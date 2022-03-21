@@ -74,118 +74,39 @@ This is an optional input that indicates if a contributor should be excluded fro
 
 ### Output
 
-+-------+-------+-------+-------+-------+-------+-------+-------+
-| Var   | Type  | F     | Exp   | Me    | Exp   | Freq  | Com   |
-| iable | of    | ormat | ected | aning | ected | uency | ments |
-| defin | var   | of    | range | of    | level |       |       |
-| ition | iable | spe   | of    | the   | of    |       |       |
-|       |       | cific | the   | v     | a     |       |       |
-|       |       | var   | v     | alues | ggreg |       |       |
-|       |       | iable | alues |       | ation |       |       |
-|       |       | (if   |       |       |       |       |       |
-|       |       | a     |       |       |       |       |       |
-|       |       | pplic |       |       |       |       |       |
-|       |       | able) |       |       |       |       |       |
-+=======+=======+=======+=======+=======+=======+=======+=======+
-| U     | Any   |       | \"F   | \"    | Repo  |       | Con   |
-| nique | Any   |       | IR\", | FIR\" | rting |       | tains |
-| ident | Date  |       | \"F   | =     | unit  |       | ret   |
-| ifier | Nu    |       | IC\", | for   | level |       | urned |
-| Imput | meric |       | \"FI  | wards | Repo  |       | and   |
-| ation | Char  |       | MN\", | im    | rting |       | im    |
-| class | acter |       | \"FI  | puted | unit  |       | puted |
-| P     |       |       | MD\", | value | level |       | v     |
-| eriod | Nu    |       | \     | from  |       |       | alues |
-| O     | meric |       | "BI\" | a     | Repo  |       |       |
-| utput | Nu    |       | ,     | ret   | rting |       |       |
-| var   | meric |       | \     | urned | unit  |       |       |
-| iable | Nu    |       | "C\", | value | level |       |       |
-| Imput | meric |       | \     |       | Repo  |       |       |
-| ation |       |       | "R\", | \"    | rting |       |       |
-| m     |       |       | \"M   | FIC\" | unit  |       |       |
-| arker |       |       | NI\", | =     | level |       |       |
-|       |       |       | \"    | for   | Repo  |       |       |
-| For   |       |       | MDI\" | wards | rting |       |       |
-| wards |       |       |       | im    | unit  |       |       |
-| imput |       |       |       | puted | level |       |       |
-| ation |       |       |       | value |       |       |       |
-| link  |       |       |       | from  |       |       |       |
-| Back  |       |       |       | a     |       |       |       |
-| wards |       |       |       | c     |       |       |       |
-| imput |       |       |       | onstr |       |       |       |
-| ation |       |       |       | ucted |       |       |       |
-| link  |       |       |       | value |       |       |       |
-| Co    |       |       |       |       |       |       |       |
-| nstru |       |       |       | \"F   |       |       |       |
-| ction |       |       |       | IMN\" |       |       |       |
-| imput |       |       |       | =     |       |       |       |
-| ation |       |       |       | for   |       |       |       |
-| link  |       |       |       | wards |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       | from  |       |       |       |
-|       |       |       |       | a     |       |       |       |
-|       |       |       |       | mean  |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       | \"F   |       |       |       |
-|       |       |       |       | IMD\" |       |       |       |
-|       |       |       |       | =     |       |       |       |
-|       |       |       |       | for   |       |       |       |
-|       |       |       |       | wards |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       | from  |       |       |       |
-|       |       |       |       | a     |       |       |       |
-|       |       |       |       | m     |       |       |       |
-|       |       |       |       | edian |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       | \     |       |       |       |
-|       |       |       |       | "BI\" |       |       |       |
-|       |       |       |       | =     |       |       |       |
-|       |       |       |       | back  |       |       |       |
-|       |       |       |       | wards |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       | \"C\" |       |       |       |
-|       |       |       |       | =     |       |       |       |
-|       |       |       |       | c     |       |       |       |
-|       |       |       |       | onstr |       |       |       |
-|       |       |       |       | ucted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       | \"R\" |       |       |       |
-|       |       |       |       | =     |       |       |       |
-|       |       |       |       | ret   |       |       |       |
-|       |       |       |       | urned |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       | \"    |       |       |       |
-|       |       |       |       | MNI\" |       |       |       |
-|       |       |       |       | =     |       |       |       |
-|       |       |       |       | mean  |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       | \"    |       |       |       |
-|       |       |       |       | MDI\" |       |       |       |
-|       |       |       |       | =     |       |       |       |
-|       |       |       |       | m     |       |       |       |
-|       |       |       |       | edian |       |       |       |
-|       |       |       |       | im    |       |       |       |
-|       |       |       |       | puted |       |       |       |
-|       |       |       |       | value |       |       |       |
-+-------+-------+-------+-------+-------+-------+-------+-------+
+#### Unique Identifier
+* Type Any
+
+#### Imputation Class
+* Type Any
+
+#### Period
+* Date
+#### Output Variable
+Contains returned and imputed values.
+* Numeric
+* Reporting Unit Level
+#### Imputation Marker
+* Character
+* Reporting Unit Level
+* R - Response
+* FIR - Forward Impute from Response
+* BI - Backward Impute from Response
+* C - Construct
+* FIC - Forward Impute from Construct
+* MNI - Mean
+* FIMNI - Forward Impute from Mean
+* MDI - Median
+* FIMDI - Forward Impute from Median
+#### Forwards Imputation Link
+* Numeric
+* Reporting Unit Level
+#### Backwards Imputation Link
+* Numeric
+* Reporting Unit Level
+#### Construction Link
+* Numeric
+* Reporting Unit Level
 
 ### Description
 

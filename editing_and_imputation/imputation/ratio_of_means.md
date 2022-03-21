@@ -11,21 +11,13 @@
 ## Introduction
 
 Ratio of means imputation is a standard imputation method for business
-surveys. The standard method, as outlined in examples 1 to 3 below, does not
+surveys. The standard method does not
 use any form of trimming for outliers. The method is fairly robust to
-outliers, unless they are exceptional and they dominate an imputation class.
-In addition, the standard method does not incorporate any weights **except**
-when averaging imputation links from more than one period (see
-'Exceptions' below)
+outliers apart from in exceptional circumstances.
 
-
-## Method Specification
-
-### Summary
-
-Ratio of means is an imputation method for a single numeric variable. It
-uses the relationship between the variable being imputed and an
-auxiliary variable. Typically, the auxiliary variable can be:
+The method imputes a single numeric variable. It uses the relationship
+between the variable being imputed and an auxiliary variable. Typically, the
+auxiliary variable can be:
 
 * a previous value, from the variable of interest for the
     non-responder, if it is available (see forward imputation - example 1 below)
@@ -35,6 +27,15 @@ auxiliary variable. Typically, the auxiliary variable can be:
 * a known register-based variable for the non-responder that is well
     correlated with the variable of interest (e.g. frozen turnover or
     frozen employment from the IDBR - see example 3 below)
+
+## Terminology
+
+the below terms can be used interchangeably
+
+* link - a ratio.
+* variable of interest - target variable
+
+### Summary
 
 As an example, for a unit $i$ at time $t$ which has a missing value for
 the variable of interest $y$ but an available value for the auxiliary

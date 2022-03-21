@@ -139,7 +139,9 @@ As an example, for a unit $i$ at time $t$ which has a missing value for
 the variable of interest $y$ but an available value for the auxiliary
 variable $x$, the imputed value for unit $i$ is given by:
 
+```latex
 $$y_{i,t}^{*} = \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}x_{i,t}$$
+```
 
 Where $impclass$ is the set of units in a pre-defined imputation class
 with responses for both $y_{j,t}$ and $x_{j,t}$. The method is called
@@ -348,4 +350,3 @@ Editing and Imputation. New York: Wiley and Sons.
 
 ## Links
 [Editing.and.Imputation.expert.group\@ons.gov.uk]: editing.and.imputation.expert.group@ons.gov.uk
-

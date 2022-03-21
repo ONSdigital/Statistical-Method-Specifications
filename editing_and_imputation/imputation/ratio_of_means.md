@@ -139,7 +139,7 @@ As an example, for a unit $i$ at time $t$ which has a missing value for
 the variable of interest $y$ but an available value for the auxiliary
 variable $x$, the imputed value for unit $i$ is given by:
 
-```math
+```latex
 $$y_{i,t}^{*} = \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}x_{i,t}$$
 ```
 

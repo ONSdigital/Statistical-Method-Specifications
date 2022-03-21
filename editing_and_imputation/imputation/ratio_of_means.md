@@ -20,389 +20,54 @@ Partially tested, draft (not published)
 
 ### Inputs
 
-+-------+-------+-------+-------+-------+-------+-------+-------+
-| Var   | Type  | F     | Exp   | Me    | Exp   | Freq  | Com   |
-| iable | of    | ormat | ected | aning | ected | uency | ments |
-| defin | var   | of    | range | of    | level |       |       |
-| ition | iable | spe   | of    | the   | of    |       |       |
-|       |       | cific | the   | v     | a     |       |       |
-|       |       | var   | v     | alues | ggreg |       |       |
-|       |       | iable | alues |       | ation |       |       |
-|       |       | (if   |       |       |       |       |       |
-|       |       | a     |       |       |       |       |       |
-|       |       | pplic |       |       |       |       |       |
-|       |       | able) |       |       |       |       |       |
-+=======+=======+=======+=======+=======+=======+=======+=======+
-| U     | Any   |       | \     | \"A   | Repo  |       | Used  |
-| nique | Any   |       | "A\", | \"/\" | rting |       | to    |
-| ident | Date  |       | \     | Annua | unit  |       | part  |
-| ifier | Nu    |       | "M\", | lly\" | level |       | ition |
-| Imput | meric |       | \     | =     | Repo  |       | the   |
-| ation | Nu    |       | "Q\", | data  | rting |       | data  |
-| class | meric |       | \"A   | pro   | unit  |       | into  |
-| P     | Nu    |       | nnual | vided | level |       | imput |
-| eriod | meric |       | ly\", | ann   | Repo  |       | ation |
-| T     | Nu    |       |       | ually | rting |       | cla   |
-| arget | meric |       | \"    |       | unit  |       | sses. |
-| var   | Nu    |       | Month | \"    | level |       | Mul   |
-| iable | meric |       | ly\", | M\"/\ | Repo  |       | tiple |
-| Auxi  | S     |       | \"Q   | "Mont | rting |       | co    |
-| liary | tring |       | uarte | hly\" | unit  |       | lumns |
-| var   |       |       | rly\" | =     | level |       | can   |
-| iable | Data  |       |       | data  | Repo  |       | be    |
-| For   | Frame |       |       | pro   | rting |       | used  |
-| wards |       |       |       | vided | unit  |       | to    |
-| imput | Bo    |       |       | on a  | level |       | d     |
-| ation | olean |       |       | mo    | Repo  |       | efine |
-| l     |       |       |       | nthly | rting |       | the   |
-| ink\* |       |       |       | basis | unit  |       | imput |
-| Back  |       |       |       |       | level |       | ation |
-| wards |       |       |       | \"Q\  | Repo  |       | c     |
-| imput |       |       |       | "/\"Q | rting |       | lass. |
-| ation |       |       |       | uarte | unit  |       |       |
-| l     |       |       |       | rly\" | level |       | The   |
-| ink\* |       |       |       | =     | Repo  |       | m     |
-| Co    |       |       |       | data  | rting |       | ethod |
-| nstru |       |       |       | pro   | unit  |       | will  |
-| ction |       |       |       | vided | level |       | a     |
-| imput |       |       |       | on a  |       |       | ssume |
-| ation |       |       |       | quar  | Repo  |       | pr    |
-| l     |       |       |       | terly | rting |       | esent |
-| ink\* |       |       |       | basis | unit  |       | v     |
-| P     |       |       |       |       | level |       | alues |
-| eriod |       |       |       |      |       |       | are   |
-| icity |       |       |       |  will | Repo  |       | ret   |
-| (fun  |       |       |       | > be  | rting |       | urned |
-| ction |       |       |       |      | unit  |       | v     |
-| call  |       |       |       |  prod | level |       | alues |
-| param |       |       |       | uced. |       |       | and   |
-| eter, |       |       |       |       |       |       | blank |
-| not a |       |       |       |       |       |       | cells |
-| vari  |       |       |       |       |       |       | are   |
-| able) |       |       |       |       |       |       | to be |
-|       |       |       |       |       |       |       | imp   |
-| Back  |       |       |       |       |       |       | uted. |
-| data  |       |       |       |       |       |       |       |
-|       |       |       |       |       |       |       | Opt   |
-| in    |       |       |       |       |       |       | ional |
-| clusi |       |       |       |       |       |       | vari  |
-| on\_m |       |       |       |       |       |       | able. |
-| arker |       |       |       |       |       |       | S     |
-|       |       |       |       |       |       |       | hould |
-|       |       |       |       |       |       |       | be    |
-|       |       |       |       |       |       |       | pro   |
-|       |       |       |       |       |       |       | vided |
-|       |       |       |       |       |       |       | if    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | user  |
-|       |       |       |       |       |       |       | would |
-|       |       |       |       |       |       |       | like  |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | for   |
-|       |       |       |       |       |       |       | wards |
-|       |       |       |       |       |       |       | i     |
-|       |       |       |       |       |       |       | mpute |
-|       |       |       |       |       |       |       | v     |
-|       |       |       |       |       |       |       | alues |
-|       |       |       |       |       |       |       | using |
-|       |       |       |       |       |       |       | an    |
-|       |       |       |       |       |       |       | a     |
-|       |       |       |       |       |       |       | ltern |
-|       |       |       |       |       |       |       | ative |
-|       |       |       |       |       |       |       | for   |
-|       |       |       |       |       |       |       | wards |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | link. |
-|       |       |       |       |       |       |       | Can   |
-|       |       |       |       |       |       |       | co    |
-|       |       |       |       |       |       |       | ntain |
-|       |       |       |       |       |       |       | n     |
-|       |       |       |       |       |       |       | ulls. |
-|       |       |       |       |       |       |       | Opt   |
-|       |       |       |       |       |       |       | ional |
-|       |       |       |       |       |       |       | vari  |
-|       |       |       |       |       |       |       | able. |
-|       |       |       |       |       |       |       | S     |
-|       |       |       |       |       |       |       | hould |
-|       |       |       |       |       |       |       | be    |
-|       |       |       |       |       |       |       | pro   |
-|       |       |       |       |       |       |       | vided |
-|       |       |       |       |       |       |       | if    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | user  |
-|       |       |       |       |       |       |       | would |
-|       |       |       |       |       |       |       | like  |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | back  |
-|       |       |       |       |       |       |       | wards |
-|       |       |       |       |       |       |       | i     |
-|       |       |       |       |       |       |       | mpute |
-|       |       |       |       |       |       |       | v     |
-|       |       |       |       |       |       |       | alues |
-|       |       |       |       |       |       |       | using |
-|       |       |       |       |       |       |       | an    |
-|       |       |       |       |       |       |       | a     |
-|       |       |       |       |       |       |       | ltern |
-|       |       |       |       |       |       |       | ative |
-|       |       |       |       |       |       |       | back  |
-|       |       |       |       |       |       |       | wards |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | link. |
-|       |       |       |       |       |       |       | Can   |
-|       |       |       |       |       |       |       | co    |
-|       |       |       |       |       |       |       | ntain |
-|       |       |       |       |       |       |       | n     |
-|       |       |       |       |       |       |       | ulls. |
-|       |       |       |       |       |       |       | Opt   |
-|       |       |       |       |       |       |       | ional |
-|       |       |       |       |       |       |       | vari  |
-|       |       |       |       |       |       |       | able. |
-|       |       |       |       |       |       |       | S     |
-|       |       |       |       |       |       |       | hould |
-|       |       |       |       |       |       |       | be    |
-|       |       |       |       |       |       |       | pro   |
-|       |       |       |       |       |       |       | vided |
-|       |       |       |       |       |       |       | if    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | user  |
-|       |       |       |       |       |       |       | would |
-|       |       |       |       |       |       |       | like  |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | cons  |
-|       |       |       |       |       |       |       | truct |
-|       |       |       |       |       |       |       | v     |
-|       |       |       |       |       |       |       | alues |
-|       |       |       |       |       |       |       | using |
-|       |       |       |       |       |       |       | an    |
-|       |       |       |       |       |       |       | a     |
-|       |       |       |       |       |       |       | ltern |
-|       |       |       |       |       |       |       | ative |
-|       |       |       |       |       |       |       | co    |
-|       |       |       |       |       |       |       | nstru |
-|       |       |       |       |       |       |       | ction |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | link. |
-|       |       |       |       |       |       |       | Can   |
-|       |       |       |       |       |       |       | co    |
-|       |       |       |       |       |       |       | ntain |
-|       |       |       |       |       |       |       | n     |
-|       |       |       |       |       |       |       | ulls. |
-|       |       |       |       |       |       |       |       |
-|       |       |       |       |       |       |       | Opt   |
-|       |       |       |       |       |       |       | ional |
-|       |       |       |       |       |       |       | param |
-|       |       |       |       |       |       |       | eter. |
-|       |       |       |       |       |       |       | S     |
-|       |       |       |       |       |       |       | ingle |
-|       |       |       |       |       |       |       | p     |
-|       |       |       |       |       |       |       | eriod |
-|       |       |       |       |       |       |       | of    |
-|       |       |       |       |       |       |       | data  |
-|       |       |       |       |       |       |       | to be |
-|       |       |       |       |       |       |       | pro   |
-|       |       |       |       |       |       |       | vided |
-|       |       |       |       |       |       |       | when  |
-|       |       |       |       |       |       |       | prior |
-|       |       |       |       |       |       |       | data  |
-|       |       |       |       |       |       |       | is    |
-|       |       |       |       |       |       |       | avi   |
-|       |       |       |       |       |       |       | lable |
-|       |       |       |       |       |       |       | for   |
-|       |       |       |       |       |       |       | i     |
-|       |       |       |       |       |       |       | mputa |
-|       |       |       |       |       |       |       | tion. |
-|       |       |       |       |       |       |       | This  |
-|       |       |       |       |       |       |       | p     |
-|       |       |       |       |       |       |       | eriod |
-|       |       |       |       |       |       |       | must  |
-|       |       |       |       |       |       |       | be    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | pre   |
-|       |       |       |       |       |       |       | vious |
-|       |       |       |       |       |       |       | p     |
-|       |       |       |       |       |       |       | eriod |
-|       |       |       |       |       |       |       | with  |
-|       |       |       |       |       |       |       | re    |
-|       |       |       |       |       |       |       | gards |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | p     |
-|       |       |       |       |       |       |       | eriod |
-|       |       |       |       |       |       |       | icity |
-|       |       |       |       |       |       |       | of    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | da    |
-|       |       |       |       |       |       |       | taset |
-|       |       |       |       |       |       |       | being |
-|       |       |       |       |       |       |       | im    |
-|       |       |       |       |       |       |       | puted |
-|       |       |       |       |       |       |       | and   |
-|       |       |       |       |       |       |       | must  |
-|       |       |       |       |       |       |       | be    |
-|       |       |       |       |       |       |       | fully |
-|       |       |       |       |       |       |       | im    |
-|       |       |       |       |       |       |       | puted |
-|       |       |       |       |       |       |       | e.g.  |
-|       |       |       |       |       |       |       | if    |
-|       |       |       |       |       |       |       | you   |
-|       |       |       |       |       |       |       | are   |
-|       |       |       |       |       |       |       | lo    |
-|       |       |       |       |       |       |       | oking |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | i     |
-|       |       |       |       |       |       |       | mpute |
-|       |       |       |       |       |       |       | for   |
-|       |       |       |       |       |       |       | Febr  |
-|       |       |       |       |       |       |       | uary, |
-|       |       |       |       |       |       |       | M     |
-|       |       |       |       |       |       |       | arch, |
-|       |       |       |       |       |       |       | April |
-|       |       |       |       |       |       |       | then  |
-|       |       |       |       |       |       |       | this  |
-|       |       |       |       |       |       |       | c     |
-|       |       |       |       |       |       |       | olumn |
-|       |       |       |       |       |       |       | r     |
-|       |       |       |       |       |       |       | efers |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | Ja    |
-|       |       |       |       |       |       |       | nuary |
-|       |       |       |       |       |       |       | (the  |
-|       |       |       |       |       |       |       | p     |
-|       |       |       |       |       |       |       | eriod |
-|       |       |       |       |       |       |       | prior |
-|       |       |       |       |       |       |       | to    |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | p     |
-|       |       |       |       |       |       |       | eriod |
-|       |       |       |       |       |       |       | range |
-|       |       |       |       |       |       |       | where |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | is    |
-|       |       |       |       |       |       |       | requ  |
-|       |       |       |       |       |       |       | ired) |
-|       |       |       |       |       |       |       | and   |
-|       |       |       |       |       |       |       | s     |
-|       |       |       |       |       |       |       | hould |
-|       |       |       |       |       |       |       | in    |
-|       |       |       |       |       |       |       | clude |
-|       |       |       |       |       |       |       | all   |
-|       |       |       |       |       |       |       | data  |
-|       |       |       |       |       |       |       | types |
-|       |       |       |       |       |       |       | (e.g. |
-|       |       |       |       |       |       |       | resp  |
-|       |       |       |       |       |       |       | onse, |
-|       |       |       |       |       |       |       | im    |
-|       |       |       |       |       |       |       | puted |
-|       |       |       |       |       |       |       | and   |
-|       |       |       |       |       |       |       | c     |
-|       |       |       |       |       |       |       | onstr |
-|       |       |       |       |       |       |       | ucted |
-|       |       |       |       |       |       |       | val   |
-|       |       |       |       |       |       |       | ues). |
-|       |       |       |       |       |       |       | If    |
-|       |       |       |       |       |       |       | not   |
-|       |       |       |       |       |       |       | prov  |
-|       |       |       |       |       |       |       | ided, |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | m     |
-|       |       |       |       |       |       |       | ethod |
-|       |       |       |       |       |       |       | will  |
-|       |       |       |       |       |       |       | pe    |
-|       |       |       |       |       |       |       | rform |
-|       |       |       |       |       |       |       | sta   |
-|       |       |       |       |       |       |       | ndard |
-|       |       |       |       |       |       |       | i     |
-|       |       |       |       |       |       |       | mputa |
-|       |       |       |       |       |       |       | tion. |
-|       |       |       |       |       |       |       | The   |
-|       |       |       |       |       |       |       | da    |
-|       |       |       |       |       |       |       | taset |
-|       |       |       |       |       |       |       | must  |
-|       |       |       |       |       |       |       | co    |
-|       |       |       |       |       |       |       | ntain |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | u     |
-|       |       |       |       |       |       |       | nqiue |
-|       |       |       |       |       |       |       | i     |
-|       |       |       |       |       |       |       | denti |
-|       |       |       |       |       |       |       | fier, |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | c     |
-|       |       |       |       |       |       |       | lass, |
-|       |       |       |       |       |       |       | pe    |
-|       |       |       |       |       |       |       | riod, |
-|       |       |       |       |       |       |       | o     |
-|       |       |       |       |       |       |       | utput |
-|       |       |       |       |       |       |       | vari  |
-|       |       |       |       |       |       |       | able, |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | ma    |
-|       |       |       |       |       |       |       | rker, |
-|       |       |       |       |       |       |       | for   |
-|       |       |       |       |       |       |       | wards |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | link, |
-|       |       |       |       |       |       |       | back  |
-|       |       |       |       |       |       |       | wards |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | link  |
-|       |       |       |       |       |       |       | and   |
-|       |       |       |       |       |       |       | co    |
-|       |       |       |       |       |       |       | nstru |
-|       |       |       |       |       |       |       | ction |
-|       |       |       |       |       |       |       | link  |
-|       |       |       |       |       |       |       | col   |
-|       |       |       |       |       |       |       | umns. |
-|       |       |       |       |       |       |       | This  |
-|       |       |       |       |       |       |       | is an |
-|       |       |       |       |       |       |       | opt   |
-|       |       |       |       |       |       |       | ional |
-|       |       |       |       |       |       |       | input |
-|       |       |       |       |       |       |       | that  |
-|       |       |       |       |       |       |       | indi  |
-|       |       |       |       |       |       |       | cates |
-|       |       |       |       |       |       |       | if a  |
-|       |       |       |       |       |       |       | c     |
-|       |       |       |       |       |       |       | ontri |
-|       |       |       |       |       |       |       | butor |
-|       |       |       |       |       |       |       | s     |
-|       |       |       |       |       |       |       | hould |
-|       |       |       |       |       |       |       | be    |
-|       |       |       |       |       |       |       | exc   |
-|       |       |       |       |       |       |       | luded |
-|       |       |       |       |       |       |       | from  |
-|       |       |       |       |       |       |       | the   |
-|       |       |       |       |       |       |       | imput |
-|       |       |       |       |       |       |       | ation |
-|       |       |       |       |       |       |       | link  |
-|       |       |       |       |       |       |       | cal   |
-|       |       |       |       |       |       |       | culat |
-|       |       |       |       |       |       |       | ions. |
-|       |       |       |       |       |       |       | V     |
-|       |       |       |       |       |       |       | alues |
-|       |       |       |       |       |       |       | acc   |
-|       |       |       |       |       |       |       | epted |
-|       |       |       |       |       |       |       | are   |
-|       |       |       |       |       |       |       | True  |
-|       |       |       |       |       |       |       | or    |
-|       |       |       |       |       |       |       | F     |
-|       |       |       |       |       |       |       | alse, |
-|       |       |       |       |       |       |       | if    |
-|       |       |       |       |       |       |       | blank |
-|       |       |       |       |       |       |       | then  |
-|       |       |       |       |       |       |       | en    |
-|       |       |       |       |       |       |       | error |
-+-------+-------+-------+-------+-------+-------+-------+-------+
+#### Unique Identifier
+Reporting unit level identifier of responders.
+* Type Any
+* * Reporting unit level
 
-* If the forward imputation link, backward imputation link and
+#### Imputation Class
+Used to partition the data into imputation classes. Multiple columns can be used to define the imputation class.
+* Type Any
+* Reporting unit level
+
+#### Period
+* Date
+* Reporting unit level
+#### Target Variable
+The method will assume present values are returned values and blank cells are to be imputed.
+* Numeric
+* Reporting unit level
+#### Auxiliary Variable
+* Numeric
+* Reporting unit level
+#### Forward Imputation Links 1.
+Optional variable. Should be provided if the user would like to forwards impute values using alternative forwards imputation links. Can contain nulls.
+* Numeric
+* Reporting unit level
+#### Backward Imputation Links 1.
+Optional variable. Should be provided if the user would like to backwards impute values using alternative backwards imputation links. Can contain nulls.
+* Numeric
+* Reporting unit level
+#### Construction Imputation Links 1.
+Optional variable. Should be provided if the user would like to construct values using alternative construction links. Can contain nulls.
+* Numeric
+* Reporting unit level
+#### Periodicity (function call parameter, not a variable)
+* String
+* A - Annually
+* M - Monthly
+* Q - Quarterly
+#### Back Data
+Optional parameter. Single period of data to be provided when prior data is avilable for imputation. This period must be the previous period with regards to the periodicity of the dataset being imputed and must be fully imputed e.g. if you are looking to impute for February, March, April then this column refers to January (the period prior to the period range where imputation is required) and should include all data types (e.g. response, imputed and constructed values). If not provided, the method will perform standard imputation. The dataset must contain the unqiue identifier, imputation class, period, output variable, imputation marker, forwards imputation link, backwards imputation link and construction link columns.
+* Dataframe
+* Reporting unit level
+#### Inclusion Marker
+This is an optional input that indicates if a contributor should be excluded from the imputation link calculations. Values accepted are True or False, if blank then en error will be produced.
+* Boolean
+* Reporting unit level
+
+#### Notes
+1. If the forward imputation link, backward imputation link and
     construction imputation link columns are provided then the links
     should be supplied for all periods and observations. Any blanks in
     these columns will be defaulted to 1.

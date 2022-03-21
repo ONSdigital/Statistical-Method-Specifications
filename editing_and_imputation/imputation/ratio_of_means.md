@@ -52,11 +52,7 @@ Optional variable. Should be provided if the user would like to backwards impute
 Optional variable. Should be provided if the user would like to construct values using alternative construction links. Can contain nulls.
 * Numeric
 * Reporting unit level
-#### Periodicity (function call parameter, not a variable)
-* String
-* A - Annually
-* M - Monthly
-* Q - Quarterly
+
 #### Back Data
 Optional parameter. Single period of data to be provided when prior data is avilable for imputation. This period must be the previous period with regards to the periodicity of the dataset being imputed and must be fully imputed e.g. if you are looking to impute for February, March, April then this column refers to January (the period prior to the period range where imputation is required) and should include all data types (e.g. response, imputed and constructed values). If not provided, the method will perform standard imputation. The dataset must contain the unqiue identifier, imputation class, period, output variable, imputation marker, forwards imputation link, backwards imputation link and construction link columns.
 * Dataframe

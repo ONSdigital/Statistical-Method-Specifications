@@ -1,110 +1,14 @@
 # Ratio of Means Specification
 
-## Overview
+## Meta
 
-### Support Area
+* Support area - Methodology - Editing & imputation
+* Support contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
+* Method theme - Imputation
+* Method classification - Ratio imputation
+* Status - Partially tested, draft (not published)
 
-Methodology - Editing & imputation <Editing.and.Imputation.expert.group@ons.gov.uk>
-
-### Method theme
-
-Imputation
-
-### Method classification
-
-Ratio imputation
-
-### Status
-
-Partially tested, draft (not published)
-
-### Inputs
-
-#### Unique Identifier
-Reporting unit level identifier of responders.
-* Type Any
-* * Reporting unit level
-
-#### Imputation Class
-Used to partition the data into imputation classes. Multiple columns can be used to define the imputation class.
-* Type Any
-* Reporting unit level
-
-#### Period
-* Date
-* Reporting unit level
-#### Target Variable
-The method will assume present values are returned values and blank cells are to be imputed.
-* Numeric
-* Reporting unit level
-#### Auxiliary Variable
-* Numeric
-* Reporting unit level
-#### Forward Imputation Links 1.
-Optional variable. Should be provided if the user would like to forwards impute values using alternative forwards imputation links. Can contain nulls.
-* Numeric
-* Reporting unit level
-#### Backward Imputation Links 1.
-Optional variable. Should be provided if the user would like to backwards impute values using alternative backwards imputation links. Can contain nulls.
-* Numeric
-* Reporting unit level
-#### Construction Imputation Links 1.
-Optional variable. Should be provided if the user would like to construct values using alternative construction links. Can contain nulls.
-* Numeric
-* Reporting unit level
-
-#### Back Data
-Optional parameter. Single period of data to be provided when prior data is avilable for imputation. This period must be the previous period with regards to the periodicity of the dataset being imputed and must be fully imputed e.g. if you are looking to impute for February, March, April then this column refers to January (the period prior to the period range where imputation is required) and should include all data types (e.g. response, imputed and constructed values). If not provided, the method will perform standard imputation. The dataset must contain the unqiue identifier, imputation class, period, output variable, imputation marker, forwards imputation link, backwards imputation link and construction link columns.
-* Dataframe
-* Reporting unit level
-#### Inclusion Marker
-This is an optional input that indicates if a contributor should be excluded from the imputation link calculations. Values accepted are True or False, if blank then en error will be produced.
-* Boolean
-* Reporting unit level
-
-#### Notes
-1. If the forward imputation link, backward imputation link and
-    construction imputation link columns are provided then the links
-    should be supplied for all periods and observations. Any blanks in
-    these columns will be defaulted to 1.
-
-### Output
-
-#### Unique Identifier
-* Type Any
-
-#### Imputation Class
-* Type Any
-
-#### Period
-* Date
-#### Output Variable
-Contains returned and imputed values.
-* Numeric
-* Reporting Unit Level
-#### Imputation Marker
-* Character
-* Reporting Unit Level
-* R - Response
-* FIR - Forward Impute from Response
-* BI - Backward Impute from Response
-* C - Construct
-* FIC - Forward Impute from Construct
-* MNI - Mean
-* FIMNI - Forward Impute from Mean
-* MDI - Median
-* FIMDI - Forward Impute from Median
-#### Forwards Imputation Link
-* Numeric
-* Reporting Unit Level
-#### Backwards Imputation Link
-* Numeric
-* Reporting Unit Level
-#### Construction Link
-* Numeric
-* Reporting Unit Level
-
-### Description
+## Introduction
 
 Ratio of means imputation is a standard imputation method for business
 surveys. The standard method, as outlined in examples 1 to 3 below, does not
@@ -112,7 +16,8 @@ use any form of trimming for outliers. The method is fairly robust to
 outliers, unless they are exceptional and they dominate an imputation class.
 In addition, the standard method does not incorporate any weights **except**
 when averaging imputation links from more than one period (see
-\'Exceptions\' below)
+'Exceptions' below)
+
 
 ## Method Specification
 
@@ -187,12 +92,7 @@ et al (2011) pp244.**
 All the examples below relate to an imputation method that applies Ratio
 of Means imputation to a dataframe to predict missing values.
 
-Terminology
 
-the below terms can be used interchangeably
-
-* **link** = a ratio.
-* **variable of interest** = target variable
 
 ### Example 1 - Forward Imputation
 

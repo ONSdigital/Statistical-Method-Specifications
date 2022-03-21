@@ -140,11 +140,11 @@ the variable of interest $y$ but an available value for the auxiliary
 variable $x$, the imputed value for unit $i$ is given by:
 
 ```latex
-$$y_{i,t}^{*} = \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}x_{i,t}$$
+$y_{i,t}^{*} = \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}x_{i,t}$
 ```
 
-Where $impclass$ is the set of units in a pre-defined imputation class
-with responses for both $y_{j,t}$ and $x_{j,t}$. The method is called
+Where `$impclass$` is the set of units in a pre-defined imputation class
+with responses for both `$y_{j,t}$` and `$x_{j,t}$`. The method is called
 ratio of means but it is more commonly expressed as a ratio of sums as
 there is the same number of values in both the numerator and denominator
 of the fraction. NOTE: this is because the ratio uses matched pairs of
@@ -153,7 +153,7 @@ using non-register based data to calculate the ratio or the imputation
 link shown below.
 
 The fraction
-$\frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}$
+`$\frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}$`
 is called the **imputation link**.
 
 While the imputation link calculation is based on matched pairs of
@@ -162,10 +162,10 @@ create the imputed value, can be *any* status available (i.e. responded,
 imputed, constructed).
 
 It is possible to remove respondents from the imputation link
-calculation by using the inclusion\_marker column. The inclusion\_marker
+calculation by using the `inclusion_marker` column. The `inclusion_marker`
 column is an optional input column where a user can identify respondents
 that need to be excluded from the imputation link calculation. If the
-inclusion\_marker column is used then the values will need to have the
+`inclusion_marker` column is used then the values will need to have the
 Boolean type (True/False). The respondents that are included in the
 imputation link calculations will need to be marked as True and
 respondents that are excluded from the imputation link calculations will
@@ -208,17 +208,21 @@ auxiliary. Only records that:
     that have not been imputed by either the forward, backward or
     constructed computations in these examples.
 * have responded in both periods
-* marked as True if the inclusion\_marker column is an input
+* marked as True if the `inclusion_marker` column is an input
 
 are used to calculate the link below.
 
 #### Forwards Imputation Link formula
 
-$$\text{Forward link} = \frac{\text{sum(variable of interest within strata and current period)}}{\text{sum(variable of interest within strata and previous period)}}$$
+```latex
+$\text{Forward link} = \frac{\text{sum(variable of interest within strata and current period)}}{\text{sum(variable of interest within strata and previous period)}}$
+```
 
 #### Forwards Imputation formula
 
-$$\text{forward link} * \text{variable of interest that relates to the non-respondent from a previous period}$$
+```latex
+$\text{forward link} * \text{variable of interest that relates to the non-respondent from a previous period}$
+```
 
 *the variable of interest that relates to the non-respondent from
 the relative period can be any status (i.e. response, imputed,
@@ -242,11 +246,14 @@ value or that were forward imputed from a constructed value.
 
 #### Backwards Imputation Link formula
 
-$$\text{Backward link} = \frac{\text{sum(variable of interest within strata and period of interest)}}{\text{sum(variable of interest within strata and consecutive period)}}$$
+```latex
+$\text{Backward link} = \frac{\text{sum(variable of interest within strata and period of interest)}}{\text{sum(variable of interest within strata and consecutive period)}}$
+```
 
 #### Backwards Imputation formula
-
-$$\text{backward link} * \text{variable of interest that relates to the non-respondent from a consecutive period}$$
+```latex
+$\text{backward link} * \text{variable of interest that relates to the non-respondent from a consecutive period}$
+```
 
 **the variable of interest that relates to the non-respondent from
 the relative period can be any status (i.e. response, imputed,
@@ -267,15 +274,18 @@ calculations.
 
 #### Construction Link formula
 
-$$\text{Construction link} = \frac{\text{sum(variable of interest within strata and current period)}}{\text{sum(aux variable within strata and current period)}}$$
+```latex
+$\text{Construction link} = \frac{\text{sum(variable of interest within strata and current period)}}{\text{sum(aux variable within strata and current period)}}$
+```
 
 #### Construction Imputation formula
+```latex
+$\text{Construction link} * \text{aux variable value for non-respondent from current period}.$
+```
 
-$$\text{Construction link} * \text{aux variable value for non-respondent from current period}.$$
+### Exceptions
 
-##### Exceptions
-
-Please note the following exceptions to the method\'s standard
+Please note the following exceptions to the method's standard
 behaviour.
 1. In some cases it may be appropriate to use an imputation link which
     is an average of imputation links for more than one.
@@ -285,7 +295,9 @@ parameters would need to be specified: the lag ($k$) and the weight
 ($w$) given to each period. In this case the imputation link is
 calculated as:
 
-$$\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}} + (1 - w)*\frac{\sum_{j\in{impclass}}{y_{j,t-k}}}{\sum_{j\in{impclass}}{x_{j,t-k}}}$$
+```latex
+$\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}} + (1 - w)*\frac{\sum_{j\in{impclass}}{y_{j,t-k}}}{\sum_{j\in{impclass}}{x_{j,t-k}}}$
+```
 
 This could be generalised further to allow more than two links to be
 included in the average.
@@ -299,7 +311,7 @@ included in the average.
         that have been calculated for another variable named by the user
         within a corresponding imputation class or use a link of 1.
 
-##### Imputation rules
+### Imputation rules
 
 1. Forward impute if no response available for current period but is
     available from a previous period
@@ -347,6 +359,3 @@ way:
 
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
 Editing and Imputation. New York: Wiley and Sons.
-
-## Links
-[Editing.and.Imputation.expert.group\@ons.gov.uk]: editing.and.imputation.expert.group@ons.gov.uk

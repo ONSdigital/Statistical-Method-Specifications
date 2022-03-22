@@ -20,6 +20,8 @@ Ratio of means is a standard imputation method used for business surveys. Due to
 
 The method imputes for a single numeric variable of interest for each contributor/period that the target variable is a non-responder for.
 
+Currently the method only works for monthly data but should a need arise can be adjusted to quarterly or annually.
+
 ## Assumptions
 1. The auxiliary variable is a good predictor of the target variable.
 2. If the auxiliary variable is not available for a non-responding contributor, either there must be other matched pair contributors in the same strata as that contributor or the contributor must have a response in any previous or consecutive period.
@@ -48,8 +50,8 @@ The method prioretises calculating the non-responder's target variable using the
 2. Backward Imputation from a Response - BI
 3. Construct initial values - C
 4. Forward Imputation from a Constructed Value - FIC
-5. Mean or Median initial calculation - MNI or MDI
-6. Forward Imputation from Mean or Median - FIMN or FIMD
+5. Mean or Median initial calculation - MNI or MDI (Not yet written)
+6. Forward Imputation from Mean or Median - FIMN or FIMD (Not yet written)
 
 ## The Calculations
 ### Forward Imputation Link
@@ -96,6 +98,9 @@ Link = (weight * sum(current var 1) / sum(current var 2)) + ((1 - weight) * (sum
 ```latex
 $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}} + (1 - w)*\frac{\sum_{j\in{impclass}}{y_{j,t-k}}}{\sum_{j\in{impclass}}{x_{j,t-k}}}$
 ```
+
+## Special Cases
+1. In certain scenarios it may be that to avoid the first period of non-responses all being constructed that the method will need to accept periods of back data. This data will be used to calculate links and forward impute from but will not be returned on the output. Care must be taken to ensure that the back data does mess with the prioreties mentioned above.
 
 ## Technical Information
 Perhaps link to the repository containing the code?

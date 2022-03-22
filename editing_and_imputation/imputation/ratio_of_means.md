@@ -103,7 +103,7 @@ $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{i
 1. In certain scenarios it may be that to avoid the first period of non-responses all being constructed that the method will need to accept periods of back data. This data will be used to calculate links and forward impute from but will not be returned on the output. Care must be taken to ensure that the back data does mess with the prioreties mentioned above.
 
 ## Technical Information
-Perhaps link to the repository containing the code?
+https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py
 
 ## References
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data

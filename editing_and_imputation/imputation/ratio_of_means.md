@@ -2,257 +2,104 @@
 
 ## Meta
 
-* Support area - Methodology - Editing & imputation
-* Support contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
-* Method theme - Imputation
-* Method classification - Ratio imputation
+* Support Area - Methodology - Editing & Imputation
+* Support Contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
+* Method Theme - Imputation
+* Method Classification - Ratio Imputation
 * Status - Partially tested, draft (not published)
-
-## Introduction
-
-Ratio of means imputation is a standard imputation method for business
-surveys. The standard method does not
-use any form of trimming for outliers. The method is fairly robust to
-outliers apart from in exceptional circumstances.
-
-The method imputes a single numeric variable. It uses the relationship
-between the variable being imputed and an auxiliary variable. Typically, the
-auxiliary variable can be:
-
-* a previous value, from the variable of interest for the
-    non-responder, if it is available (see forward imputation - example 1 below)
-* a consecutive value, from the variable of interest for the
-    non-responder, if it is available (see backward imputation -
-    example 2 below)
-* a known register-based variable for the non-responder that is well
-    correlated with the variable of interest (e.g. frozen turnover or
-    frozen employment from the IDBR - see example 3 below)
 
 ## Terminology
 
-the below terms can be used interchangeably
+* Matched Pair Contributors - Contributors that have responded in both the periods being used in a calculation.
+* Link - A ratio of the means of the matched pair contributors. (Three types are used in this method. Forward links, backward links and construction links)
+* Target variable - The variable of interest that the method is working on.
 
-* link - a ratio.
-* variable of interest - target variable
+## Introduction
 
-### Summary
+Ratio of means is a standard imputation method used for business surveys. Due to its robust nature it does not use any form of trimming or outliering.
 
-As an example, for a unit $i$ at time $t$ which has a missing value for
-the variable of interest $y$ but an available value for the auxiliary
-variable $x$, the imputed value for unit $i$ is given by:
+The method imputes for a single numeric variable of interest for each contributor/period that the target variable is a non-responder for.
 
-```latex
-$y_{i,t}^{*} = \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}x_{i,t}$
+## Assumptions
+1. The auxiliary variable is a good predictor of the target variable.
+2. If the auxiliary variable is not available for a non-responding contributor, either there must be other matched pair contributors in the same strata as that contributor or the contributor must have a response in any previous or consecutive period.
+
+## Summary
+
+The method calcultes links for each strata and period combination in the data, between the current period and both the previous (forward link) and consecutive (backward link) periods using matched pair contributors or between the current periods target variable and an auxiliary variable (construction link). Then for non-responders it applies (via simple multiplication) these links to previous/consecutive period data to fill in the blanks.
+
+In scenarios where there is not a previous/consecutive response to apply a link to, the method will construct an initial value to impute from by using the construction link and the non-responders auxiliary variable (This should be a register-based variable such as frozen turnover or frozen employment from IDBR).
+
+If a value can still not be calculated the method will attempt to calculate a mean or medium value of the responders in the non-responders period/strata.
+
+The method uses rolling imputation to ensure cases where there are multiple periods of non-response are covered by starting at a response/constructed/mean/median value and progressing period by period applying the link until no other non-responses are found.
+
+In certain cases a matched pair contributor may wish to be excluded from the link calculations. The method accepts an optional inclusion marker, that, when it contains *true* is included and when it contains *False* is excluded from the calculations. When this marker is not given to the method, all matched pair contributors are included.
+
+Links can also be passed into the method rather than being calculated by the method. If this occurs all three types of links must be provided (this is due to there being a defined relationship between the forward and backward links) and if they are missing for any contrubutors they should default to 1.
+
+If a contributor is rotated out of a sample and then back in at a later date the method does not calculate accross this gap.
+
+### Order Of Calculation Priority And Imputation Markers
+The method prioretises calculating the non-responder's target variable using the following links and marks that value with the calculation used:
+
+0. Response, no calculation - R
+1. Forward Imputation from a Response - FIR
+2. Backward Imputation from a Response - BI
+3. Construct initial values - C
+4. Forward Imputation from a Constructed Value - FIC
+5. Mean or Median initial calculation - MNI or MDI
+6. Forward Imputation from Mean or Median - FIMN or FIMD
+
+## The Calculations
+### Forward Imputation Link
+Calculated using matched pair contributors for the strata, in the current and previous periods.
 ```
-
-Where `$impclass$` is the set of units in a pre-defined imputation class
-with responses for both `$y_{j,t}$` and `$x_{j,t}$`. The method is called
-ratio of means but it is more commonly expressed as a ratio of sums as
-there is the same number of values in both the numerator and denominator
-of the fraction. NOTE: this is because the ratio uses matched pairs of
-respondents i.e. they must be respondents in both time periods when
-using non-register based data to calculate the ratio or the imputation
-link shown below.
-
-The fraction
-`$\frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}}$`
-is called the **imputation link**.
-
-While the imputation link calculation is based on matched pairs of
-respondents, the auxiliary value that the link is then multiplied by to
-create the imputed value, can be *any* status available (i.e. responded,
-imputed, constructed).
-
-It is possible to remove respondents from the imputation link
-calculation by using the `inclusion_marker` column. The `inclusion_marker`
-column is an optional input column where a user can identify respondents
-that need to be excluded from the imputation link calculation. If the
-`inclusion_marker` column is used then the values will need to have the
-Boolean type (True/False). The respondents that are included in the
-imputation link calculations will need to be marked as True and
-respondents that are excluded from the imputation link calculations will
-need to be marked as False. If a given respondent is marked as False
-under the inclusion marker, this means they will be removed from all
-possible imputation links (i.e. forwards imputation, backwards
-imputation, construction imputation). By definition this marker is
-applied to all respondents and therefore are not imputed for; this is
-purely to control for their contribution towards imputation link
-calculations.
-
-**Please note alternative notation of these formulae e.g. de Waal
-et al (2011) pp244.**
-
-### Assumptions
-
-1. The auxiliary variable should be a good predictor of the variable of
-    interest.
-2. The auxiliary variable must be available for the non-respondent.
-
-### Standard method examples
-
-All the examples below relate to an imputation method that applies Ratio
-of Means imputation to a dataframe to predict missing values.
-
-
-
-### Example 1 - Forward Imputation
-
-The most common scenario is where the current period\'s (*t*) missing
-value is imputed using a previous period\'s (*t-1*) value as the
-auxiliary. Only records that:
-
-* are actual returns free of error, i.e. have been cleaned and those
-    that have not been imputed by either the forward, backward or
-    constructed computations in these examples.
-* have responded in both periods
-* marked as True if the `inclusion_marker` column is an input
-
-are used to calculate the link below.
-
-#### Forwards Imputation Link formula
-
+Forward Link = sum(current period's target variables)/sum(previous period's target variables)
+```
 ```latex
 $\text{Forward link} = \frac{\text{sum(variable of interest within strata and current period)}}{\text{sum(variable of interest within strata and previous period)}}$
 ```
-
-#### Forwards Imputation formula
-
-```latex
-$\text{forward link} * \text{variable of interest that relates to the non-respondent from a previous period}$
+Then simple take a non-responders previous period value and multiply it by the link.
+### Backward Imputation Link
+Calculated using matched pair contributors for the strata, in the current and consecutive periods.
 ```
-
-*the variable of interest that relates to the non-respondent from
-the relative period can be any status (i.e. response, imputed,
-constructed).*
-
-### Example 2 - Backwards Imputation
-
-In this example the method imputes a value backwards using a value from
-a consecutive period (*t+1*) to the period of interest (*t*). Only
-records that:
-
-* are actual returns free of error, i.e. have been cleaned and those
-     that have not been imputed by either the forward, backward or
-     constructed computations in these examples.
-* have responded in both periods
-* marked as True if the inclusion\_marker column is an input
-
-are used to calculate the link below. In addition, backward imputation
-is only applied to records that have been imputed with a constructed
-value or that were forward imputed from a constructed value.
-
-#### Backwards Imputation Link formula
-
+Backward Link = sum(current period's target variables)/sum(consecutive period's target variables)
+```
 ```latex
 $\text{Backward link} = \frac{\text{sum(variable of interest within strata and period of interest)}}{\text{sum(variable of interest within strata and consecutive period)}}$
 ```
+Then simple take a non-responders consecutive period value and multiply it by the link.
 
-#### Backwards Imputation formula
-```latex
-$\text{backward link} * \text{variable of interest that relates to the non-respondent from a consecutive period}$
+NOTE: For a contributor, the backward link at period t and the forward link at t+1 are related. (This is the reason if links are provided and not calculated, all links should be provided)
 ```
-
-**the variable of interest that relates to the non-respondent from
-the relative period can be any status (i.e. response, imputed,
-constructed).**
-
-### Example 3 - Construction Imputation
-
-In this example, the method constructs the value to be imputed using an
-auxiliary variable for a non-responding business where no previous
-period auxiliary is available; for example, where a business never
-responds, or is brought into the sample for the first time, or brought
-back in after a break. Typically, in this case, the auxiliary variable
-is a known register-based variable that is well correlated with the
-variable of interest, such as frozen turnover or employment from the
-business register (IDBR). If the inclusion\_marker column is an input
-then only respondents marked as True will be included in the link
-calculations.
-
-#### Construction Link formula
-
+Backward_Link(t) == 1/Forward_Link(t+1)
+```
+### Construction Link
+Calculated using current period responses for the strata and their corresponding auxiliary values.
+```
+Construction Link = sum(current period's target variables)/sum(current period's auxiliary variables)
+```
 ```latex
 $\text{Construction link} = \frac{\text{sum(variable of interest within strata and current period)}}{\text{sum(aux variable within strata and current period)}}$
 ```
+Then simple take a non-responders auxiliary value and multiply it by the link.
 
-#### Construction Imputation formula
-```latex
-$\text{Construction link} * \text{aux variable value for non-respondent from current period}.$
-```
-
-### Exceptions
-
+## Exceptions
 Please note the following exceptions to the method's standard
-behaviour.
-1. In some cases it may be appropriate to use an imputation link which
-    is an average of imputation links for more than one.
+behaviour:
 
-In the simplest case this could be the average of two links. Two further
-parameters would need to be specified: the lag ($k$) and the weight
-($w$) given to each period. In this case the imputation link is
-calculated as:
-
+1. (Not written) In some cases it may be appropriate to use an imputation link which is an average of imputation links for more than one. In the simplest case this could be the average of two links. Two further parameters would need to be specified: the lag ($k$) and the weight ($w$) given to each period. In this case the imputation link is calculated as:
+```
+Link = (weight * sum(current var 1) / sum(current var 2)) + ((1 - weight) * (sum(previous var 1) / sum(previous var 2)))
+```
 ```latex
 $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}{\sum_{j\in{impclass}}{x_{j,t}}} + (1 - w)*\frac{\sum_{j\in{impclass}}{y_{j,t-k}}}{\sum_{j\in{impclass}}{x_{j,t-k}}}$
 ```
 
-This could be generalised further to allow more than two links to be
-included in the average.
-
-2. In some instances, a user may want to:
-
-    * specify that the imputed value for the given target variable is
-        constructed using links that have been calculated for another
-        variable named by the user within a corresponding imputation class
-    * specify that a variable is backwards or forwards imputed using links
-        that have been calculated for another variable named by the user
-        within a corresponding imputation class or use a link of 1.
-
-### Imputation rules
-
-1. Forward impute if no response available for current period but is
-    available from a previous period
-2. Rolling Forward impute if no response available for few rolling
-    periods but is available from an earlier period
-3. Forwards imputation based on a previous constructed value if
-    business never responds but auxiliary data is available for that
-    business
-4. If a business is rotated out of the sample and then rotated back
-    into the sample, values that were previously imputed (see examples 1
-    to 3 above) should not be used
-5. Use a returned survey response where available
-6. Mean or median imputation should be used if there is no auxiliary
-    information available (no previous period auxiliary, no consecutive
-    period auxiliary and no register-based auxiliary variable)
-7. Backwards imputation only applies to records that are constructed or
-    are based on a constructed value; records imputed using mean
-    imputation or based on a mean imputed value or records imputed using
-    median imputation or based on a median imputed value
-
-Mean imputation: impute a mean value for non-responders based upon
-current period respondents within the same imputation class
-
-Median imputation: impute a median value for non-responders based upon
-current period respondents within the same imputation class
-
-### Treatment of special cases
-
-If a value of $y_{i,t}$ is missing then it is imputed in the following
-way:
-
-1. If a unit never responds, then their first value will be constructed
-    and subsequent values will be forward imputed.
-2. When a non-responder responds for the first time, at time
-    $t = T > 1$ then the values for $t = 1, …, T-1$ are backwards
-    imputed. If it is a non-responder in future periods, then these
-    values will be forward imputed from a returned value or a forward
-    imputed value if more than one consecutive period is missing.
-3. A unit responds $t = 1$ but does not respond at a time $t = T > 1$.
-    This value is forward imputed either from a returned value or a
-    forward imputed value if more than one consecutive period is
-    missing.
+## Technical Information
+Perhaps link to the repository containing the code?
 
 ## References
-
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
 Editing and Imputation. New York: Wiley and Sons.

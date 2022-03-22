@@ -36,7 +36,7 @@ If a value can still not be calculated the method will attempt to calculate a me
 
 The method uses rolling imputation to ensure cases where there are multiple periods of non-response are covered by starting at a response/constructed/mean/median value and progressing period by period applying the link until no other non-responses are found.
 
-In certain cases a matched pair contributor may wish to be excluded from the link calculations. The method accepts an optional inclusion marker, that, when it contains *true* is included and when it contains *False* is excluded from the calculations. When this marker is not given to the method, all matched pair contributors are included.
+In certain cases a matched pair contributor may wish to be excluded from the link calculations. The method accepts an optional inclusion marker, that, when it contains *True* is included and when it contains *False* is excluded from the calculations. When this marker is not given to the method, all matched pair contributors are included.
 
 Links can also be passed into the method rather than being calculated by the method. If this occurs all three types of links must be provided (this is due to there being a defined relationship between the forward and backward links) and if they are missing for any contrubutors they should default to 1.
 

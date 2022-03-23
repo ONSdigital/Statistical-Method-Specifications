@@ -190,8 +190,8 @@ $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}
 
 ## Technical Information
 
-The current implementation of the method is Python-PySpark and can be found here at
-[Statistical Methods Library - Ratio Of Means Code](https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py).
+The current implementation of the method is Python-PySpark and can be found here
+at [Statistical Methods Library - Ratio Of Means Code](https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py).
 
 The method uses the following input data as part of the input_df (the back_data input
 requires similar data except that instead of the target variable it will have the
@@ -219,7 +219,8 @@ The method will always return the following data:
 
 ## Unimplemented Features
 
-1. Strata currently allows only a single column. Will be adjusted in the futre to allow a list of columns.
+1. Strata currently allows only a single column.
+   Will be adjusted in the futre to allow a list of columns.
 2. [Weighted Links.](#exceptions)
 3. Imputation link Inclusion Marker column.
 4. Output number of matched pairs used when calculating links.

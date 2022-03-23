@@ -87,7 +87,7 @@ following links and marks that value with the calculation used:
 2. Backward Imputation from a Response - BI
 3. Construct initial values - C
 4. Forward Imputation from a Constructed Value - FIC
-5. ~~Mean or Median initial calculation - MNI or MDI~~ [Not Implemented](#unimplemented-features)<a name="mean"></a>
+5. ~~Mean or Median initial calculation - MNI or MDI~~ <a name="mean"></a>
 6. ~~Forward Imputation from Mean or Median - FIMN or FIMD~~ [Not Implemented](#unimplemented-features)
 
 ## The Calculations

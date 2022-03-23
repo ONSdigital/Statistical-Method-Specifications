@@ -62,7 +62,7 @@ periods of non-response are covered by starting at a
 response/constructed/mean/median value and progressing period by period applying
 the link until no other non-responses are found.
 
-[Not Implemented](#unimplemented-features)<a name="inclusion"></a>
+[Not Implemented](#unimplemented-features){#inclusion}
 ~~In certain cases a matched pair contributor may wish to be excluded from the link
 calculations. The method accepts an optional inclusion marker, that, when it
 contains *True* is included and when it contains *False* is excluded from the

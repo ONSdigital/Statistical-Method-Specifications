@@ -77,8 +77,10 @@ method. If this occurs all three types of links must be provided (this is due to
 there being a defined relationship between the forward and backward links) and if
 they are missing for any contrubutors they should default to 1.
 
-If a contributor is rotated out of a sample and then back in at a later date the
-method does not calculate accross this gap.
+If a contributor that has been sampled is rotated out and then later on is rotated
+back in to the sample, the method must not calculate accross this gap because they
+are not non-responders, the contributors will not have any data assosiated with
+them for those periods as they are not sampled.
 
 ### Order Of Calculation Priority And Imputation Markers
 

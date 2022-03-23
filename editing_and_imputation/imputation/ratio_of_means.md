@@ -62,7 +62,7 @@ periods of non-response are covered by starting at a
 response/constructed/mean/median value and progressing period by period applying
 the link until no other non-responses are found.
 
-######Inclusion Marker
+###### Inclusion Marker
 
 [Not Implemented](#unimplemented-features)
 ~~In certain cases a matched pair contributor may wish to be excluded from the link

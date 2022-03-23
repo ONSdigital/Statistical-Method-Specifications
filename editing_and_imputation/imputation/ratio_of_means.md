@@ -17,6 +17,8 @@
   construction links)
 * Target variable - The variable of interest that the method
   is working on.
+* Strata - How the data has been broken into subsets.
+  Also know as Imputation Class.
 
 ## Introduction
 
@@ -60,11 +62,12 @@ periods of non-response are covered by starting at a
 response/constructed/mean/median value and progressing period by period applying
 the link until no other non-responses are found.
 
-In certain cases a matched pair contributor may wish to be excluded from the link
+[Not Implemented](#Unimplemented_Features)
+~~In certain cases a matched pair contributor may wish to be excluded from the link
 calculations. The method accepts an optional inclusion marker, that, when it
 contains *True* is included and when it contains *False* is excluded from the
 calculations. When this marker is not given to the method, all matched pair
-contributors are included.
+contributors are included.~~
 
 Links can also be passed into the method rather than being calculated by the
 method. If this occurs all three types of links must be provided (this is due to
@@ -84,8 +87,8 @@ following links and marks that value with the calculation used:
 2. Backward Imputation from a Response - BI
 3. Construct initial values - C
 4. Forward Imputation from a Constructed Value - FIC
-5. Mean or Median initial calculation - MNI or MDI (Not yet written)
-6. Forward Imputation from Mean or Median - FIMN or FIMD (Not yet written)
+~~5. Mean or Median initial calculation - MNI or MDI~~ [Not Implemented](#Unimplemented_Features)
+~~6. Forward Imputation from Mean or Median - FIMN or FIMD~~ [Not Implemented](#Unimplemented_Features)
 
 ## The Calculations
 
@@ -155,14 +158,15 @@ Then simple take a non-responders auxiliary value and multiply it by the link.
 
 ## Exceptions
 
+[This Section Is Not Implemented](#Unimplemented_Features)
 Please note the following exceptions to the method's standard
 behaviour:
 
-1. (Not written) In some cases it may be appropriate to use an imputation link
-2. which is an average of imputation links for more than one. In the simplest
-3. case this could be the average of two links. Two further parameters would need
-4. to be specified: the lag ($k$) and the weight ($w$) given to each period. In
-5. this case the imputation link is calculated as:
+1. In some cases it may be appropriate to use an imputation link
+   which is an average of imputation links for more than one. In the simplest
+   case this could be the average of two links. Two further parameters would need
+   to be specified: the lag ($k$) and the weight ($w$) given to each period. In
+   this case the imputation link is calculated as:
 
 ```text
 Link = (weight * sum(current var 1) / sum(current var 2)) +
@@ -178,14 +182,48 @@ $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}
 ## Special Cases
 
 1. In certain scenarios it may be that to avoid the first period of non-responses
-2. all being constructed that the method will need to accept periods of back data.
-3. This data will be used to calculate links and forward impute from but will not
-4. be returned on the output. Care must be taken to ensure that the back data does
-5. mess with the prioreties mentioned above.
+   all being constructed that the method will need to accept periods of back data.
+2. This data will be used to calculate links and forward impute from but will not
+   be returned on the output. Care must be taken to ensure that the back data does
+   mess with the prioreties mentioned above.
 
 ## Technical Information
 
-[Statistical Methods Library - Ratio Of Means Code](https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py)
+The current implementation of the method is Python-PySpark and can be found here at
+[Statistical Methods Library - Ratio Of Means Code](https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py).
+
+The method uses the following input data as part of the input_df (the back_data input
+requires similar data except that instead of the target variable it will have the
+returned/imputed target variable and imputation marker columns for the periods it
+contains):
+
+1. Unique Identifier - String
+2. Period - String
+3. Strata - String
+4. Target Variable - Numeric
+5. Auxiliary Variable - Numeric
+6. Forward Link - Numeric (Optional)
+7. Backward Link - Numeric (Optional)
+8. Construction Link - Numeric (Optional)
+
+The method will always return the following data:
+
+1. Unique Identifier - String
+2. Period - String
+3. Returned/Imputed Target Variable - Numeric
+4. Imputation Marker - String
+5. Forward Link - Numeric
+6. Backward Link - Numeric
+7. Construction Link - Numeric
+
+## Unimplemented Features
+
+1. Strata currently allows only a single column. Will be adjusted in the futre to allow a list of columns.
+2. [Weighted Links.](#Exceptions)
+3. Imputation link Inclusion Marker column.
+4. Output number of matched pairs used when calculating links.
+5. Periodicity options of Quarterly and Annually.
+6. Mean/Median when missing auxiliary values for Construction.
 
 ## References
 

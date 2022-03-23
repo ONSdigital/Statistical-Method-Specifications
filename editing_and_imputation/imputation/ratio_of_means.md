@@ -94,7 +94,7 @@ following links and marks that value with the calculation used:
 Calculated using matched pair contributors for the strata, in the current and
 previous periods.
 
-```
+```text
 Forward Link = sum(current period's target variables)/sum(previous period's
 target variables)
 ```
@@ -113,7 +113,7 @@ the link.
 Calculated using matched pair contributors for the strata, in the current and
 consecutive periods.
 
-```
+```text
 Backward Link = sum(current period's target variables)/sum(consecutive period's
 target variables)
 ```
@@ -130,7 +130,8 @@ the link.
 NOTE: For a contributor, the backward link at period t and the forward link at
 t+1 are related. (This is the reason if links are provided and not calculated,
 all links should be provided)
-```
+
+```text
 Backward_Link(t) == 1/Forward_Link(t+1)
 ```
 
@@ -139,7 +140,7 @@ Backward_Link(t) == 1/Forward_Link(t+1)
 Calculated using current period responses for the strata and their corresponding
 auxiliary values.
 
-```
+```text
 Construction Link = sum(current period's target variables)/
 sum(current period's auxiliary variables)
 ```
@@ -163,7 +164,7 @@ behaviour:
 4. to be specified: the lag ($k$) and the weight ($w$) given to each period. In
 5. this case the imputation link is calculated as:
 
-```
+```text
 Link = (weight * sum(current var 1) / sum(current var 2)) +
 ((1 - weight) * (sum(previous var 1) / sum(previous var 2)))
 ```

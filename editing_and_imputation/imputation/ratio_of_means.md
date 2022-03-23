@@ -54,8 +54,10 @@ to, the method will construct an initial value to impute from by using the
 construction link and the non-responders auxiliary variable (This should be a
 register-based variable such as frozen turnover or frozen employment from IDBR).
 
-If a value can still not be calculated the method will attempt to calculate a
-mean or medium value of the responders in the non-responders period/strata.
+<a name="median"></a>
+[Not Implemented](#unimplemented-features)
+~~If a value can still not be calculated the method will attempt to calculate a
+mean or medium value of the responders in the non-responders period/strata.~~
 
 The method uses rolling imputation to ensure cases where there are multiple
 periods of non-response are covered by starting at a
@@ -227,7 +229,7 @@ The method will always return the following data:
 3. [Imputation link Inclusion Marker column.](#inclusion)
 4. Output number of matched pairs used when calculating links.
 5. Periodicity options of Quarterly and Annually.
-6. [Mean/Median when missing auxiliary values for Construction.](#mean)
+6. [Mean/Median when missing auxiliary values for Construction.](#median) [It is the final step of the priorety list.](#mean)
 
 ## References
 

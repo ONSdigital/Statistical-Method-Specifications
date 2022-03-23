@@ -185,7 +185,7 @@ $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}
 
 ## Technical Information
 
-https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py
+[Statistical Methods Library - Ratio Of Means Code](https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py)
 
 ## References
 

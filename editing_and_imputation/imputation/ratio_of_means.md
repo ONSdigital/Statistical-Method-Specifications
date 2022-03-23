@@ -31,6 +31,7 @@ Currently the method only works for monthly data but should a need arise
 can be adjusted to quarterly or annually.
 
 ## Assumptions
+
 1. The auxiliary variable is a good predictor of the target variable.
 2. If the auxiliary variable is not available for a non-responding
    contributor, either there must be other matched pair contributors in
@@ -92,30 +93,37 @@ following links and marks that value with the calculation used:
 
 Calculated using matched pair contributors for the strata, in the current and
 previous periods.
+
 ```
 Forward Link = sum(current period's target variables)/sum(previous period's
 target variables)
 ```
+
 ```latex
 $\text{Forward link} = \frac{\text{
 sum(variable of interest within strata and current period)}}{\text{
 sum(variable of interest within strata and previous period)}}$
 ```
+
 Then simple take a non-responders previous period value and multiply it by
 the link.
 
 ### Backward Imputation Link
+
 Calculated using matched pair contributors for the strata, in the current and
 consecutive periods.
+
 ```
 Backward Link = sum(current period's target variables)/sum(consecutive period's
 target variables)
 ```
+
 ```latex
 $\text{Backward link} = \frac{\text{
 sum(variable of interest within strata and period of interest)}}{\text{
 sum(variable of interest within strata and consecutive period)}}$
 ```
+
 Then simple take a non-responders consecutive period value and multiply it by
 the link.
 
@@ -130,15 +138,18 @@ Backward_Link(t) == 1/Forward_Link(t+1)
 
 Calculated using current period responses for the strata and their corresponding
 auxiliary values.
+
 ```
 Construction Link = sum(current period's target variables)/
 sum(current period's auxiliary variables)
 ```
+
 ```latex
 $\text{Construction link} = \frac{\text{
 sum(variable of interest within strata and current period)}}{\text{
 sum(aux variable within strata and current period)}}$
 ```
+
 Then simple take a non-responders auxiliary value and multiply it by the link.
 
 ## Exceptions
@@ -151,10 +162,12 @@ behaviour:
 3. case this could be the average of two links. Two further parameters would need
 4. to be specified: the lag ($k$) and the weight ($w$) given to each period. In
 5. this case the imputation link is calculated as:
+
 ```
 Link = (weight * sum(current var 1) / sum(current var 2)) +
 ((1 - weight) * (sum(previous var 1) / sum(previous var 2)))
 ```
+
 ```latex
 $\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}
 {\sum_{j\in{impclass}}{x_{j,t}}} + (1 - w)*\frac{\sum_{j\in{impclass}}

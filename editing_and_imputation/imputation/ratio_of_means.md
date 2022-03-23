@@ -62,7 +62,7 @@ periods of non-response are covered by starting at a
 response/constructed/mean/median value and progressing period by period applying
 the link until no other non-responses are found.
 
-[Not Implemented](#unimplemented-features)<a name="3"></a>
+[Not Implemented](#unimplemented-features)<a name="inclusion"></a>
 ~~In certain cases a matched pair contributor may wish to be excluded from the link
 calculations. The method accepts an optional inclusion marker, that, when it
 contains *True* is included and when it contains *False* is excluded from the
@@ -87,7 +87,7 @@ following links and marks that value with the calculation used:
 2. Backward Imputation from a Response - BI
 3. Construct initial values - C
 4. Forward Imputation from a Constructed Value - FIC
-5. ~~Mean or Median initial calculation - MNI or MDI~~ [Not Implemented](#unimplemented-features)
+5. ~~Mean or Median initial calculation - MNI or MDI~~ [Not Implemented](#unimplemented-features)<a name="mean"></a>
 6. ~~Forward Imputation from Mean or Median - FIMN or FIMD~~ [Not Implemented](#unimplemented-features)
 
 ## The Calculations
@@ -222,10 +222,10 @@ The method will always return the following data:
 1. Strata currently allows only a single column.
    Will be adjusted in the futre to allow a list of columns.
 2. [Weighted Links.](#exceptions)
-3. [Imputation link Inclusion Marker column.](#3)
+3. [Imputation link Inclusion Marker column.](#inclusion)
 4. Output number of matched pairs used when calculating links.
 5. Periodicity options of Quarterly and Annually.
-6. Mean/Median when missing auxiliary values for Construction.
+6. [Mean/Median when missing auxiliary values for Construction.](#mean)
 
 ## References
 

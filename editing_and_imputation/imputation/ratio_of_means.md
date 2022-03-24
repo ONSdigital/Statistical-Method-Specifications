@@ -10,15 +10,19 @@
 
 ## Terminology
 
-* Matched Pair Contributors - Contributors that have responded in both
-  the periods being used in a calculation.
-* Link - A ratio of the means of the matched pair contributors. (Three
-  types are used in this method. Forward links, backward links and
-  construction links)
+* Link - A ratio of the means of the matched pair contributors.
 * Target variable - The variable of interest that the method
-  is working on.
+    is working on.
 * Strata - How the data has been broken into subsets.
-  Also know as Imputation Class.
+    Also know as Imputation Class.
+* Record - A set of values for each contributor and period
+* Target record - The record currently being imputed for due to its target
+    variable being missing.
+* Predictive period - The period from which records will be used when
+    calculations depend on records from another period.
+* Target period - The period currently undergoing imputation.
+* Matched Pair Contributors - Contributors that have responses for the
+    target variable in both the predictive and target periods.
 
 ## Introduction
 
@@ -26,56 +30,70 @@ Ratio of means is a standard imputation method used for business
 surveys. Due to its robust nature it does not use any form of trimming
 or outliering.
 
-The method imputes for a single numeric variable of interest for each
-contributor/period that the target variable is a non-responder for.
-
-Currently the method only works for monthly data but should a need arise
-can be adjusted to quarterly or annually.
+The method willimpute for a single numeric target variable within the
+dataset.
+It will output a separate dataset containing the imputed target variable and
+information necessary to identify the records. Other input variables must not
+be passed through to the output.
 
 ## Assumptions
 
 1. The auxiliary variable is a good predictor of the target variable.
-2. If the auxiliary variable is not available for a non-responding
-   contributor, either there must be other matched pair contributors in
-   the same strata as that contributor or the contributor must have a
-   response in any previous or consecutive period.
+2. If the auxiliary variable is not available for a target record, either there
+    are other matched pair contributors in the same strata as that record or
+    the contributor must have a response in the predictive period.
 
-## Summary
 
-The method calcultes links for each strata and period combination in the data,
+## Overall method
+
+The imputation method consists of a number of processes as detailed below.
+The method ends only when either there are no more missing values within
+the target variable or no more values can be imputed. The latter case is an
+error and thus a suitable error must be emitted.
+
+In the case of any errors, the method will not return any output. In
+addition it will stop processing immediately.
+
+The method uses a link, in combination with a predictive value, to calculate
+an imputed value for a target record. This predictive value can either be
+from a contributor's record in the predictive period or an auxiliary
+variable.
+
+There are six types of imputation performed by this method:
+* Forward imputation from response
+* Backward imputation
+* Construction
+* Forward imputation from construction
+* Average imputation
+
+## Link calculation
+The method calculates links for each strata and period combination in the data,
 between the current period and both the previous (forward link) and consecutive
 (backward link) periods using matched pair contributors or between the current
 periods target variable and an auxiliary variable (construction link). Then for
 non-responders it applies (via simple multiplication) these links to
-previous/consecutive period data to fill in the blanks.
+previous/consecutive period data to calculate the imputed value.
 
-In scenarios where there is not a previous/consecutive response to apply a link
-to, the method will construct an initial value to impute from by using the
-construction link and the non-responders auxiliary variable (This should be a
-register-based variable such as frozen turnover or frozen employment from IDBR).
+In scenarios where there is not a previous/consecutive response, the method
+will construct an initial value to impute from by using the construction
+link and the non-responders auxiliary variable. Typically a register-based
+variable such as frozen turnover or frozen employment would be used for this
+purpose.
 
-<a name="median"></a>
-[Not Implemented](#unimplemented-features)
-~~If a value can still not be calculated the method will attempt to calculate a
-mean or medium value of the responders in the non-responders period/strata.~~
+If there is no auxiliary variable for a given record, the method will
+calculate an imputed value using
+either the mean or median value for the target variable of the responders in the record's period and strata.
 
-The method uses rolling imputation to ensure cases where there are multiple
-periods of non-response are covered by starting at a
-response/constructed/mean/median value and progressing period by period applying
-the link until no other non-responses are found.
-
-<a name="inclusion"></a>
-[Not Implemented](#unimplemented-features)
-~~In certain cases a matched pair contributor may wish to be excluded from the link
+In certain cases a matched pair contributor may wish to be excluded from the link
 calculations. The method accepts an optional inclusion marker, that, when it
-contains *True* is included and when it contains *False* is excluded from the
+contains *true* is included and when it contains *false* is excluded from the
 calculations. When this marker is not given to the method, all matched pair
-contributors are included.~~
+contributors are included.
 
 Links can also be passed into the method rather than being calculated by the
 method. If this occurs all three types of links must be provided (this is due to
 there being a defined relationship between the forward and backward links) and if
-they are missing for any contrubutors they should default to 1.
+they are missing for any contrubutors they will default to 1.
 
 If a contributor that has been sampled is rotated out and then later on is rotated
 back in to the sample, the method must not calculate accross this gap because they
@@ -92,9 +110,6 @@ following links and marks that value with the calculation used:
 2. Backward Imputation from a Response - BI
 3. Construct initial values - C
 4. Forward Imputation from a Constructed Value - FIC
-<a name="mean"></a>
-5. ~~Mean or Median initial calculation - MNI or MDI~~
-6. ~~Forward Imputation from Mean or Median - FIMN or FIMD~~ [Not Implemented](#unimplemented-features)
 
 ## The Calculations
 

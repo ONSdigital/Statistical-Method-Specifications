@@ -38,21 +38,19 @@ be passed through to the output.
 
 ## Assumptions
 
-1. The auxiliary variable is a good predictor of the target variable.
-2. If the auxiliary variable is not available for a target record, either there
-    are other matched pair contributors in the same strata as that record or
-    the contributor must have a response in the predictive period.
-
+This method assumes that the auxiliary variable is a good predictor of the
+target variable. This method also assumes that the contributor's target
+variable value in the predictive period is a good predictor of the target
+variable in the target period. This same assumption is also made for matched
+pair contributors' target variable values.
 
 ## Overall method
 
 The imputation method consists of a number of processes as detailed below.
-The method ends only when either there are no more missing values within
-the target variable or no more values can be imputed. The latter case is an
-error and thus a suitable error must be emitted.
-
-In the case of any errors, the method will not return any output. In
-addition it will stop processing immediately.
+The method ends only when either there are no more missing values within the
+target variable or no more values can be imputed. The latter case
+constitutes an error condition and will be handled according to the error
+handling behaviour defined below.
 
 The method uses a link, in combination with a predictive value, to calculate
 an imputed value for a target record. This predictive value can either be
@@ -68,13 +66,32 @@ There are six types of imputation performed by this method:
 
 ## Link calculation
 
-The method calculates links for each strata and period combination in the data,
-between the current period and both the previous (forward link) and consecutive
-(backward link) periods using matched pair contributors or between the current
-periods target variable and an auxiliary variable (construction link). Then for
-non-responders it applies (via simple multiplication) these links to
-previous/consecutive period data to calculate the imputed value.
+Forward and backward links will be calculated using the formula:
+```text
+link(target_period) = sum(target_responses)/sum(predictive_responses)
+```
 
+where:
+* `target_responses` contains all the responses for the target variable for
+    matched pair contributors in the target period
+* `predictive_responses` contains all the responses for the target variable for
+    matched pair contributors in the predictive period
+
+When calculating the forward link, the previous period will be used as the
+predictive period, whereas for the backward link the next period relative to the target period will be used.
+
+The construction link will be calculated using the following formula:
+```text
+link(target_period) = sum(target_responses)/sum(target_auxiliaries)
+```
+
+where:
+* `target_responses` contains all responses for the target variable in the
+    target period
+* `target_auxiliaries` is the auxiliary variable values for contributors
+    whos values are present in `target_responses`
+
+## Construction
 In scenarios where there is not a previous/consecutive response, the method
 will construct an initial value to impute from by using the construction
 link and the non-responders auxiliary variable. Typically a register-based
@@ -119,10 +136,7 @@ following links and marks that value with the calculation used:
 Calculated using matched pair contributors for the strata, in the current and
 previous periods.
 
-```text
-Forward Link = sum(current period's target variables)/sum(previous period's
-target variables)
-```
+
 
 ```latex
 $\text{Forward link} = \frac{\text{
@@ -248,6 +262,11 @@ The method will always return the following data:
 4. Output number of matched pairs used when calculating links.
 5. Periodicity options of Quarterly and Annually.
 6. [Mean/Median when missing auxiliary values for Construction.](#median) [It is the final step of the priorety list.](#mean)
+
+## Error handling
+
+In the case of errors occuring the method must not emit any output records.
+In addition a suitable error must be emitted.
 
 ## References
 

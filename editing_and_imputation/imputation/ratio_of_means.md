@@ -10,7 +10,6 @@
 
 ## Terminology
 
-* Link - A ratio of the means of the matched pair contributors.
 * Target variable - The variable of interest that the method
     is working on.
 * Strata - How the data has been broken into subsets.
@@ -18,11 +17,12 @@
 * Record - A set of values for each contributor and period
 * Target record - The record currently being imputed for due to its target
     variable being missing.
-* Predictive period - The period from which records will be used when
-    calculations depend on records from another period.
 * Target period - The period currently undergoing imputation.
+* Predictive period - The period directly preceeding or succeeding the
+    target period.
 * Matched Pair Contributors - Contributors that have responses for the
     target variable in both the predictive and target periods.
+* Link - A ratio of the means of the matched pair contributors.
 
 ## Introduction
 
@@ -33,7 +33,7 @@ or outliering.
 The method willimpute for a single numeric target variable within the
 dataset.
 It will output a separate dataset containing the imputed target variable and
-information necessary to identify the records. Other input variables must not
+information necessary to identify the records. Other input variables will not
 be passed through to the output.
 
 ## Assumptions
@@ -56,8 +56,8 @@ addition it will stop processing immediately.
 
 The method uses a link, in combination with a predictive value, to calculate
 an imputed value for a target record. This predictive value can either be
-from a contributor's record in the predictive period or an auxiliary
-variable.
+the target variable value from the contributor's record in the predictive
+period or an auxiliary variable.
 
 There are six types of imputation performed by this method:
 * Forward imputation from response
@@ -67,6 +67,7 @@ There are six types of imputation performed by this method:
 * Average imputation
 
 ## Link calculation
+
 The method calculates links for each strata and period combination in the data,
 between the current period and both the previous (forward link) and consecutive
 (backward link) periods using matched pair contributors or between the current

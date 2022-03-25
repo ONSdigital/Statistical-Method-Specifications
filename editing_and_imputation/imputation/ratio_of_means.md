@@ -12,20 +12,18 @@
 
 * Target variable - The variable of interest that the method
     is working on.
-* Strata - How the data has been broken into subsets.
-    Also know as Imputation Class.
+* Group - How the data has been broken into subsets. Also know as Imputation
+    Class.
 * Contributor - A member of the sample, identified by a unique identifier.
 * Record - A set of values for each contributor and period
-* Target record - The record currently being imputed for due to its target
-    variable being missing.
 * Target period - The period currently undergoing imputation.
 * Predictive period - The period directly preceeding or succeeding the
     target period.
+* Target record - A contributor's record in the target period.
+* Predictive record - A contributor's record in the predictive period.
 * Responder - A contributor who has responded to the survey within a given
     period.
-* matched Pairs - Responders which are present in both the target and
-    predictive periods.
-* Link - A ratio of the means of the matched pairs.
+* link - A ratio used as part of the imputation process.
 
 ## Introduction
 
@@ -39,14 +37,6 @@ It will output a separate dataset containing the imputed target variable and
 information necessary to identify the records. Other input variables will not
 be passed through to the output.
 
-## Assumptions
-
-This method assumes that the auxiliary variable is a good predictor of the
-target variable. This method also assumes that the contributor's target
-variable value in the predictive period is a good predictor of the target
-variable in the target period. This same assumption is also made for matched
-pairs' target variable values.
-
 ## Overall Method
 
 The imputation method consists of a number of processes as detailed below.
@@ -57,8 +47,7 @@ handling behaviour defined below.
 
 The method uses a link, in combination with a predictive value, to calculate
 an imputed value for a target record. This predictive value can either be
-the target variable value from the contributor's record in the predictive
-period or an auxiliary variable.
+the target variable value from the contributor's predictive record or an auxiliary variable.
 
 There are six types of imputation performed by this method:
 
@@ -68,85 +57,122 @@ There are six types of imputation performed by this method:
 * Forward imputation from construction
 * Average imputation
 
-## Link Calculation
+All link and imputation calculations must be performed treating each group
+in the dataset separately. For brevity the calculations are shown assuming a
+single group is being used.
 
-### Responder filtering
+### Link Calculation
+
+#### Responder filtering
 
 By default the method will consider all responders when calculating links. However the method must
 also accept an optional expression for filtering responders. If provided,
 link calculations will only consider responders matching this filter. This
 filter will only apply to link calculations.
 
-### Responder pair matching
+#### Responder pair matching
 
 In order to calculate links, matched pairs of responders must be used. These
 matched pairs comprise of responders in both the target and predictive
 periods with the same unique identifier.
 
-### Forward and backward link calculation
+#### Definitions
+
+The following definitions apply to formulae within this section:
+
+* `target_period` = the target period
+* `predictive_period` = the predictive period
+* `responses(period)` = Responses for the target variable in the given period
+* `matched_responses(period)` = Responses for matched pairs for the given period
+* `auxiliaries(period)` = Values for the auxiliary variable for responders
+    within a given period
+
+#### Forward and backward link calculation
 
 Forward and backward links will be calculated using the formula:
 
 ```text
-link(target_period) = sum(target_responses)/sum(predictive_responses)
+link(target_period) = sum(matched_responses(target_period))/sum(matched_responses(predictive_period))
 ```
-
-where:
-
-* `target_responses` contains all the responses for the target variable for
-    matched pairs in the target period
-* `predictive_responses` contains all the responses for the target variable for
-    matched pairs in the predictive period
 
 When calculating the forward link, the previous period will be used as the
 predictive period, whereas for the backward link the next period relative to
 the target period will be used.
 
-### Construction link calculation
+#### Construction link calculation
 
 The construction link will be calculated using the following formula:
 
 ```text
-link(target_period) = sum(target_responses)/sum(target_auxiliaries)
+link(target_period) = sum(responses(target_period))/sum(auxiliaries(target_period))
 ```
 
-where:
-
-* `target_responses` contains all responses for the target variable in the
-    target period
-* `target_auxiliaries` is the auxiliary variable values for contributors
-    whos values are present in `target_responses`
-
-### Pre-calculated links
+#### Pre-calculated links
 
 It must also be possible to pass pre-calculated link columns to the method.
 In this case all three types of links must be provided; this requirement is
 to avoid any assumptions within the method as to the relationship between
 provided links.
 
-## Construction
+### Imputation
 
-In scenarios where there is not a previous/consecutive response, the method
-will construct an initial value to impute from by using the construction
-link and the non-responders auxiliary variable. Typically a register-based
-variable such as frozen turnover or frozen employment would be used for this
-purpose.
+Using the link definitions, The general imputation formula is:
+
+```text
+impute(target_record) = link(target_period) * predictive_value(target_period)
+```
+
+where:
+
+* `predictive_value(period)` = The applicable predictive value for the type
+    of imputation for the given period.
+
+Imputation must only be applied to records with missing values in the target
+variable.
+
+#### Forward and Backward imputation
+
+For this type of imputation the following definition is used:
+
+```text
+predictive_value(target_period) = target_value(predictive_period)
+```
+
+where:
+
+* `target_value(period) = The value for the target variable in the
+    predictive record.
+
+If there is no predictive record for a given contributor then these types of
+imputation must not be performed for this contributor.
+
+For forward imputation the forward link will be used and for backward imputation
+the backward link will be used. The predictive period for the type of imputation
+being performed must be the same as that for the link being used.
+
+#### Construction
+
+In scenarios where neither forward or backward imputation can be performed
+due to a lack of a predictive record or link for a contributor, the method
+will use the following predictive value definition to perform construction
+imputation.
+
+```text
+predictive_value(target_period) = auxiliary(target_period)
+```
+
+where:
+
+* `auxiliary(period)` = The value of the contributor's auxiliary variable
+for a given period
+
+This type of imputation can only be performed where the target record has a
+value for its auxiliary variable.
 
 If there is no auxiliary variable for a given record, the method will
 calculate an imputed value using
 either the mean or median value for the target variable of the responders in
 the record's period and strata.
-
-In certain cases a matched pair contributor may wish to be excluded from the link
-calculations. The method accepts an optional inclusion marker, that, when it
-contains *true* is included and when it contains *false* is excluded from the
-calculations. When this marker is not given to the method, all matched pair
-contributors are included.
-
-Links can also be passed into the method rather than being calculated by the
-method. If this occurs all three types of links must be provided (this is due to
-there being a defined relationship between the forward and backward links) and if
-they are missing for any contrubutors they will default to 1.
 
 If a contributor that has been sampled is rotated out and then later on is rotated
 back in to the sample, the method must not calculate accross this gap because they
@@ -301,7 +327,22 @@ The method will always return the following data:
 In the case of errors occuring the method must not emit any output records.
 In addition a suitable error must be emitted.
 
+## Assumptions
+
+This method assumes that the auxiliary variable is a good predictor of the
+target variable. This method also assumes that the contributor's target
+variable value in the predictive period is a good predictor of the target
+variable in the target period. This same assumption is also made for matched
+pairs' target variable values.
+
+## Notes
+
+Typically a register-based
+variable such as frozen turnover or frozen employment would be used as a
+contributor's auxiliary variable.
+
 ## References
 
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
 Editing and Imputation. New York: Wiley and Sons.
+

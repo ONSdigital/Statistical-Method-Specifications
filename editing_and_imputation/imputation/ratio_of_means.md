@@ -58,6 +58,7 @@ the target variable value from the contributor's record in the predictive
 period or an auxiliary variable.
 
 There are six types of imputation performed by this method:
+
 * Forward imputation from response
 * Backward imputation
 * Construction
@@ -262,11 +263,11 @@ The method will always return the following data:
 
 1. Strata currently allows only a single column.
    Will be adjusted in the futre to allow a list of columns.
-2. [Weighted Links.](#exceptions)
-3. [Imputation link Inclusion Marker column.](#inclusion)
+2. Weighted Links.
+3. Imputation link Inclusion Marker column.
 4. Output number of matched pairs used when calculating links.
 5. Periodicity options of Quarterly and Annually.
-6. [Mean/Median when missing auxiliary values for Construction.](#median) [It is the final step of the priorety list.](#mean)
+6. Mean/Median when missing auxiliary values for Construction.
 
 ## Error Handling
 

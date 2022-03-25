@@ -10,20 +10,20 @@
 
 ## Terminology
 
-* Target variable - The variable of interest that the method
+* Target Variable - The variable of interest that the method
     is working on.
 * Group - How the data has been broken into subsets. Also know as Imputation
     Class.
 * Contributor - A member of the sample, identified by a unique identifier.
 * Record - A set of values for each contributor and period
-* Target period - The period currently undergoing imputation.
-* Predictive period - The period directly preceeding or succeeding the
+* Target Period - The period currently undergoing imputation.
+* Predictive Period - The period directly preceeding or succeeding the
     target period.
-* Target record - A contributor's record in the target period.
-* Predictive record - A contributor's record in the predictive period.
+* Target Record - A contributor's record in the target period.
+* Predictive Record - A contributor's record in the predictive period.
 * Responder - A contributor who has responded to the survey within a given
     period.
-* link - A ratio used as part of the imputation process.
+* Link - A ratio used as part of the imputation process.
 
 ## Introduction
 
@@ -65,14 +65,14 @@ single group is being used.
 
 ### Link Calculation
 
-#### Responder filtering
+#### Responder Filtering
 
 By default the method will consider all responders when calculating links. However the method must
 also accept an optional expression for filtering responders. If provided,
 link calculations will only consider responders matching this filter. This
 filter will only apply to link calculations.
 
-#### Responder pair matching
+#### Responder Pair Matching
 
 In order to calculate links, matched pairs of responders must be used. These
 matched pairs comprise of responders in both the target and predictive
@@ -89,7 +89,7 @@ The following definitions apply to formulae within this section:
 * `auxiliaries(period)` = Values for the auxiliary variable for responders
     within a given period
 
-#### Forward and backward link calculation
+#### Forward And Backward Link Calculation
 
 Forward and backward links will be calculated using the formula:
 
@@ -101,7 +101,7 @@ When calculating the forward link, the previous period will be used as the
 predictive period, whereas for the backward link the next period relative to
 the target period will be used.
 
-#### Construction link calculation
+#### Construction Link Calculation
 
 The construction link will be calculated using the following formula:
 
@@ -109,7 +109,7 @@ The construction link will be calculated using the following formula:
 link(target_period) = sum(responses(target_period))/sum(auxiliaries(target_period))
 ```
 
-#### Pre-calculated links
+#### Pre-Calculated Links
 
 It must also be possible to pass pre-calculated link columns to the method.
 In this case all three types of links must be provided; this requirement is
@@ -132,7 +132,7 @@ where:
 Imputation must only be applied to records with missing values in the target
 variable.
 
-#### Forward and Backward imputation
+#### Forward And Backward Imputation
 
 For this type of imputation the following definition is used:
 
@@ -152,25 +152,25 @@ For forward imputation the forward link will be used and for backward imputation
 the backward link will be used. The predictive period for the type of imputation
 being performed must be the same as that for the link being used.
 
-##### Forward imputation from response
+##### Forward Imputation From Response
 
 In this type of imputation, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this imputation will be marked `FIR`.
 
-##### Forward imputation from construction
+##### Forward Imputation From Construction
 
 In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
 `FIC`.
 
-##### Forward imputation from average imputation
+##### Forward Imputation From Average Imputation
 
 In this type of imputation, only predictive records which are imputes from
 average imputation can be used. Records imputed using this imputation will
 be marked with `FI` with the applicable average imputation marker appended with no separator.
 
-##### Backward imputation
+##### Backward Imputation
 
 In this type of imputation, only predictive records which are responses can
 be used. Records imputed using this imputation will be marked `BI`.
@@ -214,7 +214,7 @@ In the case of mean imputation the average used will be the mean and imputed
 records will be marked `MNI`. In the case of median imputation the median
 will be used and imputed records will be marked `MDI`.
 
-## Back data
+## Back Data
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
@@ -222,6 +222,7 @@ directly preceeding the first period in the main dataset. This back data
 must not appear in the output.
 
 ## Technical Information
+
 1. Unique Identifier - String
 2. Period - String
 3. Strata - String

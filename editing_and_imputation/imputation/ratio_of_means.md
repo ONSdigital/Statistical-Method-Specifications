@@ -47,15 +47,17 @@ handling behaviour defined below.
 
 The method uses a link, in combination with a predictive value, to calculate
 an imputed value for a target record. This predictive value can either be
-the target variable value from the contributor's predictive record or an auxiliary variable.
+the target variable value from the contributor's predictive record or an
+auxiliary variable.
 
-There are six types of imputation performed by this method:
+There are seven types of imputation performed by this method:
 
 * Forward imputation from response
 * Backward imputation
 * Construction
 * Forward imputation from construction
 * Average imputation
+* Forward imputation from average imputation
 
 All link and imputation calculations must be performed treating each group
 in the dataset separately. For brevity the calculations are shown assuming a
@@ -150,6 +152,31 @@ For forward imputation the forward link will be used and for backward imputation
 the backward link will be used. The predictive period for the type of imputation
 being performed must be the same as that for the link being used.
 
+##### Forward imputation from response
+
+In this type of imputation, only predictive records which are either
+responses or forward imputes from responses can be used. Records imputed
+using this imputation will be marked `FIR`.
+
+##### Forward imputation from construction
+
+In this type of imputation, only predictive records which are imputes from
+construction can be used. Records imputed using this imputation will be marked
+`FIC`.
+
+##### Forward imputation from average imputation
+
+In this type of imputation, only predictive records which are imputes from
+average imputation can be used. Records imputed using this imputation will
+be marked with `FI` with the applicable average imputation marker appended with no separator.
+
+##### Backward imputation
+
+In this type of imputation, only predictive records which are responses can
+be used. Records imputed using this imputation will be marked `BI`.
+
+Backward imputation from construction must not occur.
+
 #### Construction
 
 In scenarios where neither forward or backward imputation can be performed
@@ -166,18 +193,26 @@ where:
 * `auxiliary(period)` = The value of the contributor's auxiliary variable
 for a given period
 
-This type of imputation can only be performed where the target record has a
-value for its auxiliary variable.
+This type of imputation must only be performed where the target record has a
+value for its auxiliary variable. Records imputed using this imputation will
+be marked `C`.
+
+#### Average Imputation
 
 If there is no auxiliary variable for a given record, the method will
-calculate an imputed value using
-either the mean or median value for the target variable of the responders in
-the record's period and strata.
+calculate an imputed value using the following formula:
 
-If a contributor that has been sampled is rotated out and then later on is rotated
-back in to the sample, the method must not calculate accross this gap because they
-are not non-responders, the contributors will not have any data assosiated with
-them for those periods as they are not sampled.
+```text
+impute(target_period) = average(responses(target_period))
+```
+
+where:
+
+* average(responses) = An average value for a given set of responses
+
+In the case of mean imputation the average used will be the mean and imputed
+records will be marked `MNI`. In the case of median imputation the median
+will be used and imputed records will be marked `MDI`.
 
 ### Order Of Calculation Priority And Imputation Markers
 

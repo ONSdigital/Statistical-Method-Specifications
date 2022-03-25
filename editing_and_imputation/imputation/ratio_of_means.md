@@ -44,7 +44,7 @@ variable value in the predictive period is a good predictor of the target
 variable in the target period. This same assumption is also made for matched
 pair contributors' target variable values.
 
-## Overall method
+## Overall Method
 
 The imputation method consists of a number of processes as detailed below.
 The method ends only when either there are no more missing values within the
@@ -64,34 +64,40 @@ There are six types of imputation performed by this method:
 * Forward imputation from construction
 * Average imputation
 
-## Link calculation
+## Link Calculation
 
 Forward and backward links will be calculated using the formula:
+
 ```text
 link(target_period) = sum(target_responses)/sum(predictive_responses)
 ```
 
 where:
+
 * `target_responses` contains all the responses for the target variable for
     matched pair contributors in the target period
 * `predictive_responses` contains all the responses for the target variable for
     matched pair contributors in the predictive period
 
 When calculating the forward link, the previous period will be used as the
-predictive period, whereas for the backward link the next period relative to the target period will be used.
+predictive period, whereas for the backward link the next period relative to
+the target period will be used.
 
 The construction link will be calculated using the following formula:
+
 ```text
 link(target_period) = sum(target_responses)/sum(target_auxiliaries)
 ```
 
 where:
+
 * `target_responses` contains all responses for the target variable in the
     target period
 * `target_auxiliaries` is the auxiliary variable values for contributors
     whos values are present in `target_responses`
 
 ## Construction
+
 In scenarios where there is not a previous/consecutive response, the method
 will construct an initial value to impute from by using the construction
 link and the non-responders auxiliary variable. Typically a register-based
@@ -100,7 +106,8 @@ purpose.
 
 If there is no auxiliary variable for a given record, the method will
 calculate an imputed value using
-either the mean or median value for the target variable of the responders in the record's period and strata.
+either the mean or median value for the target variable of the responders in
+the record's period and strata.
 
 In certain cases a matched pair contributor may wish to be excluded from the link
 calculations. The method accepts an optional inclusion marker, that, when it
@@ -135,8 +142,6 @@ following links and marks that value with the calculation used:
 
 Calculated using matched pair contributors for the strata, in the current and
 previous periods.
-
-
 
 ```latex
 $\text{Forward link} = \frac{\text{
@@ -263,7 +268,7 @@ The method will always return the following data:
 5. Periodicity options of Quarterly and Annually.
 6. [Mean/Median when missing auxiliary values for Construction.](#median) [It is the final step of the priorety list.](#mean)
 
-## Error handling
+## Error Handling
 
 In the case of errors occuring the method must not emit any output records.
 In addition a suitable error must be emitted.

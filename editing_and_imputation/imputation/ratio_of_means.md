@@ -14,15 +14,18 @@
     is working on.
 * Strata - How the data has been broken into subsets.
     Also know as Imputation Class.
+* Contributor - A member of the sample, identified by a unique identifier.
 * Record - A set of values for each contributor and period
 * Target record - The record currently being imputed for due to its target
     variable being missing.
 * Target period - The period currently undergoing imputation.
 * Predictive period - The period directly preceeding or succeeding the
     target period.
-* Matched Pair Contributors - Contributors that have responses for the
-    target variable in both the predictive and target periods.
-* Link - A ratio of the means of the matched pair contributors.
+* Responder - A contributor who has responded to the survey within a given
+    period.
+* matched Pairs - Responders which are present in both the target and
+    predictive periods.
+* Link - A ratio of the means of the matched pairs.
 
 ## Introduction
 
@@ -42,7 +45,7 @@ This method assumes that the auxiliary variable is a good predictor of the
 target variable. This method also assumes that the contributor's target
 variable value in the predictive period is a good predictor of the target
 variable in the target period. This same assumption is also made for matched
-pair contributors' target variable values.
+pairs' target variable values.
 
 ## Overall Method
 
@@ -67,6 +70,21 @@ There are six types of imputation performed by this method:
 
 ## Link Calculation
 
+### Responder filtering
+
+By default the method will consider all responders when calculating links. However the method must
+also accept an optional expression for filtering responders. If provided,
+link calculations will only consider responders matching this filter. This
+filter will only apply to link calculations.
+
+### Responder pair matching
+
+In order to calculate links, matched pairs of responders must be used. These
+matched pairs comprise of responders in both the target and predictive
+periods with the same unique identifier.
+
+### Forward and backward link calculation
+
 Forward and backward links will be calculated using the formula:
 
 ```text
@@ -76,13 +94,15 @@ link(target_period) = sum(target_responses)/sum(predictive_responses)
 where:
 
 * `target_responses` contains all the responses for the target variable for
-    matched pair contributors in the target period
+    matched pairs in the target period
 * `predictive_responses` contains all the responses for the target variable for
-    matched pair contributors in the predictive period
+    matched pairs in the predictive period
 
 When calculating the forward link, the previous period will be used as the
 predictive period, whereas for the backward link the next period relative to
 the target period will be used.
+
+### Construction link calculation
 
 The construction link will be calculated using the following formula:
 
@@ -96,6 +116,13 @@ where:
     target period
 * `target_auxiliaries` is the auxiliary variable values for contributors
     whos values are present in `target_responses`
+
+### Pre-calculated links
+
+It must also be possible to pass pre-calculated link columns to the method.
+In this case all three types of links must be provided; this requirement is
+to avoid any assumptions within the method as to the relationship between
+provided links.
 
 ## Construction
 
@@ -141,7 +168,7 @@ following links and marks that value with the calculation used:
 
 ### Forward Imputation Link
 
-Calculated using matched pair contributors for the strata, in the current and
+Calculated using matched pairs for the strata, in the current and
 previous periods.
 
 ```latex
@@ -155,7 +182,7 @@ the link.
 
 ### Backward Imputation Link
 
-Calculated using matched pair contributors for the strata, in the current and
+Calculated using matched pairs for the strata, in the current and
 consecutive periods.
 
 ```text

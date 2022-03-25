@@ -214,120 +214,14 @@ In the case of mean imputation the average used will be the mean and imputed
 records will be marked `MNI`. In the case of median imputation the median
 will be used and imputed records will be marked `MDI`.
 
-### Order Of Calculation Priority And Imputation Markers
+## Back data
 
-The method prioretises calculating the non-responder's target variable using the
-following links and marks that value with the calculation used:
-
-0. Response, no calculation - R
-1. Forward Imputation from a Response - FIR
-2. Backward Imputation from a Response - BI
-3. Construct initial values - C
-4. Forward Imputation from a Constructed Value - FIC
-
-## The Calculations
-
-### Forward Imputation Link
-
-Calculated using matched pairs for the strata, in the current and
-previous periods.
-
-```latex
-$\text{Forward link} = \frac{\text{
-sum(variable of interest within strata and current period)}}{\text{
-sum(variable of interest within strata and previous period)}}$
-```
-
-Then simple take a non-responders previous period value and multiply it by
-the link.
-
-### Backward Imputation Link
-
-Calculated using matched pairs for the strata, in the current and
-consecutive periods.
-
-```text
-Backward Link = sum(current period's target variables)/sum(consecutive period's
-target variables)
-```
-
-```latex
-$\text{Backward link} = \frac{\text{
-sum(variable of interest within strata and period of interest)}}{\text{
-sum(variable of interest within strata and consecutive period)}}$
-```
-
-Then simple take a non-responders consecutive period value and multiply it by
-the link.
-
-NOTE: For a contributor, the backward link at period t and the forward link at
-t+1 are related. (This is the reason if links are provided and not calculated,
-all links should be provided)
-
-```text
-Backward_Link(t) == 1/Forward_Link(t+1)
-```
-
-### Construction Link
-
-Calculated using current period responses for the strata and their corresponding
-auxiliary values.
-
-```text
-Construction Link = sum(current period's target variables)/
-sum(current period's auxiliary variables)
-```
-
-```latex
-$\text{Construction link} = \frac{\text{
-sum(variable of interest within strata and current period)}}{\text{
-sum(aux variable within strata and current period)}}$
-```
-
-Then simple take a non-responders auxiliary value and multiply it by the link.
-
-## Exceptions
-
-[This Section Is Not Implemented](#unimplemented-features)
-
-Please note the following exceptions to the method's standard
-behaviour:
-
-1. In some cases it may be appropriate to use an imputation link
-   which is an average of imputation links for more than one. In the simplest
-   case this could be the average of two links. Two further parameters would need
-   to be specified: the lag ($k$) and the weight ($w$) given to each period. In
-   this case the imputation link is calculated as:
-
-```text
-Link = (weight * sum(current var 1) / sum(current var 2)) +
-((1 - weight) * (sum(previous var 1) / sum(previous var 2)))
-```
-
-```latex
-$\text{imputation link} = w * \frac{\sum_{j\in{impclass}}{y_{j,t}}}
-{\sum_{j\in{impclass}}{x_{j,t}}} + (1 - w)*\frac{\sum_{j\in{impclass}}
-{y_{j,t-k}}}{\sum_{j\in{impclass}}{x_{j,t-k}}}$
-```
-
-## Special Cases
-
-1. In certain scenarios it may be that to avoid the first period of non-responses
-   all being constructed that the method will need to accept periods of back data.
-2. This data will be used to calculate links and forward impute from but will not
-   be returned on the output. Care must be taken to ensure that the back data does
-   mess with the prioreties mentioned above.
+In order to correctly handle the first period of data, the method must
+accept a dataset containing back data. This dataset must contain the period
+directly preceeding the first period in the main dataset. This back data
+must not appear in the output.
 
 ## Technical Information
-
-The current implementation of the method is Python-PySpark and can be found here
-at [Statistical Methods Library - Ratio Of Means Code](https://github.com/ONSdigital/statistical-methods-library/blob/main/statistical_methods_library/imputation.py).
-
-The method uses the following input data as part of the input_df (the back_data input
-requires similar data except that instead of the target variable it will have the
-returned/imputed target variable and imputation marker columns for the periods it
-contains):
-
 1. Unique Identifier - String
 2. Period - String
 3. Strata - String
@@ -346,16 +240,6 @@ The method will always return the following data:
 5. Forward Link - Numeric
 6. Backward Link - Numeric
 7. Construction Link - Numeric
-
-## Unimplemented Features
-
-1. Strata currently allows only a single column.
-   Will be adjusted in the futre to allow a list of columns.
-2. Weighted Links.
-3. Imputation link Inclusion Marker column.
-4. Output number of matched pairs used when calculating links.
-5. Periodicity options of Quarterly and Annually.
-6. Mean/Median when missing auxiliary values for Construction.
 
 ## Error Handling
 

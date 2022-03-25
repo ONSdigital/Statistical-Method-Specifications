@@ -67,10 +67,10 @@ single group is being used.
 
 #### Responder Filtering
 
-By default the method will consider all responders when calculating links. However the method must
-also accept an optional expression for filtering responders. If provided,
-link calculations will only consider responders matching this filter. This
-filter will only apply to link calculations.
+By default the method will consider all responders when calculating links.
+However the method must also accept an optional expression for filtering
+responders. If provided, link calculations will only consider responders
+matching this filter. This filter will only apply to link calculations.
 
 #### Responder Pair Matching
 
@@ -168,7 +168,8 @@ construction can be used. Records imputed using this imputation will be marked
 
 In this type of imputation, only predictive records which are imputes from
 average imputation can be used. Records imputed using this imputation will
-be marked with `FI` with the applicable average imputation marker appended with no separator.
+be marked with `FI` with the applicable average imputation marker appended
+with no separator.
 
 ##### Backward Imputation
 
@@ -223,6 +224,8 @@ must not appear in the output.
 
 ## Technical Information
 
+The method will expect the following data:
+
 1. Unique Identifier - String
 2. Period - String
 3. Strata - String
@@ -265,4 +268,3 @@ contributor's auxiliary variable.
 
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
 Editing and Imputation. New York: Wiley and Sons.
-

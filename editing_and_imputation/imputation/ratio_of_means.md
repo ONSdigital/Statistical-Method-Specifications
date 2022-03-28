@@ -75,25 +75,25 @@ filter will only apply to link calculations.
 The following formulae shall be used to calculate links:
 
 ```text
+p = A period
 p_target = the target period
 p_predictive = the predictive period
 D = The dataset under consideration
-responses(p, D) = [ [ r for r in D ], exists(r_target) ]
+responses(p, D) = [ [ c for c in D ], exists(c[target]) and c[period] == p]
 R_target = responses(p_target, D)
 R_predictive = responses(p_predictive, D)
 matched_responses(p_target, p_predictive) = [
-    r_pair, for r in (R_target, R_predictive),
-    identical r_pair[identifier] and identical r_pair[group
+    r_pair(r_target, r_predictive), for r in (R_target, R_predictive),
+    identical(r_pair[identifier]) and identical(r_pair[group])
 ]
 link(p_target) = [
     sum[ r for r in matched_responses(p_target, p_predictive) ] r_target
-    / sum[ r for r in matched_responses(p_target, p_predictive)] r_predictive
-]
-link_forward(p_target) = link(p_target, p_target + 1)
-link_backward(p_target) = link(p_target, p_target - 1)
-link_construction(p_target) = [
+    / sum[ r for r in matched_responses(p_target, p_predictive) ] r_predictive,
+    p_target <> p_predictive;
     sum[ r for r in responses(p_target)] r_target
-    / sum[ r for r in responses(p_target)] r_auxiliary
+    / sum[ r for r in responses(p_target)] r_auxiliary,
+    p_target == p_predictive
+]
 ```
 
 #### Pre-calculated links
@@ -108,36 +108,25 @@ provided links.
 Using the link definitions, The general imputation formula is:
 
 ```text
-impute(target_record) = link(target_period) * predictive_value(target_period)
+nonresponders(p, D) = [ [ c for c in D ], not exists(c[target]) c[period] == p]
+N_target = nonresponders(p_target, D)
+N_predictive = nonresponders(p_predictive, D)
+matched_nonresponders(p_target, p_predictive) = [
+    n_pair(n_target, n_predictive) for n in (N_target, N_predictive),
+    identical(n_pair[identifier]) and identical(n_pair[group])
+]
+impute(p_target, p_predictive) = [
+    [ m for n in matched_nonresponders(p_target, p_predictive) ]
+    m_predictive[target] * link(p_target, p_predictive),
+    p_target <> p_predictive;
+    [ n for n in nonresponders(p_target) ]
+    n[auxiliary] * link(p_target, p_predictive),
+    p_target == p_predictive
+]
+impute_forward(p_target) = [ impute(p_target), p_predictive = p - 1 ]
+impute_backward(p_target) = [ impute(p_target), p_predictive = p + 1 ]
+impute_construction(p_target) = [ impute(p_target), p_predictive = p ]
 ```
-
-where:
-
-* `predictive_value(period)` = The applicable predictive value for the type
-    of imputation for the given period.
-
-Imputation must only be applied to records with missing values in the target
-variable.
-
-#### Forward and Backward imputation
-
-For this type of imputation the following definition is used:
-
-```text
-predictive_value(target_period) = target_value(predictive_period)
-```
-
-where:
-
-* `target_value(period) = The value for the target variable in the
-    predictive record.
-
-If there is no predictive record for a given contributor then these types of
-imputation must not be performed for this contributor.
-
-For forward imputation the forward link will be used and for backward imputation
-the backward link will be used. The predictive period for the type of imputation
-being performed must be the same as that for the link being used.
 
 ##### Forward imputation from response
 

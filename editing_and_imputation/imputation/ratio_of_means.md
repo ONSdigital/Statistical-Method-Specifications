@@ -10,20 +10,21 @@
 
 ## Terminology
 
-* Target Variable - The variable of interest that the method
+* Target variable - The variable of interest that the method
     is working on.
 * Group - How the data has been broken into subsets. Also know as Imputation
     Class.
 * Contributor - A member of the sample, identified by a unique identifier.
+* Periodicity - the length of a period within the dataset
 * Record - A set of values for each contributor and period
-* Target Period - The period currently undergoing imputation.
-* Predictive Period - The period directly preceeding or succeeding the
-    target period.
-* Target Record - A contributor's record in the target period.
-* Predictive Record - A contributor's record in the predictive period.
+* Target period - The period currently undergoing imputation.
+* Predictive period - The period directly preceeding or succeeding the
+    target period with respect to the periodocity of the dataset.
+* Target record - A contributor's record in the target period.
+* Predictive record - A contributor's record in the predictive period.
 * Responder - A contributor who has responded to the survey within a given
     period.
-* Link - A ratio used as part of the imputation process.
+* link - A ratio used as part of the imputation process.
 
 ## Introduction
 
@@ -31,11 +32,9 @@ Ratio of means is a standard imputation method used for business
 surveys. Due to its robust nature it does not use any form of trimming
 or outliering.
 
-The method willimpute for a single numeric target variable within the
-dataset.
-It will output a separate dataset containing the imputed target variable and
-information necessary to identify the records. Other input variables will not
-be passed through to the output.
+The method imputes for a single numeric target variable within each group within the
+dataset and outputs a separate dataset containing the imputed target variable and
+other information necessary to use the imputed variable.
 
 ## Overall Method
 
@@ -50,7 +49,7 @@ an imputed value for a target record. This predictive value can either be
 the target variable value from the contributor's predictive record or an
 auxiliary variable.
 
-There are seven types of imputation performed by this method:
+The following imputation processes comprise the complete method:
 
 * Forward imputation from response
 * Backward imputation
@@ -60,56 +59,44 @@ There are seven types of imputation performed by this method:
 * Forward imputation from average imputation
 
 All link and imputation calculations must be performed treating each group
-in the dataset separately. For brevity the calculations are shown assuming a
-single group is being used.
+in the dataset separately.
 
 ### Link Calculation
 
-#### Responder Filtering
+#### Responder filtering
 
-By default the method will consider all responders when calculating links.
-However the method must also accept an optional expression for filtering
-responders. If provided, link calculations will only consider responders
-matching this filter. This filter will only apply to link calculations.
+By default the method will consider all responders when calculating links. However the method must
+also accept an optional expression for filtering responders. If provided,
+link calculations will only consider responders matching this filter. This
+filter will only apply to link calculations.
 
-#### Responder Pair Matching
+#### Formulae
 
-In order to calculate links, matched pairs of responders must be used. These
-matched pairs comprise of responders in both the target and predictive
-periods with the same unique identifier.
-
-#### Definitions
-
-The following definitions apply to formulae within this section:
-
-* `target_period` = the target period
-* `predictive_period` = the predictive period
-* `responses(period)` = Responses for the target variable in the given period
-* `matched_responses(period)` = Responses for matched pairs for the given period
-* `auxiliaries(period)` = Values for the auxiliary variable for responders
-    within a given period
-
-#### Forward And Backward Link Calculation
-
-Forward and backward links will be calculated using the formula:
+The following formulae shall be used to calculate links:
 
 ```text
-link(target_period) = sum(matched_responses(target_period))/sum(matched_responses(predictive_period))
+p_target = the target period
+p_predictive = the predictive period
+D = The dataset under consideration
+responses(p, D) = [ [ r for r in D ], exists(r_target) ]
+R_target = responses(p_target, D)
+R_predictive = responses(p_predictive, D)
+matched_responses(p_target, p_predictive) = [
+    r_pair, for r in (R_target, R_predictive),
+    identical r_pair[identifier] and identical r_pair[group
+]
+link(p_target) = [
+    sum[ r for r in matched_responses(p_target, p_predictive) ] r_target
+    / sum[ r for r in matched_responses(p_target, p_predictive)] r_predictive
+]
+link_forward(p_target) = link(p_target, p_target + 1)
+link_backward(p_target) = link(p_target, p_target - 1)
+link_construction(p_target) = [
+    sum[ r for r in responses(p_target)] r_target
+    / sum[ r for r in responses(p_target)] r_auxiliary
 ```
 
-When calculating the forward link, the previous period will be used as the
-predictive period, whereas for the backward link the next period relative to
-the target period will be used.
-
-#### Construction Link Calculation
-
-The construction link will be calculated using the following formula:
-
-```text
-link(target_period) = sum(responses(target_period))/sum(auxiliaries(target_period))
-```
-
-#### Pre-Calculated Links
+#### Pre-calculated links
 
 It must also be possible to pass pre-calculated link columns to the method.
 In this case all three types of links must be provided; this requirement is
@@ -132,7 +119,7 @@ where:
 Imputation must only be applied to records with missing values in the target
 variable.
 
-#### Forward And Backward Imputation
+#### Forward and Backward imputation
 
 For this type of imputation the following definition is used:
 
@@ -152,26 +139,25 @@ For forward imputation the forward link will be used and for backward imputation
 the backward link will be used. The predictive period for the type of imputation
 being performed must be the same as that for the link being used.
 
-##### Forward Imputation From Response
+##### Forward imputation from response
 
 In this type of imputation, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this imputation will be marked `FIR`.
 
-##### Forward Imputation From Construction
+##### Forward imputation from construction
 
 In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
 `FIC`.
 
-##### Forward Imputation From Average Imputation
+##### Forward imputation from average imputation
 
 In this type of imputation, only predictive records which are imputes from
 average imputation can be used. Records imputed using this imputation will
-be marked with `FI` with the applicable average imputation marker appended
-with no separator.
+be marked with `FI` with the applicable average imputation marker appended with no separator.
 
-##### Backward Imputation
+##### Backward imputation
 
 In this type of imputation, only predictive records which are responses can
 be used. Records imputed using this imputation will be marked `BI`.
@@ -215,7 +201,7 @@ In the case of mean imputation the average used will be the mean and imputed
 records will be marked `MNI`. In the case of median imputation the median
 will be used and imputed records will be marked `MDI`.
 
-## Back Data
+## Back data
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
@@ -223,9 +209,6 @@ directly preceeding the first period in the main dataset. This back data
 must not appear in the output.
 
 ## Technical Information
-
-The method will expect the following data:
-
 1. Unique Identifier - String
 2. Period - String
 3. Strata - String
@@ -268,3 +251,4 @@ contributor's auxiliary variable.
 
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
 Editing and Imputation. New York: Wiley and Sons.
+

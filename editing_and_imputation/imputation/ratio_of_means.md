@@ -1,4 +1,4 @@
-# Ratio of Means Specification
+## Ratio of Means Specification
 
 ## Meta
 
@@ -49,15 +49,23 @@ an imputed value for a target record. This predictive value can either be
 the target variable value from the contributor's predictive record or an
 auxiliary variable.
 
-The following imputation processes comprise the complete method:
+The following imputation types comprise the complete method and a suggested
+order of operations:
 
-* Forward imputation from response
-* Backward imputation
-* Construction
-* Forward imputation from construction
+1. Forward imputation from response
+2. Backward imputation
+3. Construction
+4. Forward imputation from construction
+
+One important aspect of the above order of
+operations is that no operation needs to filter the results of prior operations. This is due to the fact that each imputation operation will impute as
+much as possible and thus the gaps left can only be filled by the next
+operation.
 
 All link and imputation calculations must be performed treating each group
-in the dataset separately.
+in the dataset separately. In addition, since all contributors must have a
+populated auxiliary variable, failure to fully populate the target variable
+by this method shall constitute an error.
 
 ### Link Calculation
 
@@ -68,16 +76,92 @@ also accept an optional expression for filtering responders. If provided,
 link calculations will only consider responders matching this filter. This
 filter will only apply to link calculations.
 
-#### Formulae
+#### Pre-calculated links
 
-The following formulae shall be used to calculate links:
+It must also be possible to pass pre-calculated link columns to the method.
+In this case all three types of links must be provided; this requirement is
+to avoid any assumptions within the method as to the relationship between
+provided links.
+
+#### Responder matching
+
+In link calculations dealing with a target and a predictive period, only
+contributors present in both periods and in the same group shall be used to
+calculate the ratios.
+
+#### Link calculations
+
+For forward and backward links, the general ratio is the sum of the target period's
+responders divided by the sum of the predictive period's responders. In the
+case of the forward link, the predictive period is the previous period
+whereas for the backward link it is the next period. If the predictive
+period is not present in the dataset, or the value of the denominator is 0
+then the link shall default to 1.
+
+for construction the ratio uses the sum of the responses in the target
+period divided by the sum of the responders' auxiliary values for the target
+period. As above, if the denominator is 0 then the link shall default to 1.
+For the purpose of this definition, the predictive period for this link
+is the target period.
+
+### Imputation
+
+Imputation uses a predictive value for a contributor and multiplies that by
+the appropriate link. Both the link and predictive value used depend on the
+type of imputation being performed. Imputation can only take place on
+records with no value for the target variable and where the appropriate
+predictive value and link are present or can be calculated. In particular,
+imputation of multiple contiguous periods must be performed in the correct
+order since imputations for a given contributor chain together. In all
+cases, the predictive period for a type of imputation is the same as that
+of the link being used.
+
+#### forward imputation
+
+In this method there are multiple types of forward imputation performed. In
+all cases the forward link is used and the predictive value is the value for
+the target variable for the predictive record.
+
+##### Forward imputation from response
+
+In this type of imputation, only predictive records which are either
+responses or forward imputes from responses can be used. Records imputed
+using this imputation will be marked `FIR`.
+
+##### Forward imputation from construction
+
+In this type of imputation, only predictive records which are imputes from
+construction can be used. Records imputed using this imputation will be marked
+`FIC`.
+
+#### Backward imputation
+
+In this type of imputation, only predictive records which are responses can
+be used. Records imputed using this imputation will be marked `BI`.
+
+Backward imputation from construction must not occur.
+
+#### Construction
+
+In this type of imputation the construction link is used and the predictive
+value is the auxiliary variable from the target record. Records imputed
+using this imputation will be marked `C`.
+
+### Calculations
+
+In order to calculate a fully imputed output one possible formulation is as
+follows:
 
 ```text
 p = A period
 p_target = the target period
 p_predictive = the predictive period
 D = The dataset under consideration
-responses(p, D) = [ [ c for c in D ], exists(c[target]) and c[period] == p]
+c = An individual contributor record
+f(c) = A function which tests c against a set of conditions
+responses(p, D) = [
+    [ c in D ],
+    exists(c[target]) and c[period] == p and f(c)]
 R_target = responses(p_target, D)
 R_predictive = responses(p_predictive, D)
 matched_responses(p_target, p_predictive) = [
@@ -92,20 +176,6 @@ link(p_target) = [
     / sum[ r for r in responses(p_target)] r_auxiliary,
     p_target == p_predictive
 ]
-```
-
-#### Pre-calculated links
-
-It must also be possible to pass pre-calculated link columns to the method.
-In this case all three types of links must be provided; this requirement is
-to avoid any assumptions within the method as to the relationship between
-provided links.
-
-### Imputation
-
-Using the link definitions, The general imputation formula is:
-
-```text
 nonresponders(p, D) = [ [ c for c in D ], not exists(c[target]) c[period] == p]
 N_target = nonresponders(p_target, D)
 N_predictive = nonresponders(p_predictive, D)
@@ -120,41 +190,25 @@ impute(p_target, p_predictive) = [
     [ n for n in nonresponders(p_target) ]
     n[auxiliary] * link(p_target, p_predictive),
     p_target == p_predictive
+P = [ c in D ] {c[period]}
+impute_forward(D) = [
+    [ p_target in P, order ascending ]
+    impute(p_target),
+    p_predictive = p - 1
 ]
-impute_forward(p_target) = [ impute(p_target), p_predictive = p - 1 ]
-impute_backward(p_target) = [ impute(p_target), p_predictive = p + 1 ]
-impute_construction(p_target) = [ impute(p_target), p_predictive = p ]
+impute_backward(D) = [
+    [ p_target in P, order descending ]
+    impute(p_target),
+    p_predictive = p + 1
+]
+impute_construction(D) = [
+    [ p in P ]
+    impute(p_target), p_predictive = p ]
+output(D) = [
+    impute_forward(impute_construction(impute_backward(impute_forward(D))))
+]
 ```
 
-##### Forward imputation from response
-
-In this type of imputation, only predictive records which are either
-responses or forward imputes from responses can be used. Records imputed
-using this imputation will be marked `FIR`.
-
-##### Forward imputation from construction
-
-In this type of imputation, only predictive records which are imputes from
-construction can be used. Records imputed using this imputation will be marked
-`FIC`.
-
-##### Backward imputation
-
-In this type of imputation, only predictive records which are responses can
-be used. Records imputed using this imputation will be marked `BI`.
-
-Backward imputation from construction must not occur.
-
-#### Construction
-
-In scenarios where neither forward or backward imputation can be performed
-due to a lack of a predictive record or link for a contributor, the method
-will use the following predictive value definition to perform construction
-imputation.
-
-This type of imputation must only be performed where the target record has a
-value for its auxiliary variable. Records imputed using this imputation will
-be marked `C`.
 
 ## Back data
 
@@ -164,6 +218,9 @@ directly preceeding the first period in the main dataset. This back data
 must not appear in the output.
 
 ## Technical Information
+
+Input columns must include:
+
 1. Unique Identifier - String
 2. Period - String
 3. Strata - String

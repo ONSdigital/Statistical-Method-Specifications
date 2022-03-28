@@ -55,8 +55,6 @@ The following imputation processes comprise the complete method:
 * Backward imputation
 * Construction
 * Forward imputation from construction
-* Average imputation
-* Forward imputation from average imputation
 
 All link and imputation calculations must be performed treating each group
 in the dataset separately.
@@ -140,12 +138,6 @@ In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
 `FIC`.
 
-##### Forward imputation from average imputation
-
-In this type of imputation, only predictive records which are imputes from
-average imputation can be used. Records imputed using this imputation will
-be marked with `FI` with the applicable average imputation marker appended with no separator.
-
 ##### Backward imputation
 
 In this type of imputation, only predictive records which are responses can
@@ -160,35 +152,9 @@ due to a lack of a predictive record or link for a contributor, the method
 will use the following predictive value definition to perform construction
 imputation.
 
-```text
-predictive_value(target_period) = auxiliary(target_period)
-```
-
-where:
-
-* `auxiliary(period)` = The value of the contributor's auxiliary variable
-for a given period
-
 This type of imputation must only be performed where the target record has a
 value for its auxiliary variable. Records imputed using this imputation will
 be marked `C`.
-
-#### Average Imputation
-
-If there is no auxiliary variable for a given record, the method will
-calculate an imputed value using the following formula:
-
-```text
-impute(target_period) = average(responses(target_period))
-```
-
-where:
-
-* average(responses) = An average value for a given set of responses
-
-In the case of mean imputation the average used will be the mean and imputed
-records will be marked `MNI`. In the case of median imputation the median
-will be used and imputed records will be marked `MDI`.
 
 ## Back data
 

@@ -229,33 +229,41 @@ R_target = responses(p_target, D)
 R_predictive = responses(p_predictive, D)
 
 matched_responses(p_target, p_predictive) = [
-    r_pair(r_target, r_predictive), for r in (R_target, R_predictive),
-    identical(r_pair[identifier]) and identical(r_pair[group])
+    [ r in (R_target, R_predictive) ],
+    identical(r[identifier]) and identical(r[group])
 ]
 
 link(p_target) = [
-    sum[ r for r in matched_responses(p_target, p_predictive) ] r_target
-    / sum[ r for r in matched_responses(p_target, p_predictive) ] r_predictive,
-    p_target <> p_predictive;
-    sum[ r for r in responses(p_target)] r_target
-    / sum[ r for r in responses(p_target)] r_auxiliary,
+    sum[ r in matched_responses(p_target, p_predictive) ] r_target
+    / sum[ r in matched_responses(p_target, p_predictive) ] r_predictive,
+    p_target <> p_predictive
+    and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive <> 0;
+    1,
+    p_target <> p_predictive
+    and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive == 0;
+    sum[ r in responses(p_target)] r_target
+    / sum[ r in responses(p_target)] r_auxiliary,
     p_target == p_predictive
+    and sum[ r in responses(p_target)] r_auxiliary <> 0;
+    1,
+    p_target == p_predictive
+    and sum[ r in responses(p_target)] r_auxiliary == 0
 ]
 
-nonresponders(p, D) = [ [ c for c in D ], not exists(c[target]) c[period] == p]
+nonresponders(p, D) = [ [ c in D ], not exists(c[target]) c[period] == p]
 N_target = nonresponders(p_target, D)
 N_predictive = nonresponders(p_predictive, D)
 
 matched_nonresponders(p_target, p_predictive) = [
-    n_pair(n_target, n_predictive) for n in (N_target, N_predictive),
-    identical(n_pair[identifier]) and identical(n_pair[group])
+    [ n in (N_target, N_predictive) ],
+    identical(n[identifier]) and identical(n[group])
 ]
 
 impute(p_target, p_predictive) = [
-    [ m for n in matched_nonresponders(p_target, p_predictive) ]
+    [ m in matched_nonresponders(p_target, p_predictive) ]
     m_predictive[target] * link(p_target, p_predictive),
     p_target <> p_predictive;
-    [ n for n in nonresponders(p_target) ]
+    [ n in nonresponders(p_target) ]
     n[auxiliary] * link(p_target, p_predictive),
     p_target == p_predictive
 ]

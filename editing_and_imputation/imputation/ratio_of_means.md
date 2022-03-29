@@ -36,6 +36,14 @@ The method imputes for a single numeric target variable within each group within
 the dataset and outputs a separate dataset containing the imputed target
 variable and other information necessary to use the imputed variable.
 
+## Assumptions
+
+This method assumes that the auxiliary variable is a good predictor of the
+target variable. This method also assumes that the contributor's target
+variable value in the predictive period is a good predictor of the target
+variable in the target period. This same assumption is also made for matched
+pairs' target variable values.
+
 ## Method Input and Output
 
 All field names in this document are not definitive; the actual field names
@@ -111,6 +119,9 @@ All link and imputation calculations must be performed treating each group
 in the dataset separately. In addition, since all contributors must have a
 populated auxiliary variable, failure to fully populate the target variable
 by this method shall constitute an error.
+
+Typically a register-based variable such as frozen turnover or frozen
+employment would be used as a contributor's auxiliary variable.
 
 ### Link Calculation
 
@@ -192,7 +203,12 @@ In this type of imputation the construction link is used and the predictive
 value is the auxiliary variable from the target record. Records imputed
 using this imputation will be marked `C`.
 
-### Calculations
+### Error Handling
+
+In the case of errors occuring the method shall not emit any output records.
+Instead a suitable error shall be emitted.
+
+## Calculations
 
 In order to calculate a fully imputed output one possible formulation is as
 follows:
@@ -272,27 +288,3 @@ output(D) = [
     )
 ]
 ```
-
-## Error Handling
-
-In the case of errors occuring the method must not emit any output records.
-In addition a suitable error must be emitted.
-
-## Assumptions
-
-This method assumes that the auxiliary variable is a good predictor of the
-target variable. This method also assumes that the contributor's target
-variable value in the predictive period is a good predictor of the target
-variable in the target period. This same assumption is also made for matched
-pairs' target variable values.
-
-## Notes
-
-Typically a register-based
-variable such as frozen turnover or frozen employment would be used as a
-contributor's auxiliary variable.
-
-## References
-
-**De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
-Editing and Imputation. New York: Wiley and Sons.

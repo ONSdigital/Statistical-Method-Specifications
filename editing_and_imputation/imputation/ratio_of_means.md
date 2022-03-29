@@ -32,9 +32,9 @@ Ratio of means is a standard imputation method used for business
 surveys. Due to its robust nature it does not use any form of trimming
 or outliering.
 
-The method imputes for a single numeric target variable within each group within the
-dataset and outputs a separate dataset containing the imputed target variable and
-other information necessary to use the imputed variable.
+The method imputes for a single numeric target variable within each group within
+the dataset and outputs a separate dataset containing the imputed target
+variable and other information necessary to use the imputed variable.
 
 ## Overall Method
 
@@ -58,9 +58,9 @@ order of operations:
 4. Forward imputation from construction
 
 One important aspect of the above order of
-operations is that no operation needs to filter the results of prior operations. This is due to the fact that each imputation operation will impute as
-much as possible and thus the gaps left can only be filled by the next
-operation.
+operations is that no operation needs to filter the results of prior operations.
+This is due to the fact that each imputation operation will impute as much as
+possible and thus the gaps left can only be filled by the next operation.
 
 All link and imputation calculations must be performed treating each group
 in the dataset separately. In addition, since all contributors must have a
@@ -71,10 +71,10 @@ by this method shall constitute an error.
 
 #### Responder filtering
 
-By default the method will consider all responders when calculating links. However the method must
-also accept an optional expression for filtering responders. If provided,
-link calculations will only consider responders matching this filter. This
-filter will only apply to link calculations.
+By default the method will consider all responders when calculating links.
+However the method must also accept an optional expression for filtering
+responders. If provided, link calculations will only consider responders
+matching this filter. This filter will only apply to link calculations.
 
 #### Pre-calculated links
 
@@ -237,20 +237,20 @@ must not appear in the output.
 
 ## Technical Information
 
-Input columns must include:
+Input data must include the columns (additional columns will be ignored):
 
-* Unique Identifier - String
+* Unique Identifier - Any
 * Period - String
-* Strata - String
+* Strata - Any
 * Target Variable - Numeric - Nulls Allowed
 * Auxiliary Variable - Numeric
-* Forward Link - Numeric (Optional) - Nulls Allowed
-* Backward Link - Numeric (Optional) - Nulls Allowed
-* Construction Link - Numeric (Optional) - Nulls Allowed
+* Forward Link (Optional) - Numeric - Nulls Allowed
+* Backward Link (Optional) - Numeric - Nulls Allowed
+* Construction Link (Optional) - Numeric - Nulls Allowed
 
 The method will always return the following data:
 
-* Unique Identifier - String
+* Unique Identifier - Any
 * Period - String
 * Returned/Imputed Target Variable - Numeric
 * Imputation Marker - String
@@ -281,4 +281,3 @@ contributor's auxiliary variable.
 
 **De Waal, T., Pannekoek, J. and Scholtus, S.** (2011) Handbook of Data
 Editing and Imputation. New York: Wiley and Sons.
-

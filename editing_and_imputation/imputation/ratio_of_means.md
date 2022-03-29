@@ -239,24 +239,24 @@ must not appear in the output.
 
 Input columns must include:
 
-1. Unique Identifier - String
-2. Period - String
-3. Strata - String
-4. Target Variable - Numeric
-5. Auxiliary Variable - Numeric
-6. Forward Link - Numeric (Optional)
-7. Backward Link - Numeric (Optional)
-8. Construction Link - Numeric (Optional)
+* Unique Identifier - String
+* Period - String
+* Strata - String
+* Target Variable - Numeric - Nulls Allowed
+* Auxiliary Variable - Numeric
+* Forward Link - Numeric (Optional) - Nulls Allowed
+* Backward Link - Numeric (Optional) - Nulls Allowed
+* Construction Link - Numeric (Optional) - Nulls Allowed
 
 The method will always return the following data:
 
-1. Unique Identifier - String
-2. Period - String
-3. Returned/Imputed Target Variable - Numeric
-4. Imputation Marker - String
-5. Forward Link - Numeric
-6. Backward Link - Numeric
-7. Construction Link - Numeric
+* Unique Identifier - String
+* Period - String
+* Returned/Imputed Target Variable - Numeric
+* Imputation Marker - String
+* Forward Link - Numeric
+* Backward Link - Numeric
+* Construction Link - Numeric
 
 ## Error Handling
 

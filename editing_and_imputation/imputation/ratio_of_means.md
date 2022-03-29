@@ -240,15 +240,17 @@ link(p_target, p_predictive) = [
         sum[ r in matched_responses(p_target, p_predictive) ] r_target
         / sum[ r in matched_responses(p_target, p_predictive) ] r_predictive,
         p_target <> p_predictive
-        and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive
-        <> 0
+        and sum[
+            r in matched_responses(p_target, p_predictive)
+        ] r_predictive <> 0
     ]
 
     [
         1,
         p_target <> p_predictive
-        and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive
-        == 0
+        and sum[
+            r in matched_responses(p_target, p_predictive)
+        ] r_predictive == 0
     ]
 
     [

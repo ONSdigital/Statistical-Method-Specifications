@@ -15,11 +15,11 @@
 * Group - How the data has been broken into subsets. Also know as Imputation
     Class.
 * Contributor - A member of the sample, identified by a unique identifier.
-* Periodicity - the length of a period within the dataset
+* Periodicity - The length of a period within the dataset
 * Record - A set of values for each contributor and period
 * Target Period - The period currently undergoing imputation.
 * Predictive Period - The period directly preceeding or succeeding the
-    target period with respect to the periodocity of the dataset.
+    target period with respect to the periodicity of the dataset.
 * Target Record - A contributor's record in the target period.
 * Predictive Record - A contributor's record in the predictive period.
 * Responder - A contributor who has responded to the survey within a given
@@ -42,7 +42,9 @@ This method assumes that the auxiliary variable is a good predictor of the
 target variable. This method also assumes that the contributor's target
 variable value in the predictive period is a good predictor of the target
 variable in the target period. This same assumption is also made for matched
-pairs' target variable values.
+pairs' target variable values. As such it is assumed that the grouping used
+groups similar contributors together whilst providing a sufficient number of
+contributors within each group for robust link calculation.
 
 ## Method Input and Output
 

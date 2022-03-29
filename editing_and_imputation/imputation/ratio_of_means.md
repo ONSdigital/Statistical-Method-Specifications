@@ -210,8 +210,8 @@ Instead a suitable error shall be emitted.
 
 ## Calculations
 
-In order to calculate a fully imputed output one possible formulation is as
-follows:
+In order to calculate a fully imputed target variable, one possible formulation
+is as follows:
 
 ```text
 p = A period

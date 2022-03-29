@@ -1,4 +1,4 @@
-## Ratio of Means Specification
+# Ratio of Means Specification
 
 ## Meta
 
@@ -68,10 +68,10 @@ types:
 * Backward Link - Numeric
 * Construction Link - Numeric
 
-Fields of type "Any" shall be of the same type as the corresponding input fields as the
-values shall be the same in both input and output records. In addition the
-field names in this list are to be interpreted in the same way as in the
-Input section above.
+Fields of type "Any" shall be of the same type as the corresponding input
+fields as the values shall be the same in both input and output records.
+In addition the field names in this list are to be interpreted in the
+same way as in the Input section above.
 
 ## Back Data
 

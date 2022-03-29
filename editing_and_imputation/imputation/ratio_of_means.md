@@ -235,7 +235,7 @@ matched_responses(p_target, p_predictive) = [
     identical(r[identifier]) and identical(r[group])
 ]
 
-link(p_target) = [
+link(p_target, p_predictive) = [
     sum[ r in matched_responses(p_target, p_predictive) ] r_target
     / sum[ r in matched_responses(p_target, p_predictive) ] r_predictive,
     p_target <> p_predictive
@@ -274,20 +274,18 @@ P = [ c in D ] {c[period]}
 
 impute_forward(D) = [
     [ p_target in P, order ascending ]
-    impute(p_target),
-    p_predictive = p - 1
+    impute(p_target, p_target - 1)
 ]
 
 impute_backward(D) = [
     [ p_target in P, order descending ]
-    impute(p_target),
-    p_predictive = p + 1
+    impute(p_target, p_target + 1)
 ]
 
 impute_construction(D) = [
     [ p in P ]
-    impute(p_target), p_predictive = p ]
-
+    impute(p_target, p_target)
+]
 output(D) = [
     impute_forward(
         impute_construction(

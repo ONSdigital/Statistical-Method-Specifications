@@ -306,13 +306,11 @@ impute_construction(D) = [
     [ p in P ]
     impute(p_target, p_target)
 ]
-output(D) = [
-    impute_forward(
-        impute_construction(
-            impute_backward(
-                impute_forward(D)
-            )
+output(D) = impute_forward(
+    impute_construction(
+        impute_backward(
+            impute_forward(D)
         )
     )
-]
+)
 ```

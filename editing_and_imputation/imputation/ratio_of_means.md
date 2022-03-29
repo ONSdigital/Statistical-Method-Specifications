@@ -207,7 +207,7 @@ using this imputation will be marked `C`.
 
 ### Error Handling
 
-In the case of errors occuring the method shall not emit any output records.
+In the case of errors occuring the method shall not result in any output records.
 Instead a suitable error shall be emitted.
 
 ## Calculations
@@ -236,20 +236,33 @@ matched_responses(p_target, p_predictive) = [
 ]
 
 link(p_target, p_predictive) = [
-    sum[ r in matched_responses(p_target, p_predictive) ] r_target
-    / sum[ r in matched_responses(p_target, p_predictive) ] r_predictive,
-    p_target <> p_predictive
-    and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive <> 0;
-    1,
-    p_target <> p_predictive
-    and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive == 0;
-    sum[ r in responses(p_target)] r_target
-    / sum[ r in responses(p_target)] r_auxiliary,
-    p_target == p_predictive
-    and sum[ r in responses(p_target)] r_auxiliary <> 0;
-    1,
-    p_target == p_predictive
-    and sum[ r in responses(p_target)] r_auxiliary == 0
+    [
+        sum[ r in matched_responses(p_target, p_predictive) ] r_target
+        / sum[ r in matched_responses(p_target, p_predictive) ] r_predictive,
+        p_target <> p_predictive
+        and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive
+        <> 0
+    ]
+
+    [
+        1,
+        p_target <> p_predictive
+        and sum[ r in matched_responses(p_target, p_predictive) ] r_predictive
+        == 0
+    ]
+
+    [
+        sum[ r in responses(p_target)] r_target
+        / sum[ r in responses(p_target)] r_auxiliary,
+        p_target == p_predictive
+        and sum[ r in responses(p_target)] r_auxiliary <> 0
+    ]
+
+    [
+        1,
+        p_target == p_predictive
+        and sum[ r in responses(p_target)] r_auxiliary == 0
+    ]
 ]
 
 nonresponders(p, D) = [ [ c in D ], not exists(c[target]) c[period] == p]
@@ -262,12 +275,17 @@ matched_nonresponders(p_target, p_predictive) = [
 ]
 
 impute(p_target, p_predictive) = [
-    [ m in matched_nonresponders(p_target, p_predictive) ]
-    m_predictive[target] * link(p_target, p_predictive),
-    p_target <> p_predictive;
-    [ n in nonresponders(p_target) ]
-    n[auxiliary] * link(p_target, p_predictive),
-    p_target == p_predictive
+    [
+        [ m in matched_nonresponders(p_target, p_predictive) ]
+        m_predictive[target] * link(p_target, p_predictive),
+        p_target <> p_predictive
+    ]
+
+    [
+        [ n in nonresponders(p_target) ]
+        n[auxiliary] * link(p_target, p_predictive),
+        p_target == p_predictive
+    ]
 ]
 
 P = [ c in D ] {c[period]}

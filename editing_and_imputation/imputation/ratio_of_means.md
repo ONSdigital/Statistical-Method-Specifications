@@ -36,7 +36,13 @@ The method imputes for a single numeric target variable within each group within
 the dataset and outputs a separate dataset containing the imputed target
 variable and other information necessary to use the imputed variable.
 
-## Input
+## Method Input and Output
+
+All field names in this document are not definitive; the actual field names
+must be configurable and the method used to configure these names is an
+implementation detail and thus out of scope of this document.
+
+### Input Records
 
 Input records must include the following fields of the correct types:
 
@@ -50,12 +56,9 @@ Input records must include the following fields of the correct types:
 * Construction Link (Optional) - Numeric
 
 Unless otherwise noted, fields must not contain null values. All other
-fields shall be ignored. In addition the specific names used here are not
-definitive; the actual field names must be configurable and the method used
-to configure these names is an implementation detail and thus out of scope
-of this document.
+fields shall be ignored.
 
-## Output
+### Output Records
 
 Output records shall always contain the following fields with the following
 types:
@@ -70,10 +73,8 @@ types:
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
-In addition the field names in this list are to be interpreted in the
-same way as in the Input section above.
 
-## Back Data
+### Back Data
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period

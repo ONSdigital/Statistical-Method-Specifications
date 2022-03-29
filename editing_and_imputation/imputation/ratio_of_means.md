@@ -10,21 +10,21 @@
 
 ## Terminology
 
-* Target variable - The variable of interest that the method
+* Target Variable - The variable of interest that the method
     is working on.
 * Group - How the data has been broken into subsets. Also know as Imputation
     Class.
 * Contributor - A member of the sample, identified by a unique identifier.
 * Periodicity - the length of a period within the dataset
 * Record - A set of values for each contributor and period
-* Target period - The period currently undergoing imputation.
-* Predictive period - The period directly preceeding or succeeding the
+* Target Period - The period currently undergoing imputation.
+* Predictive Period - The period directly preceeding or succeeding the
     target period with respect to the periodocity of the dataset.
-* Target record - A contributor's record in the target period.
-* Predictive record - A contributor's record in the predictive period.
+* Target Record - A contributor's record in the target period.
+* Predictive Record - A contributor's record in the predictive period.
 * Responder - A contributor who has responded to the survey within a given
     period.
-* link - A ratio used as part of the imputation process.
+* Link - A ratio used as part of the imputation process.
 
 ## Introduction
 
@@ -41,7 +41,7 @@ variable and other information necessary to use the imputed variable.
 Input records must include the following fields of the correct types:
 
 * Unique Identifier - Any
-* Period - 6 character string in "YYYYMM" format
+* Period - String in "YYYYMM" format
 * Grouping - Any
 * Target Variable - Numeric - Nulls Allowed
 * Auxiliary Variable - Numeric
@@ -61,7 +61,7 @@ Output records shall always contain the following fields with the following
 types:
 
 * Unique Identifier - Any
-* Period - 6 character string in "YYYYMM" format
+* Period - String in "YYYYMM" format
 * Imputed Variable - Numeric
 * Imputation Marker - String
 * Forward Link - Numeric
@@ -73,7 +73,7 @@ values shall be the same in both input and output records. In addition the
 field names in this list are to be interpreted in the same way as in the
 Input section above.
 
-## Back data
+## Back Data
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
@@ -113,27 +113,27 @@ by this method shall constitute an error.
 
 ### Link Calculation
 
-#### Responder filtering
+#### Responder Filtering
 
 By default the method will consider all responders when calculating links.
 However the method must also accept an optional expression for filtering
 responders. If provided, link calculations will only consider responders
 matching this filter. This filter will only apply to link calculations.
 
-#### Pre-calculated links
+#### Pre-Calculated Links
 
 It must also be possible to pass pre-calculated link columns to the method.
 In this case all three types of links must be provided; this requirement is
 to avoid any assumptions within the method as to the relationship between
 provided links.
 
-#### Responder matching
+#### Responder Matching
 
 In link calculations dealing with a target and a predictive period, only
 contributors present in both periods and in the same group shall be used to
 calculate the ratios.
 
-#### Link calculations
+#### Link Calculations
 
 For forward and backward links, the general ratio is the sum of the target period's
 responders divided by the sum of the predictive period's responders. In the
@@ -142,7 +142,7 @@ whereas for the backward link it is the next period. If the predictive
 period is not present in the dataset, or the value of the denominator is 0
 then the link shall default to 1.
 
-for construction the ratio uses the sum of the responses in the target
+For construction the ratio uses the sum of the responses in the target
 period divided by the sum of the responders' auxiliary values for the target
 period. As above, if the denominator is 0 then the link shall default to 1.
 For the purpose of this definition, the predictive period for this link
@@ -160,25 +160,25 @@ order since imputations for a given contributor chain together. In all
 cases, the predictive period for a type of imputation is the same as that
 of the link being used.
 
-#### forward imputation
+#### Forward Imputation
 
 In this method there are multiple types of forward imputation performed. In
 all cases the forward link is used and the predictive value is the value for
 the target variable for the predictive record.
 
-##### Forward imputation from response
+##### Forward Imputation From Response
 
 In this type of imputation, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this imputation will be marked `FIR`.
 
-##### Forward imputation from construction
+##### Forward Imputation From Construction
 
 In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
 `FIC`.
 
-#### Backward imputation
+#### Backward Imputation
 
 In this type of imputation, only predictive records which are responses can
 be used. Records imputed using this imputation will be marked `BI`.

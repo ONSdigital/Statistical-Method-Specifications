@@ -36,6 +36,50 @@ The method imputes for a single numeric target variable within each group within
 the dataset and outputs a separate dataset containing the imputed target
 variable and other information necessary to use the imputed variable.
 
+## Input
+
+Input records must include the following fields of the correct types:
+
+* Unique Identifier - Any
+* Period - 6 character string in "YYYYMM" format
+* Grouping - Any
+* Target Variable - Numeric - Nulls Allowed
+* Auxiliary Variable - Numeric
+* Forward Link (Optional) - Numeric
+* Backward Link (Optional) - Numeric
+* Construction Link (Optional) - Numeric
+
+Unless otherwise noted, fields must not contain null values. All other
+fields shall be ignored. In addition the specific names used here are not
+definitive; the actual field names must be configurable and the method used
+to configure these names is an implementation detail and thus out of scope
+of this document.
+
+## Output
+
+Output records shall always contain the following fields with the following
+types:
+
+* Unique Identifier - Any
+* Period - 6 character string in "YYYYMM" format
+* Imputed Variable - Numeric
+* Imputation Marker - String
+* Forward Link - Numeric
+* Backward Link - Numeric
+* Construction Link - Numeric
+
+Fields of type "Any" shall be of the same type as the corresponding input fields as the
+values shall be the same in both input and output records. In addition the
+field names in this list are to be interpreted in the same way as in the
+Input section above.
+
+## Back data
+
+In order to correctly handle the first period of data, the method must
+accept a dataset containing back data. This dataset must contain the period
+directly preceeding the first period in the main dataset. This data shall be
+the result of a prior imputation run and must not appear in the output.
+
 ## Overall Method
 
 The imputation method consists of a number of processes as detailed below.
@@ -227,36 +271,6 @@ output(D) = [
     )
 ]
 ```
-
-## Back data
-
-In order to correctly handle the first period of data, the method must
-accept a dataset containing back data. This dataset must contain the period
-directly preceeding the first period in the main dataset. This back data
-must not appear in the output.
-
-## Technical Information
-
-Input data must include the columns (additional columns will be ignored):
-
-* Unique Identifier - Any
-* Period - String
-* Strata - Any
-* Target Variable - Numeric - Nulls Allowed
-* Auxiliary Variable - Numeric
-* Forward Link (Optional) - Numeric - Nulls Allowed
-* Backward Link (Optional) - Numeric - Nulls Allowed
-* Construction Link (Optional) - Numeric - Nulls Allowed
-
-The method will always return the following data:
-
-* Unique Identifier - Any
-* Period - String
-* Returned/Imputed Target Variable - Numeric
-* Imputation Marker - String
-* Forward Link - Numeric
-* Backward Link - Numeric
-* Construction Link - Numeric
 
 ## Error Handling
 

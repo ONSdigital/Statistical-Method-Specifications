@@ -159,15 +159,19 @@ p_predictive = the predictive period
 D = The dataset under consideration
 c = An individual contributor record
 f(c) = A function which tests c against a set of conditions
+
 responses(p, D) = [
     [ c in D ],
     exists(c[target]) and c[period] == p and f(c)]
+
 R_target = responses(p_target, D)
 R_predictive = responses(p_predictive, D)
+
 matched_responses(p_target, p_predictive) = [
     r_pair(r_target, r_predictive), for r in (R_target, R_predictive),
     identical(r_pair[identifier]) and identical(r_pair[group])
 ]
+
 link(p_target) = [
     sum[ r for r in matched_responses(p_target, p_predictive) ] r_target
     / sum[ r for r in matched_responses(p_target, p_predictive) ] r_predictive,
@@ -176,13 +180,16 @@ link(p_target) = [
     / sum[ r for r in responses(p_target)] r_auxiliary,
     p_target == p_predictive
 ]
+
 nonresponders(p, D) = [ [ c for c in D ], not exists(c[target]) c[period] == p]
 N_target = nonresponders(p_target, D)
 N_predictive = nonresponders(p_predictive, D)
+
 matched_nonresponders(p_target, p_predictive) = [
     n_pair(n_target, n_predictive) for n in (N_target, N_predictive),
     identical(n_pair[identifier]) and identical(n_pair[group])
 ]
+
 impute(p_target, p_predictive) = [
     [ m for n in matched_nonresponders(p_target, p_predictive) ]
     m_predictive[target] * link(p_target, p_predictive),
@@ -190,25 +197,36 @@ impute(p_target, p_predictive) = [
     [ n for n in nonresponders(p_target) ]
     n[auxiliary] * link(p_target, p_predictive),
     p_target == p_predictive
+]
+
 P = [ c in D ] {c[period]}
+
 impute_forward(D) = [
     [ p_target in P, order ascending ]
     impute(p_target),
     p_predictive = p - 1
 ]
+
 impute_backward(D) = [
     [ p_target in P, order descending ]
     impute(p_target),
     p_predictive = p + 1
 ]
+
 impute_construction(D) = [
     [ p in P ]
     impute(p_target), p_predictive = p ]
+
 output(D) = [
-    impute_forward(impute_construction(impute_backward(impute_forward(D))))
+    impute_forward(
+        impute_construction(
+            impute_backward(
+                impute_forward(D)
+            )
+        )
+    )
 ]
 ```
-
 
 ## Back data
 

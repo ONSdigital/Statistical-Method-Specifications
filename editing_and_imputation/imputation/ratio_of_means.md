@@ -104,18 +104,12 @@ an imputed value for a target record. This predictive value can either be
 the target variable value from the contributor's predictive record or an
 auxiliary variable.
 
-The following imputation types comprise the complete method and a suggested
-order of operations:
+The following imputation types comprise the complete method:
 
-1. Forward imputation from response
-2. Backward imputation
-3. Construction
-4. Forward imputation from construction
-
-One important aspect of the above order of
-operations is that no operation needs to filter the results of prior operations.
-This is due to the fact that each imputation operation will impute as much as
-possible and thus the gaps left can only be filled by the next operation.
+* Forward imputation from response
+* Backward imputation
+* Construction
+* Forward imputation from construction
 
 All link and imputation calculations must be performed treating each group
 in the dataset separately. In addition, since all contributors must have a

@@ -212,6 +212,7 @@ In order to calculate a fully imputed target variable, one possible formulation
 is as follows:
 
 Let:
+
 * `p` be a period
 * `p_target` be the the target period
 * `p_predictive` be the predictive period
@@ -219,13 +220,14 @@ Let:
 * `f((c))` be a function which tests c against a set of conditions
 
 The responses `r` in the dataset are found by:
-` r((c)) = c if exists c_(target) and c_(period) = p and f((c)) forall c`.
+`r((c)) = c if exists c_(target) and c_(period) = p and f((c)) forall c`.
 
 The target responses `r_(target)` are found by setting `p = p_target` and
 the predictive responses `r_(predictive)` are found by setting `p =
 p_predictive`.
 
 Matched pairs of responses `m_r` are found by:
+
 ```asciimath
 m_r((c)) = ((r_(target), r_(predictive))) forall ((r_(target((c))), r_(predictive((c)))))
     if r_(target)_(identifier) = r_(predictive)_(identifier)
@@ -233,6 +235,7 @@ m_r((c)) = ((r_(target), r_(predictive))) forall ((r_(target((c))), r_(predictiv
 ```
 
 The link `l` for a target and predictive period is:
+
 ```asciimath
 l((c)) = {
     (
@@ -259,6 +262,7 @@ Non-responders `n` can be found by `n((c)) = c if c notin r forall c`. As above,
 `p = p_(predictive)`.
 
 Matched pairs of non-responders `m_n` are found by:
+
 ```asciimath
 m_n((c)) = ((n_(target), n_(predictive))) forall ((n_(target)((c)), n_(predictive)((c))))
     if n_(target)_(identifier) = n_(predictive)_(identifier)
@@ -285,6 +289,7 @@ Based on the above definition, we can define the types of imputation as:
     thus `p_(sequence)` may be in any order
 
 Thus a completely imputed target variable `o` is:
+
 ```asciimath
 o((c)) = v_(forward)((
     v_(construction)((

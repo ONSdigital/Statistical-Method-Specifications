@@ -281,6 +281,7 @@ v((c)) = {
 ```
 
 Based on the above definition, we can define the types of imputation as:
+
 * `v_(forward)((c)) = v((c)) "where" p_(predictive) = p_(target) - 1` and
     `p_(sequence)` is in ascending order
 * `v_(backward)((c)) = v((c)) "where" p_(predictive) = p_(target) + 1` and

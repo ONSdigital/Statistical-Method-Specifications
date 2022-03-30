@@ -217,102 +217,82 @@ Instead a suitable error shall be emitted.
 In order to calculate a fully imputed target variable, one possible formulation
 is as follows:
 
-```text
-p = A period
-p_target = the target period
-p_predictive = the predictive period
-D = The dataset under consideration
-c = An individual contributor record
-f(c) = A function which tests c against a set of conditions
+Let:
+* `p` be a period
+* `p_target` be the the target period
+* `p_predictive` be the predictive period
+* `c` be a contributor record
+* `f((c))` be a function which tests c against a set of conditions
 
-responses(p, D) = [
-    [ c in D ],
-    exists(c[target]) and c[period] == p and f(c)]
+The responses `r` in the dataset are found by:
+` r((c)) = c if exists c_(target) and c_(period) = p and f((c)) forall c`.
 
-R_target = responses(p_target, D)
-R_predictive = responses(p_predictive, D)
+The target responses `r_(target)` are found by setting `p = p_target` and
+the predictive responses `r_(predictive)` are found by setting `p =
+p_predictive`.
 
-matched_responses(p_target, p_predictive) = [
-    [ r in (R_target, R_predictive) ],
-    identical(r[identifier]) and identical(r[group])
-]
+Matched pairs of responses `m_r` are found by:
+```asciimath
+m_r((c)) = ((r_(target), r_(predictive))) forall ((r_(target((c))), r_(predictive((c)))))
+    if r_(target)_(identifier) = r_(predictive)_(identifier)
+    and r_(target)_(group) = r_(predictive)_(group)
+```
 
-link(p_target, p_predictive) = [
-    [
-        sum[ r in matched_responses(p_target, p_predictive) ] r_target
-        / sum[ r in matched_responses(p_target, p_predictive) ] r_predictive,
-        p_target <> p_predictive
-        and sum[
-            r in matched_responses(p_target, p_predictive)
-        ] r_predictive <> 0
-    ]
-
-    [
-        1,
-        p_target <> p_predictive
-        and sum[
-            r in matched_responses(p_target, p_predictive)
-        ] r_predictive == 0
-    ]
-
-    [
-        sum[ r in responses(p_target)] r_target
-        / sum[ r in responses(p_target)] r_auxiliary,
-        p_target == p_predictive
-        and sum[ r in responses(p_target)] r_auxiliary <> 0
-    ]
-
-    [
-        1,
-        p_target == p_predictive
-        and sum[ r in responses(p_target)] r_auxiliary == 0
-    ]
-]
-
-nonresponders(p, D) = [ [ c in D ], not exists(c[target]) c[period] == p]
-N_target = nonresponders(p_target, D)
-N_predictive = nonresponders(p_predictive, D)
-
-matched_nonresponders(p_target, p_predictive) = [
-    [ n in (N_target, N_predictive) ],
-    identical(n[identifier]) and identical(n[group])
-]
-
-impute(p_target, p_predictive) = [
-    [
-        [ m in matched_nonresponders(p_target, p_predictive) ]
-        m_predictive[target] * link(p_target, p_predictive),
-        p_target <> p_predictive
-    ]
-
-    [
-        [ n in nonresponders(p_target) ]
-        n[auxiliary] * link(p_target, p_predictive),
-        p_target == p_predictive
-    ]
-]
-
-P = [ c in D ] {c[period]}
-
-impute_forward(D) = [
-    [ p_target in P, order ascending ]
-    impute(p_target, p_target - 1)
-]
-
-impute_backward(D) = [
-    [ p_target in P, order descending ]
-    impute(p_target, p_target + 1)
-]
-
-impute_construction(D) = [
-    [ p in P ]
-    impute(p_target, p_target)
-]
-output(D) = impute_forward(
-    impute_construction(
-        impute_backward(
-            impute_forward(D)
-        )
+The link `l` for a target and predictive period is:
+```asciimath
+l((c)) = {
+    (
+        sum_(m_r((c))) m__r_(target) / sum_(m_r((c))) m__r_(predictive)
+        if p_(target) != p_(predictive) and sum_(m_r((c))) m_(predictive) != 0
+    ","),
+    (
+        1 if p_(target) != p_(predictive)
+        and sum_(m_r((c))) m_(predictive) != 0
+    ","),
+    (
+        sum_(m_r((c))) m__r_(target) / sum_(m_r((c))) m__r_(auxiliary)
+        if p_(target) = p_(predictive) and sum_(m_r((c))) m__r_(auxiliary) != 0
+    ","),
+    (
+        1 if p_(target) = p_(predictive)
+        and sum_(m_r((c))) m__r_(auxiliary) != 0
     )
-)
+:}
+```
+
+Non-responders `n` can be found by `n((c)) = c if c notin r forall c`. As above,
+`n_(target)` is found by `p = p_(target)` and `n_(predictive)` is found by
+`p = p_(predictive)`.
+
+Matched pairs of non-responders `m_n` are found by:
+```asciimath
+m_n((c)) = ((n_(target), n_(predictive))) forall ((n_(target)((c)), n_(predictive)((c))))
+    if n_(target)_(identifier) = n_(predictive)_(identifier)
+    and n_(target)_(group) = n_(predictive)_(group)
+```
+
+Thus, the variable `v` resulting from a single type of imputation is
+calculated as:
+
+```asciimath
+v((c)) = {
+    (m_n_(predictive)((c)) * l((c)) if p_(target) != p_(predictive) ","),
+    (m_n_(auxiliary) * l((c)) if p_(target) = p_(predictive))
+:} forall m_n((c))
+```
+
+Based on the above definition, we can define the types of imputation as:
+* `v_(forward)((c)) = v((c)) "where" p_(predictive) = p_(target) - 1`
+* `v_(backward)((c)) = v((c)) "where" p_(predictive) = p_(target) + 1`
+* `v_(construction)((c)) = v((c)) "where" p_(predictive) = p_(target)`
+
+Thus a completely imputed target variable `o` is:
+```asciimath
+o((c)) = v_(forward)((
+    v_(construction)((
+        v_backward((
+            v_forward)((c))
+        ))
+    ))
+))
 ```

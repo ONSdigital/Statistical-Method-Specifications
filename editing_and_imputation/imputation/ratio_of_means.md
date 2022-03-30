@@ -156,7 +156,7 @@ whereas for the backward link it is the next period. If the predictive
 period is not present in the dataset, or the value of the denominator is 0
 then the link shall default to 1.
 
-For construction the ratio uses the sum of the responses in the target
+For construction links, the ratio uses the sum of the responses in the target
 period divided by the sum of the responders' auxiliary values for the target
 period. As above, if the denominator is 0 then the link shall default to 1.
 For the purpose of this definition, the predictive period for this link
@@ -194,8 +194,10 @@ construction can be used. Records imputed using this imputation will be marked
 
 #### Backward Imputation
 
-In this type of imputation, only predictive records which are responses can
-be used. Records imputed using this imputation will be marked `BI`.
+In this type of imputation, the backward link is used and the predictive value
+is the value for the target variable for the predictive record. Only predictive
+records which are responses can be used. Records imputed using this imputation
+will be marked `BI`.
 
 Backward imputation from construction must not occur.
 

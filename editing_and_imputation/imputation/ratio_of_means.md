@@ -265,20 +265,24 @@ m_n((c)) = ((n_(target), n_(predictive))) forall ((n_(target)((c)), n_(predictiv
     and n_(target)_(group) = n_(predictive)_(group)
 ```
 
-Thus, the variable `v` resulting from a single type of imputation is
-calculated as:
+Thus, where `p_(sequence)` is a sequence of all distinct periods in `c`,
+the variable `v` resulting from a single type of imputation is calculated
+as:
 
 ```asciimath
 v((c)) = {
     (m_n_(predictive)((c)) * l((c)) if p_(target) != p_(predictive) ","),
     (m_n_(auxiliary) * l((c)) if p_(target) = p_(predictive))
-:} forall m_n((c))
+:} forall m_n((c)) forall ((p_(target), p_(predictive))) in p_(sequence)
 ```
 
 Based on the above definition, we can define the types of imputation as:
-* `v_(forward)((c)) = v((c)) "where" p_(predictive) = p_(target) - 1`
-* `v_(backward)((c)) = v((c)) "where" p_(predictive) = p_(target) + 1`
-* `v_(construction)((c)) = v((c)) "where" p_(predictive) = p_(target)`
+* `v_(forward)((c)) = v((c)) "where" p_(predictive) = p_(target) - 1` and
+    `p_(sequence)` is in ascending order
+* `v_(backward)((c)) = v((c)) "where" p_(predictive) = p_(target) + 1` and
+    `p_(sequence)` is in ascending order
+* `v_(construction)((c)) = v((c)) "where" p_(predictive) = p_(target)` and
+    thus `p_(sequence)` may be in any order
 
 Thus a completely imputed target variable `o` is:
 ```asciimath

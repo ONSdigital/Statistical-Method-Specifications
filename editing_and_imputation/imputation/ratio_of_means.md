@@ -12,16 +12,17 @@
 
 * Target Variable - The variable of interest that the method
     is working on.
-* Group - How the data has been broken into subsets. Also know as Imputation
-    Class.
-* Contributor - A member of the sample, identified by a unique identifier.
-* Periodicity - The length of a period within the dataset
-* Record - A set of values for each contributor and period
+* Group - How the data has been broken into subsets.
+* Contributor - A member of the sample; identified by a unique identifier.
+* Record - A set of values for each contributor and period.
+* Predictive Value - A value used as a predictor for a contributor's target
+    variable.
+* Predictive Record - The record containing a contributor's predictive
+    value.
 * Target Period - The period currently undergoing imputation.
-* Predictive Period - The period directly preceeding or succeeding the
-    target period with respect to the periodicity of the dataset.
+* Predictive Period - The period containing predictive records; defined
+    relative to the target period.
 * Target Record - A contributor's record in the target period.
-* Predictive Record - A contributor's record in the predictive period.
 * Responder - A contributor who has responded to the survey within a given
     period.
 * Link - A ratio used as part of the imputation process.
@@ -88,7 +89,7 @@ fields as the values shall be the same in both input and output records.
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
-directly preceeding the first period in the main dataset. This data shall be
+directly preceding the first period in the main dataset. This data shall be
 the result of a prior imputation run and must not appear in the output.
 
 ## Overall Method

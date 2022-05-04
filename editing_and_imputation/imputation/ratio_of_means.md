@@ -1,6 +1,6 @@
 # Ratio of Means Specification
 
-## Meta
+## 1.0 Meta
 
 * Support Area - Methodology - Editing & Imputation
 * Support Contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
@@ -8,7 +8,7 @@
 * Method Classification - Ratio Imputation
 * Status - Partially tested, draft (not published)
 
-## Terminology
+## 2.0 Terminology
 
 * Target Variable - The variable of interest that the method
     is working on.
@@ -27,7 +27,7 @@
     period.
 * Link - A ratio used as part of the imputation process.
 
-## Introduction
+## 3.0 Introduction
 
 Ratio of means is a standard imputation method used for business
 surveys. Due to its robust nature it does not use any form of trimming
@@ -37,7 +37,7 @@ The method imputes for a single numeric target variable within each group within
 the dataset and outputs a separate dataset containing the imputed target
 variable and other information necessary to use the imputed variable.
 
-## Assumptions
+## 4.0 Assumptions
 
 This method assumes that the auxiliary variable is a good predictor of the
 target variable. This method also assumes that the contributor's target
@@ -47,13 +47,13 @@ pairs' target variable values. As such it is assumed that the grouping used
 groups similar contributors together whilst providing a sufficient number of
 contributors within each group for robust link calculation.
 
-## Method Input and Output
+## 5.0 Method Input and Output
 
 All field names in this document are not definitive; the actual field names
 must be configurable and the method used to configure these names is an
 implementation detail and thus out of scope of this document.
 
-### Input Records
+### 5.1 Input Records
 
 Input records must include the following fields of the correct types:
 
@@ -69,7 +69,7 @@ Input records must include the following fields of the correct types:
 Unless otherwise noted, fields must not contain null values. All other
 fields shall be ignored.
 
-### Output Records
+### 5.2 Output Records
 
 Output records shall always contain the following fields with the following
 types:
@@ -85,14 +85,14 @@ types:
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
 
-### Back Data
+### 6.0 Back Data
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
 directly preceding the first period in the main dataset. This data shall be
 the result of a prior imputation run and must not appear in the output.
 
-## Overall Method
+## 7.0 Overall Method
 
 The imputation method consists of a number of processes as detailed below.
 The method ends only when either there are no more missing values within the

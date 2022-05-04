@@ -120,29 +120,29 @@ by this method shall constitute an error.
 Typically a register-based variable such as frozen turnover or frozen
 employment would be used as a contributor's auxiliary variable.
 
-### Link Calculation
+### 8.0 Link Calculation
 
-#### Responder Filtering
+#### 8.1 Responder Filtering
 
 By default the method will consider all responders when calculating links.
 However the method must also accept an optional expression for filtering
 responders. If provided, link calculations will only consider responders
 matching this filter. This filter will only apply to link calculations.
 
-#### Pre-Calculated Links
+#### 8.2 Pre-Calculated Links
 
 It must also be possible to pass pre-calculated link columns to the method.
 In this case all three types of links must be provided; this requirement is
 to avoid any assumptions within the method as to the relationship between
 provided links.
 
-#### Responder Matching
+#### 8.3 Responder Matching
 
 In link calculations dealing with a target and a predictive period, only
 contributors present in both periods and in the same group shall be used to
 calculate the ratios.
 
-#### Link Calculations
+#### 8.4 Link Calculations
 
 For forward and backward links, the general ratio is the sum of the target period's
 responders divided by the sum of the predictive period's responders. In the
@@ -157,7 +157,7 @@ period. As above, if the denominator is 0 then the link shall default to 1.
 For the purpose of this definition, the predictive period for this link
 is the target period.
 
-### Imputation
+### 9.0 Imputation
 
 Imputation uses a predictive value for a contributor and multiplies that by
 the appropriate link. Both the link and predictive value used depend on the
@@ -169,25 +169,25 @@ order since imputations for a given contributor chain together. In all
 cases, the predictive period for a type of imputation is the same as that
 of the link being used.
 
-#### Forward Imputation
+#### 9.1 Forward Imputation
 
 In this method there are multiple types of forward imputation performed. In
 all cases the forward link is used and the predictive value is the value for
 the target variable for the predictive record.
 
-##### Forward Imputation From Response
+##### 9.1.1 Forward Imputation From Response
 
 In this type of imputation, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this imputation will be marked `FIR`.
 
-##### Forward Imputation From Construction
+##### 9.1.2 Forward Imputation From Construction
 
 In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
 `FIC`.
 
-#### Backward Imputation
+#### 9.2 Backward Imputation
 
 In this type of imputation, the backward link is used and the predictive value
 is the value for the target variable for the predictive record. Only predictive
@@ -196,18 +196,18 @@ will be marked `BI`.
 
 Backward imputation from construction must not occur.
 
-#### Construction
+#### 9.3 Construction
 
 In this type of imputation the construction link is used and the predictive
 value is the auxiliary variable from the target record. Records imputed
 using this imputation will be marked `C`.
 
-### Error Handling
+### 10.0 Error Handling
 
 In the case of errors occuring the method shall not result in any output records.
 Instead a suitable error shall be emitted.
 
-## Calculations
+## 11.0 Calculations
 
 In order to calculate a fully imputed target variable, one possible formulation
 is as follows:

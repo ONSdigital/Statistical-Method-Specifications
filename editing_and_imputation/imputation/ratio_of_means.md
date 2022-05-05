@@ -10,42 +10,52 @@
 
 ## 2.0 Terminology
 
-* Target Variable - The variable of interest that the method
-    is working on.
-* Group - How the data has been broken into subsets.
 * Contributor - A member of the sample; identified by a unique identifier.
 * Record - A set of values for each contributor and period.
+* Target Period - The period which requires imputation to be applied.
+* Target Variable - The variable of interest that requires data values
+    to be imputed.
+* Target Record - A contributor's record in the target period.
+* Grouping - The variable used to group the data for the calculation of
+    imputation links. Commonly known as the imputation class.
 * Predictive Value - A value used as a predictor for a contributor's target
     variable.
 * Predictive Record - The record containing a contributor's predictive
     value.
-* Target Period - The period currently undergoing imputation.
 * Predictive Period - The period containing predictive records; defined
     relative to the target period.
-* Target Record - A contributor's record in the target period.
+* Auxiliary variable - The variable used as a predictor for a contributor's
+    target variable, where the predictive value is not available (i.e. where
+    the contributor was not sampled in the predictive period).
 * Responder - A contributor who has responded to the survey within a given
     period.
-* Link - A ratio used as part of the imputation process.
+* Link - A ratio used as part of the imputation process. Commonly known as 
+    the imputation link.
 
 ## 3.0 Introduction
 
 Ratio of means is a standard imputation method used for business
-surveys. Due to its robust nature it does not use any form of trimming
-or outliering.
+surveys. The method imputes for each non-responding contributor a single
+numeric target variable within the dataset for multiple period simultaneously.
+It uses the relationship between the target variable of interest and a 
+predictive value and/or auxiliary variable to inform the imputed value. Due 
+to its robust nature it does not use any form of trimming or outliering.
 
-The method imputes for a single numeric target variable within each group within
-the dataset and outputs a separate dataset containing the imputed target
-variable and other information necessary to use the imputed variable.
+As imputation can be carried out for multiple periods simultaneously, the 
+method can apply forward, backward or construction imputation. The type of
+imputation used will vary for each non-respondent in each period depending
+on whether data is available in the predictive period.
 
 ## 4.0 Assumptions
 
-This method assumes that the auxiliary variable is a good predictor of the
-target variable. This method also assumes that the contributor's target
-variable value in the predictive period is a good predictor of the target
-variable in the target period. This same assumption is also made for matched
-pairs' target variable values. As such it is assumed that the grouping used
-groups similar contributors together whilst providing a sufficient number of
-contributors within each group for robust link calculation.
+This method assumes that the contributor's target variable value in the 
+predictive period and the auxiliary variable are well correlated (i.e. a 
+good predictor) with the target period.
+
+It is assumed that the grouping used (imputation classes) groups similar 
+contributors together with respect to the target variable, whilst providing 
+a sufficient number of responders within each group (imputation class) for 
+robust link calculation. 
 
 ## 5.0 Method Input and Output
 
@@ -68,6 +78,9 @@ Input records must include the following fields of the correct types:
 
 Unless otherwise noted, fields must not contain null values. All other
 fields shall be ignored.
+
+Note that the predictive variable is indirectly defined as the target 
+variable in the predictive period.
 
 ### 5.2 Output Records
 
@@ -100,10 +113,13 @@ target variable or no more values can be imputed. The latter case
 constitutes an error condition and will be handled according to the error
 handling behaviour defined below.
 
-The method uses a link, in combination with a predictive value, to calculate
-an imputed value for a target record. This predictive value can either be
-the target variable value from the contributor's predictive record or an
-auxiliary variable.
+For each non-responding contributor, the method calculates a link, which 
+corresponds to the group (imputation class) the non-responder sits within and 
+is then multiplied by the predictive value, to calculate an imputed value for
+a target record. This predictive value can either be the target variable value
+from the contributor's predictive record (if available) or an auxiliary variable.
+When the imputation link is mutltiplied by the redictive record, the predictive 
+record can take any response type (i.e. response, imputed or constructed value).
 
 The following imputation types comprise the complete method:
 
@@ -112,10 +128,24 @@ The following imputation types comprise the complete method:
 * Construction
 * Forward imputation from construction
 
-All link and imputation calculations must be performed treating each group
-in the dataset separately. In addition, since all contributors must have a
-populated auxiliary variable, failure to fully populate the target variable
-by this method shall constitute an error.
+Forward imputation imputes data for non-responders in the target perdio by 
+multiplying a link to the predictive period daa, where the predictive period is
+the period that immediately precedes the target period. It should be noted that
+the sasme link is used for forwards imputation from a response and construction.
+
+Backwrads imputation imputes data for non-responders in the target period by 
+multiplying a link to the predictive period data, where the predictive period is 
+the period that immediately follows the target period.
+
+Construction imputation imputes data for non-repsonders in the target period
+where no data is available in the predictive period and therefore, an auxiliary 
+variable is used which relates to the target period and is then multiplied by a 
+link to create a constructed value.
+
+All link and imputation calculations must be performed treating each group 
+(imputation class) in the dataset separately. In addition, since all contributors 
+must have a populated auxiliary variable, failure to fully populate the target 
+variable by this method shall constitute an error.
 
 Typically a register-based variable such as frozen turnover or frozen
 employment would be used as a contributor's auxiliary variable.
@@ -124,10 +154,18 @@ employment would be used as a contributor's auxiliary variable.
 
 #### 8.1 Responder Filtering
 
+When calculating imputation links, it is essential that matched pairs of 
+clean respondent data are used. More specifically, only clean respondents 
+that are present in both the target and predictive periods should be used. In
+the case of construction imputation, only clean responsendt present in the
+target period and corresponding auxiliary variable should be used.
+
 By default the method will consider all responders when calculating links.
-However the method must also accept an optional expression for filtering
-responders. If provided, link calculations will only consider responders
-matching this filter. This filter will only apply to link calculations.
+However, the method must also accept an optional expression for filtering
+responders as there are specific requirements for the data that should be used 
+when calculating particular links. If provided, link calculations will only 
+consider responders matching this filter (commonly known as matched pairs). 
+This filter will only apply to link calculations.
 
 #### 8.2 Pre-Calculated Links
 
@@ -138,13 +176,17 @@ provided links.
 
 #### 8.3 Responder Matching
 
-In link calculations dealing with a target and a predictive period, only
-contributors present in both periods and in the same group shall be used to
-calculate the ratios.
+For forward and backward link calculations, only contributors that have responded
+in both the target and predictive period and are in the same group (imputation
+class) for both period shall be used to calculate the ratios.
+
+For construction link calculations, only contributors that have responded in the 
+target period and have an available auxiliary variable shall be used to calculcate
+the ratio.
 
 #### 8.4 Link Calculations
 
-For forward and backward links, the general ratio is the sum of the target period's
+For forward and backward links, within each group (imputation class), the ratio is the sum of the target period's
 responders divided by the sum of the predictive period's responders. In the
 case of the forward link, the predictive period is the previous period
 whereas for the backward link it is the next period. If the predictive

@@ -46,6 +46,11 @@ method can apply forward, backward or construction imputation. The type of
 imputation used will vary for each non-respondent in each period depending
 on whether data is available in the predictive period.
 
+The generic formula for using ratio of means imputation is the imputation link
+multiplied by the variable of interest (auxiliary variable in the case of 
+construction) for the non-respondent from a previous/consecutive/current period
+for forwards/backwards/construction imputation respectively.
+
 ## 4.0 Assumptions
 
 This method assumes that the contributor's target variable value in the 
@@ -98,14 +103,16 @@ types:
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
 
-### 6.0 Back Data
+## 6.0 Back Data
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
 directly preceding the first period in the main dataset. This data shall be
 the result of a prior imputation run and must not appear in the output.
 
-## 7.0 Overall Method
+## 7.0 Method
+
+### 7.1 Overall method
 
 The imputation method consists of a number of processes as detailed below.
 The method ends only when either there are no more missing values within the
@@ -150,9 +157,26 @@ variable by this method shall constitute an error.
 Typically a register-based variable such as frozen turnover or frozen
 employment would be used as a contributor's auxiliary variable.
 
-### 8.0 Link Calculation
+### 7.2 Imputation rules
 
-#### 8.1 Responder Filtering
+Ratio of means imputation follows a set of rules to ensure that it is used 
+correctly:
+
+- Forward impute if no response available for current period but is available from
+    a previous period.
+- Rolling forward impute if no response available for a few rolling period but is 
+    available from an earlier period.
+- Forwards imputation based ona  previous constructed value if a business never 
+    responds but auxiliary data is available for that business.
+- If a business is rotated out of the sample and then rotated back into the sample,
+    values that were previously imputed should not be used.
+- Use a returned survey response where available.
+
+![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
+
+## 8.0 Link Calculation
+
+### 8.1 Responder Filtering
 
 When calculating imputation links, it is essential that matched pairs of 
 clean respondent data are used. More specifically, only clean respondents 
@@ -167,14 +191,14 @@ when calculating particular links. If provided, link calculations will only
 consider responders matching this filter (commonly known as matched pairs). 
 This filter will only apply to link calculations.
 
-#### 8.2 Pre-Calculated Links
+### 8.2 Pre-Calculated Links
 
 It must also be possible to pass pre-calculated link columns to the method.
 In this case all three types of links must be provided; this requirement is
 to avoid any assumptions within the method as to the relationship between
 provided links.
 
-#### 8.3 Responder Matching
+### 8.3 Responder Matching
 
 For forward and backward link calculations, only contributors that have responded
 in both the target and predictive period and are in the same group (imputation
@@ -184,7 +208,7 @@ For construction link calculations, only contributors that have responded in the
 target period and have an available auxiliary variable shall be used to calculcate
 the ratio.
 
-#### 8.4 Link Calculations
+### 8.4 Link Calculations
 
 For forward and backward links, within each group (imputation class), the ratio is 
 the sum of the target period's responders divided by the sum of the predictive 
@@ -206,7 +230,7 @@ is the target period.
 
 <img src="https://render.githubusercontent.com/render/math?math=\Construction \imputation \link = \frac{\sum x_{i, t}}{\sum y_{i, t}}">
 
-#### 8.5 Weighted imputation links
+### 8.5 Weighted imputation links
 
 In some cases it may be appropriate to use an imputation link which is an average of
 imputation links for more than one period. In the simpllest case this could be the 
@@ -226,7 +250,7 @@ a variable is backwards or forwards imputed using links that have been calculate
 another variable named by the user within a corresponding imputation class or use a link 
 of 1.
 
-### 9.0 Imputation
+## 9.0 Imputation
 
 Imputation uses a predictive value for a contributor and multiplies that by
 the appropriate link. Both the link and predictive value used depend on the
@@ -246,26 +270,26 @@ be used if applicable. If a predictive record does not exist for the non-respond
 Note that when imputation is not required for a given contributor (i.e. responder) 
 then the output imputation marker is set to R.
 
-#### 9.1 Forward Imputation
+### 9.1 Forward Imputation
 
 In this method there are multiple types of forward imputation performed. In
 all cases the forward link is used and the predictive value is the value for
 the target variable for the predictive record. Note that it is not possible to 
 forward impute from a backward imputation.
 
-##### 9.1.1 Forward Imputation From Response
+#### 9.1.1 Forward Imputation From Response
 
 In this type of imputation, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this imputation will be marked `FIR`.
 
-##### 9.1.2 Forward Imputation From Construction
+#### 9.1.2 Forward Imputation From Construction
 
 In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
 `FIC`.
 
-#### 9.2 Backward Imputation
+### 9.2 Backward Imputation
 
 In this type of imputation, the backward link is used and the predictive value
 is the value for the target variable for the predictive record. Only predictive
@@ -275,13 +299,13 @@ from construction must not occur. In the event that a given period non-responder
 is able to have both forward and backward imputation, forward imputation takes
 priority.
 
-#### 9.3 Construction
+### 9.3 Construction
 
 In this type of imputation the construction link is used and the predictive
 value is the auxiliary variable from the target record. Records imputed
 using this imputation will be marked `C`.
 
-### 10.0 Error Handling
+## 10.0 Error Handling
 
 In the case of errors occuring the method shall not result in any output records.
 Instead a suitable error shall be emitted.

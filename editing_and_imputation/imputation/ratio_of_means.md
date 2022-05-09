@@ -181,7 +181,7 @@ correctly:
 When calculating imputation links, it is essential that matched pairs of 
 clean respondent data are used. More specifically, only clean respondents 
 that are present in both the target and predictive periods should be used. In
-the case of construction imputation, only clean responsendt present in the
+the case of construction imputation, only clean responsent present in the
 target period and corresponding auxiliary variable should be used.
 
 By default the method will consider all responders when calculating links.

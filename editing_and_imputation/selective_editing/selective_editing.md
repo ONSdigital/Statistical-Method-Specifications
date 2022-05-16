@@ -19,8 +19,8 @@ Error if missing or if the following are not true:
 * For each score:
   * Select predicted value. Use previous period data if exists otherwise use
   auxiliary. Input Flag as P or A.
-  * Score = ```(100 * design_weight * modulus(adjusted_return - predicted_value)
-  )/standardising_factor```
+  * Score = (100*design_weight*modulus(adjusted_return-predicted_value)
+  )/standardising_factor
 
 * If multiple scores then either:
   * Get max of the scores

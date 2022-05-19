@@ -8,7 +8,13 @@
 * Method Classification - Selective Editing
 * Status - Partially tested
 
-## Validation
+## 2.0 Description
+
+Selective Editing is a method for highlighting respondants which have a large
+impact on further data processing. By applying this method the efficiency of
+micro-editing is greatly improved.
+
+## 3.0 Validation
 
 Must have adjusted return, auxiliary value, design weight, standardising
 factor and threshold. Do for each required score. Each score may need a
@@ -21,7 +27,7 @@ following are not true:
 * Other Weights Between 0 and 1. Must always sum to 1
 * Minkowski value is an integer >= 1
 
-## Calculations
+## 4.0 Calculations
 
 For each score:
 * Select predicted value. Use previous period data if exists otherwise use
@@ -38,7 +44,7 @@ If multiple scores then either:
 Then check score against threshold. score >= threshold Output Flag F.
 score < threshold Output Flag P.
 
-## Output
+## 5.0 Output
 
 Output must include reference, score and input flag for each score, final
 score and output flag.

@@ -26,14 +26,16 @@ Input records must include the following fully populated fields of the correct
 types:
 
 * Unique Identifier - Any
-* design weight - Numeric
+* Design Weight - Numeric
 * Threshold - Numeric
-* Minkowski Parameter - Numeric - Optional, only if Minkowski is being used.
+* Minkowski Parameter - Numeric - Optional, only if Minkowski Distance is
+    being used.
 
 For each single score:
 * adjusted return - Numeric
 * Auxiliary Value - Numeric
 * Standardising factor - Numeric
+* Weight - Numeric - Optional, only if Weighted Mean is used.
 
 #### 3.1.1 Validation
 
@@ -49,10 +51,12 @@ Output records shall always contain the following fields with the following
 types:
 
 * Unique Identifier - Any
-* Score - Numeric
-* Predictive Marker - String
 * Combined Score - Numeric - Optional, only if combined score is used.
 * Selective Editing Marker - Boolean
+
+For each single score:
+* Score - Numeric
+* Predicted Marker - Boolean
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
@@ -61,7 +65,8 @@ fields as the values shall be the same in both input and output records.
 
 For each score:
 * Select predicted value. Use previous period data if exists otherwise use
-    auxiliary. Input Flag as P or A.
+    auxiliary. Predicted Marker is true in the case that previous period data
+    exists, false otherwise.
 * Score = (100 * design_weight * modulus(adjusted_return - predicted_value))/standardising_factor
 
 If multiple scores then either:

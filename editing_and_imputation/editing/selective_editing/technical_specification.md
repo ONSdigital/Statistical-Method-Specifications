@@ -14,18 +14,48 @@ Selective Editing is a method for highlighting respondants which have a large
 impact on further data processing. By applying this method the efficiency of
 micro-editing is greatly improved.
 
-## 3.0 Validation
+## 3.0 Method Input and Output
 
-Must have adjusted return, auxiliary value, design weight, standardising
-factor and threshold. Do for each required score. Each score may need a
-weight or a Minkowski variable. Must provide which type of combination is to
-be used or if single score happens instead. Error if missing or if the
-following are not true:
+All field names in this document are not definitive; the actual field names
+must be configurable and the method used to configure these names is an
+implementation detail and thus out of scope of this document.
 
-* Threshold should be > 0
+### 3.1 Input Records
+
+Input records must include the following fully populated fields of the correct
+types:
+
+* Unique Identifier - Any
+* design weight - Numeric
+* Threshold - Numeric
+* Minkowski Parameter - Numeric - Optional, only if Minkowski is being used.
+
+For each single score:
+* adjusted return - Numeric
+* Auxiliary Value - Numeric
+* Standardising factor - Numeric
+
+#### 3.1.1 Validation
+
+The input values must satisfy the following conditions:
+
+* Threshold > 0
 * Design Weight >= 1
-* Other Weights Between 0 and 1. Must always sum to 1
 * Minkowski value is an integer >= 1
+
+### 3.2 Output Records
+
+Output records shall always contain the following fields with the following
+types:
+
+* Unique Identifier - Any
+* Score - Numeric
+* Predictive Marker - String
+* Combined Score - Numeric - Optional, only if combined score is used.
+* Selective Editing Marker - Boolean
+
+Fields of type "Any" shall be of the same type as the corresponding input
+fields as the values shall be the same in both input and output records.
 
 ## 4.0 Calculations
 
@@ -37,14 +67,9 @@ For each score:
 If multiple scores then either:
 
 * Get max of the scores
-* Weighted mean of scores (assuming weights = 1) sum(weight*score)
-* Mean score (The above but weight = 1/number of scores) = sum(score)/number of scores
+* Weighted mean of scores = sum(weight*score)/sum(weight)
+* Mean score (The above but weight = 1)
 * Minkowski distance = (sum(score^p))^(1/p)
 
-Then check score against threshold. score >= threshold Output Flag F.
-score < threshold Output Flag P.
-
-## 5.0 Output
-
-Output must include reference, score and input flag for each score, final
-score and output flag.
+Then check score against threshold. Selective editing marker is the result of
+the expression `score < threshold`.

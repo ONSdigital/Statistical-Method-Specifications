@@ -1,4 +1,14 @@
-# 1.0 Validation
+# Selective Editing Specification
+
+## 1.0 Meta
+
+* Support Area - Methodology - Editing & Imputation
+* Support Contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
+* Method Theme - Editing
+* Method Classification - Selective Editing
+* Status - Partially tested
+
+## Validation
 
 Must have adjusted return, auxiliary value, design weight, standardising
 factor and threshold. Do for each required score. Each score may need a
@@ -11,7 +21,7 @@ following are not true:
 * Other Weights Between 0 and 1. Must always sum to 1
 * Minkowski value is an integer >= 1
 
-# Calculations
+## Calculations
 
 For each score:
 * Select predicted value. Use previous period data if exists otherwise use
@@ -28,7 +38,7 @@ If multiple scores then either:
 Then check score against threshold. score >= threshold Output Flag F.
 score < threshold Output Flag P.
 
-# Output
+## Output
 
 Output must include reference, score and input flag for each score, final
 score and output flag.

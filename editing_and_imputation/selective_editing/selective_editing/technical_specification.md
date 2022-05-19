@@ -17,15 +17,16 @@ For each score:
 * Select predicted value. Use previous period data if exists otherwise use
     auxiliary. Input Flag as P or A.
 * Score = (100 * design_weight * modulus(adjusted_return - predicted_value))/standardising_factor
+
 If multiple scores then either:
+
 * Get max of the scores
 * Weighted mean of scores (assuming weights = 1) sum(weight*score)
 * Mean score (The above but weight = 1/number of scores) = sum(score)/number of scores
 * Minkowski distance = (sum(score^p))^(1/p)
 
-* Then check score against threshold. score >= threshold Output Flag F.
-    score < threshold Output Flag P.
-
+Then check score against threshold. score >= threshold Output Flag F.
+score < threshold Output Flag P.
 
 # Output
 

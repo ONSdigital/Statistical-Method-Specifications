@@ -32,9 +32,9 @@ types:
     being used.
 
 For each single score:
-* adjusted return - Numeric
+* Adjusted Return - Numeric
 * Auxiliary Value - Numeric
-* Standardising factor - Numeric
+* Standardising Factor - Numeric
 * Weight - Numeric - Optional, only if Weighted Mean is used.
 
 #### 3.1.1 Validation

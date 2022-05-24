@@ -135,16 +135,17 @@ The following imputation types comprise the complete method:
 * Construction
 * Forward imputation from construction
 
-Forward imputation imputes data for non-responders in the target perdio by 
-multiplying a link to the predictive period daa, where the predictive period is
+Forward imputation imputes data for non-responders in the target period by 
+multiplying a link to the predictive period data, where the predictive period is
 the period that immediately precedes the target period. It should be noted that
-the sasme link is used for forwards imputation from a response and construction.
+the same link is used for forwards imputation from a response and from a 
+construction.
 
-Backwrads imputation imputes data for non-responders in the target period by 
+Backwards imputation imputes data for non-responders in the target period by 
 multiplying a link to the predictive period data, where the predictive period is 
 the period that immediately follows the target period.
 
-Construction imputation imputes data for non-repsonders in the target period
+Construction imputation imputes data for non-responders in the target period
 where no data is available in the predictive period and therefore, an auxiliary 
 variable is used which relates to the target period and is then multiplied by a 
 link to create a constructed value.
@@ -157,32 +158,16 @@ variable by this method shall constitute an error.
 Typically a register-based variable such as frozen turnover or frozen
 employment would be used as a contributor's auxiliary variable.
 
-### 7.2 Imputation rules
-
-Ratio of means imputation follows a set of rules to ensure that it is used 
-correctly:
-
-- Forward impute if no response available for current period but is available from
-    a previous period.
-- Rolling forward impute if no response available for a few rolling period but is 
-    available from an earlier period.
-- Forwards imputation based ona  previous constructed value if a business never 
-    responds but auxiliary data is available for that business.
-- If a business is rotated out of the sample and then rotated back into the sample,
-    values that were previously imputed should not be used.
-- Use a returned survey response where available.
-
-![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
-
 ## 8.0 Link Calculation
 
 ### 8.1 Responder Filtering
 
 When calculating imputation links, it is essential that matched pairs of 
-clean respondent data are used. More specifically, only clean respondents 
-that are present in both the target and predictive periods should be used. In
-the case of construction imputation, only clean responsent present in the
-target period and corresponding auxiliary variable should be used.
+clean respondent data (data that are not in error) are used. More specifically, 
+only clean respondents that are present in both the target and predictive 
+periods should be used. In the case of construction imputation, only clean
+responsent present in the target period and corresponding auxiliary 
+variable should be used.
 
 By default the method will consider all responders when calculating links.
 However, the method must also accept an optional expression for filtering
@@ -305,10 +290,47 @@ In this type of imputation the construction link is used and the predictive
 value is the auxiliary variable from the target record. Records imputed
 using this imputation will be marked `C`.
 
+### 9.4 Imputation rules
+
+Ratio of means imputation follows a set of rules to ensure that it is used 
+correctly:
+
+- Forward impute if no response available for current period but is available from
+    a previous period.
+- Rolling forward impute if no response available for a few rolling period but is 
+    available from an earlier period.
+- Forwards imputation based on a previous constructed value if a business never 
+    responds but auxiliary data is available for that business.
+- If forwards imputation cannot be calculated then backwards imputation is the 
+    next best method.
+- Rolling backward imputation should be used if no response available for a few
+    rolling periods but is available from a later period.
+- If forwards or backwards imputation cannot be used then construction should be 
+    used.
+- If a business is rotated out of the sample and then rotated back into the sample,
+    values that were previously imputed should not be used.
+- The image below explains the priority order of the imputation links.
+
+![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
+
 ## 10.0 Error Handling
 
 In the case of errors occuring the method shall not result in any output records.
 Instead a suitable error shall be emitted.
+
+### 10.1 Default links
+
+#### 10.1.1 Unable to calculate links
+
+When the imputation link cannot be calculated the imputation link will be 
+defaulted to 1. To distinguish that this link cannot be calculated the matched
+pairs will be missing.
+
+#### 10.1.2 Zero in link calculations
+
+When the denominator of the imputation link calculation is 0 the link is 
+defaulted to 1. To distinguish this link from the above default the matched
+pairs will be set to 0.
 
 ## 11.0 Calculations
 

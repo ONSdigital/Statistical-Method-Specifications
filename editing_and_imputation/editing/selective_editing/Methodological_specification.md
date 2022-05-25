@@ -70,15 +70,15 @@ names is an implementation detail and thus out of scope of this document.
 
 Input records must include the following fields of the correct types:
 
-- Unique identifier - Any
-- Period - String in "YYYYMM" format
-- Domain group - Any
-- Adjusted return - Numeric
-- Predicted value - Numeric
-- Auxiliary predicted value - Numeric
-- Standardising factor - Numeric
-- Design weight - Numeric
-- Thresholds - Numeric
+* Unique identifier - Any
+* Period - String in "YYYYMM" format
+* Domain group - Any
+* Adjusted return - Numeric
+* Predicted value - Numeric
+* Auxiliary predicted value - Numeric
+* Standardising factor - Numeric
+* Design weight - Numeric
+* Thresholds - Numeric
 
 Unless otherwise noted, fields must not contain Null values. All other 
 fields shall be ignored.
@@ -88,13 +88,13 @@ fields shall be ignored.
 Output records shall always contain the following fields with the 
 following types:
 
-Unique identifier - Any
-Period - String in "YYYYMM" format
-Score1 - Numeric
-ScoreM - Numeric
-Final_Score - NUmeric
-Input flag - Character
-Output flag - Character
+* Unique identifier - Any
+* Period - String in "YYYYMM" format
+* Score1 - Numeric
+* ScoreM - Numeric
+* Final_Score - NUmeric
+* Input flag - Character
+* Output flag - Character
 
 ## 6.0 Method
 
@@ -133,12 +133,12 @@ the final score is compared to the threshold
 
 The overall final scores may be combined in the following ways:
 
-- Maximum score: The maximum score of all the variables.
-- Weighted mean score: Where each score is multiplied by a weight, where
+* Maximum score: The maximum score of all the variables.
+* Weighted mean score: Where each score is multiplied by a weight, where
   all weights will add up to 1.
-- Mean score: Where all scores are added up and divided by the number of
+* Mean score: Where all scores are added up and divided by the number of
   scores.
-- Minkowski distance: The final score is equal to each score multiplied to
+* Minkowski distance: The final score is equal to each score multiplied to
  the power of p, all the scores are then summed and then multipled to the 
  power of 1/p. Where p >= 1 and is an integer.
   

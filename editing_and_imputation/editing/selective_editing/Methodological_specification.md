@@ -48,9 +48,9 @@ through unchecked.
 
 - All data inputs required by the method are available and are on a
   standardised basis.
-- The auxiliary variable should be a good predictor of the target
-  variable.
-- The predicted value in the score calculaiton must have been cleaned
+- The auxiliary predicted variable should be a good predictor of the 
+  target variable.
+- The predicted value in the score calculation must have been cleaned
   and free from errors. This is not limited to genuine returns and 
   it may be an imputed or constructed value if a clean response is
   not available.

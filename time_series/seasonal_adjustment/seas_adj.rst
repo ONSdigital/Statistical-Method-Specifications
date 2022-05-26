@@ -91,7 +91,7 @@ The seasonal adjustment process includes pre-adjustment of the time series, in o
 
 Following pre-adjustment of the series, the cleaned (prior-adjusted) series is subjected to iterations of moving averages in order to decompose it into trend, seasonal and irregular components. This step also includes correction for extreme values in the form of weights.
 
-.. figure:: x11Scheme.png
+.. figure:: x11Scheme.PNG
 
 The user can select one of the folowing pre-defined specifications for seasonal adjustment, the default being DEF_X13_RSA5. 
 

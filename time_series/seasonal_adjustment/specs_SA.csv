@@ -1,0 +1,8 @@
+Specification name ,Transformation,Leap-year,Working days,Trading days,Easter,Outliers,ARIMA model
+DEF_X13_RSAX11,yes,no,no,no,no,no,no
+DEF_X13_RSA0,no,no,no,no,no,no,"(0,1,1)(0,1,1)"
+DEF_X13_RSA1,test,no,no,no,no,test,"(0,1,1)(0,1,1)"
+DEF_X13_RSA2,test,test,test,no,test,test,"(0,1,1)(0,1,1)"
+DEF_X13_RSA3,test,no,no,no,no,test,Automatic
+DEF_X13_RSA4,test,test,test,no,test,test,Automatic
+DEF_X13_RSA5,test,test,no,test,test,test,Automatic

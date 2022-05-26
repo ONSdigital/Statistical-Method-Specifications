@@ -66,12 +66,12 @@ Fields of type "Any" shall be of the same type as the corresponding input fields
 ## 6.0 Method
 
 ### 6.1 Overall Method
-The method checks the principal question for a given respondent whether the ratio of the target variable by the predictive variable is within a fixed set of upper and lower thresholds. If the predictive variable is not available, then an auxiliary variable is used. If the ratio lies outside of these thresholds, then a thousand pounds correction is automatically applied to the target variable.    
+The method checks the principal question for a given respondent whether the ratio of the target variable by the predictive variable is within a fixed set of upper and lower thresholds. If the predictive variable is not available, then an auxiliary variable is used. If the ratio lies within these thresholds, then a thousand pounds correction is automatically applied to the target variable.    
 
 ### 6.2 Error Detection
 The error detection calculation is applied to each respondent and calculates the ratio of the target variable and predictive variable at the contributor level. The target variable is the current period respondent data value, and the predictive variable is the corresponding previous period data value if the contributor was previously sampled. Previous period data can be a clean response, imputed or constructed data value. If there is no predictive value available (i.e., the contributor was not sampled in the previous period), then an auxiliary variable should be used; IDBR selection turnover. Note that the auxiliary variable should be recorded in the same denomination as the target variable. 
 
-If the ratio is outside of the predefined upper and lower thresholds, then a thousand pounds error is detected.  
+If the ratio is within the predefined upper and lower thresholds, then a thousand pounds error is detected.  
 
 If the previous period’s value is zero, then the method does not continue. A thousand pounds error is neither detected nor corrected. 
 
@@ -86,7 +86,7 @@ In the case of the method experiencing processing issues, the method shall not r
 
 ## 7.0 Calculations
 ### 7.1 Error Detection Calculation 
-If a predictive value for principal question q is available for responder *i* at time *t-1*, then a thousand pounds error is detected if the following ratio lies outside of the defined lower or upper thresholds, *L<sub>Lower</sub>* or *L<sub>Upper</sub>*.
+If a predictive value for principal question q is available for responder *i* at time *t-1*, then a thousand pounds error is detected if the following ratio lies within the defined lower or upper thresholds, *L<sub>Lower</sub>* or *L<sub>Upper</sub>*.
 
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=\large L_{Lower} < \frac{y_{i, q, t}}{y_{i, q, t-1}} < L_{Upper}">
@@ -98,7 +98,7 @@ L_{Lower} < \frac{y_{i, q, t}}{y_{i, q, t-1}} < L_{Upper}
 
 Where *y<sub>i, q, t</sub>* is the returned value for the principal question *q* and *y<sub>i, q, t-1</sub>* is its corresponding previous period value. Previous period data may be a clean response, impute or constructed data. 
 
-If the ratio lies within the limits, then no thousand pounds error is detected; else a thousand pounds error has been identified. 
+If the ratio lies within, and not equal to, the limits, then a thousand pounds error is detected; else a thousand pounds error has not been identified. 
 
  
 

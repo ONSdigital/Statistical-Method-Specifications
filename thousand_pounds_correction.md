@@ -29,8 +29,8 @@ The thousand pounds correction is commonly used across business surveys. It is a
 ## 4.0 Assumptions
 * A ratio outside of the upper or lower thresholds is due to a thousand pounds error 
 * If the principal variable is found to be a thousand pounds error, then it is assumed that all other monetary values are also thousand pounds errors 
-* Returned value (target variable) and predictive value are well correlated and are intended to be reported in the same denomination (i.e., thousand pounds) 
-* Returned value (principal variable) and auxiliary value are well correlated and intended to be reported in the same denomination (i.e., thousand pounds) 
+* The principal variable and predictive value are well correlated and are intended to be reported in the same denomination (i.e., thousand pounds) 
+* The principal variable and auxiliary value are well correlated and intended to be reported in the same denomination (i.e., thousand pounds) 
 * The auxiliary variable is known and available for all contributors processed by the method 
 * Thresholds set are a good indication of whether a value should be corrected  
 
@@ -91,7 +91,7 @@ In the case of the method experiencing processing issues, the method shall not r
 
 ## 7.0 Calculations
 ### 7.1 Error Detection Calculation 
-If a predictive value for the principal question q is available for contributor *i* at time *t-1*, then a thousand pounds error is detected if the following ratio lies within the defined lower or upper thresholds, *L<sub>Lower</sub>* or *L<sub>Upper</sub>*.
+If a predictive value for the principal question *q* is available for contributor *i* at time *t-1*, then a thousand pounds error is detected if the following ratio lies within the defined lower or upper thresholds, *L<sub>Lower</sub>* or *L<sub>Upper</sub>*.
 
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=\large L_{Lower} < \frac{y_{i, q, t}}{y_{i, q, t-1}} < L_{Upper}">
@@ -117,7 +117,7 @@ If a cleared, predictive value does not exist, then the error detection calculat
 L_{Lower} < \frac{y_{i, q, t}}{x_{i, q, t}} < L_{Upper}
 ```
 
-Where *x<sub>i, q, t</sub>* is the auxiliary register based selected turnover for contributor *i* and appropriately converted to the same denomination as the principal variable, if necessary. . 
+Where *x<sub>i, q, t</sub>* is the auxiliary register based selected turnover for contributor *i* and appropriately converted to the same denomination as the principal variable, if necessary.
 
 If the ratio lies within the limits, then a thousand pounds error is detected; else a thousand pounds error has not been identified. 
 
@@ -148,11 +148,11 @@ For this example, let the lower and upper limits equal 250 and 1350 respectively
 | 3 | 1350M |  | 1M | 1350 | Pass | 1350M |
 | 4 | 1250M | 0 | N/A | N/A | N/A | 1250M |
 
-Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore an error is detected and a correction is applied. 
+Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore an error is detected, and a correction is applied. 
 
-Contributor 2 shows the detection method using the target and predictive variables. The ratio is outside the thresholds and therefore an error is not detected and a correction is not applied. 
+Contributor 2 shows the detection method using the target and predictive variables. The ratio is outside the thresholds and therefore an error is not detected, and a correction is not applied. 
 
-Contributor 3 shows the detection method using the target variable, but the predictive variable is missing so the auxiliary variable is used. The ratio is equal to the upper threshold and therefore an error is not detected and a correction is not applied. 
+Contributor 3 shows the detection method using the target variable, but the predictive variable is missing so the auxiliary variable is used. The ratio is equal to the upper threshold and therefore an error is not detected, and a correction is not applied. 
 
 Contributor 4 has both the target and predictive variables available, but the predictive variable is equal to 0 and therefore the method is not applied. 
 

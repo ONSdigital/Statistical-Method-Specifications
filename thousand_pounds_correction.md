@@ -139,7 +139,18 @@ Where *y<sup>\*</sup><sub>i, q, t</sub>* is the corrected value and rounded to t
 Once the principal target variable has been corrected, all other monetary values, the remaining target variables, for a given contributor will be automatically corrected by the same method as described above. 
 
 
-## 8.0 Future Enhancements 
+## 8.0 Worked Example
+For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys.  
+
+| Contributor  |y_{i, q, t}   |   |   |   |   |y^{\*}\_{i, q, t}   |
+|---|---|---|---|---|---|---|
+| 1 |   |   |   |   |   |   |
+| 2 |   |   |   |   |   |   |
+| 3 |   |   |   |   |   |   |
+| 4 |   |   |   |   |   |   |
+
+
+## 9.0 Future Enhancements 
 
 At present, method thresholds are fixed across all surveys, size bands and industry. A future enhancement could allow different thresholds to be set for cases that as particular industries that are more likely to experience higher fluctuations or sporadic data. The enhancement could also allow the method to detect and correct for cases where question values are requested in pounds but have incorrectly been returned in thousands.  
  

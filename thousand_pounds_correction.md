@@ -141,7 +141,7 @@ Once the principal target variable has been corrected, all other monetary values
 ## 8.0 Worked Example
 For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys.  
 
-| Contributor | *y<sub>i, q, t</sub>* | *y<sub>i, q, t-1</sub>* | *x<sub>i, q, t</sub>* | Detection Ratio | Pass/Fail |*y<sup>*</sup><sub>i, q, t</sub>*|
+| Contributor | *y<sub>i, q, t</sub>* | *y<sub>i, q, t-1</sub>* | *x<sub>i, q, t</sub>* | Detection Ratio | Pass/Fail |*y<sup>\*</sup><sub>i, q, t</sub>*|
 |---|---|---|---|---|---|---|
 | 1 | 2000M | 2M | N/A | 1000 | Fail | 2M |
 | 2 | 5000M | 100M | N/A | 50  | Pass | 5000M |

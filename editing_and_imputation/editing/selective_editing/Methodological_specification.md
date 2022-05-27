@@ -51,7 +51,7 @@ through unchecked.
 - The auxiliary predicted variable should be a good predictor of the 
   target variable.
 - The predicted value in the score calculation must have been cleaned
-  and free from errors. This is not limited to genuine returns and 
+  and free from errors. This is not limited to genuine returns, and 
   it may be an imputed or constructed value if a clean response is
   not available.
 - Each respondent is clearly classified into one mutually exclusive
@@ -63,7 +63,7 @@ through unchecked.
 ## 5.0 Method input and output
 
 All field names in this document are not definitive; the actual field 
-names must be configurable and the method used to configure these 
+names must be configurable, and the method used to configure these 
 names is an implementation detail and thus out of scope of this document.
 
 ### 5.1 Input records
@@ -92,7 +92,7 @@ following types:
 * Period - String in "YYYYMM" format
 * Score1 - Numeric
 * ScoreM - Numeric
-* Final_Score - NUmeric
+* Final_Score - Numeric
 * Input flag - Character
 * Output flag - Character
 
@@ -111,7 +111,7 @@ by the equation below.
 
 The predicted value is equal to a clean (not in error) response for 
 adjusted return for reporting unit i at time t-1, if this value isn't
-available then the auxilary predicted value for reporting unit i at
+available then the auxiliary predicted value for reporting unit i at
 time t. However, if a clean response for reporting unit i at time t-1 
 is not available then imputed or constructed previous period data may 
 be used. 
@@ -119,14 +119,14 @@ be used.
 If the predicted value is the adjusted return for reporting unit i at 
 time t-1 then the input flag should be 'P' for predictor. 
 
-If the predicted value is the auxiliary preducted value for reporting
+If the predicted value is the auxiliary predicted value for reporting
 unit i at time t then the input flag should be 'A' for auxiliary.
 
 *are we using M flag for missing or raising an error?
 
 ### 6.2 Combining Scores
 
-This is only required if selective editing is applied ot more than one
+This is only required if selective editing is applied to more than one
 variable. The score calculation is used for each variable required and 
 a score is produced. The method of combining scores is then chosen and
 the final score is compared to the threshold
@@ -139,7 +139,7 @@ The overall final scores may be combined in the following ways:
 * Mean score: Where all scores are added up and divided by the number of
   scores.
 * Minkowski distance: The final score is equal to each score multiplied to
- the power of p, all the scores are then summed and then multipled to the 
+ the power of p, all the scores are then summed and then multiplied to the 
  power of 1/p. Where p >= 1 and is an integer.
   
 ### 6.3 Generate final selective editing output flag
@@ -148,10 +148,10 @@ For each final score compare it to the threshold which are associated with
 the respondent's domain group.
 
 If the final score is greater than or equal to the selective editing 
-threshold then output the output flag marker for the reporting unit as 'F'
+threshold, then output the output flag marker for the reporting unit as 'F'
 for failed selective editing and the respondent requires validation. 
 
-If the final score is less than the selective editing threshold then output 
+If the final score is less than the selective editing threshold, then output 
 the output flag as 'P' for pass selective editing and does not require
 validation.
 

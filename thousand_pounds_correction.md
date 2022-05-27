@@ -121,7 +121,6 @@ Where *x<sub>i, q, t</sub>* is the auxiliary register based selected turnover fo
 
 If the ratio lies within the limits, then a thousand pounds error is detected; else a thousand pounds error has not been identified. 
 
-At present, *L<sub>Lower</sub>* = 250 and *L<sub>Upper</sub>* = 1350. 
 
 ### 7.2 Error Correction Calculation
 A detected error for question *q* is automatically corrected for contributor *i* at time *t* by: 
@@ -142,12 +141,20 @@ Once the principal target variable has been corrected, all other monetary values
 ## 8.0 Worked Example
 For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys.  
 
-| Contributor  |y_{i, q, t}   |   |   |   |   |y<sup>*</sup><sub>i, q, t</sub>|
+| Contributor | *y<sub>i, q, t</sub>* | *y<sub>i, q, t-1</sub>* | *x<sub>i, q, t</sub>* | Detection Ratio | Pass/Fail |*y<sup>*</sup><sub>i, q, t</sub>*|
 |---|---|---|---|---|---|---|
-| 1 |   |   |   |   |   |   |
-| 2 |   |   |   |   |   |   |
-| 3 |   |   |   |   |   |   |
-| 4 |   |   |   |   |   |   |
+| 1 | 2000M | 2M | N/A | 1000 | Fail | 2M |
+| 2 | 5000M | 100M | N/A | 50  | Pass | 5000M |
+| 3 | 1350M |  | 1M | 1350 | Pass | 1350M |
+| 4 | 1250M | 0 |   | N/A | N/A | 1250M |
+
+Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore a correction is applied. 
+
+Contributor 2 shows the detection method using the target and predictive variables. The ratio is outside the thresholds and therefore a correction is not applied. 
+
+Contributor 3 shows the detection method using the target variable, but the predictive variable is missing so the auxiliary variable is used. The ratio is equal to the upper threshold and therefore a correction is not applied. 
+
+Contributor 4 has both the target and predictive variables available, but the predictive variable is equal to 0 and therefore the method is not applied. 
 
 
 ## 9.0 Future Enhancements 

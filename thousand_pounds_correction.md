@@ -142,7 +142,7 @@ Once the principal target variable has been corrected, all other monetary values
 ## 8.0 Worked Example
 For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys.  
 
-| Contributor  |y_{i, q, t}   |   |   |   |   |y<sup>*<\sup>}<sub>{i, q, t}<\sub>|
+| Contributor  |y_{i, q, t}   |   |   |   |   |y<sup>*</sup>}<sub>{i, q, t}</sub>|
 |---|---|---|---|---|---|---|
 | 1 |   |   |   |   |   |   |
 | 2 |   |   |   |   |   |   |

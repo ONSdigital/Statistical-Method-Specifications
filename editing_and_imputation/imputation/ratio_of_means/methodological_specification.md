@@ -36,10 +36,10 @@
 
 Ratio of means is a standard imputation method used for business
 surveys. The method imputes for each non-responding contributor a single
-numeric target variable within the dataset for multiple period simultaneously.
+numeric target variable within the dataset for multiple periods simultaneously.
 It uses the relationship between the target variable of interest and a 
 predictive value and/or auxiliary variable to inform the imputed value. Due 
-to its robust nature it does not use any form of trimming or outliering.
+to its robust nature, it does not use any form of trimming or outliering.
 
 As imputation can be carried out for multiple periods simultaneously, the 
 method can apply forward, backward or construction imputation. The type of
@@ -65,7 +65,7 @@ robust link calculation.
 ## 5.0 Method Input and Output
 
 All field names in this document are not definitive; the actual field names
-must be configurable and the method used to configure these names is an
+must be configurable, and the method used to configure these names is an
 implementation detail and thus out of scope of this document.
 
 ### 5.1 Input Records
@@ -125,7 +125,7 @@ corresponds to the group (imputation class) the non-responder sits within and
 is then multiplied by the predictive value, to calculate an imputed value for
 a target record. This predictive value can either be the target variable value
 from the contributor's predictive record (if available) or an auxiliary variable.
-When the imputation link is mutltiplied by the redictive record, the predictive 
+When the imputation link is multiplied by the predictive record, the predictive 
 record can take any response type (i.e. response, imputed or constructed value).
 
 The following imputation types comprise the complete method:
@@ -155,7 +155,7 @@ All link and imputation calculations must be performed treating each group
 must have a populated auxiliary variable, failure to fully populate the target 
 variable by this method shall constitute an error.
 
-Typically a register-based variable such as frozen turnover or frozen
+Typically, a register-based variable such as frozen turnover or frozen
 employment would be used as a contributor's auxiliary variable.
 
 ## 8.0 Link Calculation
@@ -166,10 +166,10 @@ When calculating imputation links, it is essential that matched pairs of
 clean respondent data (data that are not in error) are used. More specifically, 
 only clean respondents that are present in both the target and predictive 
 periods should be used. In the case of construction imputation, only clean
-responsent present in the target period and corresponding auxiliary 
+respondent present in the target period and corresponding auxiliary 
 variable should be used.
 
-By default the method will consider all responders when calculating links.
+By default, the method will consider all responders when calculating links.
 However, the method must also accept an optional expression for filtering
 responders as there are specific requirements for the data that should be used 
 when calculating particular links. If provided, link calculations will only 
@@ -187,10 +187,10 @@ provided links.
 
 For forward and backward link calculations, only contributors that have responded
 in both the target and predictive period and are in the same group (imputation
-class) for both period shall be used to calculate the ratios.
+class) for both periods shall be used to calculate the ratios.
 
 For construction link calculations, only contributors that have responded in the 
-target period and have an available auxiliary variable shall be used to calculcate
+target period and have an available auxiliary variable shall be used to calculate
 the ratio.
 
 ### 8.4 Link Calculations
@@ -217,8 +217,8 @@ is the target period.
 
 ### 8.5 Weighted imputation links
 
-In some cases it may be appropriate to use an imputation link which is an average of
-imputation links for more than one period. In the simpllest case this could be the 
+In some cases, it may be appropriate to use an imputation link which is an average of
+imputation links for more than one period. In the simplest case this could be the 
 average of two links. Two further parameters would need to specified: the time lag (k)
 and the weight (w) given to each period. In this case the imputation link is calculated 
 as:
@@ -258,17 +258,17 @@ then the output imputation marker is set to R.
 ### 9.1 Forward Imputation
 
 In this method there are multiple types of forward imputation performed. In
-all cases the forward link is used and the predictive value is the value for
+all cases the forward link is used, and the predictive value is the value for
 the target variable for the predictive record. Note that it is not possible to 
 forward impute from a backward imputation.
 
-#### 9.1.1 Forward Imputation From Response
+#### 9.1.1 Forward Imputation from Response
 
 In this type of imputation, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this imputation will be marked `FIR`.
 
-#### 9.1.2 Forward Imputation From Construction
+#### 9.1.2 Forward Imputation from Construction
 
 In this type of imputation, only predictive records which are imputes from
 construction can be used. Records imputed using this imputation will be marked
@@ -286,7 +286,7 @@ priority.
 
 ### 9.3 Construction
 
-In this type of imputation the construction link is used and the predictive
+In this type of imputation, the construction link is used and the predictive
 value is the auxiliary variable from the target record. Records imputed
 using this imputation will be marked `C`.
 
@@ -297,7 +297,7 @@ correctly:
 
 - Forward impute if no response available for current period but is available from
     a previous period.
-- Rolling forward impute if no response available for a few rolling period but is 
+- Rolling forward impute if no response available for a few rolling periods but is 
     available from an earlier period.
 - Forwards imputation based on a previous constructed value if a business never 
     responds but auxiliary data is available for that business.
@@ -305,7 +305,7 @@ correctly:
     next best method.
 - Rolling backward imputation should be used if no response available for a few
     rolling periods but is available from a later period.
-- If forwards or backwards imputation cannot be used then construction should be 
+- If forwards or backwards imputation cannot be used, then construction should be 
     used.
 - If a business is rotated out of the sample and then rotated back into the sample,
     values that were previously imputed should not be used.
@@ -315,8 +315,8 @@ correctly:
 
 ## 10.0 Error Handling
 
-In the case of errors occuring the method shall not result in any output records.
-Instead a suitable error shall be emitted.
+In the case of errors occurring the method shall not result in any output records.
+Instead, a suitable error shall be emitted.
 
 ### 10.1 Default links
 

@@ -146,7 +146,7 @@ For this example, let the lower and upper limits equal 250 and 1350 respectively
 | 1 | 2000M | 2M | N/A | 1000 | Fail | 2M |
 | 2 | 5000M | 100M | N/A | 50  | Pass | 5000M |
 | 3 | 1350M |  | 1M | 1350 | Pass | 1350M |
-| 4 | 1250M | 0 |   | N/A | N/A | 1250M |
+| 4 | 1250M | 0 | N/A | N/A | N/A | 1250M |
 
 Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore a correction is applied. 
 

@@ -148,11 +148,11 @@ For this example, let the lower and upper limits equal 250 and 1350 respectively
 | 3 | 1350M |  | 1M | 1350 | Pass | 1350M |
 | 4 | 1250M | 0 | N/A | N/A | N/A | 1250M |
 
-Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore a correction is applied. 
+Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore an error is detected and a correction is applied. 
 
-Contributor 2 shows the detection method using the target and predictive variables. The ratio is outside the thresholds and therefore a correction is not applied. 
+Contributor 2 shows the detection method using the target and predictive variables. The ratio is outside the thresholds and therefore an error is not detected and a correction is not applied. 
 
-Contributor 3 shows the detection method using the target variable, but the predictive variable is missing so the auxiliary variable is used. The ratio is equal to the upper threshold and therefore a correction is not applied. 
+Contributor 3 shows the detection method using the target variable, but the predictive variable is missing so the auxiliary variable is used. The ratio is equal to the upper threshold and therefore an error is not detected and a correction is not applied. 
 
 Contributor 4 has both the target and predictive variables available, but the predictive variable is equal to 0 and therefore the method is not applied. 
 

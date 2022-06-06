@@ -78,7 +78,7 @@ Where:
 
 For `n` number of scores (where `n > 1`) then the combined score `s` is one of:
 
-* Maximum single score `s = max(lim(i=1)^n s_i)`
+* Maximum single score `s = max(lim_(i=1)^n s_i)`
 * Weighted mean of scores `s = sum_(i=1)^n (s_i * w_i) / sum_(i=1)^n w_i`
 * Mean score (The above but weight = 1)
 * Minkowski distance `s = (sum_(i=1)^n s_i^p)^(1/p)

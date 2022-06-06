@@ -33,6 +33,7 @@ types:
     being used.
 
 For each single score:
+
 * Adjusted Return - Numeric
 * Auxiliary Value - Numeric
 * Standardising Factor - Numeric
@@ -56,6 +57,7 @@ types:
 * Selective Editing Marker - Boolean
 
 For each single score:
+
 * Score - Numeric
 * Predicted Marker - Boolean
 

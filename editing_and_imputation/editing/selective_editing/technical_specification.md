@@ -86,4 +86,4 @@ For `n` number of scores (where `n > 1`) then the combined score `s` is one of:
 Otherwise there is only one single score `s`.
 
 The resultant score is then compared against the respondant's threshold `t`.
-The selective editing marker is the result of the expression `s < t`.
+The selective editing marker is the result of the boolean expression `s < t`.

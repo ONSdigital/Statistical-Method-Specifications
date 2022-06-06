@@ -3,7 +3,7 @@
 * Support area – Methodology – Processing, Editing & Imputation 
 * Support contact – Editing.and.Imputation.expert.group@ons.gov.uk
 * Method theme – Automatic Editing 
-* Method classification –Thousand Pounds Correction 
+* Method classification – Totals Components Correction 
 * Status – draft, not tested 
 
 
@@ -87,24 +87,17 @@ However, if the absolute difference is greater than or equal to the threshold, t
 ### 6.3 Method Error Handling
 In the case of the method experiencing processing issues, the method shall not result in any output records. Instead, a suitable error description shall be emitted. 
 
-## 7.0 Calculations
+## 7.0 Calculations - EQUATIONS NOT WORKING AT PRESENT
 ### 7.1 Error Detection Calculation
 The method checks whether the following is satisfied for a given contributor: 
-
-<p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large y_{t}">
-</p>
 
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=\large |(y_{1, t} + \dots + y_{n, t}) - y_{total, t-1}| < x">
 </p>
 
+Alt: 
 <p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large y^{*}_{i, q, t} =  < \frac{y_{i, q, t}}{1000}">
-</p>
- 
-<p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large y^{*}_{i, q, t} =  < \frac{y_{i, q, t}}{100}">
+ <i>|(y<sub>1, t</sub> + ... + y<sub>n, t</sub>) - y<sub>total, t-1</sub>| < x</i>
 </p>
 
 Where *y<sub>1, t</sub>* to *y<sub>n, t</sub>* are the *n* corresponding components of the total *y<sub>total, t</sub>*, *y<sub>total, t-1</sub>* is the total for the predictive period and *x* is the predefined threshold.  
@@ -115,15 +108,26 @@ If the predictive value is missing, then *y<sub>total, t-1</sub>* should be repl
 If the above is satisfied and the priority variable is the total (target variable 1), then: 
 
 <p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large y_{total, t}">
+<img src="https://render.githubusercontent.com/render/math?math=\large y_{total, t} = y_{1, t} + \dots + y_{n, t}">
+</p>
+
+Alt:
+<p align="center">
+ <i>y<sub>total, t</sub> = y<sub>1, t</sub> + ... + y<sub>n, t</sub></i>
 </p>
  
 
 If the condition in section 7.1 is satisfied and the priority variable is the list of components (target variable 2), then: 
 
-y1, t+…+yn, t= ytotal, t 
- 
+<p align="center">
+ <img src="https://render.githubusercontent.com/render/math?math=\large y_{1, t} + \dots + y_{n, t} = y_{total, t}">
+</p>
 
+Alt:
+<p align="center">
+ <i>y<sub>1, t</sub> + ... + y<sub>n, t</sub> = y<sub>total, t</sub></i>
+</p>
+ 
 Where *y<sub>1, t</sub>* to *y<sub>n, t</sub>* are prorated to equal *y<sub>total, t</sub>*. 
 
 ## 8.0 Worked Example 

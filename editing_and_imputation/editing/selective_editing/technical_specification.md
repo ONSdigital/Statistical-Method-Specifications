@@ -10,9 +10,10 @@
 
 ## 2.0 Description
 
-Selective Editing is a method for highlighting respondants which have a large
-impact on further data processing. By applying this method the efficiency of
-micro-editing is greatly improved.
+Selective Editing is a method for highlighting respondants which have a
+large impact on further data processing. By applying this method the
+efficiency of micro-editing is greatly improved. Note that selective editing
+does not actually alter the input values.
 
 ## 3.0 Method Input and Output
 
@@ -43,7 +44,7 @@ The input values must satisfy the following conditions:
 
 * Threshold > 0
 * Design Weight >= 1
-* Minkowski value is an integer >= 1
+* Minkowski value is an integer  >= 1
 
 ### 3.2 Output Records
 
@@ -64,10 +65,10 @@ fields as the values shall be the same in both input and output records.
 ## 4.0 Calculations
 
 For each score:
-* Select predicted value. Use previous period data if exists otherwise use
+* Select predicted value. Use previous period data if it exists otherwise use
     auxiliary. Predicted Marker is true in the case that previous period data
     exists, false otherwise.
-* Score = (100 * design_weight * modulus(adjusted_return - predicted_value))/standardising_factor
+* `Score = (100 * design_weight * modulus(adjusted_return - predicted_value))/standardising_factor
 
 If multiple scores then either:
 

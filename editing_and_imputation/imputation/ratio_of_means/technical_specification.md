@@ -11,11 +11,10 @@
 ## 2.0 Terminology
 
 * Contributor - A member of the sample; identified by a unique identifier.
-* Responder - A contributor who has responded to the survey within a given
-    period.
 * Record - A set of values for each contributor and period.
-* Target Variable - The variable of interest that the method
-    is working on.
+* Target Variable - The variable (A.K.A. field) in the record to be imputed.
+* Responder - A contributor whos target variable contains a value (A.K.A.
+    response) for a given period.
 * Predictive Value - A value used as a predictor for a contributor's target
     variable.
 * Predictive Record - The record containing a contributor's predictive
@@ -84,6 +83,9 @@ types:
 * Forward Link - Numeric
 * Backward Link - Numeric
 * Construction Link - Numeric
+* Forward Link Observation Count - Numeric
+* Backward Link Observation Count - Numeric
+* Construction Link Observation Count - Numeric
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
@@ -92,8 +94,19 @@ fields as the values shall be the same in both input and output records.
 
 In order to correctly handle the first period of data, the method must
 accept a dataset containing back data. This dataset must contain the period
-directly preceding the first period in the main dataset. This data shall be
-the result of a prior imputation run and must not appear in the output.
+directly preceding the first period in the main dataset and must not appear
+in the output.
+
+Back data records shall always contain the following fields:
+* Unique Identifier
+* Period
+* Grouping
+* Imputed Variable
+* Imputation Marker
+* Auxiliary Variable
+
+These fields must have the same types as their counterparts in the Input and
+Output records.
 
 ## 6.0 Overall Method
 
@@ -138,14 +151,15 @@ provided links.
 
 ### 7.3 Responder Matching
 
-In link calculations dealing with a target and a predictive period, only
-contributors present in both periods and in the same group shall be used to
-calculate the ratios.
+In link calculations, only responders present in both target and predictive
+periods and in the same group shall be used to calculate the ratios. The
+relevant link's Observation Count field shall be set to the number of
+matched responders.
 
 ### 7.4 Link Calculations
 
 For forward and backward links, the general ratio is the sum of the target period's
-responders divided by the sum of the predictive period's responders. In the
+responses divided by the sum of the predictive period's responses. In the
 case of the forward link, the predictive period is the previous period
 whereas for the backward link it is the next period. If the predictive
 period is not present in the dataset, or the value of the denominator is 0,

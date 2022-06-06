@@ -153,9 +153,7 @@ provided links.
 ### 7.3 Responder Matching
 
 In link calculations, only responders present in both target and predictive
-periods and in the same group shall be used to calculate the ratios. The
-relevant link's Observation Count field shall be set to the number of
-matched responders.
+periods and in the same group shall be used to calculate the ratios.
 
 ### 7.4 Link Calculations
 
@@ -171,6 +169,15 @@ period divided by the sum of the responders' auxiliary values for the target
 period. As above, if the denominator is 0 then the link shall default to 1.
 For the purpose of this definition, the predictive period for this link
 is the target period.
+
+### 7.5 Observation Counts
+
+For each link, if the link is not defaulted, its corresponding Observation
+Count field shall be set to the number of matched responders used in the
+calculation. If the link is defaulted because the predictive period is not
+present in the dataset, the link's Observation Count field shall be null. If
+the link is defaulted due to the denominator being 0, its Observation Count
+field shall be 0.
 
 ## 8.0 Imputation
 

@@ -99,6 +99,10 @@ Alt:
 <p align="center">
  <i>|(y<sub>1, t</sub> + ... + y<sub>n, t</sub>) - y<sub>total, t-1</sub>| < x</i>
 </p>
+ 
+ ```asciimath
+|(y_{1, t} + \dots + y_{n, t}) - y_{total, t-1}| < x
+```
 
 Where *y<sub>1, t</sub>* to *y<sub>n, t</sub>* are the *n* corresponding components of the total *y<sub>total, t</sub>*, *y<sub>total, t-1</sub>* is the total for the predictive period and *x* is the predefined threshold.  
 
@@ -115,7 +119,10 @@ Alt:
 <p align="center">
  <i>y<sub>total, t</sub> = y<sub>1, t</sub> + ... + y<sub>n, t</sub></i>
 </p>
- 
+
+```asciimath
+y_{total, t} = y_{1, t} + \dots + y_{n, t}
+```  
 
 If the condition in section 7.1 is satisfied and the priority variable is the list of components (target variable 2), then: 
 
@@ -127,6 +134,10 @@ Alt:
 <p align="center">
  <i>y<sub>1, t</sub> + ... + y<sub>n, t</sub> = y<sub>total, t</sub></i>
 </p>
+
+```asciimath
+y_{1, t} + \dots + y_{n, t} = y_{total, t}
+```
  
 Where *y<sub>1, t</sub>* to *y<sub>n, t</sub>* are prorated to equal *y<sub>total, t</sub>*. 
 

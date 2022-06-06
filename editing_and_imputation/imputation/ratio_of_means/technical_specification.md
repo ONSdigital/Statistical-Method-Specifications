@@ -98,6 +98,7 @@ directly preceding the first period in the main dataset and must not appear
 in the output.
 
 Back data records shall always contain the following fields:
+
 * Unique Identifier
 * Period
 * Grouping

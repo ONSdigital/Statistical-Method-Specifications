@@ -62,20 +62,28 @@ For each single score:
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
 
-## 4.0 Calculations
+## 4.0 Algorithm
 
-For each score:
-* Select predicted value. Use previous period data if it exists otherwise use
-    auxiliary. Predicted Marker is true in the case that previous period data
-    exists, false otherwise.
-* `Score = (100 * design_weight * modulus(adjusted_return - predicted_value))/standardising_factor
+For each single score `s_i` first select the predicted value `p_i`. Use the
+previous period data for the respondant if it exists otherwise use the
+respondant's auxiliary variable for the current period. The Predicted Marker
+is true in the case that the previous period data exists, false otherwise.
 
-If multiple scores then either:
+Given this, `s_i = (100 * a_i * abs(r_i - p_i))/f_i`.
+Where:
 
-* Get max of the scores
-* Weighted mean of scores = sum(weight*score)/sum(weight)
+* `a_i` is the unadjusted design weight for the respondant
+* `r_i` is the date adjusted return for the respondant
+* `f_i` is the standardising factor for the respondant
+
+For `n` number of scores (where `n > 1`) then the combined score `s` is one of:
+
+* Maximum single score `s = max(lim(i=1)^n s_i)`
+* Weighted mean of scores `s = sum_(i=1)^n (s_i * w_i) / sum_(i=1)^n w_i`
 * Mean score (The above but weight = 1)
-* Minkowski distance = (sum(score^p))^(1/p)
+* Minkowski distance `s = (sum_(i=1)^n s_i^p)^(1/p)
 
-Then check score against threshold. Selective editing marker is the result of
-the expression `score < threshold`.
+Otherwise there is only one single score `s`.
+
+The resultant score is then compared against the respondant's threshold `t`.
+The selective editing marker is the result of the expression `s < t`.

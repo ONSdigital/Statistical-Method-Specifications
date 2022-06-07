@@ -5,7 +5,6 @@
 * Support Area - Methodology - Editing & Imputation
 * Support Contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
 * Method Theme - Imputation
-* Method Classification - Ratio Imputation
 * Status - Partially tested, draft (not published)
 
 ## 2.0 Terminology
@@ -16,8 +15,8 @@
 * Target Variable - The variable of interest that requires data values
     to be imputed.
 * Target Record - A contributor's record in the target period.
-* Grouping - The variable used to group the data for the calculation of
-    imputation links. Commonly known as the imputation class.
+* Imputation Class - The variable used to group the data for the calculation of
+    imputation links.
 * Predictive Value - A value used as a predictor for a contributor's target
     variable.
 * Predictive Record - The record containing a contributor's predictive
@@ -57,10 +56,9 @@ This method assumes that the contributor's target variable value in the
 predictive period and the auxiliary variable are well correlated (i.e. a
 good predictor) with the target period.
 
-It is assumed that the grouping used (imputation classes) groups similar
-contributors together with respect to the target variable, whilst providing
-a sufficient number of responders within each group (imputation class) for
-robust link calculation.
+It is assumed that the imputation used groups similar contributors together
+with respect to the target variable, whilst providing a sufficient number
+of responders within each imputation class for robust link calculation.
 
 ## 5.0 Method Input and Output
 
@@ -74,7 +72,7 @@ Input records must include the following fields of the correct types:
 
 * Unique Identifier - Any
 * Period - String in "YYYYMM" format
-* Grouping - Any
+* Imputation Class - Any
 * Target Variable - Numeric - Nulls Allowed
 * Auxiliary Variable - Numeric
 * Forward Link (Optional) - Numeric
@@ -110,6 +108,18 @@ accept a dataset containing back data. This dataset must contain the period
 directly preceding the first period in the main dataset. This data shall be
 the result of a prior imputation run and must not appear in the output.
 
+Back data records shall always contain the following fields:
+
+* Unique Identifier
+* Period
+* Grouping
+* Imputed Variable
+* Imputation Marker
+* Auxiliary Variable
+
+These fields must have the same types as their counterparts in the Input
+and Output records.
+
 ## 7.0 Method
 
 ### 7.1 Overall method
@@ -121,7 +131,7 @@ constitutes an error condition and will be handled according to the error
 handling behaviour defined below.
 
 For each non-responding contributor, the method calculates a link, which
-corresponds to the group (imputation class) the non-responder sits within and
+corresponds to the imputation class the non-responder sits within and
 is then multiplied by the predictive value, to calculate an imputed value for
 a target record. This predictive value can either be the target variable value
 from the contributor's predictive record (if available) or an auxiliary variable.
@@ -150,8 +160,8 @@ where no data is available in the predictive period and therefore, an auxiliary
 variable is used which relates to the target period and is then multiplied by a
 link to create a constructed value.
 
-All link and imputation calculations must be performed treating each group
-(imputation class) in the dataset separately. In addition, since all contributors
+All link and imputation calculations must be performed treating each imputation
+class in the dataset separately. In addition, since all contributors
 must have a populated auxiliary variable, failure to fully populate the target
 variable by this method shall constitute an error.
 
@@ -186,8 +196,8 @@ provided links.
 ### 8.3 Responder Matching
 
 For forward and backward link calculations, only contributors that have responded
-in both the target and predictive period and are in the same group (imputation
-class) for both periods shall be used to calculate the ratios.
+in both the target and predictive period and are in the same imputation class
+for both periods shall be used to calculate the ratios.
 
 For construction link calculations, only contributors that have responded in the
 target period and have an available auxiliary variable shall be used to calculate
@@ -195,10 +205,10 @@ the ratio.
 
 ### 8.4 Link Calculations
 
-For forward and backward links, within each group (imputation class), the ratio is
+For forward and backward links, within each imputation class, the ratio is
 the sum of the target period's responders divided by the sum of the predictive
 period's responders. Note that contributors must have responded in both period
-(matched pairs) and in the same group (imputation class) for both periods. In the
+(matched pairs) and in the same imputation class for both periods. In the
 case of the forward link, the predictive period is the previous period whereas for
 the backward link it is the next period. If the predictive period is not present
 in the dataset, or the value of the denominator is 0 then the link shall default to 1.
@@ -207,7 +217,7 @@ in the dataset, or the value of the denominator is 0 then the link shall default
 
 <img src="https://render.githubusercontent.com/render/math?math=\Backwards \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t%2B1}}">
 
-For construction links, within each group (imputation class), the ratio uses the sum
+For construction links, within each imputation class, the ratio uses the sum
 of the responses in the target period divided by the sum of the responders' auxiliary
 values for the target period. As above, if the denominator is 0 then the link shall
 default to 1. For the purpose of this definition, the predictive period for this link
@@ -225,15 +235,26 @@ as:
 
 <img src="https://render.githubusercontent.com/render/math?math=\Weighted \imputation \link = w*\frac{\sum y_{i, t}}{\sum x_{i, t}} %2B (1-w)*\frac{\sum y_{i, t-k}}{\sum x_{i, t-k}}">
 
-This could be generalised further to allow more than two links to be included in the
-average.
-
 In some instances, a user may want to specify that the imputed value for a given target
 variable is constructed using links that have been calculated for another variable named
 by the user within a corresponding imputation class. A user also may want to specify that
 a variable is backwards or forwards imputed using links that have been calculated for
 another variable named by the user within a corresponding imputation class or use a link
 of 1.
+
+### 8.6 Defaulted links
+
+#### 8.6.1 Unable to calculate links
+
+When the imputation link cannot be calculated the imputation link will be
+defaulted to 1. To distinguish that this link cannot be calculated the matched
+pairs will be missing.
+
+#### 8.6.2 Zero in link calculations
+
+When the denominator of the imputation link calculation is 0 the link is
+defaulted to 1. To distinguish this link from the above default the matched
+pairs will be set to 0.
 
 ## 9.0 Imputation
 
@@ -293,23 +314,29 @@ using this imputation will be marked `C`.
 ### 9.4 Imputation rules
 
 Ratio of means imputation follows a set of rules to ensure that it is used
-correctly:
+correctly, these rules are in the same order as the flow chart below:
 
-- Forward impute if no response available for current period but is available from
-    a previous period.
-- Rolling forward impute if no response available for a few rolling periods but is
-    available from an earlier period.
-- Forwards imputation based on a previous constructed value if a business never
-    responds but auxiliary data is available for that business.
-- If forwards imputation cannot be calculated then backwards imputation is the
-    next best method.
-- Rolling backward imputation should be used if no response available for a few
-    rolling periods but is available from a later period.
-- If forwards or backwards imputation cannot be used, then construction should be
-    used.
+- If there is no response available and the respondent is being sampled for
+    the first time, calculate a constructed link using the auxiliary data.
+- If there is no response available for a second period, forwards impute
+    based off the constructed value.
+- If a response is available for the previous period but not the current
+    period, then perform forwards imputation.
+- If a response is available for the second period but not the third, fourth
+    or current, then perform rolling forwards imputation from the second period.
+- If a respondent doesn't respond for the first two periods it is sampled (see
+    bullet point 2) however does respond for the third period, then overwrite 
+    periods 1 and 2 with backwards imputation.
+- You can forwards and backwards impute off of the same respondent. However,
+    a forwards impute will always be preferred to a backwards impute.
+- If a respondent responds for all periods, then imputation is not needed.
 - If a business is rotated out of the sample and then rotated back into the sample,
-    values that were previously imputed should not be used.
-- The image below explains the priority order of the imputation links.
+    values that were previously present should not be used to forwards impute.
+- If a business is rotated out of sample and then rotated back into the sample,
+    the response from the current period should not be used to backwards impute.
+- If auxiliary data is missing then an error will occur
+
+Please see the image below for further information.
 
 ![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
 
@@ -317,18 +344,3 @@ correctly:
 
 In the case of errors occurring the method shall not result in any output records.
 Instead, a suitable error shall be emitted.
-
-### 10.1 Default links
-
-#### 10.1.1 Unable to calculate links
-
-When the imputation link cannot be calculated the imputation link will be
-defaulted to 1. To distinguish that this link cannot be calculated the matched
-pairs will be missing.
-
-#### 10.1.2 Zero in link calculations
-
-When the denominator of the imputation link calculation is 0 the link is
-defaulted to 1. To distinguish this link from the above default the matched
-pairs will be set to 0.
-

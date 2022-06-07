@@ -316,25 +316,25 @@ using this imputation will be marked `C`.
 Ratio of means imputation follows a set of rules to ensure that it is used
 correctly, these rules are in the same order as the flow chart below:
 
-- If there is no response available and the respondent is being sampled for
+* If there is no response available and the respondent is being sampled for
     the first time, calculate a constructed link using the auxiliary data.
-- If there is no response available for a second period, forwards impute
+* If there is no response available for a second period, forwards impute
     based off the constructed value.
-- If a response is available for the previous period but not the current
+* If a response is available for the previous period but not the current
     period, then perform forwards imputation.
-- If a response is available for the second period but not the third, fourth
+* If a response is available for the second period but not the third, fourth
     or current, then perform rolling forwards imputation from the second period.
-- If a respondent doesn't respond for the first two periods it is sampled (see
+* If a respondent doesn't respond for the first two periods it is sampled (see
     bullet point 2) however does respond for the third period, then overwrite 
     periods 1 and 2 with backwards imputation.
-- You can forwards and backwards impute off of the same respondent. However,
+* You can forwards and backwards impute off of the same respondent. However,
     a forwards impute will always be preferred to a backwards impute.
-- If a respondent responds for all periods, then imputation is not needed.
-- If a business is rotated out of the sample and then rotated back into the sample,
+* If a respondent responds for all periods, then imputation is not needed.
+* If a business is rotated out of the sample and then rotated back into the sample,
     values that were previously present should not be used to forwards impute.
-- If a business is rotated out of sample and then rotated back into the sample,
+* If a business is rotated out of sample and then rotated back into the sample,
     the response from the current period should not be used to backwards impute.
-- If auxiliary data is missing then an error will occur
+* If auxiliary data is missing then an error will occur
 
 Please see the image below for further information.
 

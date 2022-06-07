@@ -98,7 +98,7 @@ following types:
 
 ## 6.0 Method
 
-### 6.1 Score calculation 
+### 6.1 Score calculation
 
 A selective editing score is calculated for each reporting unit i in
 time t. The selective editing score is calculated by multiplying the
@@ -156,9 +156,3 @@ validation.
 *is there a missing flag here or are we just outputting the error?
 
 ## 7.0 Worked example
-
-
-
-
-
-

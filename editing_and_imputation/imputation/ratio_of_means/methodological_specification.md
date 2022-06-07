@@ -215,11 +215,13 @@ for the backward link it is the next period. If the predictive period is not
 present in the dataset, or the value of the denominator is 0 then the link
 shall default to 1.
 
-<img src="https://render.githubusercontent.com/render/math?math=\Forwards
-          \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t-1}}">
+```asciimath
+Forwards imputation link = {sum x_{i, t}}/{sum x_{i, t-1}}
+```
 
-<img src="https://render.githubusercontent.com/render/math?math=\Backwards
-          \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t%2B1}}">
+```asciimath
+Backwards imputation link = {sum x_{i, t}}/{sum x_{i, t+1}}
+```
 
 For construction links, within each imputation class, the ratio uses the sum
 of the responses in the target period divided by the sum of the responders'
@@ -227,8 +229,9 @@ auxiliary values for the target period. As above, if the denominator is 0
 then the link shall default to 1. For the purpose of this definition, the
 predictive period for this link is the target period.
 
-<img src="https://render.githubusercontent.com/render/math?math=\Construction
-          \imputation \link = \frac{\sum x_{i, t}}{\sum y_{i, t}}">
+```asciimath
+Construction imputation link = {sum x_{i, t}}/{sum y_{i, t}}
+```
 
 ### 8.5 Weighted imputation links
 
@@ -238,9 +241,10 @@ this could be the average of two links. Two further parameters would need
 to specified: the time lag (k) and the weight (w) given to each period. In
 this case the imputation link is calculated as:
 
-<img src="https://render.githubusercontent.com/render/math?math=\Weighted
-          \imputation \link = w*\frac{\sum y_{i, t}}{\sum x_{i, t}}
-          %2B (1-w)*\frac{\sum y_{i, t-k}}{\sum x_{i, t-k}}">
+```asciimath
+Weighted imputation link = w*{sum y_{i, t}}/{sum x_{i, t}}
+          + (1-w)*{sum y_{i, t-k}}/{sum x_{i, t-k}}
+```
 
 In some instances, a user may want to specify that the imputed value for a
 given target variable is constructed using links that have been calculated

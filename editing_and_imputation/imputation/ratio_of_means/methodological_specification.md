@@ -134,9 +134,10 @@ For each non-responding contributor, the method calculates a link, which
 corresponds to the imputation class the non-responder sits within and
 is then multiplied by the predictive value, to calculate an imputed value for
 a target record. This predictive value can either be the target variable value
-from the contributor's predictive record (if available) or an auxiliary variable.
-When the imputation link is multiplied by the predictive record, the predictive
-record can take any response type (i.e. response, imputed or constructed value).
+from the contributor's predictive record (if available) or an auxiliary
+variable. When the imputation link is multiplied by the predictive record, the
+predictive record can take any response type (i.e. response, imputed or
+constructed value).
 
 The following imputation types comprise the complete method:
 
@@ -146,14 +147,14 @@ The following imputation types comprise the complete method:
 * Forward imputation from construction
 
 Forward imputation imputes data for non-responders in the target period by
-multiplying a link to the predictive period data, where the predictive period is
-the period that immediately precedes the target period. It should be noted that
-the same link is used for forwards imputation from a response and from a
+multiplying a link to the predictive period data, where the predictive period
+is the period that immediately precedes the target period. It should be noted
+that the same link is used for forwards imputation from a response and from a
 construction.
 
 Backwards imputation imputes data for non-responders in the target period by
-multiplying a link to the predictive period data, where the predictive period is
-the period that immediately follows the target period.
+multiplying a link to the predictive period data, where the predictive period
+is the period that immediately follows the target period.
 
 Construction imputation imputes data for non-responders in the target period
 where no data is available in the predictive period and therefore, an auxiliary
@@ -195,13 +196,13 @@ provided links.
 
 ### 8.3 Responder Matching
 
-For forward and backward link calculations, only contributors that have responded
-in both the target and predictive period and are in the same imputation class
-for both periods shall be used to calculate the ratios.
+For forward and backward link calculations, only contributors that have
+responded in both the target and predictive period and are in the same
+imputation class for both periods shall be used to calculate the ratios.
 
-For construction link calculations, only contributors that have responded in the
-target period and have an available auxiliary variable shall be used to calculate
-the ratio.
+For construction link calculations, only contributors that have responded in
+the target period and have an available auxiliary variable shall be used to
+calculate the ratio.
 
 ### 8.4 Link Calculations
 
@@ -209,38 +210,50 @@ For forward and backward links, within each imputation class, the ratio is
 the sum of the target period's responders divided by the sum of the predictive
 period's responders. Note that contributors must have responded in both period
 (matched pairs) and in the same imputation class for both periods. In the
-case of the forward link, the predictive period is the previous period whereas for
-the backward link it is the next period. If the predictive period is not present
-in the dataset, or the value of the denominator is 0 then the link shall default to 1.
+case of the forward link, the predictive period is the previous period whereas
+for the backward link it is the next period. If the predictive period is not
+present in the dataset, or the value of the denominator is 0 then the link
+shall default to 1.
 
-<img src="https://render.githubusercontent.com/render/math?math=\Forwards \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t-1}}">
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=\Forwards
+          \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t-1}}">
+</p>
 
-<img src="https://render.githubusercontent.com/render/math?math=\Backwards \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t%2B1}}">
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=\Backwards
+          \imputation \link = \frac{\sum x_{i, t}}{\sum x_{i, t%2B1}}">
+</p>
 
 For construction links, within each imputation class, the ratio uses the sum
-of the responses in the target period divided by the sum of the responders' auxiliary
-values for the target period. As above, if the denominator is 0 then the link shall
-default to 1. For the purpose of this definition, the predictive period for this link
-is the target period.
+of the responses in the target period divided by the sum of the responders'
+auxiliary values for the target period. As above, if the denominator is 0
+then the link shall default to 1. For the purpose of this definition, the
+predictive period for this link is the target period.
 
-<img src="https://render.githubusercontent.com/render/math?math=\Construction \imputation \link = \frac{\sum x_{i, t}}{\sum y_{i, t}}">
+<p align="center">
+<img src="https://render.githubusercontent.com/render/math?math=\Construction
+          \imputation \link = \frac{\sum x_{i, t}}{\sum y_{i, t}}">
+</p>
 
 ### 8.5 Weighted imputation links
 
-In some cases, it may be appropriate to use an imputation link which is an average of
-imputation links for more than one period. In the simplest case this could be the
-average of two links. Two further parameters would need to specified: the time lag (k)
-and the weight (w) given to each period. In this case the imputation link is calculated
-as:
+In some cases, it may be appropriate to use an imputation link which is an
+average of imputation links for more than one period. In the simplest case
+this could be the average of two links. Two further parameters would need
+to specified: the time lag (k) and the weight (w) given to each period. In
+this case the imputation link is calculated as:
 
-<img src="https://render.githubusercontent.com/render/math?math=\Weighted \imputation \link = w*\frac{\sum y_{i, t}}{\sum x_{i, t}} %2B (1-w)*\frac{\sum y_{i, t-k}}{\sum x_{i, t-k}}">
+<img src="https://render.githubusercontent.com/render/math?math=\Weighted
+          \imputation \link = w*\frac{\sum y_{i, t}}{\sum x_{i, t}} %2B (1-w)*\frac{\sum y_{i, t-k}}{\sum x_{i, t-k}}">
 
-In some instances, a user may want to specify that the imputed value for a given target
-variable is constructed using links that have been calculated for another variable named
-by the user within a corresponding imputation class. A user also may want to specify that
-a variable is backwards or forwards imputed using links that have been calculated for
-another variable named by the user within a corresponding imputation class or use a link
-of 1.
+In some instances, a user may want to specify that the imputed value for a
+given target variable is constructed using links that have been calculated
+for another variable named by the user within a corresponding imputation
+class. A user also may want to specify that a variable is backwards or
+forwards imputed using links that have been calculated for another variable
+named by the user within a corresponding imputation class or use a link of
+1.
 
 ### 8.6 Defaulted links
 
@@ -270,11 +283,11 @@ of the link being used.
 
 For a given period and non-responder, the method will aim to apply forwards
 imputation wherever possible. If this is not feasible, backward imputation will
-be used if applicable. If a predictive record does not exist for the non-responder
-(ie. newly sampled) then construction imputation will be applied.
+be used if applicable. If a predictive record does not exist for the
+non-responder (ie. newly sampled) then construction imputation will be applied.
 
-Note that when imputation is not required for a given contributor (i.e. responder)
-then the output imputation marker is set to R.
+Note that when imputation is not required for a given contributor (i.e.
+responder) then the output imputation marker is set to R.
 
 ### 9.1 Forward Imputation
 
@@ -301,9 +314,9 @@ In this type of imputation, the backward link is used and the predictive value
 is the value for the target variable for the predictive record. Only predictive
 records which are responses or backwards imputes from responses can be used.
 Records imputed using this imputation will be marked `BI`. Backward imputation
-from construction must not occur. In the event that a given period non-responder
-is able to have both forward and backward imputation, forward imputation takes
-priority.
+from construction must not occur. In the event that a given period
+non-responder is able to have both forward and backward imputation, forward
+imputation takes priority.
 
 ### 9.3 Construction
 
@@ -323,18 +336,21 @@ correctly, these rules are in the same order as the flow chart below:
 * If a response is available for the previous period but not the current
     period, then perform forwards imputation.
 * If a response is available for the second period but not the third, fourth
-    or current, then perform rolling forwards imputation from the second period.
+    or current, then perform rolling forwards imputation from the second
+    period.
 * If a respondent doesn't respond for the first two periods it is sampled (see
-    bullet point 2) however does respond for the third period, then overwrite 
+    bullet point 2) however does respond for the third period, then overwrite
     periods 1 and 2 with backwards imputation.
 * You can forwards and backwards impute off of the same respondent. However,
     a forwards impute will always be preferred to a backwards impute.
 * If a respondent responds for all periods, then imputation is not needed.
-* If a business is rotated out of the sample and then rotated back into the sample,
-    values that were previously present should not be used to forwards impute.
-* If a business is rotated out of sample and then rotated back into the sample,
-    the response from the current period should not be used to backwards impute.
-* If auxiliary data is missing then an error will occur
+* If a business is rotated out of the sample and then rotated back into the
+    sample, values that were previously present should not be used to
+    forwards impute.
+* If a business is rotated out of sample and then rotated back into the
+    sample, the response from the current period should not be used to
+    backwards impute.
+* If auxiliary data is missing then an error will occur.
 
 Please see the image below for further information.
 

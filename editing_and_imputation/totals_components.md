@@ -11,7 +11,7 @@
 * Contributor – A member of the sample; identified by a unique identifier. 
 * Record – A set of values for each contributor and period. 
 * Target Period – The period currently undergoing data validation. 
-* Target Variable – The variable of interest that the method is working on. 
+* Target Variable – The variable of interest that the method is working on, the total or components as determined by the Amend Total variable. 
 * Target Record – A contributor's record in the target period. 
 * Predictive Value – A value used as a predictor for a contributor's target variable. 
 * Predictive Record – The record containing a contributor's predictive value. 
@@ -32,17 +32,19 @@ The method uses two cleared consecutive periods of data for a given respondent: 
 * Target value and predictive value are well correlated  
 * Target value and register based auxiliary value, if required, are well correlated 
 * Thresholds set are a good indication of whether a value should be corrected  
-* The method can only observe and satisfy one fixed relationship at a time (i.e., only one set of components and total)  
+* The method can only observe and satisfy one fixed relationship at a time (i.e., only one set of components and total)
+* Both the total value and corresponding components are populated for the target period 
+* 
 
-## 5.0 Method Input and Output - TO BE FINALISED IN COLLAB WITH DST
+## 5.0 Method Input and Output
 ### 5.1 Input Records
 Input records must include the following fields of the correct types:  
 
 * Unique Identifier – Any e.g., Business Reporting Unit  
 * Period – String in "YYYYMM" format  
-* Target Variable 1 – Target period total, numeric – nulls allowed  
-* Target Variable 2 – List of Target Variable 1 components, numeric – nulls allowed 
-* Correction Priority – Variable(s) to be corrected, numeric. 1 = Target Variable 1, 2 = Target Variable 2 
+* Total Variable – Target period total, numeric – nulls allowed  
+* Components Variable – Corresponding list of Total variable's components, numeric – nulls allowed 
+* Amend Total – Select which variable should be amended, Boolean. 0 = False, Components amended and 1 = True, Total amended 
 * Predictive Variable – Previous period total, numeric  
 * Predictive Variable Type – e.g., return, impute, etc., numeric   
 * Auxiliary Variable – Register based variable – optional, nulls allowed 
@@ -53,21 +55,25 @@ Output records shall always contain the following fields with the following type
 
 * Unique Identifier – Any e.g., Business Reporting Unit  
 * Period – String in "YYYYMM" format  
-* TCC Marker – To indicate if correction made as result of Totals Components Correction, numeric 
-* Original Target Variable 1 – Numeric  
-* Corrected Target Variable 1 – Numeric  
-* Original Target Variable 2 – Numeric  
-* Corrected Target Variable 2 – Numeric  
-* Date Changed – String in “DDMMYYYY” format  
+* TCC Marker – To indicate the result of the Totals Components Correction method, string 
+* Final Total Variable – Numeric  
+* Final Components Variable – Numeric  
 
 Fields of type "Any" shall be of the same type as the corresponding input fields as the values shall be the same in both input and output records. 
 
+The TCC marker must be one of the following: 
+
+* T = Total corrected 
+* C = Components corrected 
+* N = No correction required, i.e., the total is equal to the components sum. 
+* M = Manual editing required. This marker will identify contributors where the discrepancy between the total and component is deemed too large for automatic correction
+
 ## 6.0 Overall Method
-This method firstly identifies if any fixed relationships (i.e., totals/components) have not been satisfied. If so, the method then calculates the absolute difference between the sum of the components for a given question and its corresponding total, collected separately, for the previous period. If this difference is non-zero and less than a specified threshold, then the priority target variable is automatically corrected. If the absolute difference is greater than or equal to a threshold and the method is being applied to returned data, then the responder is recontacted for confirmation. If method is applied to data that is not respondent data e.g., imputed data, then the threshold can be set to a maximum value, allowing the method to automatically correct all cases where the total does not equal the sum of the components.  
+This method firstly identifies if any fixed relationships (i.e., totals/components) have not been satisfied. If so, the method then calculates the absolute difference between the sum of the components for a given question and its corresponding total, collected separately, for the previous period. If this difference is non-zero and less than a specified threshold, then either the total or components variables will be automatically corrected, depending on which is selected. If the absolute difference is greater than or equal to a threshold and the method is being applied to returned data, then the responder is recontacted for confirmation. If method is applied to data that is not respondent data e.g., imputed data, then the threshold can be set to a maximum value, allowing the method to automatically correct all cases where the total does not equal the sum of the components.  
 
 The rationale for automatically correcting totals/components can vary by data type. For example, with respondent data, it may be preferred to only automatically correct data if there is a small difference between the predictive and target variables in the target period as it is a cost-effective approach to data editing. However, if a difference greater than or equal to a set threshold is observed between the predictive variable and the target variable in the target period, then it may be preferred to not automatically correct data in favour of re-contacting the respondent to correct the data directly. 
 
-[As mentioned above, thresholds can conversely be set to be very large, such that data will always be automatically edited if they have met the required criteria. This approach can be applied when it is not appropriate to re-contact a respondent (e.g., apply to imputed data).]
+As mentioned above, thresholds can conversely be set to be very large, such that data will always be automatically edited if they have met the required criteria. This approach can be applied when it is not appropriate to re-contact a respondent (e.g., apply to imputed data).
 
 If the predictive period’s data is missing, then the method is not applied, unless it is appropriate to use a register-based variable that is well correlated with the target variable. The register based auxiliary variable should not be read into the data if the user does not require it. 
 

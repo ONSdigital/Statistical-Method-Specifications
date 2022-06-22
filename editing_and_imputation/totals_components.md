@@ -34,7 +34,6 @@ The method uses two cleared consecutive periods of data for a given respondent: 
 * Thresholds set are a good indication of whether a value should be corrected  
 * The method can only observe and satisfy one fixed relationship at a time (i.e., only one set of components and total)
 * Both the total value and corresponding components are populated for the target period 
-* 
 
 ## 5.0 Method Input and Output
 ### 5.1 Input Records
@@ -44,11 +43,13 @@ Input records must include the following fields of the correct types: 
 * Period – String in "YYYYMM" format  
 * Total Variable – Target period total, numeric – nulls allowed  
 * Components Variable – Corresponding list of Total variable's components, numeric – nulls allowed 
-* Amend Total – Select which variable should be amended, Boolean. 0 = False, Components amended and 1 = True, Total amended 
+* Amend Total – Select whether Total Variable should be automatically corrected, Boolean. 0 = False (correct components), 1 = True (correct total)
 * Predictive Variable – Previous period total, numeric  
 * Predictive Variable Type – e.g., return, impute, etc., numeric   
 * Auxiliary Variable – Register based variable – optional, nulls allowed 
 * Threshold – Numeric
+
+The Amend Total variable determines whether the Total or Components variable will be corrected through application of the method. The chosen variable is then defined as the Target Variable.
 
 ### 5.2 Output Records
 Output records shall always contain the following fields with the following types:  
@@ -69,7 +70,7 @@ The TCC marker must be one of the following:
 * M = Manual editing required. This marker will identify contributors where the discrepancy between the total and component is deemed too large for automatic correction.
 
 ## 6.0 Overall Method
-This method firstly identifies if any fixed relationships (i.e., totals/components) have not been satisfied. If so, the method then calculates the absolute difference between the sum of the components for a given question and its corresponding total, collected separately, for the previous period. If this difference is non-zero and less than a specified threshold, then either the total or components variables will be automatically corrected, depending on the Amend Total variable. If the absolute difference is greater than or equal to a threshold and the method is being applied to returned data, then the responder is recontacted for confirmation. If the method is applied to data that is not respondent data e.g., imputed data, then the threshold can be set to a maximum value, allowing the method to automatically correct all cases where the total does not equal the sum of the components.  
+This method firstly identifies if any fixed relationships (i.e., totals/components) have not been satisfied. If so, the method then calculates the absolute difference between the sum of the components for a given question and its corresponding total, for the previous period. If this difference is non-zero and less than a specified threshold, then either the total or component variables will be automatically corrected, depending on the Amend Total variable. If the absolute difference is greater than or equal to a threshold and the method is being applied to returned data, then the responder is recontacted for confirmation. If the method is applied to data that is not returned data e.g., imputed data, then the threshold can be set to a maximum value, allowing the method to automatically correct all cases where the total does not equal the sum of the components.  
 
 The rationale for automatically correcting totals/components can vary by data type. For example, with respondent data, it may be preferred to only automatically correct data if there is a small difference between the predictive and target variables in the target period as it is a cost-effective approach to data editing. However, if a difference greater than or equal to a set threshold is observed between the predictive variable and the target variable in the target period, then it may be preferred to not automatically correct data in favour of re-contacting the respondent to correct the data directly. 
 
@@ -81,7 +82,7 @@ If a total for the target period does not equal the sum of its corresponding com
 The predictive period value can either be a cleaned return, an impute or a construction. If this data is not available, then an auxiliary register-based variable should only be used when it is populated by the user. For example, when checking employment data, ONS business surveys use a register-based auxiliary variable only for surveys with annual periodicity, when there is no predictive variable available. The predictive variable should take priority over the register-based auxiliary. Otherwise, the method should not run if there is no previous period data available. 
 
 ### 6.2 Error Correction
-If the condition is satisfied, i.e., the absolute difference is less than the threshold, then the target variable will be corrected, depending on which priority variable has been selected: 
+If the condition is satisfied, i.e., the absolute difference is less than the threshold, then the target variable will be corrected, depending on which target variable has been selected: 
 
 1. If Amend Total = 0, then the components are automatically corrected for the target period to be equal to the total in the target period.
 2.  If Amend Total = 1, then the total is automatically corrected for the target period to equal the sum of the components in the target period. 

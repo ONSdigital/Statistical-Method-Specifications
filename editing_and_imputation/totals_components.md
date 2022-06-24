@@ -16,7 +16,7 @@
 * Predictive Value – A value used as a predictor for a contributor's target variable. 
 * Predictive Record – The record containing a contributor's predictive value. 
 * Predictive Period – The period containing predictive records; defined relative to the target period. 
-* Auxiliary variable – The variable used a predictor for a contributor’s target variable, where the predictive value is not available (i.e., where the contributor was not sampled in the predictive period). This should only be populated if the user has a suitable variable that they wish to use if the predictive value is not available. Else, the method should not run. 
+* Auxiliary variable – The variable used as a predictor for a contributor’s target variable, where the predictive value is not available (i.e., where the contributor was not sampled in the predictive period). This should only be populated if the user has a suitable variable that they wish to use if the predictive value is not available. Else, the method should not run. 
 * Responder – A contributor who has responded to the survey within a given period. 
 
 ## 3.0 Introduction

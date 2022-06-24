@@ -46,7 +46,7 @@ Input records must include the following fields of the correct types: 
 * Amend Total – Select whether Total Variable should be automatically corrected, Boolean. 0 = False (correct components), 1 = True (correct total)
 * Predictive Variable – Previous period total, numeric  
 * Predictive Variable Type – e.g., return, impute, etc., numeric   
-* Auxiliary Variable – Register based variable – optional, nulls allowed 
+* Auxiliary Variable – Register based variable – optional, numeric – nulls allowed
 * Threshold – Numeric
 
 The Amend Total variable determines whether the Total or Components variable will be corrected through application of the method. The chosen variable is then defined as the Target Variable.

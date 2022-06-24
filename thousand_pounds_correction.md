@@ -18,7 +18,7 @@
 * Predictive Variable Type – Type of data e.g., response, impute etc. Not required to run the method but required for method review purposes. 
 * Predictive Record - The record containing a contributor's predictive value.
 * Predictive Period - The period containing predictive records; defined relative to the target period.
-* Auxiliary variable - The variable used as a predictor for a contributor's principal variable, where the predictive value is not available for a given contributor (i.e. where the contributor was not sampled in the predictive period).
+* Auxiliary variable - The variable used as a predictor for a contributor's principal variable, where the predictive value is not available for a given contributor (i.e. where the contributor was not sampled in the predictive period). This should only be populated if the user has a suitable variable that they wish to use if the predictive value is not available. Else, the method should not run.
 * Responder - A contributor who has responded to the survey within a given period.
 
 
@@ -45,7 +45,7 @@ Input records must include the following fields of the correct types:
 * Target Variable(s) – Can be a list, numeric – nulls allowed 
 * Predictive Variable – Single variable, numeric – nulls allowed if unavailable 
 * Predictive Variable Type – e.g., return, impute, etc., numeric – nulls allowed 
-* Auxiliary Variable – Numeric 
+* Auxiliary Variable – Register based variable – optional, numeric – nulls allowed 
 * Upper Limit – Numeric  
 * Lower Limit – Numeric  
 
@@ -71,10 +71,12 @@ Fields of type "Any" shall be of the same type as the corresponding input fields
 ## 6.0 Method
 
 ### 6.1 Overall Method
-A principal variable must be specified as a priority indictor for whether a thousand pounds error has occurred. The method checks the principal variable for a given contributor to determine whether the ratio of the principal variable by the predictive variable is within a fixed set of upper and lower thresholds. If the predictive variable is not available for a given contributor, then an auxiliary variable is used. If the ratio lies within these thresholds, then a thousand pounds correction is automatically applied to the principal variable and the rest of the target variables, if any, are automatically corrected.       
+A principal variable must be specified as a priority indictor for whether a thousand pounds error has occurred. The method checks the principal variable for a given contributor to determine whether the ratio of the principal variable by the predictive variable is within a fixed set of upper and lower thresholds. If the ratio lies within these thresholds, then a thousand pounds correction is automatically applied to the principal variable and the rest of the target variables, if any, are automatically corrected.
+
+If the predictive period’s data is missing, then the method is not applied, unless it is appropriate to use a register-based variable that is well correlated with the target variable. The register based auxiliary variable should not be read into the data if the user does not require it. 
 
 ### 6.2 Error Detection
-The error detection calculation is applied to each contributor and calculates the ratio of the principal variable and predictive variable at the contributor level. The principal variable is the current period data value, and the predictive variable is the corresponding previous period data value, if the contributor was previously sampled. Previous period data can be a clean response, imputed or constructed data value. If there is no predictive value available (i.e., the contributor was not sampled in the previous period), then an auxiliary variable should be used; IDBR selection turnover. Note that the auxiliary variable should be recorded in the same denomination as the target variable. 
+The error detection calculation is applied to each contributor and calculates the ratio of the principal variable and predictive variable at the contributor level. The principal variable is the current period data value, and the predictive variable is the corresponding previous period data value, if the contributor was previously sampled. Previous period data can be a clean response, imputed or constructed data value. If there is no predictive value available (i.e., the contributor was not sampled in the previous period), then an auxiliary variable such as IDBR selection turnover can be used if required by the user. Note that the auxiliary variable should be recorded in the same denomination as the target variable. 
 
 If the ratio is within the predefined upper and lower thresholds, then a thousand pounds error is detected.  
 
@@ -107,7 +109,7 @@ If the ratio lies within, and not equal to, the limits, then a thousand pounds e
 
  
 
-If a cleared, predictive value does not exist, then the error detection calculation is as follows:  
+If a cleared, predictive value does not exist and the user has chosen to input an auxiliary variable, then the error detection calculation is as follows:  
 
 <p align="center">
 <img src="https://render.githubusercontent.com/render/math?math=\large L_{Lower} < \frac{y_{i, q, t}}{x_{i, q, t}} < L_{Upper}">
@@ -139,7 +141,7 @@ Once the principal target variable has been corrected, all other monetary values
 
 
 ## 8.0 Worked Example
-For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys.  
+For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys. The user has opted to use auxiliary data in the absence of the preferred predictive variable.  
 
 | Contributor | *y<sub>i, q, t</sub>* | *y<sub>i, q, t-1</sub>* | *x<sub>i, q, t</sub>* | Detection Ratio | Pass/Fail |*y<sup>\*</sup><sub>i, q, t</sub>*|
 |---|---|---|---|---|---|---|

@@ -154,5 +154,3 @@ the output flag as 'P' for pass selective editing and does not require
 validation.
 
 *is there a missing flag here or are we just outputting the error?
-
-## 7.0 Worked example

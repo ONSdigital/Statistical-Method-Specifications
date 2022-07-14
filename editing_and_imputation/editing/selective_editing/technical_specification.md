@@ -93,7 +93,7 @@ Where:
 * `r_i` is the adjusted return for the respondant
 * `f_i` is the standardising factor for the respondant
 
-For `n` veriable specific scores (where `n > 1`) then the combined score `s`
+For `n` question specific scores (where `n > 1`) then the combined score `s`
 is one of:
 
 * Maximum question specific score `s = max(lim_(i=1)^n s_i)`

@@ -19,12 +19,13 @@ does not actually alter the input values.
 
 * Contributor - A respondent identified by a unique identifier.
 * Record - The set of input fields corresponding to a single contributor.
+* Question - A single question on a form for a given contributor.
 * Adjusted return - The unedited returned data value in the current period for
-    a given variable.
-* Predicted value - The value in the previous period for a given variable
+    a given question.
+* Predicted value - The value in the previous period for a given question
     (may be the result of imputation).
 * Auxiliary value - A secondary predictive value from the current period for
-    a given variable.
+    a given question.
 * Standardising factor - The domain group estimate used to standardise scores
     within a given domain group.
 * Design weight - The sample design weight.
@@ -46,7 +47,7 @@ types:
 * Minkowski Parameter - Numeric - Optional, only if Minkowski Distance is
     being used.
 
-For each variable which must be scored:
+For each question which must be scored:
 
 * Adjusted Return - Numeric
 * Auxiliary Value - Numeric
@@ -70,7 +71,7 @@ types:
 * Combined Score - Numeric - Optional, only if combined score is used.
 * Selective Editing Marker - Boolean
 
-For each variable specific score:
+For each question specific score:
 
 * Score - Numeric
 * Predicted Marker - Boolean
@@ -80,9 +81,9 @@ fields as the values shall be the same in both input and output records.
 
 ## 5.0 Algorithm
 
-For each variable specific score `s_i` first select the predicted value `p_i`.
+For each question specific score `s_i` first select the predicted value `p_i`.
 Use the previous period data for the respondant if it exists otherwise use the
-respondant's auxiliary variable for the current period. The Predicted Marker
+respondant's auxiliary value for the current period. The Predicted Marker
 is true in the case that the previous period data exists, false otherwise.
 
 Given this, `s_i = (100 * a_i * abs(r_i - p_i))/f_i`.
@@ -95,12 +96,12 @@ Where:
 For `n` veriable specific scores (where `n > 1`) then the combined score `s`
 is one of:
 
-* Maximum variable specific score `s = max(lim_(i=1)^n s_i)`
+* Maximum question specific score `s = max(lim_(i=1)^n s_i)`
 * Weighted mean of scores `s = sum_(i=1)^n (s_i * w_i) / sum_(i=1)^n w_i`
 * Mean score (The above but weight = 1)
 * Minkowski distance `s = (sum_(i=1)^n s_i^p)^(1/p)
 
-Otherwise there is only one variable specific score `s`.
+Otherwise there is only one question specific score `s`.
 
 The resultant score is then compared against the respondant's threshold `t`.
 The selective editing marker is the result of the boolean expression `s < t`.

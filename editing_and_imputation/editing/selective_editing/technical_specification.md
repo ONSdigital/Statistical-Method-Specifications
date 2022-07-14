@@ -18,6 +18,7 @@ does not actually alter the input values.
 ## 3.0 Terminology
 
 * Contributor - A respondent identified by a unique identifier.
+* Record - The set of input fields corresponding to a single contributor.
 * Adjusted return - The unedited returned data value in the current period for
     a given variable.
 * Predicted value - The value in the previous period for a given variable

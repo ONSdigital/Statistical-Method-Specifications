@@ -58,15 +58,15 @@ Output records shall always contain the following fields with the following type
 
 * Unique Identifier – Any e.g., Business Reporting Unit 
 * Period – String in "YYYYMM" format 
-* Original Principal Variable – Numeric 
-* Corrected Principal Variable – Numeric 
-* Original Target Variables – Can be a list, numeric – nulls allowed 
-* Corrected Target Variables – Can be a list, numeric – nulls allowed 
-* TPC Marker – Numeric, to indicate if thousand pounds correction made as result of the method 
-* Date Changed – String in “DDMMYYYY” format 
- 
-Fields of type "Any" shall be of the same type as the corresponding input fields as the values shall be the same in both input and output records.
+* Final Principal Variable – Numeric 
+* Final Target Variables – Can be a list, numeric – nulls allowed 
+* TPC Marker –  To indicate the result of the Thousand Pounds Correction method, string 
 
+Fields of type "Any" shall be of the same type as the corresponding input fields as the values shall be the same in both input and output records. 
+
+The TPC Marker must be one of the following: 
+* C = Correction applied 
+* N = No correction applied 
 
 ## 6.0 Method
 

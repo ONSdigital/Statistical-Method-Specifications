@@ -27,7 +27,7 @@ The thousand pounds correction is commonly used across business surveys. It is a
 
 
 ## 4.0 Assumptions
-* A ratio outside of the upper or lower thresholds is due to a thousand pounds error 
+* A ratio inside of the upper or lower thresholds is due to a thousand pounds error 
 * If the principal variable is found to be a thousand pounds error, then it is assumed that all other monetary values are also thousand pounds errors 
 * The principal variable and predictive value are well correlated and are intended to be reported in the same denomination (i.e., thousand pounds) 
 * The principal variable and auxiliary value are well correlated and intended to be reported in the same denomination (i.e., thousand pounds) 

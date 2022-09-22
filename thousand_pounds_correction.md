@@ -67,6 +67,11 @@ Fields of type "Any" shall be of the same type as the corresponding input fields
 The TPC Marker must be one of the following: 
 * C = Correction applied 
 * N = No correction applied 
+* E = Method error
+
+Possible method errors:
+* TO BE WRITTEN ONCE TESTING COMPLETE
+
 
 ## 6.0 Method
 

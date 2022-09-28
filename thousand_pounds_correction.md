@@ -51,6 +51,12 @@ Input records must include the following fields of the correct types:
 
 Unless otherwise noted, fields must not contain null values. All other fields shall be ignored. 
 
+The method requires at least one of the following as the previous period predictive variable, in the given priority order: 
+1. Returned, cleaned response
+2. Imputed or constructed value 
+3. Auxiliary variable e.g., registered annual turnover 
+
+Although predicted and auxiliary are both optional, at least one must be provided for the method to work. Else a method error is emitted. 
 Note that the predictive variable is indirectly defined as the principal variable in the predictive period.
 
 ### 5.2 Output Records
@@ -58,6 +64,8 @@ Output records shall always contain the following fields with the following type
 
 * Unique Identifier – Any e.g., Business Reporting Unit 
 * Period – String in "YYYYMM" format 
+* Original Principal Variable – Numeric
+* Original Target Variables – Can be a list, numeric – nulls allowed
 * Final Principal Variable – Numeric 
 * Final Target Variables – Can be a list, numeric – nulls allowed 
 * TPC Marker –  To indicate the result of the Thousand Pounds Correction method, string 

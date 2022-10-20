@@ -46,8 +46,8 @@ Input records must include the following fields of the correct types:
 * Predictive Variable – Single variable, numeric – nulls allowed if unavailable 
 * Predictive Variable Type – e.g., return, impute, etc., numeric – nulls allowed 
 * Auxiliary Variable – Register based variable – optional, numeric – nulls allowed 
-* Upper Limit – Numeric  
-* Lower Limit – Numeric  
+* Upper Limit – Single variable, numeric  
+* Lower Limit – Single variable, numeric  
 
 Unless otherwise noted, fields must not contain null values. All other fields shall be ignored. 
 

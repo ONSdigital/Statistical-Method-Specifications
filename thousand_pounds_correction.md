@@ -12,7 +12,7 @@
 * Record - A set of values for each contributor and period.
 * Target Period - The period currently undergoing data validation.
 * Principal Variable – Variable that the method is working on and will determine if the remaining monetary variables, if any, will be automatically corrected.  
-* Target Variable(s) – List of all monetary variables that may be automatically corrected, including the principal variable.
+* Target Variable(s) – List of all monetary variables that may be automatically corrected, excluding the principal variable.
 * Target Record - A contributor's record in the target period.
 * Predictive Variable - The corresponding value used as predictor for the principal variable for each contributor.
 * Predictive Variable Type – Type of data e.g., response, impute etc. Not required to run the method but required for method review purposes. 

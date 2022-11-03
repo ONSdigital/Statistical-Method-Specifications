@@ -316,8 +316,8 @@ Thus a completely imputed target variable `o` is:
 ```asciimath
 o((c)) = v_(forward)((
     v_(construction)((
-        v_backward((
-            v_forward)((c))
+        v_(backward)((
+            v_(forward)((c))
         ))
     ))
 ))

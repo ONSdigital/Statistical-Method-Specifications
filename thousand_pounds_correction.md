@@ -69,6 +69,7 @@ Output records shall always contain the following fields with the following type
 * Final Principal Variable – Numeric 
 * Final Target Variables – Can be a list, numeric – nulls allowed 
 * TPC Marker –  To indicate the result of the Thousand Pounds Correction method, string 
+* Error Description – String
 
 Fields of type "Any" shall be of the same type as the corresponding input fields as the values shall be the same in both input and output records. 
 

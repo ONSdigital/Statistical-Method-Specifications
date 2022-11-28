@@ -42,12 +42,12 @@ Input records must include the following fields of the correct types:
 * Unique Identifier – Any e.g., Business Reporting Unit 
 * Period – String in "YYYYMM" format 
 * Principal Variable – Single variable, numeric 
-* Target Variable(s) – Can be a list, numeric – nulls allowed 
+* Target Variable(s) – Can be a list, numeric – nulls allowed - COLUMN PER TARGET VAR, RATHER THAN A LIST? OR DOES WRANGLER HANDLE THIS IF LIST READ IN?
 * Predictive Variable – Single variable, numeric – nulls allowed if unavailable 
 * Predictive Variable Type – e.g., return, impute, etc., numeric – nulls allowed 
 * Auxiliary Variable – Register based variable – optional, numeric – nulls allowed 
-* Upper Limit – Single variable, numeric  
-* Lower Limit – Single variable, numeric  
+* Upper Limit – Single variable, numeric, must be greater than Lower Limit
+* Lower Limit – Single variable, numeric, must be less than Upper Limit  
 
 Unless otherwise noted, fields must not contain null values. All other fields shall be ignored. 
 
@@ -78,9 +78,6 @@ The TPC Marker must be one of the following:
 * N = No correction applied 
 * E = Method error
 
-Possible method errors:
-* TO BE WRITTEN ONCE TESTING COMPLETE
-
 
 ## 6.0 Method
 
@@ -102,7 +99,7 @@ A detected thousand pounds error will be automatically corrected by dividing the
 All other monetary questions, the target variables excluding the principal variable, on the form will be automatically corrected as described without checking the returned or corresponding previous values. 
 
 ### 6.4 Method Error Handling
-In the case of the method experiencing processing issues, the method shall not result in any output records. Instead, a suitable error description shall be emitted. 
+In the case of the method experiencing processing issues, the method will still create ouput tables with a suitable error description in the table. 
 
 
 ## 7.0 Calculations

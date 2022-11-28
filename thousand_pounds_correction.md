@@ -99,7 +99,7 @@ A detected thousand pounds error will be automatically corrected by dividing the
 All other monetary questions, the target variables excluding the principal variable, on the form will be automatically corrected as described without checking the returned or corresponding previous values. 
 
 ### 6.4 Method Error Handling
-In the case of the method experiencing processing issues, the method will still create ouput tables with a suitable error description in the table. 
+In the case of the method experiencing processing issues, the method will still create output tables with a suitable error description in the table. 
 
 
 ## 7.0 Calculations

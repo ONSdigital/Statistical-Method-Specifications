@@ -3,17 +3,15 @@
 ## 1.0 Meta
 
 * Support Area - Methodology - Editing & Imputation
-* Support Contact - <Editing.and.Imputation.expert.group@ons.gov.uk>
 * Method Theme - Editing
-* Method Classification - Selective Editing
-* Status - Partially tested, draft
+* Status – Fully tested
 
 ## 2.0 Terminology
 
 * Contributor reference - A respondent identified by a unique
   identifier.
 * Adjusted return - The most recent unedited returned data
-  value (for a given variable) in the current time period, t.
+  value (for a given variable) in the current period, t.
 * Predicted value - The first predictor value (for a given
   variable) for the current period adjusted return.
 * Auxiliary predicted value - This is the (secondary)
@@ -24,7 +22,7 @@
 * Design weight - An a-weight, usually generated in another
   method.
 * Selective Editing domain group - States which Selective
-  Editing domain group a given respondent belongs to.
+  Editing domain group, a given respondent belongs to.
 * Selective Editing threshold - Unique threshold, to compare
   to the score, for each domain group.
 * Combining function - If the method is applied to more than
@@ -62,7 +60,7 @@ through unchecked.
   
 ## 5.0 Method input and output
 
-All field names in this document are not definitive; the actual field
+All field names in this document are not definitive, the actual field
 names must be configurable, and the method used to configure these
 names is an implementation detail and thus out of scope of this document.
 
@@ -120,7 +118,9 @@ time t-1 then the input flag should be 'P' for predictor.
 If the predicted value is the auxiliary predicted value for reporting
 unit i at time t then the input flag should be 'A' for auxiliary.
 
-*are we using M flag for missing or raising an error?
+The Selective Editing calculation is as follows:
+
+Score = 100 * (a-weight * |current value – previous value |)/ Domain total
 
 ### 6.2 Combining Scores
 
@@ -153,4 +153,55 @@ If the final score is less than the selective editing threshold, then output
 the output flag as 'P' for pass selective editing and does not require
 validation.
 
-*is there a missing flag here or are we just outputting the error?
+
+# 7.0 Worked Example
+
+The below example shows how the method works in principle, please see the user notes for how the method has been coded to work.
+
+
+
+| Reference | Current period unedited turnover (£) | Current period a-weight | Domain group | Threshold | Previous period unedited turnover (£) | Standardising factor | Score | Pass or Fail |
+
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+| 1 | 61,000 | 1 | A | 0.2 | 58,500 | 1,500,000 | | |
+
+| 2 | 35,600 | 1 | A | 0.2 | 28,100 | 1,500,000 | | |
+
+| 3 | 4,200 | 10 | B | 0.5 | 3,400 | 4,300,000 | | |
+
+| 4 | 7,900 | 10 | B | 0.5 | 2,200 | 4,300,000 | | |
+
+| 5 | 18,000 | 2 | C | 0.6 | 10,000 | 3,700,000 | | |
+
+| 6 | 2,000 | 2 | D | 0.4 | 1,800 | 50,000 | | |
+
+
+
+The above table gives an example dataset that contains all the information needed to calculate scores and decide whether the reference has passed or failed selective editing. 
+
+
+
+| Reference | Current period unedited turnover (£) | Current period a-weight | Domain group | Threshold | Previous period unedited turnover (£) | Domain total (standardising factor) | Score | Pass or Fail |
+
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+| 1 | 61,000 | 1 | A | 0.2 | 58,500 | 1,500,000 | 0.167 | Pass |
+
+| 2 | 35,600 | 1 | A | 0.2 | 28,100 | 1,500,000 | 0.500 | Fail |
+
+| 3 | 4,200 | 10 | B | 0.5 | 3,400 | 4,300,000 | 0.186 | Pass |
+
+| 4 | 7,900 | 10 | B | 0.5 | 2,200 | 4,300,000 | 1.326 | Fail |
+
+| 5 | 18,000 | 2 | C | 0.6 | 10,000 | 3,700,000 | 0.432 | Pass |
+
+| 6 | 2,000 | 2 | D | 0.4 | 1,800 | 50,000 | 0.800 | Fail |
+
+
+## 7.1 Discussion about results
+Even though reference 1 has a bigger return than reference 2 and are in the same domain as each other; reference 2 fails as it has a larger weighted difference than is observed for reference 1.
+Reference 4 has an unweighted return that is not large in comparison to the previous period domain total; however once weighted, the difference between current and previous period turnover values makes a more significant contribution to the domain total.
+Reference 5 may appear to have a large increase when comparing the current and previous period turnover; however once weighted, the difference between current and previous period turnover makes little contribution to the previous period domain total (standardising factor). 
+Reference 6 does not have a large, unweighted return; but once weighted it does make a large contribution to the domain as the domain total is much smaller than the other domains listed.
+

@@ -7,6 +7,7 @@
 * Status – Fully tested
 
 ## 2.0 Terminology
+
 * Expected period start date – The start date of the period set by the user
 * Expected period end date – The end date of the period set by the user
 * Variable(s) to be date adjusted – The user can select one or more variables
@@ -44,13 +45,14 @@ the start date that the output is based on
 * Actual period end date: Will appear on the output dataset and is the
 end date that the output is based on
 * Number of days in actual returned period: The number of days the user
-set 
+set
 * Sum of trading day weights over actual period: The sum of the trading
 weights over the days set by the user.
 * Date adjusted Q20: The adjusted question value based on the sum of
 the trading days weights ratio.
 
 ## 3.0 Summary
+
 To generate summary and headline statistics for a reporting period is
 important to ensure that data reported are on a consistent basis
 referencing the same period. However, sometimes it is not possible for
@@ -62,6 +64,7 @@ desired (expected) period, either by giving weights to trading days or
 giving each date the same weight.  
 
 ## 4.0 Assumptions
+
 * All data inputs required by the method are available
 * Each respondent is clearly classified into one mutually exclusive domain
 group
@@ -70,19 +73,21 @@ group
 equal weighted option is set to yes.
 
 ## 5.0 Method input and output
+
 All field names in this document are not definitive; the actual field names
 must be configurable, and the method used to configure these names is an
-implementation detail and thus out of scope of this document. 
+implementation detail and thus out of scope of this document.
 
 ### 5.1 Input records
+
 Input records must include the following fields of the correct type and be
 certain values listed below:
 * Unique identifier- Any
 * Contributor’s returned start date – YYYYMMDD
 * Contributor’s returned end date – YYYMMDD
-* Expected period start date – YYYYMMDD 
+* Expected period start date – YYYYMMDD
 * Expected period end date – YYYYMMDD
-* Domain – string 
+* Domain – string
 * Variable(s) to be adjusted – List of questions where the values are floats
 * Set to mid-point – Y or YT or N
 * Set to equal weight – Y or N
@@ -103,12 +108,13 @@ below variables with the following types:
 * Number of days in contributors returned period - Float
 * Number of days in actual returned period -Float
 * Sum of trading day weights over actual period - Float
-* Adjusted variable(s) – float 
+* Adjusted variable(s) – Float
 * Error flag – String
 
 ## 6.0 Method
 
 ### 6.1 Date adjustment
+
 A contributor will give a response for a period, this does not have to match
 the expected period, and will be fed into the method. Trading day weights are
 assigned to each day covered by the contributor’s returned period and the
@@ -116,9 +122,10 @@ expected period. These are then summed to provide a sum for the total trading
 day weights for the returned and expected periods respectively. The expected
 period total trading day weights are divided by the contributor’s returned
 period total trading day weights. This ratio is then applied to the
-contributor’s response so that it is representative of the expected period. 
+contributor’s response so that it is representative of the expected period.
 
 #### 6.1.1 Incomplete or erroneous data provided
+
 Contributors may not always provide full or correct data and the Date
 Adjustment method will handle it as detailed below:
 * If data is not returned then an E01 flag will be raised in the output.
@@ -141,13 +148,14 @@ returned start date and end date then an E05 marker is place in the date
 adjustment error flag.
 
 ### 6.2 Set to Mid-point – set as Y or YT or N
+
 A mid-point method can be used in Date Adjustment to check whether a
 contributor’s returned dates are within the expected period. If the
 mid-point of the contributor’s returned start and end dates are outside
 the expected period, then a “C” flag is raised in the error flag column
 inform the user that the contributor’s response data aligns with a different
 reporting period (i.e. not the expected period). There are two ways to use
-the mid-point method: set the mid-point to “Y” and set the mid-point to “YT”. 
+the mid-point method: set the mid-point to “Y” and set the mid-point to “YT”.
 Setting the mid-point input parameter to “Y” will simply calculate the
 mid-point of the days returned. If the number of days in the contributor’s
 returned period are even then divide the count by 2 and add that to the
@@ -158,7 +166,7 @@ date. If the user sets the mid-point input parameter to “YT”, then the metho
 will trim any weighted days at the start or end of the contributor’s returned
 dates if they have trading day weights set to 0 and do the same calculation
 as above with regards to the number of days in the period. Therefore, each
-method could provide a slightly different answer. 
+method could provide a slightly different answer.
 
 If the respondent’s mid-point does lie outside of the period the user is
 interested in then date adjustment will not occur.
@@ -168,6 +176,7 @@ this to “N”.
 
 
 ### 6.3 Use calendar days – set as Y or N
+
 If the mid-point lies outside of the expected period start and end dates, a
 “C” flag is raised in the Date change column. Calendar days function will only
 work when there is a “C” flag present. The calendar days function, when set to
@@ -177,15 +186,17 @@ When the calendar days function is set to “N” it allows start and end period
 dates to be set to the start and end dates that “C” flag lies in.
 
 ### 6.4 Set to equal weighted – set to Y or N
+
 The equal weighted method is where all the trading day weights are set to 1
 instead of having a unique trading day weight associated with each day. This
 can be a useful feature when trading day weights are all the same. To use this
-feature, the equal-weighted column should be marked as “Y”. 
+feature, the equal-weighted column should be marked as “Y”.
 
 If the user does not want the trading day weights to be equal-weighted, then
 please set this to “N”.
 
 ### 6.5 Average weekly – set to A or N
+
 The average weekly function allows the responses to be given on a weekly value
 rather than the period specified by the user. This can be a useful tool when
 the user’s period isn’t always equal, to allow the user to compare similar
@@ -196,11 +207,11 @@ If the user does not want to have average weekly values in the output, then
 please set this to “N”.
 
 ## 7.0 Date Adjustment example
+
 This is a simple example of date adjustment, please see the Date Adjustment
 user notes for more detailed scenarios. We are going to use the equal weighted
 function described above to help detail how the sum of the trading day weights
 are calculated.
-
 
 | Reference | Contributor period start date | Contributor period end date | Variable to be date adjusted | Expected period start date | Expected period end date | Domain | Set to mid-point | Set to equal weighted | Use calendar days | Short period parameter | Long period parameter | Average Weekly |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -210,7 +221,6 @@ are calculated.
 
 The above table a potential input into the date adjustment method and the
 table below is an example output. 
-
 
 | Reference | Contributor period start date | Contributor period end date | Variable to be date adjusted | Expected period start date | Expected period end date | Domain | Set to mid-point | Set to equal weighted | Use calendar days | Short period parameter | Long period parameter | Average Weekly | Sum of contributors trading day weights | Sum of expected trading day weights | Date adjusted variables |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -226,5 +236,4 @@ therefore, the sum of the weights will be equal and therefore a change has not
 occurred.
 * Reference 3 has returned a longer period than the expected period, returned
 34 days and we are expecting 30, therefore we can see that the variable has been
-date adjusted and has decreased proportionately in relation to the weights. 
-
+date adjusted and has decreased proportionately in relation to the weights.

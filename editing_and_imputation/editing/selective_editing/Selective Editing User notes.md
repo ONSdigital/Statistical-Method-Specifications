@@ -30,20 +30,20 @@ look like:
 Here we have 10 respondents with all the columns needed to perform the
 selective editing method:
 
--	reference: Unique to each respondent.
--	design_weight: Also known as the a-weight.
--	threshold: This is the selective editing threshold. This is unique for
+*	reference: Unique to each respondent.
+*	design_weight: Also known as the a-weight.
+*	threshold: This is the selective editing threshold. This is unique for
 each domain and are specified by Methodology.
--	question_1_ar: This is the adjusted return for question 1. The adjusted
+*	question_1_ar: This is the adjusted return for question 1. The adjusted
 return has usually been through other editing strategies before Selective
 Editing.
--	question_1_pv: This is the predicted value for question 1, usually the
+*	question_1_pv: This is the predicted value for question 1, usually the
 respondent’s value from the previous period.
--	question_1_apv: This is the auxiliary predicted variable used in case
+*	question_1_apv: This is the auxiliary predicted variable used in case
 there is not a previous period value available.
--	question_1_sf: This is the standardising factor which is the weighted
+*	question_1_sf: This is the standardising factor which is the weighted
 domain estimate for the previous period.
--	question_1_wt: This column is a weight column which is used in case the
+*	question_1_wt: This column is a weight column which is used in case the
 weighted option is used in the combination method.
 
 We can then run the method as shown below ensuring that we are calling the
@@ -91,12 +91,12 @@ value.
 
 New columns are produced from running the method and are described below:
 
--	question_1_s: This is the score for question 1.
--	question_1_pm: This is a predicted marker. This will indicate whether you
+*	question_1_s: This is the score for question 1.
+*	question_1_pm: This is a predicted marker. This will indicate whether you
 are using the predicted value (True) or using the auxiliary value (False).
--	Final_score: the score after the combination method has been considered and
+*	Final_score: the score after the combination method has been considered and
 is the value that is compared to the threshold.
--	Selective_edting_marker: This will show whether the respondent has passed
+*	Selective_edting_marker: This will show whether the respondent has passed
 Selective Editing (True) or failed Selective Editing (False).
 
 References 49900001 and 49900004 do not have predicted values available for the

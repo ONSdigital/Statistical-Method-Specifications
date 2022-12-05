@@ -66,25 +66,25 @@ Here we have 5 respondents with all the columns needed to perform the date
 adjustment method:
 
 * Reference: Unique to each respondent
-* Contributors start date: Start date returned by the contributor
-* Contributors end date: End date returned by the contributor
-* Q20: Variable response that needs to be date adjusted
+* Contributors start date: Start date returned by the contributor.
+* Contributors end date: End date returned by the contributor.
+* Q20: Variable response that needs to be date adjusted.
 * Expected start date: Start date the user is expecting from the
-contributor
+contributor.
 * Expected end date: End date the user is expecting from the contributor
-* Domain: Domain classification
+* Domain: Domain classification.
 * Mid-point: Indicator as to whether the mid-point method needs to be used.
 * Equal-weighted: Indicator as to whether the equal-weighted method needs
 to be used.
 * Calendar days: Indicator as to whether the calendar days method needs to
 be used.
 * Average weekly: Indicator as to whether the average weekly method needs
-to be used
+to be used.
 * Short period: A value that shows the user whether a response is of a short
-time frame
+time frame.
 * Long period: A value that shows the user whether a response is of a
-long-time frame
-* Error column: A column that will be populated if any errors occur
+long-time frame.
+* Error column: A column that will be populated if any errors occur.
 
 We also have trading day weights for all dates present and for the domain we
 are interested in:

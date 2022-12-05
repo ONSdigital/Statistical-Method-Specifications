@@ -153,34 +153,6 @@ If the final score is less than the selective editing threshold, then output
 the output flag as 'P' for pass selective editing and does not require
 validation.
 
-# 7.0 Worked Example
-
-The below example shows how the method works in principle, please see the
-user notes for how the method has been coded to work.
-
-| Reference | Current period unedited turnover (£) | Current period a-weight | Domain group | Threshold | Previous period unedited turnover (£) | Standardising factor | Score | Pass or Fail |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 61000 | 1 | A | 0.2 | 58500 | 1500000 | | |
-| 2 | 35600 | 1 | A | 0.2 | 28100 | 1500000 | | |
-| 3 | 4200 | 10 | B | 0.5 | 3400 | 4300000 | | |
-| 4 | 7900 | 10 | B | 0.5 | 2200 | 4300000 | | |
-| 5 | 18000 | 2 | C | 0.6 | 10000 | 3700000 | | |
-| 6 | 2000 | 2 | D | 0.4 | 1800 | 50000 | | |
-
-The above table gives an example dataset that contains all the information
-needed to calculate scores and decide whether the reference has passed or
-failed selective editing. 
-
-| Reference | Current period unedited turnover (£) | Current period a-weight | Domain group | Threshold | Previous period unedited turnover (£) | Domain total (standardising factor) | Score | Pass or Fail |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 61,000 | 1 | A | 0.2 | 58,500 | 1,500,000 | 0.167 | Pass |
-| 2 | 35,600 | 1 | A | 0.2 | 28,100 | 1,500,000 | 0.500 | Fail |
-| 3 | 4,200 | 10 | B | 0.5 | 3,400 | 4,300,000 | 0.186 | Pass |
-| 4 | 7,900 | 10 | B | 0.5 | 2,200 | 4,300,000 | 1.326 | Fail |
-| 5 | 18,000 | 2 | C | 0.6 | 10,000 | 3,700,000 | 0.432 | Pass |
-| 6 | 2,000 | 2 | D | 0.4 | 1,800 | 50,000 | 0.800 | Fail |
-
-
 ## 7.1 Discussion about results
 
 Even though reference 1 has a bigger return than reference 2 and are in

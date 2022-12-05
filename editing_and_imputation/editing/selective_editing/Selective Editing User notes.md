@@ -30,8 +30,8 @@ look like:
 Here we have 10 respondents with all the columns needed to perform the
 selective editing method:
 
--	reference: Unique to each respondent
--	design_weight: Also known as the a-weight
+-	reference: Unique to each respondent.
+-	design_weight: Also known as the a-weight.
 -	threshold: This is the selective editing threshold. This is unique for
 each domain and are specified by Methodology.
 -	question_1_ar: This is the adjusted return for question 1. The adjusted
@@ -91,7 +91,7 @@ value.
 
 New columns are produced from running the method and are described below:
 
--	question_1_s: This is the score for question 1
+-	question_1_s: This is the score for question 1.
 -	question_1_pm: This is a predicted marker. This will indicate whether you
 are using the predicted value (True) or using the auxiliary value (False).
 -	Final_score: the score after the combination method has been considered and

@@ -86,6 +86,7 @@ implementation detail and thus out of scope of this document.
 
 Input records must include the following fields of the correct type and be
 certain values listed below:
+
 * Unique identifier- Any
 * Contributor’s returned start date – YYYYMMDD
 * Contributor’s returned end date – YYYMMDD
@@ -107,6 +108,7 @@ fields shall be ignored.
 
 Output records shall always contain the above variables in addition to the
 below variables with the following types:
+
 * Actual period start date – YYYYMMDD
 * Actual period end date - YYYYMMDD
 * Sum of trading day weights over contributors’ period - Float
@@ -136,6 +138,7 @@ contributor’s response so that it is representative of the expected period.
 
 Contributors may not always provide full or correct data and the Date
 Adjustment method will handle it as detailed below:
+
 * If data is not returned then an E01 flag will be raised in the output.
 * If a contributor’s returned start date is empty then it will default
 to the expected period start date.
@@ -166,7 +169,6 @@ reporting period (i.e. not the expected period). If the respondent’s
 mid-point does lie outside of the period the user is
 interested in then date adjustment will not occur.
 
-
 There are two ways to use the mid-point method: set the mid-point to “Y”
 and set the mid-point to “YT”.
 
@@ -184,7 +186,6 @@ method could provide a slightly different answer.
 
 If the user does not want the mid-point method to occur, then please set
 this to “N”.
-
 
 ### 6.3 Use calendar days – set as Y or N
 
@@ -232,7 +233,7 @@ are calculated.
 | 3 | 20220601 | 20220624 | 5000 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N |
 
 The above table a potential input into the date adjustment method and the
-table below is an example output. 
+table below is an example output.
 
 | Reference | Contributor period start date | Contributor period end date | Variable to be date adjusted | Expected period start date | Expected period end date | Domain | Set to mid-point | Set to equal weighted | Use calendar days | Short period parameter | Long period parameter | Average Weekly | Sum of contributors trading day weights | Sum of expected trading day weights | Date adjusted variables |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

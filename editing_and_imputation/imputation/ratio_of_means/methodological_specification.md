@@ -93,7 +93,7 @@ Input records must include the following fields of the correct types:
 * Previous year backwards imputation link (Optional) - Numeric
 * Previous year construction link (Optional) - Numeric
 * Exclusion Marker (Optional) - Boolean. 0 = False, include. 1 = True, exclude.
-If marker not populated, then False. 
+If marker not populated, then False.
 
 Unless otherwise noted, fields must not contain null values. All other
 fields shall be ignored.
@@ -324,7 +324,7 @@ marked FIC.
 
 Backward imputation imputes data for non-responders in the target period by
 multiplying a link to the predictive period data, where the predictive
-period is the period that immediately follows the target period (i.e. 
+period is the period that immediately follows the target period (i.e.
 consecutive period). Backward imputation from construction must not occur.
 Records imputed using this imputation will be marked BI.
 
@@ -334,7 +334,7 @@ Construction imputation imputes data for non-responders in the target
 period where no data is available in the predictive period and therefore,
 an auxiliary variable is used from the target period and is then
 multiplied by a link to create a constructed value. Records imputed using
-this imputation will be marked C. 
+this imputation will be marked C.
 
 ### 8.4 Weighted imputation links
 

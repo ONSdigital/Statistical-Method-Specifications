@@ -120,7 +120,7 @@ unit i at time t then the input flag should be 'A' for auxiliary.
 
 The Selective Editing calculation is as follows:
 
-Score = 100 * (a-weight * |current value – previous value |)/ Domain total
+Score = 100*(a-weight*|current value–previous value|)/Domain total
 
 ### 6.2 Combining Scores
 
@@ -153,7 +153,7 @@ If the final score is less than the selective editing threshold, then output
 the output flag as 'P' for pass selective editing and does not require
 validation.
 
-# 7.0 Worked Example
+## 7.0 Worked Example
 
 The below example shows how the method works in principle, please see the
 user notes for how the method has been coded to work.

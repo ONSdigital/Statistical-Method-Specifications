@@ -46,7 +46,7 @@ item (partial) non-response. The method imputes for each non-responding
 contributor a single numeric target variable within the dataset for
 multiple periods simultaneously. It uses the relationship between the
 target variable of interest and a predictive value and/or auxiliary
-variable to inform the imputed value. Dueto its robust nature, it does
+variable to inform the imputed value. Due to its robust nature, it does
 not use any form of trimming or outliering.
 
 As imputation can be carried out for multiple periods simultaneously, the

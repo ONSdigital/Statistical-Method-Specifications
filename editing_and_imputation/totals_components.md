@@ -98,33 +98,23 @@ However, if the absolute difference is greater than the threshold, then no corre
 In the case of the method experiencing processing issues, the method shall not result in any output records. Instead, a suitable error description shall be emitted. 
 * NEW POTENTIAL WORDING: In the case of the method experiencing processing issues, the method will still create output tables with a suitable error description in the table. 
 
-## 7.0 Calculations - EQUATIONS NOT WORKING AT PRESENT
+## 7.0 Calculations
 ### 7.1 Error Detection Calculation
 The method initially identifies contributors where the following is not satisfied: 
 
-<p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large y_{1, t} + \dots + y_{n, t} = y_{total, t}">
-</p>
+$$ \large y_{1, t} + \dots + y_{n, t} = y_{total, t} $$
 
-Alt: 
-<p align="center">
- <i>y<sub>1, t</sub> + ... + y<sub>n, t</sub> = y<sub>total, t</sub></i>
-</p>
+```asciimath
+y_{1, t} + ... + y_{n, t} = y_{total, t}
+```
 
 If the above is satisfied, then the method does not continue as no correction is required.
 Where the above is not satisfied, the method then checks whether the following is satisfied for a given contributor: 
 
-<p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large |(y_{1, t} + \dots + y_{n, t}) - y_{total, predictive}| =< x">
-</p>
+$$ \large |(y_{1, t} + \dots + y_{n, t}) - y_{total,\ predictive}| \leq x $$
 
-Alt: 
-<p align="center">
- <i>|(y<sub>1, t</sub> + ... + y<sub>n, t</sub>) - y<sub>total, t-1</sub>| < x</i>
-</p>
- 
- ```asciimath
-|(y_{1, t} + \dots + y_{n, t}) - y_{total, predictive}| < x
+```asciimath
+|(y_{1, t} + ... + y_{n, t}) - y_{total, predictive}| =< x
 ```
 
 Where *y<sub>1, t</sub>* to *y<sub>n, t</sub>* are the *n* corresponding components of the total *y<sub>total, t</sub>*, *y<sub>total, t-1</sub>* is the total for the predictive period and *x* is the predefined threshold.  
@@ -134,34 +124,20 @@ If the predictive value is missing, then *y<sub>total, t-1</sub>* should be repl
 ### 7.2 Error Correction Calculation
 If the absolute difference in section 7.1 is less than or equal to the threshold and the Amend Total variable = 0 (amend the components), then: 
 
-<p align="center">
- <img src="https://render.githubusercontent.com/render/math?math=\large y_{1, t} + \dots + y_{n, t} = y_{total, t}">
-</p>
-
-Alt:
-<p align="center">
- <i>y<sub>1, t</sub> + ... + y<sub>n, t</sub> = y<sub>total, t</sub></i>
-</p>
+$$ \large y_{1, t} + \dots + y_{n, t} = y_{total, t} $$
 
 ```asciimath
-y_{1, t} + \dots + y_{n, t} = y_{total, t}
+y_{1, t} + ... + y_{n, t} = y_{total, t}
 ```
  
 Where *y<sub>1, t</sub>* to *y<sub>n, t</sub>* are prorated to equal *y<sub>total, t</sub>*.
 
 If the condition in section 7.1 is satisfied and the Amend Total variable = 1 (amend the total), then: 
 
-<p align="center">
-<img src="https://render.githubusercontent.com/render/math?math=\large y_{total, t} = y_{1, t} + \dots + y_{n, t}">
-</p>
-
-Alt:
-<p align="center">
- <i>y<sub>total, t</sub> = y<sub>1, t</sub> + ... + y<sub>n, t</sub></i>
-</p>
+$$ \large y_{total, t} = y_{1, t} + \dots + y_{n, t} $$
 
 ```asciimath
-y_{total, t} = y_{1, t} + \dots + y_{n, t}
+y_{total, t} = y_{1, t} + ... + y_{n, t}
 ```  
 
 

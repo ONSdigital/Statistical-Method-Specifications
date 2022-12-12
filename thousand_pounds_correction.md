@@ -1,9 +1,7 @@
 # Thousand Pounds Correction Specification
 ## 1.0 Meta 
 * Support area – Methodology – Processing, Editing & Imputation 
-* Support contact – Editing.and.Imputation.expert.group@ons.gov.uk
 * Method theme – Automatic Editing 
-* Method classification –Thousand Pounds Correction 
 * Status – draft, not tested 
 
 

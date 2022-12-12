@@ -56,11 +56,12 @@ Output records shall always contain the following fields with the following type
 
 * Unique Identifier – Any e.g., Business Reporting Unit  
 * Period – String in "YYYYMM" format  
-* TCC Marker – To indicate the result of the Totals Components Correction method, string 
 * Original Total Variable – Numeric
 * Original Components Variable – Numeric
 * Final Total Variable – Numeric  
 * Final Components Variable – Numeric  
+* TCC Marker – To indicate the result of the Totals Components Correction method, string 
+* Error Description
 
 Fields of type "Any" shall be of the same type as the corresponding input fields as the values shall be the same in both input and output records. 
 

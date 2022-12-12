@@ -120,7 +120,9 @@ unit i at time t then the input flag should be 'A' for auxiliary.
 
 The Selective Editing calculation is as follows:
 
-Score = 100*(a-weight*|current value–previous value|)/Domain total
+```asciimath
+Score = 100*{{a-weight*|current value-previous value|}/Domain total}
+```
 
 ### 6.2 Combining Scores
 

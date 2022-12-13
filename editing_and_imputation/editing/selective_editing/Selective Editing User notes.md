@@ -11,6 +11,14 @@ Score = 100 X (a * |z - y|)/T
 * y is the previous period value or the auxiliary value
 * T is the standardising factor
 
+As discussed in the methodological specification, the input dataset will
+need to contain a specific suffix structure for each question used in
+calculating the score. The adjusted return value will have '_ar', the
+predicted value will have '_pv', the auxiliary predicted value will
+have '_apv', the standardising factor will have '_sf' and the weight
+(if weighted scores are chosen) will have '_wt', where the sum of '_wt'
+has to add up to 1.
+
 Below is a snapshot of an example dataset and how the input data should
 look like:
 
@@ -65,8 +73,8 @@ output = seled.selective_editing(input_dataframe = df, # DataFrame of the test d
                                  design_weight_col = 'design_weight', # Design weight column
                                  threshold_col = 'threshold', # Threshold column
                                  question_list = ['question_1'], # Question(s) we are performing Selective Editing on
-                                 combination_method = 'maximum', # Type combination, see specification, default = maximum
-                                 minkowski_distance = 0, # Only used if Minkowski is selected in combination
+                                 combination_method = 'maximum', # Type combination, will accept 'maximum', 'mean', 'weighted', 'minkowski', default = maximum
+                                 minkowski_distance = 0, # Only used if Minkowski is selected in combination, set to 0 is minkowski is not selected
                                  show_sums = 0) # Provides additional data on score calculations
                                  
 output.to_csv("example_test_data_output.csv")

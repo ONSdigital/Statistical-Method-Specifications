@@ -33,21 +33,22 @@
 
 Selective Editing is an internationally recognised editing method
 where potential errors are prioritised according to their expected
-effect on key outputs. Only respondents that are having an impact
-on published estimates will be recontacted.
+impact on key outputs. Only respondents that are having a significant
+impact on published estimates will be recontacted for validation.
 
 Selective Editing works by assigning a score to each important
-variable for a business where, the score reflects the impact that
+variable for a contributor where, the score reflects the impact that
 editing the respondent will have on the estimates. Only contributors
-with a high score are checked, low scoring contributors pass
+with a score above a predetermined threshold are flagged for manual
+review to be validated, low scoring contributors pass
 through unchecked.
 
 ## 4.0 Assumptions
 
 * All data inputs required by the method are available and are on a
   standardised basis.
-* The auxiliary predicted variable should be a good predictor of the
-  target variable.
+* The predicted variable and auxiliary predicted value should both
+  be good predictors of the returned data for time t.
 * The predicted value in the score calculation must have been cleaned
   and free from errors. This is not limited to genuine returns, and
   it may be an imputed or constructed value if a clean response is
@@ -66,17 +67,23 @@ names is an implementation detail and thus out of scope of this document.
 
 ### 5.1 Input records
 
-Input records must include the following fields of the correct types:
+Input records in a datafram must include the following fields of the
+correct types:
 
-* Unique identifier - Any
-* Period - String in "YYYYMM" format
-* Domain group - Any
+* Reference - Any
+* Question list - List of strings
 * Adjusted return - Numeric
 * Predicted value - Numeric
 * Auxiliary predicted value - Numeric
 * Standardising factor - Numeric
 * Design weight - Numeric
-* Thresholds - Numeric
+* Threshold - Numeric
+
+When using the SML code, it will automatically assign
+adjusted return (ar), predicted value (pv), auxiliary predicted
+value (apv) and standardising factor (sf) based on the column names
+in the input dataframe. Please see User notes for further
+explanations. 
 
 Unless otherwise noted, fields must not contain Null values. All other
 fields shall be ignored.
@@ -86,13 +93,12 @@ fields shall be ignored.
 Output records shall always contain the following fields with the
 following types:
 
-* Unique identifier - Any
-* Period - String in "YYYYMM" format
+* Reference - Any
 * Score1 - Numeric
 * ScoreM - Numeric
 * Final_Score - Numeric
-* Input flag - Character
-* Output flag - Character
+* Selective Editing marker - Character
+* Predicted marker, seen as '_pm' on adjusted return - Character
 
 ## 6.0 Method
 
@@ -101,27 +107,33 @@ following types:
 A selective editing score is calculated for each reporting unit i in
 time t. The selective editing score is calculated by multiplying the
 design weight by the modulus of the adjusted return for reporting unit
-i at time 1 by the predicted value for reporting unit i at time t,
+i at time t by the predicted value for reporting unit i at time t,
 divided by the standardising factor, and all multiplied by 100 as shown
 by the equation below.
 
-The predicted value is equal to a clean (not in error) response for
-adjusted return for reporting unit i at time t-1, if this value isn't
-available then the auxiliary predicted value for reporting unit i at
-time t. However, if a clean response for reporting unit i at time t-1
-is not available then imputed or constructed previous period data may
-be used.
+The predicted value is equal to a clean response for (i.e. free from
+error adjusted return) for reporting unit i at time t-1. However, if
+a clean response for reporting unit i at time t-1 is not available
+then imputed or constructed previous period data is used. If this
+value isn't available then the auxiliary predicted value for reporting
+unit i at time t is used.
 
 If the predicted value is the adjusted return for reporting unit i at
-time t-1 then the input flag should be 'P' for predictor.
+time t-1 then the method output will contain a column with the ending
+"_pm" for predicitve marker which will be set to 'True'.
 
 If the predicted value is the auxiliary predicted value for reporting
-unit i at time t then the input flag should be 'A' for auxiliary.
+unit i at time t then the method output will contain a column with the
+ending "_pm" for predictive marker which will be set to 'False'.
+
+The standardising factor is the weighted domain estimate for a given
+variable at time t-1, which is used as a means to determine a
+respondent's potential impact on key output estimates.
 
 The Selective Editing calculation is as follows:
 
 ```asciimath
-Score = 100*{{a-weight*|current value-previous value|}/Domain total}
+Score = 100*{{a-weight*|current value-predicted value|}/Standardising factor}
 ```
 
 ### 6.2 Combining Scores
@@ -160,27 +172,27 @@ validation.
 The below example shows how the method works in principle, please see the
 user notes for how the method has been coded to work.
 
-| Reference | Current period value | Current period a weight | Domain group | Threshold | Previous period value | Standardising factor | Score | Pass or Fail |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 61000 | 1 | A | 0.2 | 58500 | 1500000 | | |
-| 2 | 35600 | 1 | A | 0.2 | 28100 | 1500000 | | |
-| 3 | 4200 | 10 | B | 0.5 | 3400 | 4300000 | | |
-| 4 | 7900 | 10 | B | 0.5 | 2200 | 4300000 | | |
-| 5 | 18000 | 2 | C | 0.6 | 10000 | 3700000 | | |
-| 6 | 2000 | 2 | D | 0.4 | 1800 | 50000 | | |
+| Unique identifier | Adjusted return | Design weight | Threshold | Predicted value | Standardising factor |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 61000 | 1 | 0.2 | 58500 | 1500000 |
+| 2 | 35600 | 1 | 0.2 | 28100 | 1500000 |
+| 3 | 4200 | 10 | 0.5 | 3400 | 4300000 |
+| 4 | 7900 | 10 | 0.5 | 2200 | 4300000 |
+| 5 | 18000 | 2 | 0.6 | 10000 | 3700000 |
+| 6 | 2000 | 2 | 0.4 | 1800 | 50000 |
 
 The above table gives an example dataset that contains all the information
 needed to calculate scores and decide whether the reference has passed or
 failed selective editing.
 
-| Reference | Current period value | Current period a weight | Domain group | Threshold | Previous period value | Standardising factor | Score | Pass or Fail |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 61000 | 1 | A | 0.2 | 58500 | 1500000 | 0.167 | Pass |
-| 2 | 35600 | 1 | A | 0.2 | 28100 | 1500000 | 0.500 | Fail |
-| 3 | 4200 | 10 | B | 0.5 | 3400 | 4300000 | 0.186 | Pass |
-| 4 | 7900 | 10 | B | 0.5 | 2200 | 4300000 | 1.326 | Fail |
-| 5 | 18000 | 2 | C | 0.6 | 10000 | 3700000 | 0.432 | Pass |
-| 6 | 2000 | 2 | D | 0.4 | 1800 | 50000 | 0.800 | Fail |
+| Unique identifier | Score1 | Final Score | Selective Editing marker | Adjusted return_pm |
+| --- | --- | --- | --- | --- |
+| 1 | 202001 | 0.167 | 0.167 | True | True |
+| 2 | 202001 | 0.500 | 0.500 | False | True |
+| 3 | 202001 | 0.186 | 0.186 | True | True |
+| 4 | 202001 | 1.326 | 1.326 | False | True |
+| 5 | 202001 | 0.432 | 0.432 | True | True |
+| 6 | 202001 | 0.800 | 0.800 | False | True |
 
 ## 7.1 Discussion about results
 

@@ -172,27 +172,18 @@ validation.
 The below example shows how the method works in principle, please see the
 user notes for how the method has been coded to work.
 
-| Unique identifier | Adjusted return | Design weight | Threshold | Predicted value | Standardising factor |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 61000 | 1 | 0.2 | 58500 | 1500000 |
-| 2 | 35600 | 1 | 0.2 | 28100 | 1500000 |
-| 3 | 4200 | 10 | 0.5 | 3400 | 4300000 |
-| 4 | 7900 | 10 | 0.5 | 2200 | 4300000 |
-| 5 | 18000 | 2 | 0.6 | 10000 | 3700000 |
-| 6 | 2000 | 2 | 0.4 | 1800 | 50000 |
-
 The above table gives an example dataset that contains all the information
 needed to calculate scores and decide whether the reference has passed or
 failed selective editing.
 
 | Unique identifier | Score1 | Final Score | Selective Editing marker | Adjusted return_pm |
 | --- | --- | --- | --- | --- |
-| 1 | 202001 | 0.167 | 0.167 | True | True |
-| 2 | 202001 | 0.500 | 0.500 | False | True |
-| 3 | 202001 | 0.186 | 0.186 | True | True |
-| 4 | 202001 | 1.326 | 1.326 | False | True |
-| 5 | 202001 | 0.432 | 0.432 | True | True |
-| 6 | 202001 | 0.800 | 0.800 | False | True |
+| 1 | 0.167 | 0.167 | True | True |
+| 2 | 0.500 | 0.500 | False | True |
+| 3 | 0.186 | 0.186 | True | True |
+| 4 | 1.326 | 1.326 | False | True |
+| 5 | 0.432 | 0.432 | True | True |
+| 6 | 0.800 | 0.800 | False | True |
 
 ## 7.1 Discussion about results
 

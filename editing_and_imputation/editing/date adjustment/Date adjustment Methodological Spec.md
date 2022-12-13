@@ -1,4 +1,4 @@
-# Date Adjustment specification
+# Date Adjustment Specification
 
 ## 1.0 Meta
 

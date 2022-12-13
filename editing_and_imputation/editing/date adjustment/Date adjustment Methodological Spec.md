@@ -2,7 +2,7 @@
 
 ## 1.0 Meta
 
-* Support area – Methodology – Editing and Imputation
+* Support area – Methodology – Editing & Imputation
 * Method Theme – Editing
 * Status – Fully tested
 
@@ -56,8 +56,8 @@ the trading days weights ratio.
 
 ## 3.0 Summary
 
-To generate summary and headline statistics for a reporting period is
-important to ensure that data reported are on a consistent basis
+To generate summary and headline statistics for a reporting period it
+is important to ensure that data reported are on a consistent basis
 referencing the same period. However, sometimes it is not possible for
 data to be reported for the exact period of time required, e.g. monthly,
 quarterly, yearly. The responder may specify different start and end
@@ -163,7 +163,7 @@ adjustment error flag.
 A mid-point method can be used in Date Adjustment to check whether a
 contributor’s returned dates are within the expected period. If the
 mid-point of the contributor’s returned start and end dates are outside
-the expected period, then a “C” flag is raised in the error flag column
+the expected period, then a “C” flag is raised in the error flag column to
 inform the user that the contributor’s response data aligns with a different
 reporting period (i.e. not the expected period). If the respondent’s
 mid-point does lie outside of the period the user is

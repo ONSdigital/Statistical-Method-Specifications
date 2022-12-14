@@ -389,7 +389,7 @@ correctly, these rules are in the same order as the flow chart below:
 * Mean or median imputation should be used if there is no auxiliary
     information available (no previous period auxiliary, no consecutive
     period auxiliary and no register-based auxiliary variable)
-
+    
     * Mean imputation: impute a mean value for non-responders based upon
      target period cleared respondents within the same imputation class.
 

@@ -102,7 +102,7 @@ is one of:
 * Weighted mean of scores `s = (sum_(i=1)^n (s_i * w_i)) / (sum_(i=1)^n w_i)`
     where `w_i` is the weight for the question specific score `s_i`.
 * Mean score `s = (sum_(i=1)^n s_i) / n`
-* Minkowski distance `s = (sum_(i=1)^n (s_i^m))^(1/m)
+* Minkowski distance `s = (sum_(i=1)^n (s_i^m))^(1/m)`
     where `m` is the Minkowski parameter.
 
 Otherwise there is only one question specific score `s`.

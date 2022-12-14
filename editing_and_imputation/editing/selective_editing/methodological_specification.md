@@ -84,7 +84,7 @@ When using the SML code, it will automatically assign
 adjusted return (ar), predicted value (pv), auxiliary predicted
 value (apv) and standardising factor (sf) based on the column names
 in the input dataframe. Please see User notes for further
-explanations. 
+explanations.
 
 Unless otherwise noted, fields must not contain Null values. All other
 fields shall be ignored.

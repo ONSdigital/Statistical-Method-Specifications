@@ -218,35 +218,3 @@ to “Y”.
 
 If the user does not want to have average weekly values in the output, then
 please set this to “N”.
-
-## 7.0 Date Adjustment example
-
-This is a simple example of date adjustment, please see the Date Adjustment
-user notes for more detailed scenarios. We are going to use the equal weighted
-function described above to help detail how the sum of the trading day weights
-are calculated.
-
-| Reference | Contributor period start date | Contributor period end date | Variable to be date adjusted | Expected period start date | Expected period end date | Domain | Set to mid-point | Set to equal weighted | Use calendar days | Short period parameter | Long period parameter | Average Weekly |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 20220601 | 20220628 | 5000 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N |
-| 2 | 20220601 | 20220630 | 4800 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N |
-| 3 | 20220601 | 20220624 | 5000 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N |
-
-The above table a potential input into the date adjustment method and the
-table below is an example output.
-
-| Reference | Contributor period start date | Contributor period end date | Variable to be date adjusted | Expected period start date | Expected period end date | Domain | Set to mid-point | Set to equal weighted | Use calendar days | Short period parameter | Long period parameter | Average Weekly | Sum of contributors trading day weights | Sum of expected trading day weights | Date adjusted variables |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 20220601 | 20220628 | 5000 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N | 28 | 30 | 5357.14 |
-| 2 | 20220601 | 20220630 | 4800 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N | 30 | 30 | 4800 |
-| 3 | 20220601 | 20220704 | 6000 | 20220601 | 20220630 | 1 | N | Y | N | 20 | 45 | N | 34 | 30 | 5294.12 |
-
-* Reference 1 has returned a shorter period then the expected period, returned
-28 days and we are expecting 30, therefore we can see that the variable has been
-date adjusted and has increased proportionately in relation to the weights.
-* Reference 2 has returned the same period we want for our expected period;
-therefore, the sum of the weights will be equal and therefore a change has not
-occurred.
-* Reference 3 has returned a longer period than the expected period, returned
-34 days and we are expecting 30, therefore we can see that the variable has been
-date adjusted and has decreased proportionately in relation to the weights.

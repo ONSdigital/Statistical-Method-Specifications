@@ -63,7 +63,8 @@ through unchecked.
 
 All field names in this document are not definitive, the actual field
 names must be configurable, and the method used to configure these
-names is an implementation detail and thus out of scope of this document.
+names is an implementation detail and thus out of scope of this
+document.
 
 ### 5.1 Input records
 
@@ -166,45 +167,3 @@ for failed selective editing and the respondent requires validation.
 If the final score is less than the selective editing threshold, then output
 the output flag as 'P' for pass selective editing and does not require
 validation.
-
-## 7.0 Worked Example
-
-The below example shows how the method works in principle, please see the
-user notes for how the method has been coded to work.
-
-| Reference | question_1_ar | Design weight | Threshold | question_1_pv | question_1_apv | question_1_sf |
-| --- | --- | --- | --- | --- | --- | --- |
-| 1 | 61000 | 1 | 0.2 | 58500 | 50000 | 1500000 |
-| 2 | 35600 | 1 | 0.2 | 28100 | 32000 | 1500000 |
-| 3 | 4200 | 10 | 0.5 | 3400 | 2600 | 4300000 |
-| 4 | 7900 | 10 | 0.5 | 2200 | 2400 | 4300000 |
-| 5 | 18000 | 2 | 0.6 | 10000 | 9800 | 3700000 |
-| 6 | 2000 | 2 | 0.4 | 1800 | 900 | 50000 |
-
-The above table gives an example dataset that contains all the information
-needed to calculate scores and decide whether the reference has passed or
-failed selective editing.
-
-| Reference | Score1 | Final Score | Selective Editing marker | question_1_pm |
-| --- | --- | --- | --- | --- |
-| 1 | 0.167 | 0.167 | True | True |
-| 2 | 0.500 | 0.500 | False | True |
-| 3 | 0.186 | 0.186 | True | True |
-| 4 | 1.326 | 1.326 | False | True |
-| 5 | 0.432 | 0.432 | True | True |
-| 6 | 0.800 | 0.800 | False | True |
-
-## 7.1 Discussion about results
-
-Even though reference 1 has a bigger return than reference 2 and are in
-the same domain as each other; reference 2 fails as it has a larger
-weighted difference than is observed for reference 1.
-Reference 4 has an unweighted return that is not large in comparison
-to the previous period domain total; however once weighted, the
-difference between current and previous period turnover values makes
-a more significant contribution to the domain total.
-Reference 5 may appear to have a large increase when comparing the
-current and previous period turnover; however once weighted, the
-difference between current and previous period turnover makes little
-contribution to the previous period domain total (standardising factor).
-Reference 6 does not have a large, unweighted return; but once weighted it does make a large contribution to the domain as the domain total is much smaller than the other domains listed.

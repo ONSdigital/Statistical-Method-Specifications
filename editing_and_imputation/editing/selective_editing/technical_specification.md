@@ -83,8 +83,10 @@ fields as the values shall be the same in both input and output records.
 
 For each question specific score `s_i` first select the predicted value `p_i`.
 Use the previous period data for the respondant if it exists otherwise use the
-respondant's auxiliary value for the current period. The Predicted Marker
-is true in the case that the previous period data exists, false otherwise.
+respondant's auxiliary value for the current period.
+
+Set the Predicted Marker to true in the case that the previous period data
+exists, false otherwise.
 
 Given this, `s_i = (100 * a_i * abs(r_i - p_i))/f_i`.
 Where:
@@ -93,13 +95,15 @@ Where:
 * `r_i` is the adjusted return for the respondant
 * `f_i` is the standardising factor for the respondant
 
-For `n` question specific scores (where `n > 1`) then the combined score `s`
+For `n` question specific scores (where `n > 1`), the combined score `s`
 is one of:
 
 * Maximum question specific score `s = max(lim_(i=1)^n s_i)`
-* Weighted mean of scores `s = sum_(i=1)^n (s_i * w_i) / sum_(i=1)^n w_i`
-* Mean score (The above but weight = 1)
-* Minkowski distance `s = (sum_(i=1)^n s_i^p)^(1/p)
+* Weighted mean of scores `s = (sum_(i=1)^n (s_i * w_i)) / (sum_(i=1)^n w_i)`
+    where `w_i` is the weight for the question specific score `s_i`.
+* Mean score `s = (sum_(i=1)^n s_i) / n`
+* Minkowski distance `s = (sum_(i=1)^n (s_i^m))^(1/m)
+    where `m` is the Minkowski parameter.
 
 Otherwise there is only one question specific score `s`.
 

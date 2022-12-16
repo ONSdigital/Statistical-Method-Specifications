@@ -124,7 +124,6 @@ The imputation marker must be one of the following:
 * BI = Backwards imputation
 * C = Construction imputation from auxiliary variable
 * R = Response. This value is cleared of errors or warnings
-* E = Method error
 
 ### 5.3 Back Data
 

@@ -34,7 +34,7 @@ for a given contributor. This should be input into the method if the user
 wishes to apply weighted imputation.
 * Target period link weight -  If using weighted imputation, this value
 represents the weight of the target period imputation link as a proportion
-of 1. If = 1 or missing, ten weighted imputation is not applied.
+of 1. If = 1 or missing, then weighted imputation is not applied.
 * Matched Pair - A contributor that has returned, cleaned values in
 both the target and predictive period.
 

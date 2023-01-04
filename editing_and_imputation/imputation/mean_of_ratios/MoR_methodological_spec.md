@@ -290,7 +290,7 @@ Let *L<sub>q,g,t</sub>* be the weighted imputation link given by:
 
 $$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}, \text{for monthly surveys} $$
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−3}, \text{for quarterly surveys} $$
+$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−4}, \text{for quarterly surveys} $$
 
 $$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for yearly surveys} $$ 
  
@@ -298,7 +298,7 @@ $$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for y
 ```asciimath
 L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}, \text{for monthly surveys}
 
-L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−3}, \text{for quarterly surveys}
+L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−4}, \text{for quarterly surveys}
 
 L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for yearly surveys}
 ```

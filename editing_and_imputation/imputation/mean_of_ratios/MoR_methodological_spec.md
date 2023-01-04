@@ -57,8 +57,8 @@ Input records must include the following fields of the correct types:
 * Target Variable – Numeric – Nulls Allowed 
 * Predictive Variable – Numeric – Optional  
 * Auxiliary Variable – Numeric 
-* Lower Trim – Numeric 
-* Upper Trim – Numeric  
+* Lower Trim – Numeric – Optional
+* Upper Trim – Numeric – Optional
 * Forward Link – Numeric – Optional  
 * Backward Link – Numeric – Optional  
 * Construction Link – Numeric – Optional  

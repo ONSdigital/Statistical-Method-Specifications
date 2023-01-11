@@ -290,9 +290,15 @@ Recall that all unmatched pairs and zeros were removed before the trimming proce
 
 #### 7.3.2 Construction Imputation Links
 
-Construction imputation links are calculated using the Ratio of Means method and does not use trimming. However, exclusion markers can be applied to remove influential contributors.
+Construction imputation links are calculated using the Ratio of Means
+ method and does not use trimming. However, exclusion markers can be
+ applied to remove influential contributors.
 
-For each imputation class, the imputation links are calculated by the sum of the cleaned responders in the target period, *x<sub> q, i, t</sub>*, divided by the sum of their corresponding auxiliary variables, *y<sub> q, i, t</sub>*, also held for the target period i.e., the predictive period is also the target period.
+For each imputation class, the imputation links are calculated by the sum
+ of the cleaned responders in the target period, *x<sub> q, i, t</sub>*,
+ divided by the sum of their corresponding auxiliary variables,
+ *y<sub> q, i, t</sub>*, also held for the target period i.e.,
+ the predictive period is also the target period.
 
 If the denominator is 0 then the link shall default to 1.
 
@@ -302,17 +308,21 @@ $$\large CR_{q,g,t} = \frac{\large\Sigma x_{q,i,t}}{\large\Sigma y_{q,i,t}} $$
 CR_{q,g,t} = \frac{\Sigma x_{q,i,t}}{\Sigma y_{q,i,t}}
 ```
 
-Where *CR<sub>q, g, t</sub>* is the construction imputation link for a given variable, *q*, in imputation class, *g*, and in the target period, *t*.
+Where *CR<sub>q, g, t</sub>* is the construction imputation link for
+ a given variable, *q*, in imputation class, *g*, and in the target period, *t*.
 
 #### 7.3.3 Weighted Imputation Links
 
 Let *L<sub>q,g,t</sub>* be the weighted imputation link given by:
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}, \text{for monthly surveys} $$
+$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12},
+ \text{for monthly surveys} $$
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−4}, \text{for quarterly surveys} $$
+$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−4},
+ \text{for quarterly surveys} $$
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for yearly surveys} $$
+$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1},
+ \text{for yearly surveys} $$
 
 ```asciimath
 L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}, \text{for monthly surveys}
@@ -324,13 +334,15 @@ L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for yearly surv
 
 Where *w* is the defined weight.
 
-If the previous year link is missing, then the weight applied to target period should = 1, such that *L<sub>q,g,t</sub>* = $\bar{R}_{q,g,t}$.
+If the previous year link is missing, then the weight applied to target period
+ should = 1, such that *L<sub>q,g,t</sub>* = $\bar{R}_{q,g,t}$.
 
-If weighted imputation is being applied to construction imputation, then $\bar{R}$ is replaced with *CR* in section 7.3.2.
+If weighted imputation is being applied to construction imputation,
+ then $\bar{R}$ is replaced with *CR* in section 7.3.2.
 
 ### 7.4 Imputed Value Calculations
 
-A single value, $\bar{Y}_{q,g,t}$ is imputed for the non-responder, 
+A single value, $\bar{Y}_{q,g,t}$ is imputed for the non-responder,
  *i*,  in the target period, *t*, given by:
 
 Forwards Imputation:

@@ -363,10 +363,10 @@ In the case of errors occurring the method shall not result
 
 ### 7.1 Growth Ratio Calculations
 
-Let *x<sub>q,i,t</sub>*  be the target variable and its predictive
- variable be *x<sub>q,i,t−1</sub>* or *x<sub>q,i,t+1</sub>* so that
+Let $x_{q,i,t}$  be the target variable and its predictive
+ variable be $x_{q,i,t−1}$ or $x_{q,i,t+1}$ so that
  matched pairs for the target and predictive period, where the target
- variable in the target period, *x<sub>q,i,t</sub>* and the predictive
+ variable in the target period, $x_{q,i,t}$ and the predictive
  value are both non-zero, responded values and the predictive value has
  been cleaned of errors or warnings.
 
@@ -383,11 +383,11 @@ $$\large Fr_{q, i, t} = \frac{x_{q, i, t}}{x_{q, i, t-1}}$$
 Fr_{q, i, t} = \frac{x_{q, i, t}}{x_{q, i, t-1}}
 ```
 
-Where *Fr<sub>q,i,t</sub>* is the growth ratio of the clean returned
+Where $Fr_{q,i,t}$ is the growth ratio of the clean returned
  target variable in the target period and corresponding clean returned
  predictive variable in the previous predictive period for question *q*,
  contributor *i* and at time *t*. This is the growth ratio of
- *x<sub>q,i,t</sub>*.
+ $x_{q,i,t}$.
 
 #### 7.1.2 Backwards Imputation
 
@@ -399,20 +399,20 @@ $$\large Br_{q,i,t} = \frac{x_{q,i,t}}{x_{q,i,t+1}}$$
 Br_{q,i,t} = \frac{x_{q,i,t}}{x_{q,i,t+1}}
 ```
 
-Where *Br<sub>q,i,t</sub>* is the growth ratio of the clean returned
+Where $Br_{q,i,t}$ is the growth ratio of the clean returned
  target variable in the target period and corresponding clean returned
  predictive variable in the consecutive predictive period for question *q*,
  contributor *i* and at time *t*. This is the growth ratio of
- *x<sub>q,i,t</sub>*.
+ $x_{q,i,t}$.
 
 ### 7.2 Trimming Calculations
 
 For a given variable, once growth ratios for each imputation class
  are ordered as described in section 6.1.3, define lower and upper
- trim as *M<sub>lower</sub>*  and *M<sub>upper</sub>*  respectively.
+ trim as $M_{lower}$ and $M_{upper}$  respectively.
  These are the top and bottom percent of the data to be removed before
  imputation links are calculated. From these, calculate the upper and
- lower cut-offs, *U<sub>q,g,t</sub>*  and *W<sub>q,g,t</sub>*  such that:
+ lower cut-offs, $U_{q,g,t}$  and $W_{q,g,t}$  such that:
 
 $$ \text{Upper cut off} = U_{q,g,t} = N_{q,g,t}*\Bigl(\frac{M_{upper}}{100}\Bigl)$$
 
@@ -424,7 +424,7 @@ Upper cut off = U_{q,g,t} = N_{q,g,t}*(\frac{M_{upper}}{100})
 Lower cut off = W_{q,g,t} = N_{q,g,t}*(\frac{1−M_{lower}}{100})
 ```
 
-Where *N<sub>q,g,t</sub>* is the number of rows after the removal
+Where $N_{q,g,t}$ is the number of rows after the removal
  of zeros/unmatched pairs in the dataset for question *q*, imputation
  class *g* and time *t*. A record should be trimmed from the data set
  if one of the following conditions are met:
@@ -439,17 +439,17 @@ Row number < U_{q,g,t} , or
 Row number > W_{q,g,t}
 ```
 
-For example, if *U<sub>q,g,t</sub>*  is between 4 and 5, then rows
- 4 and lower will be removed. If *W<sub>q,g,t</sub>*  is between 56
- and 57, then rows 57 and above will be removed. If *U<sub>q,s,t</sub>*
- is exactly 4, then rows 3 and below will be removed. If *W<sub>q,s,t</sub>*
+For example, if $U_{q,g,t}$  is between 4 and 5, then rows
+ 4 and lower will be removed. If $W_{q,g,t}$  is between 56
+ and 57, then rows 57 and above will be removed. If $U_{q,s,t}$
+ is exactly 4, then rows 3 and below will be removed. If $W_{q,s,t}$
  is exactly 56, then rows 57 and above will be removed.
 
 ### 7.3 Imputation Link Calculations
 
 #### 7.3.1 Forwards and Backward Imputation Links
 
-For simplicity, let *[F, B]r<sub>q,g,t</sub> = r<sub>q,g,t</sub>*
+For simplicity, let $[F, B]r_{q,g,t} = r_{q,g,t}$
  depending on whether the type of imputation is either forwards
  or backwards. For each imputation class, the imputation links are
  calculated by the mean growth ratio of the (trimmed) dataset:
@@ -461,9 +461,9 @@ $$ \large \bar{R}_{q,g,t} = \Sigma_{all \ i \in g \ \text{in dataset after trim}
 \bar{R}_{q,g,t} = \Sigma_{all \ i \in g \ \text{in dataset after trim}} (\frac{r_{q,i,t}}{N_{trimmed,q,g,t}})
 ```
 
-Where $\bar{R}$ is the mean of ratios. *N<sub>trimmed q,g,t</sub>*
+Where $\bar{R}$ is the mean of ratios. $N_{trimmed, q,g,t}$
  is the lowered number of items in the dataset post trim.
- This is equal to *N<sub>q,g,t</sub>*  when *N<sub>q,g,t</sub> ≤ 10* or
+ This is equal to $N_{q,g,t}$  when $N_{q,g,t} ≤ 10$ or
  if trimming was not required.
 
 Recall that all unmatched pairs and zeros were removed before the trimming process,
@@ -476,9 +476,9 @@ Construction imputation links are calculated using the Ratio of Means
  applied to remove influential contributors.
 
 For each imputation class, the imputation links are calculated by the sum
- of the cleaned responders in the target period, *x<sub> q, i, t</sub>*,
+ of the cleaned responders in the target period, $x_{q, i, t}$,
  divided by the sum of their corresponding auxiliary variables,
- *y<sub> q, i, t</sub>*, also held for the target period i.e.,
+ $y_{q, i, t}$, also held for the target period i.e.,
  the predictive period is also the target period.
 
 If the denominator is 0 then the link shall default to 1.
@@ -489,12 +489,12 @@ $$\large CR_{q,g,t} = \frac{\large\Sigma x_{q,i,t}}{\large\Sigma y_{q,i,t}} $$
 CR_{q,g,t} = \frac{\Sigma x_{q,i,t}}{\Sigma y_{q,i,t}}
 ```
 
-Where *CR<sub>q, g, t</sub>* is the construction imputation link for
+Where $CR_{q, g, t}$ is the construction imputation link for
  a given variable, *q*, in imputation class, *g*, and in the target period, *t*.
 
 #### 7.3.3 Weighted Imputation Links
 
-Let *L<sub>q,g,t</sub>* be the weighted imputation link given by:
+Let $L_{q,g,t}$ be the weighted imputation link given by:
 
 $$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12},
  \text{for monthly surveys} $$
@@ -516,7 +516,7 @@ L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for yearly surv
 Where *w* is the defined weight.
 
 If the previous year link is missing, then the weight applied to target period
- should = 1, such that *L<sub>q,g,t</sub>* = $\bar{R}_{q,g,t}$.
+ should = 1, such that $L_{q,g,t} = \bar{R}_{q,g,t}$.
 
 If weighted imputation is being applied to construction imputation,
  then $\bar{R}$ is replaced with *CR* in section 7.3.2.
@@ -534,7 +534,7 @@ $$ \large \bar{Y}_{i,q,g,t} = F\bar{R}_{q,g,t} * y_{i,q,g,t-1} $$
 Forwards imputation: \bar{Y}_{i,q,g,t} = F\bar{R}_{q,g,t} * y_{i,q,g,t-1}
 ```
 
-Where the predictive value, *y<sub>i,q,g,t-1</sub>*, is either a returned,
+Where the predictive value, $y_{i,q,g,t-1}$, is either a returned,
  imputed or constructed value held for the responder in the previous period.
 
 Backwards imputation:
@@ -545,7 +545,7 @@ $$ \large \bar{Y}_{i,q,g,t} = B\bar{R}_{q,g,t} * y_{i,q,g,t+1} $$
 Backwards imputation: \bar{Y}_{i,q,g,t} = B\bar{R}_{q,g,t} * y_{i,q,g,t+1}
 ```
 
-Where the predictive value, *y<sub>i,q,g,t+1</sub>*, is a
+Where the predictive value, $y_{i,q,g,t+1}$, is a
  returned value held for the contributor in a consecutive period.
 
 Construction imputation:

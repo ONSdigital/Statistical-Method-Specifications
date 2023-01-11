@@ -233,9 +233,9 @@ Note that trimming is not applied when using construction
 
 ### 6.2 Imputation
 
-Imputation uses a predictive value for a contributor and 
- multiplies that by the appropriate link. Both the link and 
- predictive value used depend on the type of imputation being 
+Imputation uses a predictive value for a contributor and
+ multiplies that by the appropriate link. Both the link and
+ predictive value used depend on the type of imputation being
  performed. Imputation can only take place on records with no
  value for the target variable and where the appropriate
  predictive value and link are present or can be calculated.
@@ -335,7 +335,7 @@ Exclusion markers can be used to remove with influential growth
  ratios. The use of trimming should remove most influential growth
  ratios from imputation link calculations however, some influential
  growth ratios may still exist after trimming. Exclusion markers can
- be applied to remove these. As trimming is optional, exclusion 
+ be applied to remove these. As trimming is optional, exclusion
  markers can be used as well as or instead of trimming.
 
 Trimming should be applied first, then additional growth ratios
@@ -442,7 +442,7 @@ Row number > W_{q,g,t}
 For example, if *U<sub>q,g,t</sub>*  is between 4 and 5, then rows
  4 and lower will be removed. If *W<sub>q,g,t</sub>*  is between 56
  and 57, then rows 57 and above will be removed. If *U<sub>q,s,t</sub>*
- is exactly 4, then rows 3 and below will be removed. If *W<sub>q,s,t</sub>
+ is exactly 4, then rows 3 and below will be removed. If *W<sub>q,s,t</sub>*
  is exactly 56, then rows 57 and above will be removed.
 
 ### 7.3 Imputation Link Calculations

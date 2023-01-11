@@ -363,8 +363,8 @@ $$ \large \bar{Y}_{i,q,g,t} = CR_{q,g,t} * y_{i,q,g,t} $$
 Construction imputation: \bar{Y}_{i,q,g,t} = CR_{q,g,t} * y_{i,q,g,t}
 ```
 
-Where the predictive value, $y_{i,q,g,t}$, is a well
- correlated register based auxiliary variable held for the respondent in the target period.
+Where the predictive value, $y_{i,q,g,t}$, is a well correlated
+ register based auxiliary variable held for the respondent in the target period.
 
 ## 8.0 Imputation Rules
 

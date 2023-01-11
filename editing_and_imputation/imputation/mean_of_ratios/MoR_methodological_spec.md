@@ -330,7 +330,8 @@ If weighted imputation is being applied to construction imputation, then $\bar{R
 
 ### 7.4 Imputed Value Calculations
 
-A single value, $\bar{Y}_{q,g,t}$ is imputed for the non-responder, *i*,  in the target period, *t*, given by:
+A single value, $\bar{Y}_{q,g,t}$ is imputed for the non-responder, 
+ *i*,  in the target period, *t*, given by:
 
 Forwards Imputation:
 
@@ -340,7 +341,8 @@ $$ \large \bar{Y}_{i,q,g,t} = F\bar{R}_{q,g,t} * y_{i,q,g,t-1} $$
 Forwards imputation: \bar{Y}_{i,q,g,t} = F\bar{R}_{q,g,t} * y_{i,q,g,t-1}
 ```
 
-Where the predictive value, *y<sub>i,q,g,t-1</sub>*, is either a returned, imputed or constructed value held for the responder in the previous period.
+Where the predictive value, *y<sub>i,q,g,t-1</sub>*, is either a returned,
+ imputed or constructed value held for the responder in the previous period.
 
 Backwards imputation:
 
@@ -350,7 +352,8 @@ $$ \large \bar{Y}_{i,q,g,t} = B\bar{R}_{q,g,t} * y_{i,q,g,t+1} $$
 Backwards imputation: \bar{Y}_{i,q,g,t} = B\bar{R}_{q,g,t} * y_{i,q,g,t+1}
 ```
 
-Where the predictive value, *y<sub>i,q,g,t+1</sub>*, is a returned value held for the contributor in a consecutive period.
+Where the predictive value, *y<sub>i,q,g,t+1</sub>*, is a
+ returned value held for the contributor in a consecutive period.
 
 Construction imputation:
 
@@ -360,35 +363,56 @@ $$ \large \bar{Y}_{i,q,g,t} = CR_{q,g,t} * y_{i,q,g,t} $$
 Construction imputation: \bar{Y}_{i,q,g,t} = CR_{q,g,t} * y_{i,q,g,t}
 ```
 
-Where the predictive value, *y<sub>i,q,g,t</sub>*, is a well correlated register based auxiliary variable held for the respondent in the target period.
+Where the predictive value, $y_{i,q,g,t}$, is a well
+ correlated register based auxiliary variable held for the respondent in the target period.
 
 ## 8.0 Imputation Rules
 
-Mean of Ratios imputation follows a set of rules to ensure that it is used correctly, these rules are in the same order as the flow chart below:
+Mean of Ratios imputation follows a set of rules to ensure that it
+ is used correctly, these rules are in the same order as the flow chart below:
 
-* If there is no response available and the contributor is being sampled for the first time, calculate a constructed link using the auxiliary data available for that contributor (C)
+* If there is no response available and the contributor is
+ being sampled for the first time, calculate a constructed link
+ using the auxiliary data available for that contributor (C)
 
-* If there is no response available for a second period, forwards impute based off the constructed value (FIC)
+* If there is no response available for a second period,
+ forwards impute based off the constructed value (FIC)
 
-* If a clean response is available for the previous period but not the current period, then perform forwards imputation (FIR)
+* If a clean response is available for the previous period but not the
+ current period, then perform forwards imputation (FIR)
 
-* If a clean response is available for the second period but not the third, fourth or current, then perform rolling forwards imputation from the second period for all missing periods (FIR)
+* If a clean response is available for the second period but not the
+ third, fourth or current, then perform rolling forwards imputation
+ from the second period for all missing periods (FIR)
 
-* If a respondent does not respond for the first two periods it is sampled (see second bullet point) however does respond for the third period and the response is clean, then overwrite periods 1 and 2 with backwards imputation (BI)
+* If a respondent does not respond for the first two periods it
+ is sampled (see second bullet point) however does respond for the
+ third period and the response is clean, then overwrite periods 1 and 2 with backwards
+ imputation (BI)
 
-* Forwards and backwards imputation can be carried out from the same clean respondent however, a forwards impute will always be preferred to a backwards impute
+* Forwards and backwards imputation can be carried out
+ from the same clean respondent however,
+ a forwards impute will always be preferred to a backwards impute
 
 * If a respondent responds for all periods, then imputation is not needed
 
-* If a contributor is rotated out of the sample and then rotated back into the sample, any values that were previously present should not be used to forwards impute
+* If a contributor is rotated out of the sample and then rotated back
+ into the sample, any values that were previously present should not
+ be used to forwards impute
 
-* If a contributor is rotated out of sample and then rotated back into the sample, the response from the current period should not be used to backwards impute
+* If a contributor is rotated out of sample and then rotated
+ back into the sample, the response from the current period
+ should not be used to backwards impute
 
-* If auxiliary data is missing and the contributor is a non-responder for all sampled periods, then an error will occur
+* If auxiliary data is missing and the contributor is a
+ non-responder for all sampled periods, then an error will occur
 
-* Mean or median imputation should be used if there is no auxiliary information available (no previous period auxiliary, no consecutive period auxiliary and no register-based auxiliary variable)
+* Mean or median imputation should be used if there is no
+ auxiliary information available (no previous period auxiliary,
+ no consecutive period auxiliary and no register-based auxiliary variable)
 
-* Mean imputation: impute a mean value for non-responders based upon target period cleared respondents within the same imputation class
+* Mean imputation: impute a mean value for non-responders
+ based upon target period cleared respondents within the same imputation class
 
 * Median imputation: impute a median value for non-responders
  based upon target period cleared respondents within the same imputation class

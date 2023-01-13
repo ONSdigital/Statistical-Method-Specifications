@@ -115,12 +115,14 @@ Output records shall always contain the following fields with the following type
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
 * Imputation Class
-* Final Target Variable – Numeric
-* Imputation Marker – String
-* Error Description – String
+* Forward Growth Ratio – Numeric
+* Backward Growth Ratio – Numeric
 * Forward Link – Numeric
 * Backward Link – Numeric
 * Construction Link – Numeric
+* Final Target Variable – Numeric
+* Imputation Marker – String
+* Error Description – String
 
 Fields of type "Any" shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.

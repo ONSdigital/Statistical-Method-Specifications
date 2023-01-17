@@ -197,7 +197,7 @@ The method ends only when either there are no more missing values
 When calculating growth ratios, the method considers all cleaned,
  non-zero (unless chosen otherwise) respondent data for both the
  target and predictive period.
- 
+
 It is best practice to exclude zeros when finding matched pairs however,
  if the input data set has a high prevalence of zeros in the target
  variable, then the user can choose to include zeros when finding matched
@@ -410,7 +410,7 @@ Where $Fr_{q,i,t}$ is the growth ratio of the clean returned
  predictive variable in the previous predictive period for question *q*,
  contributor *i* and at time *t*. This is the growth ratio of
  $x_{q,i,t}$.
- 
+
 If the user has chosen to include zeros when finding matched pairs,
  then $Fr_{q,i,t} = 1$ when at least one of $x_{q,i,t} = 0$ or $x_{q,i,t-1} = 0$.
 
@@ -429,7 +429,7 @@ Where $Br_{q,i,t}$ is the growth ratio of the clean returned
  predictive variable in the consecutive predictive period for question *q*,
  contributor *i* and at time *t*. This is the growth ratio of
  $x_{q,i,t}$.
- 
+
 If the user has chosen to include zeros when finding matched pairs,
  then $Br_{q,i,t} = 1$ when at least one of $x_{q,i,t} = 0$ or $x_{q,i,t+1} = 0$.
 
@@ -628,7 +628,7 @@ Mean of Ratios imputation follows a set of rules to ensure that it
 * If a contributor’s imputation class in the predictive period is
  different from its imputation class in the target period (i.e., the
  imputation class has changed), then perform construction imputation (C)
- 
+
 * If a contributor’s imputation class in the predictive period is
  different from its imputation class in the target period (i.e., the
  imputation class has changed), then a growth ratio should not be

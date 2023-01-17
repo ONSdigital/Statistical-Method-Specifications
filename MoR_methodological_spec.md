@@ -32,8 +32,9 @@
 * Target Period Link Weight – If using weighted imputation, this value
  represents the weight of the target period imputation link as a proportion
  of 1. If = 1 or missing, then weighted imputation is not applied.
-* Matched Pair – A contributor that has returned, cleaned, non-zero
- values in both the target and predictive period.
+* Matched Pair – A contributor that has returned, cleaned, non-zero (unless chosen
+ otherwise) values in both the target and predictive period and within the same
+ imputation class.
 
 ## 3.0 Introduction
 
@@ -74,8 +75,10 @@ The generic formula for using Mean of Ratios imputation is the imputation link
  providing a sufficient number of contributors within each class enabling
  robust link calculation
 * The auxiliary variable is a good predictor of the target variable
-* Matched pairs must comprise of clean, respondent non-zero
- data for both the target and predictive period
+* The auxiliary variable is populated for every contributor when performing
+ construction imputation
+* Matched pairs must comprise of clean, respondent non-zero (unless chosen otherwise)
+ data for both the target and predictive period and within the same imputation class
 
 ## 5.0 Method Input and Output - TO BE FINALISED WITH DST
 
@@ -90,6 +93,8 @@ Input records must include the following fields of the correct types:
 * Target Variable – Numeric – Nulls Allowed
 * Predictive Variable – Numeric – Optional
 * Auxiliary Variable – Numeric
+* Include Zeros – Boolean. 0 = False, exclude. 1 = True, include – Optional.
+ If marker not populated, then False.
 * Lower Trim – Numeric – Optional
 * Upper Trim – Numeric – Optional
 * Forward Link – Numeric – Optional
@@ -175,8 +180,10 @@ Initially, a growth ratio is calculated for each matched pair for
  remain after trimming then becomes the imputation link for each
  target variable in a given imputation class.
 
-Matched pairs must be found using cleaned responses and non-zero
- data for both the target and predictive periods.
+Matched pairs must be found using cleaned responses and non-zero (unless
+ chosen otherwise data for both the target and predictive periods and
+ within the same imputation class. When required, the user can include
+ zeros when finding matched pairs for forwards and backwards imputation.
 
 The method ends only when either there are no more missing values
  within the target variable or no more values can be imputed. The
@@ -188,7 +195,14 @@ The method ends only when either there are no more missing values
 #### 6.1.1 Respondent Filtering and Matching
 
 When calculating growth ratios, the method considers all cleaned,
- non-zero respondent data for both the target and predictive period.
+ non-zero (unless chosen otherwise) respondent data for both the
+ target and predictive period.
+ 
+It is best practice to exclude zeros when finding matched pairs however,
+ if the input data set has a high prevalence of zeros in the target
+ variable, then the user can choose to include zeros when finding matched
+ pairs for forwards and backwards imputation. This includes zeros in
+ either the target variable or predictive variable, or both.
 
 Only respondents present in both the target and predictive period
  and the same imputation class can form a matched pair.
@@ -206,6 +220,12 @@ Growth ratios must be calculated for each matched pair for every
  for the target variable for the target period divided by the value
  held for the consecutive period
 * Construction imputation does not require growth ratios to be calculated
+
+If the user has chosen to include zeros when finding matched pairs
+ (section 6.1.1), then the growth ratio for the affected respondents
+ for both forwards and backwards imputation should default to equal 1.
+ Note that this does not mean the overall imputation links should be
+ defaulted to 1; this only affects matched pairs with zero data values.
 
 A set of growth ratios will exist for each type of imputation
  and each target variable in a given imputation class. These sets
@@ -369,8 +389,8 @@ Let $x_{q,i,t}$  be the target variable and its predictive
  variable be $x_{q,i,t−1}$ or $x_{q,i,t+1}$ so that
  matched pairs for the target and predictive period, where the target
  variable in the target period, $x_{q,i,t}$ and the predictive
- value are both non-zero, responded values and the predictive value has
- been cleaned of errors or warnings.
+ value are both non-zero (unless chosen otherwise), responded values
+ and the predictive value has been cleaned of errors or warnings.
 
 Note, growth ratios are not calculated for construction imputation.
  See section 7.3.2 for further details on how construction imputation links are calculated.
@@ -390,6 +410,9 @@ Where $Fr_{q,i,t}$ is the growth ratio of the clean returned
  predictive variable in the previous predictive period for question *q*,
  contributor *i* and at time *t*. This is the growth ratio of
  $x_{q,i,t}$.
+ 
+If the user has chosen to include zeros when finding matched pairs,
+ then $Fr_{q,i,t} = 1$ when at least one of $x_{q,i,t} = 0$ or $x_{q,i,t-1} = 0$.
 
 #### 7.1.2 Backwards Imputation
 
@@ -406,6 +429,9 @@ Where $Br_{q,i,t}$ is the growth ratio of the clean returned
  predictive variable in the consecutive predictive period for question *q*,
  contributor *i* and at time *t*. This is the growth ratio of
  $x_{q,i,t}$.
+ 
+If the user has chosen to include zeros when finding matched pairs,
+ then $Br_{q,i,t} = 1$ when at least one of $x_{q,i,t} = 0$ or $x_{q,i,t+1} = 0$.
 
 ### 7.2 Trimming Calculations
 
@@ -566,11 +592,11 @@ Where the predictive value, $y_{i,q,g,t}$, is a well correlated
 Mean of Ratios imputation follows a set of rules to ensure that it
  is used correctly, these rules are in the same order as the flow chart below:
 
-* If there is no response available and the contributor is
+* If there is no clean response available and the contributor is
  being sampled for the first time, calculate a constructed link
  using the auxiliary data available for that contributor (C)
 
-* If there is no response available for a second period,
+* If there is no clean response available for a second period,
  forwards impute based off the constructed value (FIC)
 
 * If a clean response is available for the previous period but not the
@@ -580,7 +606,7 @@ Mean of Ratios imputation follows a set of rules to ensure that it
  third, fourth or current, then perform rolling forwards imputation
  from the second period for all missing periods (FIR)
 
-* If a respondent does not respond for the first two periods it
+* If a contributor does not respond for the first two periods it
  is sampled (see second bullet point) however does respond for the
  third period and the response is clean, then overwrite periods 1 and 2 with backwards
  imputation (BI)
@@ -598,6 +624,15 @@ Mean of Ratios imputation follows a set of rules to ensure that it
 * If a contributor is rotated out of sample and then rotated
  back into the sample, the response from the current period
  should not be used to backwards impute
+
+* If a contributor’s imputation class in the predictive period is
+ different from its imputation class in the target period (i.e., the
+ imputation class has changed), then perform construction imputation (C)
+ 
+* If a contributor’s imputation class in the predictive period is
+ different from its imputation class in the target period (i.e., the
+ imputation class has changed), then a growth ratio should not be
+ calculated for this contributor
 
 * If auxiliary data is missing and the contributor is a
  non-responder for all sampled periods, then an error will occur

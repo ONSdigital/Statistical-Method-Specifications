@@ -137,26 +137,11 @@ contributor’s response so that it is representative of the expected period.
 #### 6.1.1 Incomplete or erroneous data provided
 
 Contributors may not always provide full or correct data and the Date
-Adjustment method will handle it as detailed below:
-
-* If data is not returned then an E01 flag will be raised in the output.
-* If a contributor’s returned start date is empty then it will default
-to the expected period start date.
-* If a contributor’s returned end date is empty then it will default to
-the expected period end date.
-* If the contributor’s returned start and end date are empty then it
-will be assumed that the response is already in the correct period.
-* If the contributor’s returned end date is before the contributor’s
-returned start date, then the output will be Null for the variables to
-be date adjusted and place an E02 in the date adjustment error flag.
-* If any required dates are missing from the trading day weights, then
-return an E03 marker in the date adjustment error flag.
-* If any required trading day weights are missing between the
-contributor’s returned start date and end date or the expected start and
-end date then an E04 marker is placed in the date adjustment error flag.
-* If any required trading day weights are negative between the contributor’s
-returned start date and end date, then an E05 marker is place in the date
-adjustment error flag.
+Adjustment method will handle it by producing error codes. There are 15
+error codes and the explanation of each of the codes can be found in
+the technical specification and in the code itself. The method will continue
+processing even when errors occur, this was done for historical reasons,
+unlike other methods in the Statistical Methods Library.
 
 ### 6.2 Set to Mid-point – set as Y or YT or N
 

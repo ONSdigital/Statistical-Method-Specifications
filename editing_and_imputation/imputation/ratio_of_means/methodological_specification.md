@@ -67,7 +67,7 @@ target period.
 * The imputation classes group similar contributors together whilst providing
 a sufficient number of contributors within each class enabling a robust
 link calculation.
-* Matched pairs must comprise of clean, respondent non-zero data for both
+* Matched pairs must comprise of clean, respondent data for both
 the target and predictive period.
 
 ## 5.0 Method Input and Output
@@ -92,7 +92,7 @@ Input records must include the following fields of the correct types:
 * Previous year forwards imputation link (Optional) - Numeric
 * Previous year backwards imputation link (Optional) - Numeric
 * Previous year construction link (Optional) - Numeric
-* Exclusion Marker (Optional) - Boolean. 0 = False, include. 1 = True, exclude.
+* Link filter (Optional) - Boolean. 0 = False, include. 1 = True, exclude.
 If marker not populated, then False.
 
 Unless otherwise noted, fields must not contain null values. All other
@@ -348,6 +348,8 @@ Weighted imputation link = w*{sum y_{i, t}}/{sum x_{i, t}}
           + (1-w)*{sum y_{i, t-k}}/{sum x_{i, t-k}}
 ```
 
+### 8.5 User specified imputation links
+
 In some instances, a user may want to specify that the imputed value for a
 given target variable is constructed using links that have been calculated
 for another variable named by the user within a corresponding imputation
@@ -356,7 +358,7 @@ forwards imputed using links that have been calculated for another variable
 named by the user within a corresponding imputation class or use a link of
 1.
 
-### 8.5 Imputation rules
+### 8.6 Imputation rules
 
 Ratio of means imputation follows a set of rules to ensure that it is used
 correctly, these rules are in the same order as the flow chart below:
@@ -387,7 +389,8 @@ correctly, these rules are in the same order as the flow chart below:
     all sampled periods then an error will occur.
 * Mean or median imputation should be used if there is no auxiliary
     information available (no previous period auxiliary, no consecutive
-    period auxiliary and no register-based auxiliary variable)
+    period auxiliary and no register-based auxiliary variable). Mean and
+    median imputation are not available in this method.
 
   * Mean imputation: impute a mean value for non-responders based upon
      target period cleared respondents within the same imputation class.

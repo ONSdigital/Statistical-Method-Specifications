@@ -92,8 +92,10 @@ Input records must include the following fields of the correct types:
 * Previous year forwards imputation link (Optional) - Numeric
 * Previous year backwards imputation link (Optional) - Numeric
 * Previous year construction link (Optional) - Numeric
-* Link filter (Optional) - Boolean. 0 = False, include. 1 = True, exclude.
-If marker not populated, then False.
+* Link Filter Columns (Optional) - This can be any number of
+columns of any type that are to be used by the link filter
+(7.0) to prevent responders being used in the imputation
+link calculations.
 
 Unless otherwise noted, fields must not contain null values. All other
 fields shall be ignored.

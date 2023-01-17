@@ -33,8 +33,9 @@
 
 Selective Editing is an internationally recognised editing method
 where potential errors are prioritised according to their expected
-impact on key outputs. Only respondents that are having a significant
-impact on published estimates will be recontacted for validation.
+impact on key outputs, for one time period. Only respondents that
+are having a significant impact on published estimates will be
+recontacted for validation.
 
 Selective Editing works by assigning a score to each important
 variable for a contributor where, the score reflects the impact that
@@ -68,7 +69,7 @@ document.
 
 ### 5.1 Input records
 
-Input records in a datafram must include the following fields of the
+Input records must include the following fields of the
 correct types:
 
 * Reference - Any
@@ -83,7 +84,7 @@ correct types:
 When using the SML code, it will automatically assign
 adjusted return (ar), predicted value (pv), auxiliary predicted
 value (apv) and standardising factor (sf) based on the column names
-in the input dataframe. Please see User notes for further
+of the inputs. Please see User notes for further
 explanations.
 
 Unless otherwise noted, fields must not contain Null values. All other
@@ -98,8 +99,8 @@ following types:
 * Score1 - Numeric
 * ScoreM - Numeric
 * Final_Score - Numeric
-* Selective Editing marker - Character
-* Predicted marker, seen as '_pm' on adjusted return - Character
+* Selective Editing marker - Boolean
+* Predicted marker, seen as '_pm' on adjusted return - Boolean
 
 ## 6.0 Method
 
@@ -116,12 +117,12 @@ The predicted value is equal to a clean response for (i.e. free from
 error adjusted return) for reporting unit i at time t-1. However, if
 a clean response for reporting unit i at time t-1 is not available
 then imputed or constructed previous period data is used. If this
-value isn't available then the auxiliary predicted value for reporting
+value isn't available, then the auxiliary predicted value for reporting
 unit i at time t is used.
 
 If the predicted value is the adjusted return for reporting unit i at
 time t-1 then the method output will contain a column with the ending
-"_pm" for predicitve marker which will be set to 'True'.
+"_pm" for predictive marker which will be set to 'True'.
 
 If the predicted value is the auxiliary predicted value for reporting
 unit i at time t then the method output will contain a column with the
@@ -155,15 +156,16 @@ The overall final scores may be combined in the following ways:
  the power of p, all the scores are then summed and then multiplied to the
  power of 1/p. Where p >= 1 and is an integer.
   
-### 6.3 Generate final selective editing output flag
+### 6.3 Generate selective editing marker
 
 For each final score compare it to the threshold which are associated with
 the respondent's domain group.
 
 If the final score is greater than or equal to the selective editing
-threshold, then output the output flag marker for the reporting unit as 'F'
-for failed selective editing and the respondent requires validation.
-
-If the final score is less than the selective editing threshold, then output
-the output flag as 'P' for pass selective editing and does not require
+threshold, then output the selective editing marker for the reporting
+unit as False for failed selective editing and the respondent requires
 validation.
+
+If the final score is less than the selective editing threshold, then
+output the selective editing marker as True for passed selective
+editing and does not require validation.

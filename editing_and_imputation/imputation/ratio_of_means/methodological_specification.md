@@ -115,6 +115,9 @@ types:
 * Forward Link - Numeric
 * Backward Link - Numeric
 * Construction Link - Numeric
+* Forward Link Observation Count - Numeric
+* Backward Link Observation Count - Numeric
+* Construction Link Observation Count - Numeric
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
@@ -387,6 +390,9 @@ correctly, these rules are in the same order as the flow chart below:
 * If a contributor is rotated out of sample and then rotated back into the
     sample, the response from the current period should not be used to
     backwards impute.
+* If a contributor's imputation class in the previous period is different
+    from its imputation class in the current period (i.e. the imputation
+    class has changed), then perform construction imputation.
 * If auxiliary data is missing and the contributor is a non-responder for
     all sampled periods then an error will occur.
 * Mean or median imputation should be used if there is no auxiliary

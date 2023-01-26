@@ -8,7 +8,7 @@ or outliering.
 
 This document specifies the type-specific aspects  for Ratio of Means
 Imputation with reference to the
-[General Imputation Specification](../general/technical_specification.md).
+[General Imputation Method Specification](../general/technical_specification.md).
 Unless specified otherwise, all terminology, definitions and sections listed
 there apply to this document.
 
@@ -45,4 +45,4 @@ c = n
 If `sum_k=1)^n y_k = 0` then `l = 1` and `c = 0`. If `n = 0` then `l = 1` and
 `c` is set to null.
 
-Both the link `l` and its observation `c` shall be output.
+Both the link `l` and its observation count `c` shall be output.

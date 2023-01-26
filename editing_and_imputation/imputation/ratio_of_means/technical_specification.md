@@ -42,7 +42,7 @@ l = (sum_(k=1)^n x_k)/(sum_(k=1)^n y_k)`
 c = n
 ```
 
-If `sum_k=1)^n y_k = 0` then `l = 1` and `c = 0`. If `n = 0` then `l = 1` and
+If `sum_(k=1)^n y_k = 0` then `l = 1` and `c = 0`. If `n = 0` then `l = 1` and
 `c` is set to null.
 
 Both the link `l` and its observation count `c` shall be output.

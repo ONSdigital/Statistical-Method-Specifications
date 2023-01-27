@@ -125,6 +125,9 @@ Output records shall always contain the following fields with the following type
 * Forward Link – Numeric
 * Backward Link – Numeric
 * Construction Link – Numeric
+* Forward Link Observation Count – Numeric [CONFIRM PRE/POST TRIM]
+* Backward Link Observation Count – Numeric
+* Construction Link Observation Count – Numeric
 * Final Target Variable – Numeric
 * Imputation Marker – String
 * Error Description – String

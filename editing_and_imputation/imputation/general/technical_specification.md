@@ -105,13 +105,14 @@ Imputation must only take place on records with no value for the target
 variable and where the appropriate predictive value and link are present or
 can be calculated. Given these conditions, the general imputation formula is:
 
-`v_(impute)((p, c)) = v_(predictive)((p, c)) * l((p, c))`
+`v_(impute)((p, c)) = v_(predictive)((p, c)) * l((p, g((c))))`
 
 Where:
 * `v` is the value
 * `c` is the contributor
 * `p` is the period
 * `l` is a link calculation function 
+* `g` is a function mapping a contributor to a grouping in the dataset
 
 Both the link and predictive value used depend on the imputation process. In
 addition, for forward and backward imputation, multiple periods must be
@@ -129,7 +130,7 @@ In all cases, the predictive period for an imputation process is the same as
 that of the link being used. In addition, the predictive period must be
 calculated assuming a contiguous sequence of periods covering the full
 inclusive range of periods in the dataset rather than based on the periods
-actually present for a given contributor or the dataset as a whole.
+actually present for a given contributor or in the dataset as a whole.
 
 This document defines target and predictive periods as terms in the above
 sequence and assumes that the sequence is in ascending order regardless of
@@ -163,10 +164,11 @@ In link calculations, only responders present in the same group in both target a
 periods shall be used to calculate the ratios. These
 pairs of responders are referred to as matched pairs.
 
-The exact method for link calculation is out of scope of this document
-however it must produce forward, backward and construction links for every period and grouping combination in
-the dataset with forward and backward links based on matched pairs. It must also provide observation counts for the calculated
-links.
+The exact method for link calculation is out of scope of this document.
+However, as in the general imputation formula above, forward, backward and
+construction links must be calculated per period and grouping within the
+dataset, with forward and backward links based on matched pairs. Observation
+counts for the calculated links must also be provided.
 
 In the general case, a contributor's imputation link shall be that
 calculated for its group and the imputation process being performed.

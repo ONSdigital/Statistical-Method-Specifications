@@ -4,22 +4,22 @@
 
 * Contributor - A member of the sample identified by an identifier.
 * Record - A set of values for each contributor and period. At most one
-    record for a contributor can be present for a given period.
+  record for a contributor can be present for a given period.
 * Target Variable - The variable (A.K.A. field) in the record to be imputed.
 * Response - A value in a target variable which exists prior to any
-    imputation for a given period.
+  imputation for a given period.
 * Responder - A contributor whose target variable contains a response for a 
-    given period.
+  given period.
 * Non-responder - a contributor who is not a Responder.
 * Predictive Value - A value used as a predictor for a contributor's target
-    variable.
+  variable.
 * Predictive Record - The record containing a contributor's predictive
-    value.
+  value.
 * Target Period - The period currently undergoing imputation.
 * Predictive Period - The period containing predictive records.
 * Target Record - A contributor's record in the target period.
 * Grouping or group - How the data has been broken into subsets also known as
-    imputation class.
+  imputation class.
 * Link - A ratio used as part of the imputation process.
 
 ## 2.0 Description
@@ -108,6 +108,7 @@ can be calculated. Given these conditions, the general imputation formula is:
 `v_(impute)((p, c)) = v_(predictive)((p, c)) * l((p, g((c))))`
 
 Where:
+
 * `v` is the value
 * `c` is the contributor
 * `p` is the period
@@ -164,11 +165,12 @@ In link calculations, only responders present in the same group in both target a
 periods shall be used to calculate the ratios. These
 pairs of responders are referred to as matched pairs.
 
-The exact method for link calculation is out of scope of this document.
-However, as in the general imputation formula above, forward, backward and
-construction links must be calculated per period and grouping within the
-dataset, with forward and backward links based on matched pairs. Observation
-counts for the calculated links must also be provided.
+The link calculation function is out of scope of this document as it
+is specific to the type of Ratio Imputation being performed. However, as in
+the general imputation formula above, forward, backward and construction
+links must be calculated per period and grouping within the dataset, with
+forward and backward links based on matched pairs. Observation counts for
+the calculated links must also be provided.
 
 In the general case, a contributor's imputation link shall be that
 calculated for its group and the imputation process being performed.

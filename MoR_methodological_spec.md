@@ -31,7 +31,7 @@
  to apply weighted imputation.
 * Target Period Link Weight – If using weighted imputation, this value
  represents the weight of the target period imputation link as a proportion
- of 1. If = 1 or missing, then weighted imputation is not applied.
+ of 1. If = 1, then the method will take 100% of the target period link.
 * Matched Pair – A contributor that has returned, cleaned, non-zero (unless chosen
  otherwise) values in both the target and predictive period and within the same
  imputation class.
@@ -44,16 +44,19 @@ Mean of Ratios imputation is a standard imputation method for business
  method can be influenced by extreme values. The method imputes a single
  numeric variable. It uses the relationship between the variable being imputed
  and an appropriate predictive or auxiliary variable. Typically, the predictive
- or auxiliary variable can be:
+ variable can be:
 
 * a previous value from the variable of interest for the non-responder,
- known as forwards imputation
+ used for forwards imputation
 * a consecutive value from the variable of interest for the non-responder,
- also known as backwards imputation
-* a known register-based variable for the non-responder that is well correlated
- with the variable of interest, known as construction imputation
+ used for backwards imputation
 
-Previous or consecutive auxiliary variables either can be returned, imputed
+Typically, the auxiliary variable can be:
+
+* a known register-based variable for the non-responder that is well correlated
+ with the variable of interest, used for construction imputation
+
+Previous or consecutive predictive variables either can be returned, imputed
  or constructed. Forwards and backwards imputed values can be based upon
  returned, imputed or constructed values from the predictive record.
 
@@ -69,12 +72,12 @@ The generic formula for using Mean of Ratios imputation is the imputation link
 
 ## 4.0 Assumptions
 
-* The predictive variable is a good predictor of the target variable in
- the target period
+* The predictive variable is well correlated (a good predictor) with the
+ target variable
 * The imputation classes group similar contributors together whilst
  providing a sufficient number of contributors within each class enabling
  robust link calculation
-* The auxiliary variable is a good predictor of the target variable
+* The auxiliary variable is well correlated (a good predictor) with the target variable
 * The auxiliary variable is populated for every contributor when performing
  construction imputation
 * Matched pairs must comprise of clean, respondent non-zero (unless chosen otherwise)
@@ -88,15 +91,13 @@ Input records must include the following fields of the correct types:
 
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
-* Periodicity – Numeric/string? - [TO CONFIRM]
 * Imputation Class – Any
 * Target Variable – Numeric – Nulls Allowed
-* Predictive Variable – Numeric – Optional
 * Auxiliary Variable – Numeric
 * Include Zeros – Boolean. 0 = False, exclude. 1 = True, include – Optional.
  If marker not populated, then False.
-* Lower Trim – Numeric – Optional
-* Upper Trim – Numeric – Optional
+* Lower Trim – Numeric
+* Upper Trim – Numeric
 * Forward Link – Numeric – Optional
 * Backward Link – Numeric – Optional
 * Construction Link – Numeric – Optional
@@ -104,14 +105,15 @@ Input records must include the following fields of the correct types:
 * Previous Year Forwards Imputation Link – Numeric – Optional
 * Previous Year Backwards Imputation Link – Numeric – Optional
 * Previous Year Construction Link – Numeric – Optional
-* Exclusion Marker – Boolean. 0 = False, include. 1 = True,
- exclude – Optional. If marker not populated, then False.
 
 Unless otherwise noted, fields must not contain null values. All
  other fields shall be ignored.
 
 Note that the predictive variable is indirectly defined as the
  target variable in the predictive period.
+ 
+Note that neither Lower nor Upper Trim are optional inputs. If trimming
+ is not required, then these should both be populated with 0.
 
 ### 5.2 Output Records
 
@@ -119,7 +121,6 @@ Output records shall always contain the following fields with the following type
 
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
-* Imputation Class
 * Forward Growth Ratio – Numeric
 * Backward Growth Ratio – Numeric
 * Forward Link – Numeric
@@ -130,7 +131,6 @@ Output records shall always contain the following fields with the following type
 * Construction Link Observation Count – Numeric
 * Final Target Variable – Numeric
 * Imputation Marker – String
-* Error Description – String
 
 Fields of type "Any" shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.
@@ -142,7 +142,6 @@ The Imputation Marker must be one of the following:
 * BI = Backwards imputation
 * C = Construction imputation from auxiliary variable
 * R = Response. This value is cleared of errors or warnings
-* E = Method error
 
 ### 5.3 Back Data
 
@@ -184,7 +183,7 @@ Initially, a growth ratio is calculated for each matched pair for
  target variable in a given imputation class.
 
 Matched pairs must be found using cleaned responses and non-zero (unless
- chosen otherwise data for both the target and predictive periods and
+ chosen otherwise) data for both the target and predictive periods and
  within the same imputation class. When required, the user can include
  zeros when finding matched pairs for forwards and backwards imputation.
 
@@ -209,6 +208,26 @@ It is best practice to exclude zeros when finding matched pairs however,
 
 Only respondents present in both the target and predictive period
  and the same imputation class can form a matched pair.
+
+By default, the method will consider all responders when finding matched
+ pairs for growth ratio calculations. However, the method must also accept
+ an optional expression for filtering responders as there are specific
+ requirements for the data that should be used when calculating imputation
+ links. If provided, link calculations will only consider responders matching
+ this filter (in addition to the conditions described above). This filter
+ will only apply to link calculations.
+
+Trimming (section 6.1.3) should remove any influential growth ratios.
+ However, if some remain after trimming, then filtering could be used
+ to remove these known influential growth ratios. This would require the
+ method to run twice. First to identify the influential growth ratios and
+ second, to run the method again with the filter applied.
+ 
+Note, filtering applies to specific contributors in
+specific reference periods. If a contributors' record is excluded
+for the target period, then by design it will also be excluded
+for the predictive period when using forwards or backwards imputation
+as a matched pair will not be found.
 
 #### 6.1.2 Growth Ratio Calculations
 
@@ -354,32 +373,7 @@ The proportions must sum to 1, where 1 represents 100% i.e.,
  must also be consistent with both periods e.g., the target period
  and chosen time period links must both be forwards imputation links.
 
-### 6.4 Exclusion Markers - FINALISE WITH DST
-
-Exclusion markers can be used to remove with influential growth
- ratios. The use of trimming should remove most influential growth
- ratios from imputation link calculations however, some influential
- growth ratios may still exist after trimming. Exclusion markers can
- be applied to remove these. As trimming is optional, exclusion
- markers can be used as well as or instead of trimming.
-
-Trimming should be applied first, then additional growth ratios
-should only be excluded if they are still causing unsuitable
-imputation links. If it is found that many additional growth
-ratios are frequently being removed, then the trimming parameters
-may need to be reviewed.
-
-Any growth ratios removed should be documented and it is advised
- that descriptive statistics of the imputation class be calculated
- before and after the removal of growth ratios.
-
-Note, an exclusion marker applies to specific contributors in
- specific reference periods. If a contributors' record is excluded
- for the target period, then by design it will also be excluded
- for the predictive period when using forwards or backwards imputation
- as a matched pair will not be found.
-
-### 6.5 Error Handling
+### 6.4 Error Handling
 
 In the case of errors occurring the method shall not result
  in any output records. Instead, a suitable error shall be emitted.
@@ -527,24 +521,13 @@ Where $CR_{q, g, t}$ is the construction imputation link for
 
 Let $L_{q,g,t}$ be the weighted imputation link given by:
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12},
- \text{for monthly surveys} $$
-
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−4},
- \text{for quarterly surveys} $$
-
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1},
- \text{for yearly surveys} $$
+$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1} $$
 
 ```asciimath
-L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}, \text{for monthly surveys}
-
-L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−4}, \text{for quarterly surveys}
-
-L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1}, \text{for yearly surveys}
+L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}
 ```
 
-Where *w* is the defined weight.
+Where $t-1$ relates to the previous year imputation link and *w* is the defined weight.
 
 If the previous year link is missing, then the weight applied to target period
  should = 1, such that $L_{q,g,t} = \bar{R}_{q,g,t}$.
@@ -642,12 +625,13 @@ Mean of Ratios imputation follows a set of rules to ensure that it
 
 * Mean or median imputation should be used if there is no
  auxiliary information available (no previous period auxiliary,
- no consecutive period auxiliary and no register-based auxiliary variable)
+ no consecutive period auxiliary and no register-based auxiliary variable).
+ Mean and median imputation are not available in this method.
 
-* Mean imputation: impute a mean value for non-responders
+  * Mean imputation: impute a mean value for non-responders
  based upon target period cleared respondents within the same imputation class
 
-* Median imputation: impute a median value for non-responders
+  * Median imputation: impute a median value for non-responders
  based upon target period cleared respondents within the same imputation class
 
 Please see the image below for further information.

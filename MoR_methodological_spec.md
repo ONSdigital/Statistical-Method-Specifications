@@ -111,7 +111,7 @@ Unless otherwise noted, fields must not contain null values. All
 
 Note that the predictive variable is indirectly defined as the
  target variable in the predictive period.
- 
+
 Note that neither Lower nor Upper Trim are optional inputs. If trimming
  is not required, then these should both be populated with 0.
 
@@ -222,7 +222,7 @@ Trimming (section 6.1.3) should remove any influential growth ratios.
  to remove these known influential growth ratios. This would require the
  method to run twice. First to identify the influential growth ratios and
  second, to run the method again with the filter applied.
- 
+
 Note, filtering applies to specific contributors in
 specific reference periods. If a contributors' record is excluded
 for the target period, then by design it will also be excluded

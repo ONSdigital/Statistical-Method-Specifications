@@ -449,8 +449,7 @@ Upper cut off = U_{q,g,t} = N_{q,g,t}*(\frac{M_{upper}}{100})
 Lower cut off = W_{q,g,t} = N_{q,g,t}*(\frac{1−M_{lower}}{100})
 ```
 
-Where $N_{q,g,t}$ is the number of rows after the removal
- of zeros/unmatched pairs in the dataset for question *q*, imputation
+Where $N_{q,g,t}$ is the number of valid matched pairs in the dataset for question *q*, imputation
  class *g* and time *t*. A record should be trimmed from the data set
  if one of the following conditions are met:
 
@@ -540,37 +539,22 @@ If weighted imputation is being applied to construction imputation,
 A single value, $\bar{Y}_{q,g,t}$ is imputed for the non-responder,
  *i*,  in the target period, *t*, given by:
 
-Forwards Imputation:
-
-$$ \large \bar{Y}_{i,q,g,t} = F\bar{R}_{q,g,t} * y_{i,q,g,t-1} $$
+$$ \large \bar{Y}_{i,q,g,t} = \text{Link * Predictive or Auxiliary Value} $$
 
 ```asciimath
-Forwards imputation: \bar{Y}_{i,q,g,t} = F\bar{R}_{q,g,t} * y_{i,q,g,t-1}
+\bar{Y}_{i,q,g,t} = \text{Link * Predictive or Auxiliary Value}
 ```
 
-Where the predictive value, $y_{i,q,g,t-1}$, is either a returned,
+For forwards imputation, the link as calculated in 7.3.1 is used with the predictive
+ value, $y_{i,q,g,t-1}$, which is either a returned,
  imputed or constructed value held for the responder in the previous period.
 
-Backwards imputation:
-
-$$ \large \bar{Y}_{i,q,g,t} = B\bar{R}_{q,g,t} * y_{i,q,g,t+1} $$
-
-```asciimath
-Backwards imputation: \bar{Y}_{i,q,g,t} = B\bar{R}_{q,g,t} * y_{i,q,g,t+1}
-```
-
-Where the predictive value, $y_{i,q,g,t+1}$, is a
+For backwards imputation, the link as calculated in 7.3.1 is used with the predictive
+ value, $y_{i,q,g,t+1}$, which is a
  returned value held for the contributor in a consecutive period.
 
-Construction imputation:
-
-$$ \large \bar{Y}_{i,q,g,t} = CR_{q,g,t} * y_{i,q,g,t} $$
-
-```asciimath
-Construction imputation: \bar{Y}_{i,q,g,t} = CR_{q,g,t} * y_{i,q,g,t}
-```
-
-Where the predictive value, $y_{i,q,g,t}$, is a well correlated
+For construction imputation, the link as calculated in 7.3.2 is used with the auxiliary
+ value, $y_{i,q,g,t}$, which is a well correlated
  register based auxiliary variable held for the respondent in the target period.
 
 ## 8.0 Imputation Rules

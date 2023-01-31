@@ -113,6 +113,14 @@ Unless otherwise noted, fields must not contain null values. All
 Note that the predictive variable is indirectly defined as the
  target variable in the predictive period.
 
+There are additional parameters, separate to the inputs, that the user must
+ populate. These are:
+* Periodicity to inform the method of the appropriate time lags for growth ratio
+ calculations (see 7.1) and for weighted imputation (7.3.3)
+* Whether zeros will be included when finding valid matched pairs (section 6)
+* Whether trimming of growth ratios will take place and if so, what percent of
+ the classes will be trimmed (section 6.1.3)
+
 ### 5.2 Output Records
 
 Output records shall always contain the following fields with the following types:

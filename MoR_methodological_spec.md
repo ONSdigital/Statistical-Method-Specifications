@@ -10,6 +10,7 @@
 
 * Contributor – A member of the sample; identified by a unique identifier.
 * Record – A set of values for each contributor and period.
+* Periodicity – The frequency of reference period data collection e.g., monthly.
 * Target Period – The period which requires imputation to be applied.
 * Target Variable – The variable of interest that requires data values to be imputed.
 * Target Record – A contributor's record in the target period.
@@ -79,10 +80,10 @@ The generic formula for using Mean of Ratios imputation is the imputation link
 * The auxiliary variable is well correlated (a good predictor) with the target variable
 * The auxiliary variable is populated for every contributor when performing
  construction imputation
-* Matched pairs must comprise of clean, respondent non-zero (unless chosen otherwise)
+* Matched pairs must comprise of clean, respondent non-zero (unless necessary)
  data for both the target and predictive period and within the same imputation class
 
-## 5.0 Method Input and Output - TO BE FINALISED WITH DST
+## 5.0 Method Input and Output
 
 ### 5.1 Input Records
 
@@ -95,8 +96,6 @@ Input records must include the following fields of the correct types:
 * Auxiliary Variable – Numeric
 * Include Zeros – Boolean. 0 = False, exclude. 1 = True, include – Optional.
  If marker not populated, then False.
-* Lower Trim – Numeric
-* Upper Trim – Numeric
 * Forward Link – Numeric – Optional
 * Backward Link – Numeric – Optional
 * Construction Link – Numeric – Optional
@@ -114,9 +113,6 @@ Unless otherwise noted, fields must not contain null values. All
 Note that the predictive variable is indirectly defined as the
  target variable in the predictive period.
 
-Note that neither Lower nor Upper Trim are optional inputs. If trimming
- is not required, then these should both be populated with 0.
-
 ### 5.2 Output Records
 
 Output records shall always contain the following fields with the following types:
@@ -128,7 +124,7 @@ Output records shall always contain the following fields with the following type
 * Forward Link – Numeric
 * Backward Link – Numeric
 * Construction Link – Numeric
-* Forward Link Observation Count – Numeric [CONFIRM PRE/POST TRIM]
+* Forward Link Observation Count – Numeric
 * Backward Link Observation Count – Numeric
 * Construction Link Observation Count – Numeric
 * Final Target Variable – Numeric
@@ -185,9 +181,13 @@ Initially, a growth ratio is calculated for each matched pair for
  target variable in a given imputation class.
 
 Matched pairs must be found using cleaned responses and non-zero (unless
- chosen otherwise) data for both the target and predictive periods and
- within the same imputation class. When required, the user can include
- zeros when finding matched pairs for forwards and backwards imputation.
+ necessary) data for both the target and predictive periods and
+ within the same imputation class. 
+ It is best practice to exclude zeros when finding matched pairs however,
+ if the input data set has a high prevalence of zeros in the target
+ variable, then the user can choose to include zeros when finding matched
+ pairs for forwards and backwards imputation. This includes zeros in
+ either the target variable or predictive variable, or both.
 
 The method ends only when either there are no more missing values
  within the target variable or no more values can be imputed. The
@@ -199,14 +199,8 @@ The method ends only when either there are no more missing values
 #### 6.1.1 Respondent Filtering and Matching
 
 When calculating growth ratios, the method considers all cleaned,
- non-zero (unless chosen otherwise) respondent data for both the
+ non-zero (unless necessary) respondent data for both the
  target and predictive period.
-
-It is best practice to exclude zeros when finding matched pairs however,
- if the input data set has a high prevalence of zeros in the target
- variable, then the user can choose to include zeros when finding matched
- pairs for forwards and backwards imputation. This includes zeros in
- either the target variable or predictive variable, or both.
 
 Only respondents present in both the target and predictive period
  and the same imputation class can form a matched pair.
@@ -388,7 +382,7 @@ Let $x_{q,i,t}$  be the target variable and its predictive
  variable be $x_{q,i,t−1}$ or $x_{q,i,t+1}$ so that
  matched pairs for the target and predictive period, where the target
  variable in the target period, $x_{q,i,t}$ and the predictive
- value are both non-zero (unless chosen otherwise), responded values
+ value are both non-zero (unless necessary), responded values
  and the predictive value has been cleaned of errors or warnings.
 
 Note, growth ratios are not calculated for construction imputation.

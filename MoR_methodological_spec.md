@@ -115,6 +115,7 @@ Note that the predictive variable is indirectly defined as the
 
 There are additional parameters, separate to the inputs, that the user must
  populate. These are:
+ 
 * Periodicity to inform the method of the appropriate time lags for growth ratio
  calculations (see 7.1) and for weighted imputation (7.3.3)
 * Whether zeros will be included when finding valid matched pairs (section 6)
@@ -190,7 +191,7 @@ Initially, a growth ratio is calculated for each matched pair for
 
 Matched pairs must be found using cleaned responses and non-zero (unless
  necessary) data for both the target and predictive periods and
- within the same imputation class. 
+ within the same imputation class.
  It is best practice to exclude zeros when finding matched pairs however,
  if the input data set has a high prevalence of zeros in the target
  variable, then the user can choose to include zeros when finding matched

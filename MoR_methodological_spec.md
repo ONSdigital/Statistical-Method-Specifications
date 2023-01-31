@@ -115,7 +115,7 @@ Note that the predictive variable is indirectly defined as the
 
 There are additional parameters, separate to the inputs, that the user must
  populate. These are:
- 
+
 * Periodicity to inform the method of the appropriate time lags for growth ratio
  calculations (see 7.1) and for weighted imputation (7.3.3)
 * Whether zeros will be included when finding valid matched pairs (section 6)

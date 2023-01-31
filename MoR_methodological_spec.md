@@ -10,7 +10,6 @@
 
 * Contributor – A member of the sample; identified by a unique identifier.
 * Record – A set of values for each contributor and period.
-* Periodicity – The frequency of reference period data collection e.g., monthly.
 * Target Period – The period which requires imputation to be applied.
 * Target Variable – The variable of interest that requires data values to be imputed.
 * Target Record – A contributor's record in the target period.
@@ -476,7 +475,7 @@ For example, if $U_{q,g,t}$  is between 4 and 5, then rows
 
 #### 7.3.1 Forwards and Backward Imputation Links
 
-For simplicity, let $[F, B]r_{q,g,t} = r_{q,g,t}$
+For simplicity, let the growth ratios $[F, B]r_{q,i,t} = r_{q,i,t}$
  depending on whether the type of imputation is either forwards
  or backwards. For each imputation class, the imputation links are
  calculated by the mean growth ratio of the (trimmed) dataset:
@@ -520,44 +519,46 @@ Where $CR_{q, g, t}$ is the construction imputation link for
  a given variable, *q*, in imputation class, *g*, and in the target period, *t*.
 
 #### 7.3.3 Weighted Imputation Links
-
+ 
 Let $L_{q,g,t}$ be the weighted imputation link given by:
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−1} $$
+$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−k} $$
 
 ```asciimath
-L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−12}
+L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t-k}
 ```
 
-Where $t-1$ relates to the previous year imputation link and *w* is the defined weight.
+Where $t-k$ relates to the imputation link of time lag *k* and *w* is the defined
+ target period link weight. These two parameters would need to be specified if
+ using weighted imputation.
 
-If the previous year link is missing, then the weight applied to target period
- should = 1, such that $L_{q,g,t} = \bar{R}_{q,g,t}$.
+If the previous year link is missing, then the target period link weight applied
+ to target period should = 1, such that $L_{q,g,t} = \bar{R}_{q,g,t}$.
 
 If weighted imputation is being applied to construction imputation,
  then $\bar{R}$ is replaced with *CR* in section 7.3.2.
 
 ### 7.4 Imputed Value Calculations
 
-A single value, $\bar{Y}_{q,g,t}$ is imputed for the non-responder,
- *i*,  in the target period, *t*, given by:
+Let $\bar{Y}_{q,i,t}$ denote a single variable, *q*, which is imputed for the
+non-responder, *i*,  in the target period, *t*, given by:
 
-$$ \large \bar{Y}_{i,q,g,t} = \text{Link * Predictive or Auxiliary Value} $$
+$$ \large \bar{Y}_{q,i,t} = \text{Link * (Predictive or Auxiliary Value)} $$
 
 ```asciimath
-\bar{Y}_{i,q,g,t} = \text{Link * Predictive or Auxiliary Value}
+\bar{Y}_{q,i,t} = \text{Link * (Predictive or Auxiliary Value)}
 ```
 
 For forwards imputation, the link as calculated in 7.3.1 is used with the predictive
- value, $y_{i,q,g,t-1}$, which is either a returned,
+ value, $y_{q,i,t-1}$, which is either a returned,
  imputed or constructed value held for the responder in the previous period.
 
 For backwards imputation, the link as calculated in 7.3.1 is used with the predictive
- value, $y_{i,q,g,t+1}$, which is a
+ value, $y_{q,i,t+1}$, which is a
  returned value held for the contributor in a consecutive period.
 
 For construction imputation, the link as calculated in 7.3.2 is used with the auxiliary
- value, $y_{i,q,g,t}$, which is a well correlated
+ value, $y_{q,i,t}$, which is a well correlated
  register based auxiliary variable held for the respondent in the target period.
 
 ## 8.0 Imputation Rules

@@ -492,8 +492,8 @@ Where $\bar{R}$ is the mean of ratios. $N_{trimmed, q,g,t}$
  This is equal to $N_{q,g,t}$  when $N_{q,g,t} ≤ 10$ or
  if trimming was not required.
 
-Recall that all unmatched pairs and zeros were removed before the trimming process,
- so the average ratio over the imputation group excludes these.
+Recall that all unmatched pairs and filtered out observations were removed before
+the trimming process, so the average ratio over the imputation group excludes these.
 
 #### 7.3.2 Construction Imputation Links
 

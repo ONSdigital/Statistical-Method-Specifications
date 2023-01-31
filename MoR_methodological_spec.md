@@ -104,9 +104,9 @@ Input records must include the following fields of the correct types:
 * Previous Year Forwards Imputation Link – Numeric – Optional
 * Previous Year Backwards Imputation Link – Numeric – Optional
 * Previous Year Construction Link – Numeric – Optional
-* Link Filter Columns – Optional – This can be any number of columns of any type that
- are to be used by the link filter (section 6.1.1) to prevent responders being used
- in the imputation link calculations
+* Link Filter Columns – Optional – This can be any number of columns of any type
+  that are to be used by the link filter (section 6.1.1) to prevent
+  responders being used in the imputation link calculations
 
 Unless otherwise noted, fields must not contain null values. All
  other fields shall be ignored.
@@ -451,9 +451,9 @@ Upper cut off = U_{q,g,t} = N_{q,g,t}*(\frac{M_{upper}}{100})
 Lower cut off = W_{q,g,t} = N_{q,g,t}*(\frac{1−M_{lower}}{100})
 ```
 
-Where $N_{q,g,t}$ is the number of valid matched pairs in the dataset for question *q*,
- imputation class *g* and time *t*. A record should be trimmed from the data set
- if one of the following conditions are met:
+Where $N_{q,g,t}$ is the number of valid matched pairs in the dataset for
+ question *q*, imputation class *g* and time *t*. A record should be trimmed
+ from the data set if one of the following conditions are met:
 
 $\text{Row number} < U_{q,g,t} , \text{or}$
 
@@ -519,7 +519,7 @@ Where $CR_{q, g, t}$ is the construction imputation link for
  a given variable, *q*, in imputation class, *g*, and in the target period, *t*.
 
 #### 7.3.3 Weighted Imputation Links
- 
+
 Let $L_{q,g,t}$ be the weighted imputation link given by:
 
 $$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−k} $$

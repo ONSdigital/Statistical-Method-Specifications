@@ -105,6 +105,9 @@ Input records must include the following fields of the correct types:
 * Previous Year Forwards Imputation Link – Numeric – Optional
 * Previous Year Backwards Imputation Link – Numeric – Optional
 * Previous Year Construction Link – Numeric – Optional
+* Link Filter Columns – Optional – This can be any number of columns of any type that
+ are to be used by the link filter (section 6.1.1) to prevent responders being used
+ in the imputation link calculations
 
 Unless otherwise noted, fields must not contain null values. All
  other fields shall be ignored.
@@ -373,7 +376,7 @@ The proportions must sum to 1, where 1 represents 100% i.e.,
  must also be consistent with both periods e.g., the target period
  and chosen time period links must both be forwards imputation links.
 
-### 6.4 Error Handling
+### 6.3 Error Handling
 
 In the case of errors occurring the method shall not result
  in any output records. Instead, a suitable error shall be emitted.
@@ -449,8 +452,8 @@ Upper cut off = U_{q,g,t} = N_{q,g,t}*(\frac{M_{upper}}{100})
 Lower cut off = W_{q,g,t} = N_{q,g,t}*(\frac{1−M_{lower}}{100})
 ```
 
-Where $N_{q,g,t}$ is the number of valid matched pairs in the dataset for question *q*, imputation
- class *g* and time *t*. A record should be trimmed from the data set
+Where $N_{q,g,t}$ is the number of valid matched pairs in the dataset for question *q*,
+ imputation class *g* and time *t*. A record should be trimmed from the data set
  if one of the following conditions are met:
 
 $\text{Row number} < U_{q,g,t} , \text{or}$

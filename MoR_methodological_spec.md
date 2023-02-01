@@ -117,7 +117,7 @@ There are additional parameters, separate to the inputs, that the user must
  populate. These are:
 
 * Periodicity to inform the method of the appropriate time lags for growth ratio
- calculations (see 7.1) and for weighted imputation (7.3.3)
+ calculations (section 7.1) and for weighted imputation (section 7.3.3)
 * Whether zeros will be included when finding valid matched pairs (section 6)
 * Whether trimming of growth ratios will take place and if so, what percent of
  the classes will be trimmed (section 6.1.3)

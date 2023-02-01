@@ -94,8 +94,6 @@ Input records must include the following fields of the correct types:
 * Imputation Class – Any
 * Target Variable – Numeric – Nulls Allowed
 * Auxiliary Variable – Numeric
-* Include Zeros – Boolean. 0 = False, exclude. 1 = True, include – Optional.
- If marker not populated, then False.
 * Forward Link – Numeric – Optional
 * Backward Link – Numeric – Optional
 * Construction Link – Numeric – Optional
@@ -201,7 +199,7 @@ Matched pairs must be found using cleaned responses and non-zero (unless
 The method ends only when either there are no more missing values
  within the target variable or no more values can be imputed. The
  latter case constitutes an error condition and will be handled
- according to the error handling behaviour defined in section 6.5.
+ according to the error handling behaviour defined in section 6.3.
 
 ### 6.1 Growth Ratios
 
@@ -470,8 +468,8 @@ Row number > W_{q,g,t}
 
 For example, if $U_{q,g,t}$  is between 4 and 5, then rows
  4 and lower will be removed. If $W_{q,g,t}$  is between 56
- and 57, then rows 57 and above will be removed. If $U_{q,s,t}$
- is exactly 4, then rows 3 and below will be removed. If $W_{q,s,t}$
+ and 57, then rows 57 and above will be removed. If $U_{q,g,t}$
+ is exactly 4, then rows 3 and below will be removed. If $W_{q,g,t}$
  is exactly 56, then rows 57 and above will be removed.
 
 ### 7.3 Imputation Link Calculations

@@ -8,7 +8,7 @@
 * Target Variable - The variable (A.K.A. field) in the record to be imputed.
 * Response - A value in a target variable which exists prior to any
   imputation for a given period.
-* Responder - A contributor whose target variable contains a response for a 
+* Responder - A contributor whose target variable contains a response for a
   given period.
 * Non-responder - a contributor who is not a Responder.
 * Predictive Value - A value used as a predictor for a contributor's target
@@ -112,7 +112,7 @@ Where:
 * `v` is the value
 * `c` is the contributor
 * `p` is the period
-* `l` is a link calculation function 
+* `l` is a link calculation function
 * `g` is a function mapping a contributor to a grouping in the dataset
 
 Both the link and predictive value used depend on the imputation process. In
@@ -161,8 +161,8 @@ matching this filter. This filter will only apply to link calculations.
 
 ### 4.2 Links
 
-In link calculations, only responders present in the same group in both target and predictive
-periods shall be used to calculate the ratios. These
+In link calculations, only responders present in the same group in both
+target and predictive periods shall be used to calculate the ratios. These
 pairs of responders are referred to as matched pairs.
 
 The link calculation function is out of scope of this document as it
@@ -216,7 +216,7 @@ Records imputed using this process will be marked
 In this imputation process the construction link is used and the predictive
 value is the auxiliary variable from the target record. Records imputed
 using this process will be marked `C`. Construction imputes must only
-be output in cases where no other imputation process can be performed, and in the case
-of a contiguous sequence of periods of non-response for a contributor, only
-for the earliest period in the sequence. Thus the order in which periods are processed is
-unimportant.
+be output in cases where no other imputation process can be performed, and in
+the case of a contiguous sequence of periods of non-response for a contributor,
+only for the earliest period in the sequence. Thus the order in which periods
+are processed is unimportant.

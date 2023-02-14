@@ -322,3 +322,5 @@ o((c)) = v_(forward)((
     ))
 ))
 ```
+
+For Copyright information, please see LICENCE.

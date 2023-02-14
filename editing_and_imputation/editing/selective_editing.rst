@@ -578,6 +578,8 @@ Key References on Selective Editing:
 **
 **
 
+For Copyright information, please see LICENCE.
+
 Appendix (optional)
 ~~~~~~~~~~~~~~~~~~~
 

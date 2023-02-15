@@ -169,3 +169,5 @@ validation.
 If the final score is less than the selective editing threshold, then
 output the selective editing marker as True for passed selective
 editing and does not require validation.
+
+For Copyright information, please see LICENCE.

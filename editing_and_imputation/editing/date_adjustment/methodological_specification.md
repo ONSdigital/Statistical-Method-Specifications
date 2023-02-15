@@ -203,3 +203,5 @@ to “Y”.
 
 If the user does not want to have average weekly values in the output, then
 please set this to “N”.
+
+For Copyright information, please see LICENCE.

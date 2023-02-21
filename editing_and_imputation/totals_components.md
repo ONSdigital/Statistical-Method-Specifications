@@ -123,9 +123,9 @@ This method firstly identifies if a given totals and components
 1. If the absolute difference between the sum of the components and
  its corresponding total for the predictive period is less than or
  equal to the predefined threshold
-3. If the predictive total is within an acceptable percentage of the
+2. If the predictive total is within an acceptable percentage of the
  components sum and an absolute difference is not considered
-4. If the absolute difference described above is greater than the
+3. If the absolute difference described above is greater than the
  predefined threshold but the predictive total is within an acceptable
  percentage of the components sum
 
@@ -182,7 +182,7 @@ If the selected condition(s) as described in section 6.1 are
 
 1. If Amend Total = 0, then the components are automatically corrected
  for the target period to be equal to the total in the target period.
-3. If Amend Total = 1, then the total is automatically corrected for
+2. If Amend Total = 1, then the total is automatically corrected for
  the target period to equal the sum of the components in the target period.
 
 However, if the chosen conditions are not satisfied, then no correction

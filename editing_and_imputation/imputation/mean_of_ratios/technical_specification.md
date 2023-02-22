@@ -2,6 +2,12 @@
 
 ## 1.0 Description
 
+Mean of Ratios imputation is a standard imputation method for business
+surveys. The method imputes a single numeric (target) variable using the
+relationship between the target variable and an appropriate predictive or
+auxiliary variable. Since the method can be influenced by extreme values,
+the method supports a form of trimming.
+
 This document specifies the type-specific aspects  for Mean of Ratios
 Imputation with reference to the
 [General Imputation Method Specification](../general/technical_specification.md).
@@ -26,34 +32,62 @@ calculation function for Mean of Ratios imputation.
 
 ### 3.1 Zero Filtering
 
-By default response values of 0 will be filtered in addition to any other
+By default response values of `0` will be filtered in addition to any other
 responder filtering. It must be possible to disable this filter.
+
+### 3.2 Growth Ratio Calculation
+
+Growth ratios must be calculated for all matched pairs per period and
+grouping in the dataset. For `n` matched pairs in a given period and
+grouping, let:
+* `x` be the responses in the target period
+* `y` be the responses in the predictive period
+
+Thus the set of growth ratios `r` is:
+`r = (lim_(k=1)^n x_k/y_k)`
+
+Construction links are not calculated using growth ratios.
 
 ### 3.2 Trimming
 
+To apply trimming two cut off boundaries must be calculated as follows:
+
+let:
+* `t_(upper)` be the upper percentage
+* `t_(lower)` be the lower percentage
+
+then the cut off boundaries `b_(upper)` and `b_(lower)` are:
+```asciimath
+b_(lower) = floor(n*t_(lower)/100)
+b_(upper) = floor(n*((1-t_(upper/100)))
+```
+
+Thus with ratios in `r` in ascending order, The trimmed set of growth ratios
+`g` is given by `g = lim_(k=b_(lower)+1)^b_(upper) r_k)` and `n` is adjusted
+to `b_(upper)`.
+
 ### 3.3 Calculation Function
 
-The function for calculating links for Mean of Ratios imputation for a given
-period and grouping in the dataset after trimming is as follows.
+Given the above, the formula for a link `l` is:
 
-For `n` matched pairs of observations for a given group and period, let:
+For forward or backward links `l = (sum_(k=1)^n g_k)/n` (that is the
+arithmetic mean) and the link's observation count is set to the number of
+ratios in `g`. If `g` is empty then `l = 1` and the observation count is set
+to null.
 
-* `x` be the responses in the target period
-* `y` be the predictive variable:
-  * For forward and backward links, this is the responses in the predictive
-    period
-  * For construction links, this is the responders' auxiliary variable for
-    the target period
+For construction:
 
-The general link formula for a forward or backward link `l` is:
+let:
+* `m` be the number of responders in the target period
+* `a` be the responders' auxiliary variable
 
-`l = (sum_(k=1)^n x_k/y_k)/n`
+`l = (sum_(k=1)^m x_k)/sum_(k=1)^m a_k)`
 
-The formula for a construction link `c` is:
+If there are no other responders then `l = 1` and the observation count is
+0. If `(sum_(k=1)^m a_k) = 0` then `l = 1` and the observation count is set
+to 0.
 
-`c = (sum_(k=1)^n x_k)/sum_(k=1)^n y_k)`
-In general the observation count for a link is `n`. If `sum_(k=1)^n y_k = 0`
-then `l = 1` and the observation count is 0. If `n = 0` then `l = 1` and the
-observation count is null.
+The behaviour regarding observation counts is specified to be consistent
+with Ratio of Means imputation.
 
 For Copyright information, please see LICENCE.

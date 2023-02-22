@@ -70,7 +70,7 @@ to `b_(upper)-b_(lower)`.
 
 Given the above, the formula for a link `l` is:
 
-For forward or backward links `l = (sum_(k=1)^n g_k)/n` (that is the
+For forward or backward links `l = (sum g)/n` (that is the
 arithmetic mean) and the link's observation count is set to `n`. If `g` is
 empty then `l = 1` and the observation count is set to null.
 
@@ -80,9 +80,9 @@ let:
 * `m` be the number of responders in the target period
 * `a` be the responders' auxiliary variable
 
-`l = (sum_(k=1)^m x_k)/sum_(k=1)^m a_k)`
+`l = (sum x)/sum a)`
 
 If `m = 0` then `l = 1` and the observation count is null. If
-`(sum_(k=1)^m a_k) = 0` then `l = 1` and the observation count is set to 0.
+`(sum a) = 0` then `l = 1` and the observation count is set to 0.
 
 For Copyright information, please see LICENCE.

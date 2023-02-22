@@ -95,11 +95,13 @@ Output records shall always contain the following fields with the following type
 * Period – String in "YYYYMM" format
 * Original Total Variable – Numeric
 * Original Components Variable – Numeric
+* Absolute Difference – Numeric, nulls allowed
+* Low Percent – Numeric, nulls allowed
+* High Percent – Numeric, nulls allowed
 * Final Total Variable – Numeric
 * Final Components Variable – Numeric
 * TCC Marker – To indicate the result of the Totals Components Correction
  method, string
-* Error Description
 
 Fields of type "Any" shall be of the same type as the corresponding input
  fields as the values shall be the same in both input and output records.

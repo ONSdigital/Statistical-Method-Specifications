@@ -71,9 +71,8 @@ to `b_(upper)-b_(lower)`.
 Given the above, the formula for a link `l` is:
 
 For forward or backward links `l = (sum_(k=1)^n g_k)/n` (that is the
-arithmetic mean) and the link's observation count is set to the number of
-ratios in `g`. If `g` is empty then `l = 1` and the observation count is set
-to null.
+arithmetic mean) and the link's observation count is set to `n`. If `g` is
+empty then `l = 1` and the observation count is set to null.
 
 For construction:
 
@@ -83,11 +82,7 @@ let:
 
 `l = (sum_(k=1)^m x_k)/sum_(k=1)^m a_k)`
 
-If there are no other responders then `l = 1` and the observation count is
-0. If `(sum_(k=1)^m a_k) = 0` then `l = 1` and the observation count is set
-to 0.
-
-The behaviour regarding observation counts is specified to be consistent
-with Ratio of Means imputation.
+If `m = 0` then `l = 1` and the observation count is null. If
+`(sum_(k=1)^m a_k) = 0` then `l = 1` and the observation count is set to 0.
 
 For Copyright information, please see LICENCE.

@@ -21,14 +21,13 @@ are sufficiently similar and of sufficient size for robust link calculation.
 
 ## 3.0 Link Calculation Function
 
-The processes specified in this section must be applied to filtered
-responder data and comprise the complete link calculation function for Mean
-of Ratios imputation.
+The processes specified in this section comprise the complete link
+calculation function for Mean of Ratios imputation.
 
 ### 3.1 Zero Filtering
 
 By default response values of 0 will be filtered in addition to any other
-responder filtering. This feature must be able to be disabled.
+responder filtering. It must be possible to disable this filter.
 
 ### 3.2 Trimming
 

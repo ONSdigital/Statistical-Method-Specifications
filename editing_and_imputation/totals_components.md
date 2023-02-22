@@ -244,7 +244,7 @@ Where the condition described in 7.1 is not satisfied and the sum
 Let $y_{1,t} +...+ y_{n,t} = y_{derived}$, then:
 
 $$ \large y_{derived} - (y_{derived}*x_{percent})
- \leq y_{total, predictive} \leq y_{derived} +
+ \leq y_{total,\ predictive} \leq y_{derived} +
  (y_{derived}*x_{percent}) $$
 
 ```asciimath

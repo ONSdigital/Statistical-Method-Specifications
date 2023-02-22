@@ -123,11 +123,11 @@ This method firstly identifies if a given totals and components
 1. If the absolute difference between the sum of the components and
  its corresponding total for the predictive period is less than or
  equal to the predefined threshold
-2. If the predictive total is within an acceptable percentage of the
+2. If the predictive total is within an acceptable absolute percentage of the
  components sum and an absolute difference is not considered
 3. If the absolute difference described above is greater than the
  predefined threshold but the predictive total is within an acceptable
- percentage of the components sum
+ absolute percentage of the components sum
 
 If the above is satisfied, an automatic correction will be made depending
  on the Amend Total variable. If the above is not satisfied and the
@@ -210,7 +210,7 @@ y_{1, t} + ... + y_{n, t} = y_{total, t}
 ```
 
 If the above is satisfied, then no error is detected, and the method stops.
-Else, the error detection process will proceed depending on the chose approach.
+Else, the error detection process will proceed depending on the chosen approach.
 
 #### 7.1.1 Absolute Difference
 

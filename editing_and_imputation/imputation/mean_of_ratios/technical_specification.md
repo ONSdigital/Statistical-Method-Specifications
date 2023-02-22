@@ -64,7 +64,7 @@ b_(upper) = floor(n*((1-t_(upper/100)))
 
 Thus with ratios in `r` in ascending order, The trimmed set of growth ratios
 `g` is given by `g = lim_(k=b_(lower)+1)^b_(upper) r_k)` and `n` is adjusted
-to `b_(upper)`.
+to `b_(upper)-b_(lower)`.
 
 ### 3.3 Calculation Function
 

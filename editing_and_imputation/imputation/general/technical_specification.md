@@ -220,3 +220,5 @@ be output in cases where no other imputation process can be performed, and in
 the case of a contiguous sequence of periods of non-response for a contributor,
 only for the earliest period in the sequence. Thus the order in which periods
 are processed is unimportant.
+
+For Copyright information, please see LICENCE.

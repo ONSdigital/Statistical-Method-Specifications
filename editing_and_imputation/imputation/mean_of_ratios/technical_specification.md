@@ -30,8 +30,8 @@ are sufficiently similar and of sufficient size for robust link calculation.
 In addition to the fields specified for the general method, the following
 fields of the following types will be present in output records:
 
+* Forward Growth Ratio – Numeric
 * Backward Growth Ratio – Numeric
-* Forward Link – Numeric
 
 ## 4.0 Link Calculation Function
 

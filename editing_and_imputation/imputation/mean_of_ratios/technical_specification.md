@@ -80,7 +80,7 @@ let:
 * `m` be the number of responders in the target period
 * `a` be the responders' auxiliary variable
 
-`l = (sum x)/sum a)`
+`l = (sum x)/(sum a)`
 
 If `m = 0` then `l = 1` and the observation count is null. If
 `(sum a) = 0` then `l = 1` and the observation count is set to 0.

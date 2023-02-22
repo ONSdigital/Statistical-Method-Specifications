@@ -409,3 +409,5 @@ correctly, these rules are in the same order as the flow chart below:
 Please see the image below for further information.
 
 ![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
+
+For Copyright information, please see LICENCE.

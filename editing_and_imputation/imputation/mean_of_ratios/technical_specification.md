@@ -25,17 +25,25 @@ variable in the target period. This same assumption is also made for values
 used for link calculations. It is also assumed that groups of contributors
 are sufficiently similar and of sufficient size for robust link calculation.
 
-## 3.0 Link Calculation Function
+## 3.0 Additional outputs
+
+In addition to the fields specified for the general method, the following
+fields of the following types will be present in output records:
+
+* Backward Growth Ratio – Numeric
+* Forward Link – Numeric
+
+## 4.0 Link Calculation Function
 
 The processes specified in this section comprise the complete link
 calculation function for Mean of Ratios imputation.
 
-### 3.1 Zero Filtering
+### 4.1 Zero Filtering
 
 By default response values of `0` will be filtered in addition to any other
 responder filtering. It must be possible to disable this filter.
 
-### 3.2 Growth Ratio Calculation
+### 4.2 Growth Ratio Calculation
 
 Growth ratios must be calculated for all matched pairs per period and
 grouping in the dataset. For `n` matched pairs in a given period and
@@ -48,7 +56,9 @@ Thus the set of growth ratios `r` is:
 
 Construction links are not calculated using growth ratios.
 
-### 3.2 Trimming
+### 4.3 Trimming
+
+Trimming must not be applied if `n <= 10`.
 
 To apply trimming two cut off boundaries must be calculated as follows:
 
@@ -66,7 +76,7 @@ Thus with ratios in `r` in ascending order, The trimmed set of growth ratios
 `g` is given by `g = lim_(k=b_(lower)+1)^b_(upper) r_k)` and `n` is adjusted
 to `b_(upper)-b_(lower)`.
 
-### 3.3 Calculation Function
+### 4.4 Calculation Function
 
 Given the above, the formula for a link `l` is:
 

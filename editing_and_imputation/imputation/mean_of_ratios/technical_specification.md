@@ -48,6 +48,7 @@ responder filtering. It must be possible to disable this filter.
 Growth ratios must be calculated for all matched pairs per period and
 grouping in the dataset. For `n` matched pairs in a given period and
 grouping, let:
+
 * `x` be the responses in the target period
 * `y` be the responses in the predictive period
 
@@ -63,10 +64,12 @@ Trimming must not be applied if `n <= 10`.
 To apply trimming two cut off boundaries must be calculated as follows:
 
 let:
+
 * `t_(upper)` be the upper percentage
 * `t_(lower)` be the lower percentage
 
 then the cut off boundaries `b_(upper)` and `b_(lower)` are:
+
 ```asciimath
 b_(lower) = floor(n*t_(lower)/100)
 b_(upper) = floor(n*((1-t_(upper/100)))
@@ -87,6 +90,7 @@ empty then `l = 1` and the observation count is set to null.
 For construction:
 
 let:
+
 * `m` be the number of responders in the target period
 * `a` be the responders' auxiliary variable
 

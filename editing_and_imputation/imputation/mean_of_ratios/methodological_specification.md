@@ -120,7 +120,7 @@ There are additional parameters, separate to the inputs, that the user must
 * Whether trimming of growth ratios will take place and if so, what percent of
  the classes will be trimmed (section 6.1.3)
 * The minimum number of matched pairs present in an imputation
- class to perform trimming.
+ class to perform trimming, denoted $N+1$.
 
 ### 5.2 Output Records
 

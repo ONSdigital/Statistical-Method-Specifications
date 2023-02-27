@@ -80,7 +80,7 @@ The generic formula for using Mean of Ratios imputation is the imputation link
 * The auxiliary variable is well correlated (a good predictor) with the target variable
 * The auxiliary variable is populated for every contributor when performing
  construction imputation
-* Matched pairs must comprise of clean, respondent non-zero (unless necessary)
+* Matched pairs must comprise of clean, respondent non-zero
  data for both the target and predictive period and within the same imputation class
 
 ## 5.0 Method Input and Output
@@ -119,6 +119,8 @@ There are additional parameters, separate to the inputs, that the user must
 * Whether zeros will be included when finding valid matched pairs (section 6)
 * Whether trimming of growth ratios will take place and if so, what percent of
  the classes will be trimmed (section 6.1.3)
+* The minimum number of matched pairs present in an imputation
+ class to perform trimming. 
 
 ### 5.2 Output Records
 
@@ -199,7 +201,7 @@ Matched pairs must be found using cleaned responses and non-zero (unless
 The method ends only when either there are no more missing values
  within the target variable or no more values can be imputed. The
  latter case constitutes an error condition and will be handled
- according to the error handling behaviour defined in section 6.3.
+ according to the error handling behaviour defined in section 6.4.
 
 ### 6.1 Growth Ratios
 
@@ -317,7 +319,11 @@ There is an option to use a weighted imputation link to account
  from the same imputation class in the current period and the
  previous year same period.
 
-If there are fewer than 10 matched pairs then no trimming is applied.
+When implementing best practice, if there are less than or equal
+ to 10 matched pairs then trimming should not be applied. The value
+ of 10 can be less, however links generated in this case may be less
+ robust and should be used with caution. To prevent this, imputation
+ classes should be of appropriate size, where possible.
 
 #### 6.2.2 Forwards Imputation
 
@@ -372,11 +378,26 @@ If required by the user, weighted imputation can be applied
 The proportions must sum to 1, where 1 represents 100% i.e.,
  target period link weight = 0.8 means the overall imputation
  links should be calculated using 80% of the current year link
- and 20% of the previous year link.  The type of imputation link
+ and 20% of the previous link.  The type of imputation link
  must also be consistent with both periods e.g., the target period
  and chosen time period links must both be forwards imputation links.
 
-### 6.3 Error Handling
+If the previous link is not available, then 100% of the target
+ period link should be used.
+
+### 6.3 Best Practice Guidance
+
+To summarise the best practice information previously detailed:
+
+* Zeros should be excluded when calculating growth ratios except
+ when the data has a high prevalence of zeros
+* Trimming should not be applied if the number of matched pairs
+ (growth ratios) is less than or equal to 10
+* Respondent filtering should only be used to remove extreme or
+ influential growth ratios that remain after trimming has been
+ implemented. Respondent filtering should be seen as a last resort. 
+
+### 6.4 Error Handling
 
 In the case of errors occurring the method shall not result
  in any output records. Instead, a suitable error shall be emitted.
@@ -442,17 +463,17 @@ For a given variable, once growth ratios for each imputation class
  imputation links are calculated. From these, calculate the upper and
  lower cut-offs, $U_{q,g,t}$  and $W_{q,g,t}$  such that:
 
-$$ \text{Upper cut off} = U_{q,g,t} = N_{q,g,t}*\Bigl(\frac{M_{upper}}{100}\Bigl)$$
+$$ \text{Upper cut off} = U_{q,g,t} = n_{q,g,t}*\Bigl(\frac{M_{upper}}{100}\Bigl)$$
 
-$$ \text{Lower cut off} = W_{q,g,t} = N_{q,g,t}*\Bigl(\frac{1−M_{lower}}{100}\Bigl)$$
+$$ \text{Lower cut off} = W_{q,g,t} = n_{q,g,t}*\Bigl(\frac{1−M_{lower}}{100}\Bigl) + 1 $$
 
 ```asciimath
-Upper cut off = U_{q,g,t} = N_{q,g,t}*(\frac{M_{upper}}{100})
+Upper cut off = U_{q,g,t} = n_{q,g,t}*(\frac{M_{upper}}{100})
 
-Lower cut off = W_{q,g,t} = N_{q,g,t}*(\frac{1−M_{lower}}{100})
+Lower cut off = W_{q,g,t} = n_{q,g,t}*(\frac{1−M_{lower}}{100}) + 1
 ```
 
-Where $N_{q,g,t}$ is the number of valid matched pairs in the dataset for
+Where $n_{q,g,t}$ is the number of valid matched pairs in the dataset for
  question *q*, imputation class *g* and time *t*. A record should be trimmed
  from the data set if one of the following conditions are met:
 
@@ -482,16 +503,17 @@ For simplicity, let the growth ratios $[F, B]r_{q,i,t} = r_{q,i,t}$
  calculated by the mean growth ratio of the (trimmed) dataset:
 
 $$ \large \bar{R}_{q,g,t} = \Sigma_{all \ i \in g \ \text{in dataset after trim}}
-\Bigl(\frac{r_{q,i,t}}{N_{trimmed,q,g,t}}\Bigl) $$
+\Bigl(\frac{r_{q,i,t}}{n_{trimmed,q,g,t}}\Bigl) $$
 
 ```asciimath
 \bar{R}_{q,g,t} = \Sigma_{all \ i \in g \ \text{in dataset after trim}} (\frac{r_{q,i,t}}{N_{trimmed,q,g,t}})
 ```
 
-Where $\bar{R}$ is the mean of ratios. $N_{trimmed, q,g,t}$
+Where $\bar{R}$ is the mean of ratios. $n_{trimmed, q,g,t}$
  is the lowered number of items in the dataset post trim.
- This is equal to $N_{q,g,t}$  when $N_{q,g,t} ≤ 10$ or
- if trimming was not required.
+ This is equal to $n_{q,g,t}$  when $n_{q,g,t} ≤ N$ or
+ if trimming was not required. $N+1$ is the minimum number of matched
+ pairs in a given imputation class required to apply trimming.
 
 Recall that all unmatched pairs and filtered out observations were removed before
 the trimming process, so the average ratio over the imputation group excludes these.

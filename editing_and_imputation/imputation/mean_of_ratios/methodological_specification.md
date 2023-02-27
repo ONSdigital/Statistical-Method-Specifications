@@ -391,6 +391,9 @@ To summarise the best practice information previously detailed:
 
 * Zeros should be excluded when calculating growth ratios except
  when the data has a high prevalence of zeros
+* Only data that is clean (free of errors or warnings) should be used
+ when finding matched pairs. Data that is suspicious or illogical should
+ not be used to inform imputation links
 * Trimming should not be applied if the number of matched pairs
  (growth ratios) is less than or equal to 10
 * Respondent filtering should only be used to remove extreme or

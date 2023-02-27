@@ -120,7 +120,7 @@ There are additional parameters, separate to the inputs, that the user must
 * Whether trimming of growth ratios will take place and if so, what percent of
  the classes will be trimmed (section 6.1.3)
 * The minimum number of matched pairs present in an imputation
- class to perform trimming. 
+ class to perform trimming.
 
 ### 5.2 Output Records
 
@@ -395,7 +395,7 @@ To summarise the best practice information previously detailed:
  (growth ratios) is less than or equal to 10
 * Respondent filtering should only be used to remove extreme or
  influential growth ratios that remain after trimming has been
- implemented. Respondent filtering should be seen as a last resort. 
+ implemented. Respondent filtering should be seen as a last resort.
 
 ### 6.4 Error Handling
 
@@ -465,7 +465,8 @@ For a given variable, once growth ratios for each imputation class
 
 $$ \text{Upper cut off} = U_{q,g,t} = n_{q,g,t}*\Bigl(\frac{M_{upper}}{100}\Bigl)$$
 
-$$ \text{Lower cut off} = W_{q,g,t} = n_{q,g,t}*\Bigl(\frac{1−M_{lower}}{100}\Bigl) + 1 $$
+$$ \text{Lower cut off} = W_{q,g,t} = n_{q,g,t}*\Bigl(\frac{1−M_{lower}}
+ {100}\Bigl) + 1 $$
 
 ```asciimath
 Upper cut off = U_{q,g,t} = n_{q,g,t}*(\frac{M_{upper}}{100})

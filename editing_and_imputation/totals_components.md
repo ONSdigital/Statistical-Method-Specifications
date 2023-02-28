@@ -220,10 +220,10 @@ If the condition described in 7.1 is not satisfied and the sum of the
  components is not equal to zero, the method then checks whether the
  following is satisfied for a given contributor:
 
-$$ \large |(y_{1, t} + \dots + y_{n, t}) - y_{total,\ predictive}| \leq x_absolute $$
+$$ \large |(y_{1, t} + \dots + y_{n, t}) - y_{total,\ predictive}| \leq x_{absolute} $$
 
 ```asciimath
-|(y_{1, t} + ... + y_{n, t}) - y_{total, predictive}| =< x_absolute
+|(y_{1, t} + ... + y_{n, t}) - y_{total, predictive}| =< x_{absolute}
 ```
 
 Where $y_{1, t}$ to $y_{n, t}$ are the *n* corresponding components

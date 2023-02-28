@@ -53,13 +53,14 @@ grouping, let:
 * `y` be the responses in the predictive period
 
 Thus the set of growth ratios `r` is:
-`r = (lim_(k=1)^n x_k/y_k)`
+`r = (x_k/y_k)_(k=1)^n`
 
+If `y_k = 0` then `r_k = 1`.
 Construction links are not calculated using growth ratios.
 
 ### 4.3 Trimming
 
-Trimming must not be applied if `n <= 10`.
+Trimming must only be applied if `n` is above a configurable threshold.
 
 To apply trimming two cut off boundaries must be calculated as follows:
 
@@ -76,7 +77,7 @@ b_(upper) = floor(n*((1-t_(upper/100)))
 ```
 
 Thus with ratios in `r` in ascending order, The trimmed set of growth ratios
-`g` is given by `g = lim_(k=b_(lower)+1)^b_(upper) r_k)` and `n` is adjusted
+`g` is given by `g =(r_k)_(k=b_(lower)+1)^b_(upper)` and `n` is adjusted
 to `b_(upper)-b_(lower)`.
 
 ### 4.4 Calculation Function

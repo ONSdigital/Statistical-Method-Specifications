@@ -120,7 +120,7 @@ The TCC marker must be one of the following:
 This method firstly identifies if a given totals and components
  relationship has not been satisfied. If so, the method will determine
  whether the difference observed is within an acceptable tolerance.
- This tolerance is determined in three different ways:
+ This tolerance is determined in one of three different ways:
 
 1. If the absolute difference between the sum of the components and
  its corresponding total for the predictive period is less than or

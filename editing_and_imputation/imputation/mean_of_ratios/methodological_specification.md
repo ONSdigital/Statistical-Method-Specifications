@@ -387,7 +387,8 @@ If the previous link is not available, then 100% of the target
 
 ### 6.3 Best Practice Guidance
 
-To summarise the best practice information previously detailed:
+To summarise the best practice information mentioned within this
+ specification:
 
 * Zeros should be excluded when calculating growth ratios except
  when the data has a high prevalence of zeros

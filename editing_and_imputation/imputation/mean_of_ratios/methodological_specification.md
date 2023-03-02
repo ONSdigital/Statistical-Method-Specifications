@@ -80,7 +80,7 @@ The generic formula for using Mean of Ratios imputation is the imputation link
 * The auxiliary variable is well correlated (a good predictor) with the target variable
 * The auxiliary variable is populated for every contributor when performing
  construction imputation
-* Matched pairs must comprise of clean, respondent non-zero
+* Matched pairs must comprise of clean, respondent
  data for both the target and predictive period and within the same imputation class
 
 ## 5.0 Method Input and Output

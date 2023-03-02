@@ -105,13 +105,15 @@ Imputation must only take place on records with no value for the target
 variable and where the appropriate predictive value and link are present or
 can be calculated. Given these conditions, the general imputation formula is:
 
-`v_(impute)((p, c)) = v_(predictive)((p, c)) * l((p, g((c))))`
+`v_(impute)((p_(target), c)) = v_(predictive)((p_(predictive), c)) * l((p_(target), g((c))))`
 
 Where:
 
-* `v` is the value
+* `v_(impute)` is the imputed value
+* `v_(predictive)` is the predictive value for the given imputation process
+* `p_(target)` is the target period
+* `p_(predictive` is the predictive period for the given imputation process
 * `c` is the contributor
-* `p` is the period
 * `l` is a link calculation function
 * `g` is a function mapping a contributor to a grouping in the dataset
 
@@ -122,7 +124,7 @@ since imputes for a given contributor chain together i.e. imputes are used
 as predictive values when the contributor fails to respond for a contiguous
 sequence of periods such that:
 
-`v_(predictive)((p, c))` = v_(impute)((p_(predictive), c))`
+`v_(predictive)((p, c)) = v_(impute)((p_(predictive), c))`
 
 if and only if the contributor was sampled for period `p_(predictive)` and
 `v_(predictive)` does not already exist.
@@ -213,12 +215,17 @@ Records imputed using this process will be marked
 
 ### 4.6 Construction Imputation
 
-In this imputation process the construction link is used and the predictive
-value is the auxiliary variable from the target record. Records imputed
-using this process will be marked `C`. Construction imputes must only
-be output in cases where no other imputation process can be performed, and in
-the case of a contiguous sequence of periods of non-response for a contributor,
-only for the earliest period in the sequence. Thus the order in which periods
-are processed is unimportant.
+In this imputation process the construction link is used, the predictive
+period for period `p` is `p` and the predictive value is the auxiliary
+variable from the target record. Records imputed using this process will be
+marked `C`.
+
+As per the precedence order, Construction imputes must only be output in
+cases where no other imputation process can be performed; specifically, in
+the case of a contiguous sequence of periods of non-response for a
+contributor, Construction imputes must only be output for the earliest
+period in the sequence. However, since this rule only applies to the method
+output and both the predictive and target periods are the same for this
+process, the order in which periods are processed is unimportant.
 
 For Copyright information, please see LICENCE.

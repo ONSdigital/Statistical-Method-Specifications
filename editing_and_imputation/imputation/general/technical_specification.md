@@ -105,7 +105,10 @@ Imputation must only take place on records with no value for the target
 variable and where the appropriate predictive value and link are present or
 can be calculated. Given these conditions, the general imputation formula is:
 
-`v_(impute)((p_(target), c)) = v_(predictive)((p_(predictive), c)) * l((p_(target), g((c))))`
+```asciimath
+v_(impute)((p_(target), c)) =
+    v_(predictive)((p_(predictive), c)) * l((p_(target), g((c))))
+```
 
 Where:
 

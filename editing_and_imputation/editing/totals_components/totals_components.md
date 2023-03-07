@@ -8,8 +8,6 @@ The primary use of the method is to automatically detect and correct errors in r
 
 This method can also be used to ensure fixed relationships between variables are satisfied in other data types such as imputed data to improve overall data quality.
 
-For a workflow of the process please see the [documentation]().
-
 ## 2.0 Technical Assumptions
 
 * Target value, predictive and register based auxiliary value, if required, are well correlated

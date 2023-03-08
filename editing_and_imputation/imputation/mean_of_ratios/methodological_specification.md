@@ -130,12 +130,20 @@ Output records shall always contain the following fields with the following type
 * Period – String in "YYYYMM" format
 * Forward Growth Ratio – Numeric
 * Backward Growth Ratio – Numeric
+* Trimmed Forward Growth Ratio – Numeric
+* Trimmed Backward Growth Ratio – Numeric
 * Forward Link – Numeric
 * Backward Link – Numeric
 * Construction Link – Numeric
+* Weighted Forward Link – Numeric
+* Weighted Backward Link – Numeric
+* Weighed Construction Link – Numeric
 * Forward Link Observation Count – Numeric
 * Backward Link Observation Count – Numeric
 * Construction Link Observation Count – Numeric
+* FI Discarded Observation Count – Numeric
+* BI Discarded Observation Count – Numeric
+* C Discarded Observation Count – Numeric
 * Final Target Variable – Numeric
 * Imputation Marker – String
 

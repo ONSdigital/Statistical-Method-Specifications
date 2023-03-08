@@ -114,3 +114,5 @@ The selective editing marker is the result of the boolean expression `s < t`.
 
 In the case of errors occuring the method shall not result in any output records.
 Instead a suitable error shall be emitted.
+
+For Copyright information, please see LICENCE.

@@ -199,7 +199,7 @@ The average weekly function allows the responses to be given on a weekly value
 rather than the period specified by the user. This can be a useful tool when
 the user’s period isn’t always equal, to allow the user to compare similar
 values. To use this feature, the average weekly value will need to be set
-to “Y”.
+to “A”.
 
 If the user does not want to have average weekly values in the output, then
 please set this to “N”.

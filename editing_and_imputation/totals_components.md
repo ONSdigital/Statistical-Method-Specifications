@@ -20,9 +20,7 @@
  relative to the target period.
 * Auxiliary variable – The variable used as a predictor for a contributor’s
  target variable, where the predictive value is not available (e.g., where
- the contributor was not sampled in the predictive period). This should only
- be populated if the user has a suitable variable that they wish to use if
- the predictive value is not available. Else, the method should not run.
+ the contributor was not sampled in the predictive period).
 * Responder – A contributor who has responded to the survey within a given period.
 
 ## 3.0 Introduction
@@ -45,7 +43,7 @@ This method can also be used to ensure fixed relationships between variables are
 ## 4.0 Assumptions
 
 * Target value and predictive value are well correlated
-* Target value and register based auxiliary value, if required, are well correlated
+* Target value and auxiliary value, if required, are well correlated
 * Thresholds set are a good indication of whether a value should be corrected
 * The method can only observe and satisfy one fixed relationship at a
  time (i.e., only one set of components and total)
@@ -63,15 +61,12 @@ Input records must include the following fields of the correct types:
 * Total Variable – Target period total, numeric – nulls allowed
 * Components Variable – Corresponding list of Total variable's components,
  numeric – nulls allowed
-* Detection Method – Numeric, see below
 * Amend Total – Select whether Total Variable should be automatically
- corrected, Boolean. 0 = False (correct components), 1 = True (correct total)
+ corrected, Boolean. FALSE = correct components, TRUE = correct total
 * Predictive Variable – Previous or current period total, numeric
 * Predictive Variable Type – e.g., return, impute, etc., numeric
 * Predictive Variable Period – String in “YYYYMM” format
-* Auxiliary Variable – Register based variable – optional, numeric – nulls allowed
-* Absolute Difference Threshold – Numeric
-* Percentage Threshold – Numeric
+* Auxiliary Variable – optional, numeric – nulls allowed
 
 The Amend Total variable determines whether the Total or Components variable
  will be corrected through application of the method. The chosen variable
@@ -80,6 +75,12 @@ The Amend Total variable determines whether the Total or Components variable
 If the current period total is used as the predictive variable, then the
  Predictive Variable and the Total Variable are the same.
 
+There are additional parameters, separate to the inputs, that the user must populate.
+These are:
+
+*	Absolute Difference Threshold
+*	Percentage Difference Threshold, represented as a decimal
+
 There are multiple options for the detection method. The user may
  choose from the following:
 
@@ -87,17 +88,23 @@ There are multiple options for the detection method. The user may
 2. Use a percentage change only
 3. Use an absolute difference, and then a percentage change
 
+The user must populate the above parameters with positive non-zero values
+in order to apply their chosen detection method. For example, if the user
+wishes to only apply the absolute difference detection method, then this
+parameter should be non-zero and the percentage difference threshold
+should remain blank.
+Note, populating the parameters with zeros is not equivalent to leaving
+them blank.
+
 ### 5.2 Output Records
 
 Output records shall always contain the following fields with the following types:
 
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
-* Original Total Variable – Numeric
-* Original Components Variable – Numeric
 * Absolute Difference – Numeric, nulls allowed
-* Low Percent – Numeric, nulls allowed
-* High Percent – Numeric, nulls allowed
+* Low Percent – Numeric, nulls allowed (see 7.1.2)
+* High Percent – Numeric, nulls allowed (see 7.1.2)
 * Final Total Variable – Numeric
 * Final Components Variable – Numeric
 * TCC Marker – To indicate the result of the Totals Components Correction
@@ -118,7 +125,8 @@ The TCC marker must be one of the following:
 ## 6.0 Overall Method
 
 This method firstly identifies if a given totals and components
- relationship has not been satisfied. If so, the method will determine
+ relationship has not been satisfied for a given contributor in
+ the target period. If so, the method will determine
  whether the difference observed is within an acceptable tolerance.
  This tolerance is determined in one of three different ways:
 
@@ -150,30 +158,34 @@ The rationale for automatically correcting totals/components can vary by
  correct the data directly.
 
 If the predictive period’s data is missing, then the method is not
- applied, unless it is appropriate to use a register-based variable that
- is well correlated with the target variable. The register based auxiliary
+ applied, unless it is appropriate to use an auxiliary variable that
+ is well correlated with the target variable. The auxiliary
  variable should not be read into the data if the user does not require it.
+ If both variables are missing, then an appropriate marker will be output
+ by the method.
 
 ### 6.1 Error Detection
 
 If a total for the target period does not equal the sum of its corresponding
- components in the target period and the components sum is greater than
+ components in the target period for a given contributor and the components
+ sum is greater than
  zero, then depending on the approach chosen, the method checks whether
  the differences observed are within an acceptable tolerance. This tolerance
  can be determined by an absolute difference, a percentage difference or a
  combination of both, as described in section 6.
 
 If components sum is equal to zero and the user has selected to amend the
- total variable (Amend Total = 1), then the correction should not be applied.
+ total variable (Amend Total = TRUE), then the correction should not be applied.
 
 The predictive period value can either be a cleaned return, an impute
  or a construction. If this data is not available, then an auxiliary
- register-based variable should only be used when an appropriate
+ variable should only be used when an appropriate
  auxiliary variable exists, and is populated by the user. For example,
  when checking employment data, ONS business surveys use a register-based
  annual auxiliary variable only for surveys with annual periodicity,
- when there is no predictive variable available. The predictive variable
- should take priority over the register-based auxiliary. Otherwise,
+ when there is no predictive variable available as this variable is well
+ correlated with the target variable. The predictive variable
+ should take priority over the auxiliary variable. Otherwise,
  the method should not run if there is no predictive period data available.
 
 ### 6.2 Error Correction
@@ -182,16 +194,16 @@ If the selected condition(s) as described in section 6.1 are
  satisfied, then the target variable will be corrected, depending
  on which target variable has been selected:
 
-1. If Amend Total = 0, then the components are automatically corrected
+1. If Amend Total = FALSE, then the components are automatically corrected
  for the target period to be equal to the total in the target period.
-2. If Amend Total = 1, then the total is automatically corrected for
+2. If Amend Total = TRUE, then the total is automatically corrected for
  the target period to equal the sum of the components in the target period.
 
 However, if the chosen conditions are not satisfied, then no correction
- is applied, and the responder is recontacted for confirmation, if the
+ is applied, and the responder is recontacted for confirmation if the
  target variable is a returned value.
 
-### 6.3 Method Error Handling
+### 6.3 Exception Handling
 
 In the case of the method experiencing processing issues, the method
  shall not result in any output records. Instead, a suitable error
@@ -233,7 +245,7 @@ Where $y_{1, t}$ to $y_{n, t}$ are the *n* corresponding components
  the absolute difference.
 
 If the predictive value is missing, then $y_{total, t-1}$ should
- be replaced with the register based auxiliary variable, if
+ be replaced with the auxiliary variable, if
  required by the user.
 
 #### 7.1.2 Percentage Difference
@@ -244,20 +256,30 @@ Where the condition described in 7.1 is not satisfied and the sum
 
 Let $y_{1,t} +...+ y_{n,t} = y_{derived}$, then:
 
-$$ \large y_{derived} - (y_{derived}*x_{percent})
- \leq y_{total,\ predictive} \leq y_{derived} +
- (y_{derived}*x_{percent}) $$
+$$ \large low_{percent} \leq y_{total,\ predictive} \leq high_{percent} $$
 
 ```asciimath
-y_{derived} - (y_{derived} * x_{percent}) =< y_{total, predictive}
- =< y_{derived} + (y_{derived} * x_{percent})
+low_{percent} =< y_{total,\ predictive} =< high_{percent}
 ```
 
+Where,
+
+$$ \large low_{percent} = y_{derived} - (y_{derived}*x_{percent}) $$
+
+$$ \large high_{percent} = y_{derived} + (y_{derived}*x_{percent}) $$
+
+```asciimath
+low_{percent} = y_{derived} - (y_{derived} * x_{percent})
+```
+
+```asciimath
+high_{percent} = y_{derived} + (y_{derived} * x_{percent})
+```
 Where $x_{percent}$ is the predefined percentage threshold
  represented as a decimal.
 
 If the predictive value is missing, then $y_{total, predictive}$
- should be replaced with the register based auxiliary variable, if
+ should be replaced with the auxiliary variable, if
  required by the user.
 
 #### 7.1.3 Combined Error Detection
@@ -279,7 +301,8 @@ If the percentage check is outside of the acceptable tolerance, then
 ### 7.2 Error Correction Calculation
 
 If the conditions described in the subsections of 7.1 are satisfied
- and the Amend Total variable = 0 (amend the components), then:
+ and the Amend Total variable = FALSE (amend the components), then
+ for a given contributor:
 
 $$ \large y_{1, t} + \dots + y_{n, t} = y_{total, t} $$
 
@@ -288,10 +311,19 @@ y_{1, t} + ... + y_{n, t} = y_{total, t}
 ```
 
 Where $y_{1, t}$ to $y_{n, t}$ are prorated to
- equal $y_{total, t}$.
+ equal $y_{total, t}$. For a given component $y_{k,t}$, the adjusted
+ $\hat{y}_{k,t}$ is calculated by:
+
+$$ \large \hat{y}_{k,t} = \Bigl(\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}
+ \Bigl)*y_{total, t} $$
+
+```asciimath
+\hat{y}_{k,t} = (\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}})*y_{total, t}
+```
 
 If the conditions described in the subsections of 7.1 are satisfied
- and the Amend Total variable = 1 (amend the total), then:
+ and the Amend Total variable = TRUE (amend the total), then
+ for a given contributor:
 
 $$ \large y_{total, t} = y_{1, t} + \dots + y_{n, t} $$
 

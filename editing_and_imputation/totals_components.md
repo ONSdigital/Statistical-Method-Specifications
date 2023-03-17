@@ -50,7 +50,7 @@ This method can also be used to ensure fixed relationships between variables are
 * Both the total value and corresponding components are populated for
  the target period
 
-## 5.0 Method Input and Output - TO BE FINALISED WITH DST
+## 5.0 Method Input and Output
 
 ### 5.1 Input Records
 

@@ -78,8 +78,8 @@ If the current period total is used as the predictive variable, then the
 There are additional parameters, separate to the inputs, that the user must populate.
 These are:
 
-*	Absolute Difference Threshold
-*	Percentage Difference Threshold, represented as a decimal
+* Absolute Difference Threshold
+* Percentage Difference Threshold, represented as a decimal
 
 There are multiple options for the detection method. The user may
  choose from the following:
@@ -275,6 +275,7 @@ low_{percent} = y_{derived} - (y_{derived} * x_{percent})
 ```asciimath
 high_{percent} = y_{derived} + (y_{derived} * x_{percent})
 ```
+
 Where $x_{percent}$ is the predefined percentage threshold
  represented as a decimal.
 

@@ -316,10 +316,10 @@ Where $y_{1, t}$ to $y_{n, t}$ are prorated to
  $\hat{y}_{k,t}$ is calculated by:
 
 $$ \large \hat{y}_{k,t} = \Bigl(\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}
- \Bigl)*y_{total, t} $$
+ \Bigl) * y_{total, t} $$
 
 ```asciimath
-\hat{y}_{k,t} = (\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}})*y_{total, t}
+\hat{y}_{k,t} = (\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}) * y_{total, t}
 ```
 
 If the conditions described in the subsections of 7.1 are satisfied

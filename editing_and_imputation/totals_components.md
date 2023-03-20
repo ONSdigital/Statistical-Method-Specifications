@@ -121,6 +121,8 @@ The TCC marker must be one of the following:
 * M = Manual editing required. This marker will identify contributors
  where the discrepancy between the total and component is deemed too
  large for automatic correction.
+* S = Method stops. This may be due to insufficient data to run the method,
+ or one of the relevant zero cases as described in 6.3 has occurred.
 
 ## 6.0 Overall Method
 
@@ -176,6 +178,7 @@ If a total for the target period does not equal the sum of its corresponding
 
 If components sum is equal to zero and the user has selected to amend the
  total variable (Amend Total = TRUE), then the correction should not be applied.
+ See section 6.3 for more details.
 
 The predictive period value can either be a cleaned return, an impute
  or a construction. If this data is not available, then an auxiliary
@@ -202,8 +205,30 @@ If the selected condition(s) as described in section 6.1 are
 However, if the chosen conditions are not satisfied, then no correction
  is applied, and the responder is recontacted for confirmation if the
  target variable is a returned value.
+ 
+### 6.3 Zero Cases
 
-### 6.3 Exception Handling
+Some cases where either the target period total or the components sum equals
+ zero need to be treated differently from as described in sections 6.1 and 6.2
+ depending on the case as detailed below:
+
+1. If target total > 0 and components sum = 0 and amend total = TRUE: 
+ No correction should be applied in this case. A total only may be provided
+ if the component breakdown is unknown so would not want to remove true
+ values. A suitable marker will be output by the method.
+2. If target total > 0 and components sum = 0 and amend total = FALSE: In this
+ case, the proportions of the true components are unknown so the method cannot
+ apply a correction. A suitable marker will be output by the method.
+3. If target total = 0 and components sum > 0 and amend total = TRUE: The total
+ should be corrected if the difference observed is within the tolerances
+ determined by the detection method. Else, the difference should be flagged for
+ manual checking.
+4. If target total = 0 and components > 0 and amend total = FALSE. Apply
+ correction to override the components with zeros if the difference observed is
+ within the tolerances determined by the detection method. Else, the difference
+ should be flagged for manual checking.
+
+### 6.4 Exception Handling
 
 In the case of the method experiencing processing issues, the method
  shall not result in any output records. Instead, a suitable error

@@ -130,22 +130,19 @@ Output records shall always contain the following fields with the following type
 * Period – String in "YYYYMM" format
 * Forward Growth Ratio – Numeric
 * Backward Growth Ratio – Numeric
-* Trimmed Forward Growth Ratio – Numeric
-* Trimmed Backward Growth Ratio – Numeric
 * Forward Link – Numeric
 * Backward Link – Numeric
-* Construction Link – Numeric
-* Weighted Forward Link – Numeric
-* Weighted Backward Link – Numeric
-* Weighed Construction Link – Numeric
+* Construction Link – Numeric 
+* Weighted Forward Link – Numeric – Optional
+* Weighted Backward Link – Numeric – Optional
+* Weighed Construction Link – Numeric – Optional
 * Forward Link Observation Count – Numeric
 * Backward Link Observation Count – Numeric
 * Construction Link Observation Count – Numeric
-* FI Discarded Observation Count – Numeric
-* BI Discarded Observation Count – Numeric
-* C Discarded Observation Count – Numeric
 * Final Target Variable – Numeric
 * Imputation Marker – String
+* Link Marker – To indicate whether a responder has contributed
+ to link calculations
 
 Fields of type "Any" shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.
@@ -157,6 +154,16 @@ The Imputation Marker must be one of the following:
 * BI = Backwards imputation
 * C = Construction imputation from auxiliary variable
 * R = Response. This value is cleared of errors or warnings
+
+The Link Marker must be one of the following:
+
+* K = Keep, the responder has contributed to link calculations
+* D = Default, link has defaulted to 1 due to no valid response in the
+ imputation class
+* F = Filter, the responder and resulting corresponding growth ratios
+ has been filtered out of link calculations
+* T = Trimmed, the responder and resulting corresponding growth ratios
+ has been trimmed out of link calculations
 
 ### 5.3 Back Data
 

@@ -205,14 +205,14 @@ If the selected condition(s) as described in section 6.1 are
 However, if the chosen conditions are not satisfied, then no correction
  is applied, and the responder is recontacted for confirmation if the
  target variable is a returned value.
- 
+
 ### 6.3 Zero Cases
 
 Some cases where either the target period total or the components sum equals
  zero need to be treated differently from as described in sections 6.1 and 6.2
  depending on the case as detailed below:
 
-1. If target total > 0 and components sum = 0 and amend total = TRUE: 
+1. If target total > 0 and components sum = 0 and amend total = TRUE:
  No correction should be applied in this case. A total only may be provided
  if the component breakdown is unknown so would not want to remove true
  values. A suitable marker will be output by the method.

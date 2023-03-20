@@ -132,7 +132,7 @@ Output records shall always contain the following fields with the following type
 * Backward Growth Ratio – Numeric
 * Forward Link – Numeric
 * Backward Link – Numeric
-* Construction Link – Numeric 
+* Construction Link – Numeric
 * Weighted Forward Link – Numeric – Optional
 * Weighted Backward Link – Numeric – Optional
 * Weighed Construction Link – Numeric – Optional

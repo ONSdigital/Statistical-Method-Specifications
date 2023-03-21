@@ -142,7 +142,7 @@ Output records shall always contain the following fields with the following type
 * Final Target Variable – Numeric
 * Imputation Marker – String
 * Link Marker – To indicate whether a responder has contributed
- to link calculations
+ to link calculations in the target period
 
 Fields of type "Any" shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.

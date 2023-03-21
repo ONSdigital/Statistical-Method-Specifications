@@ -155,7 +155,8 @@ The Imputation Marker must be one of the following:
 * C = Construction imputation from auxiliary variable
 * R = Response. This value is cleared of errors or warnings
 
-The Link Marker must be one of the following:
+The Link Marker must be one of the following 
+- THIS DOES NOT WORK FOR MoR:
 
 * K = Keep, the responder has contributed to link calculations
 * D = Default, link has defaulted to 1 due to no valid response in the

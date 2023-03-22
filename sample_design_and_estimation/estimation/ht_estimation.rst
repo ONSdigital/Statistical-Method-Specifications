@@ -699,4 +699,4 @@ Population Sampling and Inference”
    :height: 3.76042in
 
 
-
+For Copyright information, please see LICENCE.

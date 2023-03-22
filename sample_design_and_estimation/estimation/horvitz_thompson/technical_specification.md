@@ -2,10 +2,10 @@
 
 ## 1.0 Terminology
 
-* Design Weight - 
-* Calibration Factor - 
-* Birth - 
-* Death - 
+* Design Weight -
+* Calibration Factor -
+* Birth -
+* Death -
 
 ## 2.0 Description
 
@@ -110,11 +110,13 @@ as expansion to group the data and combined uses the calibration group column
 instead.
 
 First you need to calculate the aux_design
+
 ```asciimath
 aux_design = auxiliary * unadjusted_design_weight * sample_marker
 ```
 
 Then you group by period and grouping to perform the following calculation.
+
 ```asciimath
 calibration_factor = sum(auxiliary) / sum(aux_design)
 ```

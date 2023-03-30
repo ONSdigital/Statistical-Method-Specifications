@@ -64,7 +64,6 @@ Input records must include the following fields of the correct types:
 * Amend Total – Select whether Total Variable should be automatically
  corrected, Boolean. FALSE = correct components, TRUE = correct total
 * Predictive Variable – Previous or current period total, numeric
-* Predictive Variable Type – e.g., return, impute, etc., numeric
 * Predictive Variable Period – String in “YYYYMM” format
 * Auxiliary Variable – optional, numeric – nulls allowed
 

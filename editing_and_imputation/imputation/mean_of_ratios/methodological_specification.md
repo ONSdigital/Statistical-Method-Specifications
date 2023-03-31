@@ -144,7 +144,7 @@ Output records shall always contain the following fields with the following type
 * Construction Link Default Marker – Boolean – Optional
 * Trimmed Forward Growth Ratio Marker – Boolean – Optional
 * Trimmed Backward Growth Ratio Marker – Boolean – Optional
-* Filtered Marker – Boolean – Optional 
+* Filtered Marker – Boolean – Optional
 
 Fields of type 'Any' shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.

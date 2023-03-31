@@ -135,17 +135,22 @@ Output records shall always contain the following fields with the following type
 * Construction Link – Numeric
 * Weighted Forward Link – Numeric – Optional
 * Weighted Backward Link – Numeric – Optional
-* Weighed Construction Link – Numeric – Optional
+* Weighted Construction Link – Numeric – Optional
+* Final Target Variable – Numeric
+* Imputation Marker – String
 * Forward Link Observation Count – Numeric
 * Backward Link Observation Count – Numeric
 * Construction Link Observation Count – Numeric
-* Final Target Variable – Numeric
-* Imputation Marker – String
-* Link Marker – To indicate whether a responder has contributed
- to link calculations in the target period
+* Construction Link Default Marker – Boolean – Optional
+* Trimmed Forward Growth Ratio Marker – Boolean – Optional
+* Trimmed Backward Growth Ratio Marker – Boolean – Optional
+* Filtered Marker – Boolean – Optional 
 
-Fields of type "Any" shall be of the same type as the corresponding
+Fields of type 'Any' shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.
+
+Output records labelled ‘Optional’ shall only be populated in the output
+ dataset if the corresponding functionality was used e.g., trimming.
 
 The Imputation Marker must be one of the following:
 
@@ -154,17 +159,6 @@ The Imputation Marker must be one of the following:
 * BI = Backwards imputation
 * C = Construction imputation from auxiliary variable
 * R = Response. This value is cleared of errors or warnings
-
-The Link Marker must be one of the following 
-- THIS DOES NOT WORK FOR MoR:
-
-* K = Keep, the responder has contributed to link calculations
-* D = Default, link has defaulted to 1 due to no valid response in the
- imputation class
-* F = Filter, the responder and resulting corresponding growth ratios
- has been filtered out of link calculations
-* T = Trimmed, the responder and resulting corresponding growth ratios
- has been trimmed out of link calculations
 
 ### 5.3 Back Data
 
@@ -287,8 +281,9 @@ Growth ratios for a given imputation class should be arranged in
  that remain after trimming will be used to calculate imputation links.
 
 For a given target variable, if the number of matched pairs in
- a given imputation class is less than or equal to 10, then trimming
- should not take place in the affected imputation class.
+ a given imputation class is less than or equal to a predefined threshold,
+ then trimming should not take place in the affected imputation class.
+ See section 6.2.1.
 
 It is advised to keep a record of contributors that have
  been trimmed and the statistics of the imputation class prior to trimming.

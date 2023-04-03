@@ -40,6 +40,11 @@ This method can also be used to ensure fixed relationships between variables are
  satisfied in other data types such as imputed data to improve overall data
  quality.
 
+This method can only be applied if all the components are of the same type e.g.,
+ all returned or imputed. Maintaining a total and components relationship where
+ components are a combination of types (e.g., returned and imputed) is outside of
+ the scope for this method.
+
 ## 4.0 Assumptions
 
 * Target value and predictive value are well correlated

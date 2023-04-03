@@ -54,6 +54,8 @@ This method can only be applied if all the components are of the same type e.g.,
  time (i.e., only one set of components and total)
 * Both the total value and corresponding components are populated for
  the target period
+* The components are all the same data type e.g., all returned or imputed.
+ The total variable type does not impact this.
 
 ## 5.0 Method Input and Output
 

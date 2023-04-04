@@ -208,7 +208,10 @@ If the selected condition(s) as described in section 6.1 are
 2. If Amend Total = TRUE, then the total is automatically corrected for
  the target period to equal the sum of the components in the target period.
 
-However, if the chosen conditions are not satisfied, then no correction
+The above should be applied if both the sum of the components and target period
+ total are both greater than zero. Else, see section 6.3.
+ 
+If the chosen conditions are not satisfied, then no correction
  is applied, and the responder is recontacted for confirmation if the
  target variable is a returned value.
 

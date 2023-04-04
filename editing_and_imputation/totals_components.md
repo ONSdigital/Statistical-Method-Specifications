@@ -210,7 +210,7 @@ If the selected condition(s) as described in section 6.1 are
 
 The above should be applied if both the sum of the components and target period
  total are both greater than zero. Else, see section 6.3.
- 
+
 If the chosen conditions are not satisfied, then no correction
  is applied, and the responder is recontacted for confirmation if the
  target variable is a returned value.

@@ -26,13 +26,14 @@ In addition to the fields and records specified in the outputs section of the me
 
 The following is a key of useful forumla definitions/assumptions
 
-* `y` is a component n value at time `t`
-* Sum of the componets i.e. `y_{total, t}` is not equal to zero and the above was true. 
-* `y_{total, predictive}` is the absolute total for the predicitve period
-* Sum of `y` at time `t` is is `y_derived`
-* `y_derived` does not equal 0
+*  Sum of components `y` at time `t` is `y_{derived}`
+* `y_{derived}` does not equal 0
+* `y_{t}` is a target period total value at time `t`
+*  The sum of the target period total `y_{total, t}`
+* `y_{total, predictive}` is the absolute target period total for the predictive period
 * `A` is the amend value
-* The sum of the total is `y`
+* `x_{absolute}` is the predefined threshold for the absolute difference.
+* `x_{percent}` is the predefined percentage threshold represented as a decimal.
 
 We start with a data record which is parsed to our process.
 
@@ -59,19 +60,52 @@ The next stage (stage 3) is firstly dependent on the target period total or the 
 
 ### Stage 3a
 
+At this point we rely on the amend value `A`.
+
+If 
+
+```
+    A = TRUE
+```
+
+Then the total is automatically corrected for the target period to equal the sum of the components in the target period.
+
+```
+    A = FALSE 
+```
+
+Then the components are automatically corrected for the target period to equal the total in the target period.
+
 ### Stage 3b
 
+There are now two conditions the first one is if
 
+```
+    y_{derived} = 0
+    y_{total, t} > 0 
+```
+If this is true we stop the correction, returning TCC MArker = S.
 
+If this is not true we check that 
 
+```
+    y_{derived} > 0
+    y_{total, t} = 0 
+```
+
+If this is trueand we have the amend value `A` is also true then we return TCC = T. In other words the totals correction is applied.
+
+If this is false we mark TCC = C. In other words the sum correction is applied.
+
+The process then ends.
 
 ### 4.1 Error detection
 
-Below is a lost of formualas to assist with error detetcion and undertstanding the above process overview.
+Below is a list of formulas to assist with error detetcion and undertstanding the above process overview.
 
 ### 4.1.1 Inital error handling 
 
-This left hand side of this formula shows the target period total and the right hand side shows the sum of the target period components.
+This left hand side of this formula shows the sum of the sum of the target period components and the right hand side shows the sum of the target period components.
 
 ```
     y_{1, t} + ... + y_{n, t} = y_{total, t}
@@ -106,7 +140,7 @@ The condition is satisfied if
     |y_{total, t} - y_{total, predictive}| > x_{absolute}.
 ```
 
-of if
+or if
 
 ```
     |y_{total, t} - y_{total, predictive}| =< x_{absolute}.
@@ -116,6 +150,3 @@ of if
 ```
     y_{derived} - (y_{derived} * x_{percent}) =< y_{total} =< y_{derived} + (y_{derived} * x_{percent})
 ```
-
-### 4.1.4 Error Detection condition 4
-

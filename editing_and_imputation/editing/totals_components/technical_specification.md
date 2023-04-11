@@ -9,7 +9,7 @@
 * Status - Planning 
 ## 2.0 Description
 
-The automatic editing method for totals and components correction is currently used in ONS business surveys to ensure fixed relationships between variables are satisfied. For example, when a total (e.g., total employment) is collected along with the component breakdown (e.g., full-time male, full-time female, part-time male, part-time female).
+The automatic editing method for totals and components correction is currently used in ONS business surveys to ensure fixed relationships between variables are satisfied. For example, when a total (e.g. total employment) is collected along with the component breakdown (e.g., full-time male, full-time female, part-time male, part-time female).
 
 The primary use of the method is to automatically detect and correct errors in respondent data where fixed relationships have not been satisfied to improve the efficiency of the editing process, reduce the burden on respondents and survey validators and improve overall data quality.
 
@@ -17,21 +17,21 @@ This method can also be used to ensure fixed relationships between variables are
 
 ### 3.0 Terminology
 
-* Contributor – A member of the sample; identified by a unique identifier.
-* Record – A set of values for each contributor and period.
-* Target Period – The period currently undergoing data validation.
-* Target Variable – The variable of interest that the method is working on, the total or components as determined by the Amend Total variable.
-* Target Record – A contributor's record in the target period.
-* Predictive Variable – A value used as a predictor for a contributor's target variable.
-* Predictive Record – The record containing a contributor's predictive value.
+* Contributor – A member of the sample; identified by a unique identifier
+* Record – A set of values for each contributor and period
+* Target Period – The period currently undergoing data validation
+* Target Variable – The variable of interest that the method is working on, the total or components as determined by the Amend Total variable
+* Target Record – A contributor's record in the target period
+* Predictive Variable – A value used as a predictor for a contributor's target variable
+* Predictive Record – The record containing a contributor's predictive value
 * Predictive Period – The period containing predictive records; defined relative to the target period.
 * Auxiliary variable – The variable used as a predictor for a contributor’s target variable, where the predictive value is not available
-* Responder – A contributor who has responded to the survey within a given period.
+* Responder – A contributor who has responded to the survey within a given period
 
 ## 4.0 Technical Assumptions
 
 * Predictive and auxillary variables are well correlated with the target variable
-* At least one of the target or aux variables must be populated.
+* At least one of the target or aux variables must be populated
 * Thresholds determine the need for correction
 * The method can only observe only one set of components and total at any given time
 * Target period values exist
@@ -42,7 +42,7 @@ The following field types will be present in the input and output records, for m
 
 ### 5.1 Input records
 
-* Unique Identifier – Any e.g., Business Reporting Unit
+* Unique Identifier – Any e.g. Business Reporting Unit
 * Period – String in "YYYYMM" format
 * Total Variable – Target period total, numeric – nulls allowed
 * Components Variable – Corresponding list of Total variable's components, numeric – nulls allowed

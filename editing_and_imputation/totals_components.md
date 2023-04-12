@@ -293,7 +293,7 @@ Let $y_{1,t} +...+ y_{n,t} = y_{derived}$, then:
 $$ \large low_{percent} \leq y_{total,\ predictive} \leq high_{percent} $$
 
 ```asciimath
-low_{percent} =< y_{total,\ predictive} =< high_{percent}
+low_{percent} =< y_{total, predictive} =< high_{percent}
 ```
 
 Where,

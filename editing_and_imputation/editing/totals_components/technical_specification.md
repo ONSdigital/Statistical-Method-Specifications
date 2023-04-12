@@ -188,8 +188,6 @@ If this is true and we have the amend value `A` is also true then we return TCC 
 
 If this is false we mark TCC = C. In other words the sum correction is applied.
 
-The process then ends.
-
 ### 7.0.3 Error correction calculation 
 
 If the error correction is to be applied and the amend total variable is false then the correction is applied for a given component as follows:

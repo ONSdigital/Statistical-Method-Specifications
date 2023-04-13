@@ -145,7 +145,7 @@ The stage is firstly dependent on the target period total or the sum of the comp
 
 ### 7.0.1 Stage 3a
 
-At this point we rely on the amend value `A`. This is where `y_derived` and `y_total` are > 0 (if equal to zero we goto section 3b).
+At this point we rely on the amend value `A`. This is where `y_derived` or `y_total` are > 0 (if one is equal to zero we goto section 3b).
 
 If 
 
@@ -186,7 +186,7 @@ and
 
 If this is true and we have the amend value `A` is also true then we return TCC = T. In other words the totals correction is applied.
 
-If this is false we mark TCC = C. In other words the sum correction is applied.
+If this is false we mark TCC = C. In other words the components correction is applied.
 
 ### 7.0.3 Error correction calculation 
 
@@ -201,7 +201,5 @@ Else if the amend total variable is true then we have
 ```
 y_{total, t} = y_{1, t} + ... + y_{n, t}
 ```
-
-is a a given contributor:
 
 If the difference between the predictive total and the sum of the components is greater than the thresholds described in the above stages, then the data is not automatically corrected, and the data is flagged for manual checking.

@@ -57,12 +57,12 @@ The following field types will be present in the input and output records, for m
 
 The following is a key of useful formula definitions/assumptions
 
-* `y_{total, t}` is a target period total value at time `t`
-* `y_{total, predictive}` is the target period total for the predictive period
-* `A` is the amend total which is the total in the target period
-* `x_{absolute}` is the predefined threshold for the absolute difference
-* `x_{percent}` is the predefined percentage threshold represented as a decimal
-* Sum of components at time `t` is to `y_{derived}`
+* y_(total, t) => total
+* y_{total, predictive} => predicted (the previous/comparison total which can come from a good return or an imputed value)
+* A => do_amend_total
+* x_{absolute} => threshold_absolute
+* x_{percent} => threshold_percent
+* y_{derived} => component total
 
 We start with a data record which is parsed to our process.
 
@@ -132,7 +132,7 @@ or if
     |y_{total, t} - y_{total, predictive}| > x_{absolute}.
 ```
 
-    and 
+    and the total for the predictive period is within the low and high percentage as shown below 
 ```
     y_{derived} - (y_{derived} * x_{percent}) =< y_{total, predictive} =< y_{derived} + (y_{derived} * x_{percent})
 ```
@@ -145,18 +145,18 @@ The stage is firstly dependent on the target period total or the sum of the comp
 
 ### 7.0.1 Stage 3a
 
-At this point we rely on the amend value `A`. This is where `y_derived` or `y_total` are > 0 (if one is equal to zero we goto section 3b).
+At this point we rely on the amend value `do_amend_total`. This is where `y_derived` or `y_total` are > 0 (if one is equal to zero we goto section 3b).
 
 If 
 
 ```
-    A = TRUE
+    do_amend_total = TRUE
 ```
 
 Then the total is automatically corrected for the target period to equal the sum of the components in the target period.
 
 ```
-    A = FALSE 
+    do_amend_total = FALSE 
 ```
 
 Then the components are automatically corrected for the target period to equal the total in the target period.
@@ -184,7 +184,7 @@ and
     y_{total, t} = 0 
 ```
 
-If this is true and we have the amend value `A` is also true then we return TCC = T. In other words the totals correction is applied.
+If this is true and we have the amend value `do_amend_total` is also true then we return TCC = T. In other words the totals correction is applied.
 
 If this is false we mark TCC = C. In other words the components correction is applied.
 

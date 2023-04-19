@@ -97,10 +97,6 @@ Input records must include the following fields of the correct types:
 * Forward Link – Numeric – Optional
 * Backward Link – Numeric – Optional
 * Construction Link – Numeric – Optional
-* Target Period Link Weight – Numeric – Optional
-* Previous Year Forwards Imputation Link – Numeric – Optional
-* Previous Year Backwards Imputation Link – Numeric – Optional
-* Previous Year Construction Link – Numeric – Optional
 * Link Filter Columns – Optional – This can be any number of columns of any type
   that are to be used by the link filter (section 6.1.1) to prevent
   responders being used in the imputation link calculations
@@ -121,6 +117,10 @@ There are additional parameters, separate to the inputs, that the user must
  the classes will be trimmed (section 6.1.3)
 * The minimum number of matched pairs present in an imputation
  class to perform trimming, denoted $N+1$.
+* Target period link weight must be specified to implement weighted imputation
+ links (section 6.2.5)
+* If using weighted imputation, time lag, *k*, informs which previous period’s
+ imputation links should be used in addition to the target period links
 
 ### 5.2 Output Records
 
@@ -145,6 +145,8 @@ Output records shall always contain the following fields with the following type
 * Trimmed Forward Growth Ratio Marker – Boolean – Optional
 * Trimmed Backward Growth Ratio Marker – Boolean – Optional
 * Filtered Marker – Boolean – Optional
+* Forward Consequence Filter Marker – Boolean – Optional
+* Backward Consequence Filter Marker – Boolean – Optional
 
 Fields of type 'Any' shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.

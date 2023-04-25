@@ -112,7 +112,8 @@ There are additional parameters, separate to the inputs, that the user must
 
 * Periodicity to inform the method of the appropriate time lags for growth ratio
  calculations (section 7.1) and for weighted imputation (section 7.3.3)
-* Whether zeros will be included when finding valid matched pairs (section 6)
+* Whether zeros will be included when finding valid matched pairs for forward and
+ backward growth ratio calculations (section 6)
 * Whether trimming of growth ratios will take place and if so, what percent of
  the classes will be trimmed (section 6.1.3)
 * The minimum number of matched pairs present in an imputation
@@ -169,6 +170,10 @@ In order to correctly handle the first period of data, the method
  contain the period directly preceding the first period in the
  main dataset. This data shall be the result of a prior imputation
  run and must not appear in the output.
+
+If weighted imputation is being implemented, then the back data should
+ include the necessary periods for the specified time lag
+ (e.g., the previous year) to allow this.
 
 Back data records shall always contain the following fields:
 
@@ -285,7 +290,10 @@ Growth ratios for a given imputation class should be arranged in
 For a given target variable, if the number of matched pairs in
  a given imputation class is less than or equal to a predefined threshold,
  then trimming should not take place in the affected imputation class.
- See section 6.2.1.
+ See section 6.2.1. If filtering is applied and the resulting number of matched
+ pairs falls under or equal to the predefined threshold, then trimming should
+ still be applied. The method will automatically adjust the predefined threshold
+ to allow this.
 
 It is advised to keep a record of contributors that have
  been trimmed and the statistics of the imputation class prior to trimming.

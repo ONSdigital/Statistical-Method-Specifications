@@ -571,7 +571,7 @@ Where $CR_{q, g, t}$ is the construction imputation link for
 
 Let $L_{q,g,t}$ be the weighted imputation link given by:
 
-$$ \large L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t−k} $$
+$$\large L_{q,g,t} = w\bar{R}\_{q,g,t} +(1−w) \bar{R}\_{q,g,t−k} $$
 
 ```asciimath
 L_{q,g,t} = w\bar{R}_{q,g,t} +(1−w) \bar{R}_{q,g,t-k}

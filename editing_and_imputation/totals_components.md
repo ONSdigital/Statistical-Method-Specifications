@@ -349,7 +349,7 @@ Where $y_{1, t}$ to $y_{n, t}$ are prorated to
  equal $y_{total, t}$. For a given component $y_{k,t}$, the adjusted
  $\hat{y}_{k,t}$ is calculated by:
 
-$$ \large \hat{y}_{k,t} = \Bigl(\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}
+$$ \large \hat{y}\_{k,t} = \Bigl(\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}
  \Bigl) * y_{total, t} $$
 
 ```asciimath

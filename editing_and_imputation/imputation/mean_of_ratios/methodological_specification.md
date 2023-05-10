@@ -143,11 +143,15 @@ Output records shall always contain the following fields with the following type
 * Backward Link Observation Count – Numeric
 * Construction Link Observation Count – Numeric
 * Construction Link Default Marker – Boolean – Optional
-* Trimmed Forward Growth Ratio Marker – Boolean – Optional
+* Trimming Forward Growth Ratio Marker – Boolean – Optional
+ – TRUE = keep, FALSE = trim
 * Trimmed Backward Growth Ratio Marker – Boolean – Optional
-* Filtered Marker – Boolean – Optional
+ – TRUE = keep, FALSE = trim
+* Filter Marker – Boolean – Optional – TRUE = keep, FALSE = filter
 * Forward Consequence Filter Marker – Boolean – Optional
+ – TRUE = keep, FALSE = filtered by consequence
 * Backward Consequence Filter Marker – Boolean – Optional
+ – TRUE = keep, FALSE = filtered by consequence
 
 Fields of type 'Any' shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.

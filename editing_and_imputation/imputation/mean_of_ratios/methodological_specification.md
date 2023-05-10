@@ -145,7 +145,7 @@ Output records shall always contain the following fields with the following type
 * Construction Link Default Marker – Boolean – Optional
 * Trimming Forward Growth Ratio Marker – Boolean – Optional
  – TRUE = keep, FALSE = trim
-* Trimmed Backward Growth Ratio Marker – Boolean – Optional
+* Trimming Backward Growth Ratio Marker – Boolean – Optional
  – TRUE = keep, FALSE = trim
 * Filter Marker – Boolean – Optional – TRUE = keep, FALSE = filter
 * Forward Consequence Filter Marker – Boolean – Optional

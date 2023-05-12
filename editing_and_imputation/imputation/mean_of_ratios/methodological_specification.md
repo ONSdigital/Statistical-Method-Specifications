@@ -89,7 +89,7 @@ The generic formula for using Mean of Ratios imputation is the imputation link
 
 Input records must include the following fields of the correct types:
 
-* Unique Identifier – Any e.g., Business Reporting Unit
+* Unique Identifier – Any e.g., Business Reporting Unit for a given contributor
 * Period – String in "YYYYMM" format
 * Imputation Class – Any
 * Target Variable – Numeric – Nulls Allowed
@@ -127,8 +127,9 @@ There are additional parameters, separate to the inputs, that the user must
 
 Output records shall always contain the following fields with the following types:
 
-* Unique Identifier – Any e.g., Business Reporting Unit
+* Unique Identifier – Any e.g., Business Reporting Unit for a given contributor
 * Period – String in "YYYYMM" format
+* Imputation Class – Any
 * Forward Growth Ratio – Numeric
 * Backward Growth Ratio – Numeric
 * Forward Link – Numeric

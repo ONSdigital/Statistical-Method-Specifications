@@ -63,89 +63,141 @@ The following is a key of useful formula definitions/assumptions
 * x_{absolute} => threshold_absolute
 * x_{percent} => threshold_percent
 * y_{derived} => component total
+* y_{c} => is the individual component (e.g c_1 would be y_{1})
 
 We start with a data record which is parsed to our process.
 
-### 5.1 Stage 1
+### 5.1 Validate Data Input (Stage 1)
 
-We firstly, check to see if the target period total is equal to the sum of target period components (see 6.0.1). If this is true then no correction is applied.
+We firstly, check to see if total, components, predictive variable, auxillary variable (if specified), absolute difference threshold (if specified) or percentage difference threshold (if specified) in the data record is not a number value. If any of these values are not a number then we return an error message '{var or vars} not a Number' and stop the method.
 
-### 5.2 Stage 2 
+### 5.2 Check Predictive Errors (Stage 2)
 
-The next step is to check if the predictive value is missing. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. Hence, if this is not present then we stop the method and use the TCC marker = S
+The next step is to check if the predictive value is missing. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. Hence, if this is not present then we use the TCC marker = S, write the output and stop the method. If we have a value then we go to the next stage.
 
-We now approach the section of our process which is threefold. If the first two of the following conditions are not met along with the third breaking error detection 2 (see 6.0.4), then we require manual editing (notification to the user needs to be presented). Else we proceed to the next stage.
+### 5.2 Check Zero Errors (Stage 3)
 
-The conditions are as follows
+We must now check zero errors. 
 
-Condition 1 - Is the absolute difference between the target period total and the components less than or equal to the absolute difference threshold (see 6.0.2).
+To do this our first step is to verify if the following is true.
 
-Condition 2 - Is the target period total within or equal to the absolute percentage of the sum of the components (see 6.0.3)
-
-Condition 3 - Is the absolute difference between the target period total and the components greater than to the absolute difference threshold and the total is within or equal to the absolute percentage of the sum of the components (see 6.0.4)
-
-We now apply the correction calculation (see 7.0.3).
-
-## 6.0 Error detection
-
-Below is a list of formulas to assist with error detection and understanding the above process overview.
-
-### 6.0.1 Initial error handling 
-
-The left hand side of this formula shows the sum of the target period components and the right hand side shows the total for time 't'. We expect them to be the equal.
 
 ```
-    y_{1, t} + ... + y_{n, t} = y_{total, t}
+    y_{derived} = 0
 ```
-### 6.0.2 Error detection condition 1
+and
+```
+    y_{total, predictive} > 0 
+```
+
+If this is the case then we have TCC Marker = S and the method stops. We then write an output.
+
+If however the above is false we move onto stage 4
+
+### 5.3 Check Sum(components) and Predictive Value (Stage 4)
+
+Stage 4 is where we check the sum of the components and the predictive value. 
+
+The initial part requires us to see if the following is true
+
+
+```
+    |y_{total, predictive} - y_{derived}| = x_{absolute}.
+```
+
+If this is the case then we store the absolute difference for use in the output.
+
+We now determine if
+
+```
+    y_{1, t} + ... + y_{n, t} = y_{total, predictive}
+```
+
+If true, we have a TCC Marker = N meaning we have no correction and the method stops with an output written.
+
+Else we move onto the next stage which is where we determine an error detection method.
+
+### 5.4 Determine Error Detection Method (Stage 5)
+
+If 
+
+```
+    x_{absolute} ≠ none
+```
+
+ we go to stage 5a. Else we go to section 5.4.3.
+
+### 5.4.1 Check Absolute Difference Threshold (Stage 5a)
 
 The absolute difference between the target period total and the components less than or equal to the absolute difference threshold can be visualised using the following formula. 
 
 ```
-    |y_{total, t} - y_{total, predictive}| =< x_{absolute}.
-```
-If the predictive value is missing you may need to use an auxillary value. If this value is not present then we need to use the marker TCC Marker = S
-
-Meanwhile, if the difference is greater then the thresholds, then TCC Marker = M.
-
-### 6.0.3 Error detection condition 2
-
-The target period total within or equal to the absolute percentage of the sum of the components can be seen below.
-
-```
-    y_{derived} - (y_{derived} * x_{percent}) =< y_{total, predictive} =< y_{derived} + (y_{derived} * x_{percent})
+    x_{absolute} <= |y_{total, t} - y_{total, predictive}|
 ```
 
-### 6.0.4 Error Detection condition 3
-
-The following is for condition 3  where if satisfied. Then we continue to the next stage (i.e checking if the target period total or sum of components is  equal to zero). Else we require manual intervention.
-
-The condition is satisfied if 
+If this is true we mark 
 
 ```
-    |y_{total, t} - y_{total, predictive}| <= x_{absolute}.
+    satisfied = TRUE
+``` 
+
+else we mark 
+
+```
+    satisfied = FALSE
 ```
 
-or if
+we return the satisfied boolean and go to stage 6 (if boolean is ```TRUE```), if boolean is ```FALSE``` we move to section 5.4.3.
+### 5.4.2 Check Percentage Difference Threshold (Stage 5b)
 
-```
-    |y_{total, t} - y_{total, predictive}| > x_{absolute}.
-```
+If the total for the predictive period is within the low and high percentage as shown by the formula below 
 
-    and the total for the predictive period is within the low and high percentage as shown below 
 ```
     y_{derived} - (y_{derived} * x_{percent}) =< y_{total, predictive} =< y_{derived} + (y_{derived} * x_{percent})
 ```
 
-## 7.0 Error Correction
+If this is true we mark 
+
+```
+    satisfied = TRUE
+``` 
+
+else we mark 
+
+```
+    satisfied = FALSE
+```
+
+we return the satisfied boolean and go to stage 6 (if boolean is ```TRUE```), if boolean is ```FALSE``` we return a TCC = M marker meaning manual editing is required and write an output. The method is then stopped.
+
+### 5.4.3 Percentage Difference Threshold
+
+This stage is to check if 
+
+```
+    x_{percent} ≠ none
+```
+
+If this is true we run stage 5b (see above), else we check that
+
+```
+    x_{percent}
+```
+or
+
+```
+    x_{percent} ≠ none
+```
+
+If this is false we (check with ellie) 
+
+If it is true we return a TCC = M marker meaning manual editing is required and write an output. The method is then stopped.
+
+### 5.5 Error Correction (Stage 6)
 
 This section covers the error correction aspect of the process.
 
-The stage is firstly dependent on the target period total or the sum of the components being equal to zero. If this is not true, then we go to 7.0.1 else we go to stage 7.0.2.
-
-### 7.0.1 Stage 3a
-
-At this point we rely on the amend value `do_amend_total`. This is where `y_derived` or `y_total` are > 0 (if one is equal to zero we goto section 3b).
+At this point we rely on the amend value `do_amend_total`. This is where `y_derived` or `y_total` are > 0.
 
 If 
 
@@ -155,51 +207,34 @@ If
 
 Then the total is automatically corrected for the target period to equal the sum of the components in the target period.
 
+Hence we set the following
+
 ```
-    do_amend_total = FALSE 
+    y_{derived} = y_{total, t}
+```
+
+and the final values for all the components match their originals. 
+
+We would then have a TCC = T marker and write the output.
+
+However, if
+
+```
+    do_amend_total = FALSE
 ```
 
 Then the components are automatically corrected for the target period to equal the total in the target period.
 
-### 7.0.2 Stage 3b
-
-There are now two conditions the first one is if
-
 ```
-    y_{derived} = 0
-```
-and
-```
-    y_{total, t} > 0 
-```
-If this is true and the amend total is false we stop the correction, returning TCC Marker = S. Else, if amend total is true then we apply the correction.
-
-If this is not true we check that 
-
-```
-    y_{derived} > 0
-```
-and
-```
-    y_{total, t} = 0 
+    y_{c} = (\frac{y_{c} + \dots + y_{derived}}) * y_{total, predictive}
 ```
 
-If this is true and we have the amend value `do_amend_total` is also true then we return TCC = T. In other words the totals correction is applied.
+and the final values for all the components match their originals. 
 
-If this is false we mark TCC = C. In other words the components correction is applied.
-
-### 7.0.3 Error correction calculation 
-
-If the error correction is to be applied and the amend total variable is false then the correction is applied for a given component as follows:
+If any of the components are not corrected when needed then we repeat the formula above. Else we set
 
 ```
-\hat{y}_{k,t} = (\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}) * y_{total, t}
+    y_{total, t} = y_{total, predictive}
 ```
 
-Else if the amend total variable is true then we have 
-
-```
-y_{total, t} = y_{1, t} + ... + y_{n, t}
-```
-
-If the difference between the predictive total and the sum of the components is greater than the thresholds described in the above stages, then the data is not automatically corrected, and the data is flagged for manual checking.
+and return TCC = C marker and write the output.

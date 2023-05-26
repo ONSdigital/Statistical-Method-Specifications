@@ -46,9 +46,9 @@ Input records must include the following fields of the correct types:
 * Group - Any
 * Target Variable - Numeric - Nulls Allowed
 * Auxiliary Variable - Numeric
-* Forward Link (Optional) - Numeric
-* Backward Link (Optional) - Numeric
-* Construction Link (Optional) - Numeric
+* Forward Link (Optional) - Numeric - Nulls Allowed
+* Backward Link (Optional) - Numeric - Nulls Allowed
+* Construction Link (Optional) - Numeric - Nulls Allowed
 
 Unless otherwise noted, fields must not contain null values.
 
@@ -67,6 +67,9 @@ types:
 * Forward Link Observation Count - Numeric
 * Backward Link Observation Count - Numeric
 * Construction Link Observation Count - Numeric
+* Defaulted Forward Link - Boolean
+* Defaulted Backward Link - Boolean
+* Defaulted Construction Link - Boolean
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
@@ -86,6 +89,9 @@ Back data records shall always contain the following fields:
 * Imputed Variable
 * Imputation Marker
 * Auxiliary Variable
+* Unweighted Forward Link (Optional)
+* Unweighted Backward Link (Optional)
+* Unweighted Construction Link (Optional)
 
 These fields must have the same types as their counterparts in the Input and
 Output records.
@@ -164,6 +170,14 @@ However the method must also accept an optional expression for filtering
 responders. If provided, link calculation methods will only consider responders
 matching this filter. This filter will only apply to link calculations.
 
+Responders produce three marker columns to make clear why it was not included
+in a link calculation be it because the current, next or previous periods was
+filtered out.
+
+* Current Inclusion Post Filter - Boolean - Nulls Allowed
+* Next Inclusion Post Filter - Boolean - Nulls Allowed
+* Previous Inclusion Post Filter - Boolean - Nulls Allowed
+
 ### 4.2 Links
 
 In link calculations, only responders present in the same group in both
@@ -180,9 +194,35 @@ the calculated links must also be provided.
 In the general case, a contributor's imputation link shall be that
 calculated for its group and the imputation process being performed.
 However, the method must also accept links provided as part of the input
-dataset. These fields are optional but if present all three types of links
-must be provided and null links are not allowed. These links take
-precedence over any links calculated for a contributor's group.
+dataset. These fields are optional but forward and backward links
+must be provided together and null links are allowed but will be defaulted
+to 1. When forward/backward and/or construction links are provided,
+no links are calculated.
+
+When links are not able to be calculated must default the link and mark this
+appropriately.
+
+### 4.3 Weighting
+
+Optionally the method can perform weighting when provided with the weight of
+the current link and how far back to retrieve the previous link to weight against.
+
+Unweighted links should be output as will be needed as inputs for future calculations.
+
+* Unweighted Forward Link - Numeric
+* Unweighted Backward Link - Numeric
+* Unweighted Construction Link - Numeric
+
+Where:
+
+* `w_(link)` is the weighted link
+* `uw_(current)` is the current periods link
+* `uw_(predictive)` is the weighting predictive periods link
+* `w_(weight)` is the current periods link weight
+
+`w_(link) = (uw_(current)*w_(weight))+(uw_(predictive)*(1-w_(weight)))`
+
+Weighting does not run against links that are passed into the method.
 
 ### 4.4 Forward Imputation
 

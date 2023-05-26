@@ -71,6 +71,21 @@ We start with a data record which is parsed to our process.
 
 We firstly, check to see if total, components, predictive variable, auxillary variable (if specified), absolute difference threshold (if specified) or percentage difference threshold (if specified) in the data record is not a number value. If any of these values are not a number then we return an error message '{var or vars} not a Number' and stop the method.
 
+Then, we must see if 
+
+```
+    x_{absolute} ≠ none
+```
+ and
+
+```
+    x_{percent} ≠ none
+```
+
+holds. If this is ```True``` we flag an exception with the message "One or both of absolute/percentage difference thresholds must be specified" and the method stops.
+
+If it is ```False``` then we continue to stage 2.
+
 ### 5.2 Check Predictive Errors (Stage 2)
 
 The next step is to check if the predictive value is missing. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. Hence, if this is not present then we use the TCC marker = S, write the output and stop the method. If we have a value then we go to the next stage.
@@ -188,8 +203,6 @@ or
 ```
     x_{percent} ≠ none
 ```
-
-If this is false we (check with ellie) 
 
 If it is true we return a TCC = M marker meaning manual editing is required and write an output. The method is then stopped.
 

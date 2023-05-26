@@ -30,13 +30,13 @@ are sufficiently similar and of sufficient size for robust link calculation.
 In addition to the fields specified for the general method, the following
 fields of the following types will be present in output records:
 
-* Forward Growth Ratio – Numeric
-* Backward Growth Ratio – Numeric
+* Forward Growth Ratio – Numeric - Nulls Allowed
+* Backward Growth Ratio – Numeric - Nulls Allowed
 
 Optionally if trimming occurs there will also be:
 
-* Trim Inclusion Forward - Boolean
-* Trim Inclusion Backward - Boolean
+* Trim Inclusion Forward - Boolean - Nulls Allowed
+* Trim Inclusion Backward - Boolean - Nulls Allowed
 
 ## 4.0 Link Calculation Function
 

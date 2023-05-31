@@ -62,7 +62,7 @@ The following is a key of useful formula definitions/assumptions
 * A => do_amend_total
 * x_{absolute} => threshold_absolute
 * x_{percent} => threshold_percent
-* y_{derived} => component total
+* y_{derived} => component sum
 * y_{c} => is the individual component (e.g c_1 would be y_{1})
 
 We start with a data record which is parsed to our process.
@@ -74,12 +74,12 @@ We firstly, check to see if total, components, predictive variable, auxillary va
 Then, we must see if 
 
 ```
-    x_{absolute} ≠ none
+    x_{absolute} ≠ None
 ```
  and
 
 ```
-    x_{percent} ≠ none
+    x_{percent} ≠ None
 ```
 
 holds. If this is ```True``` we flag an exception with the message "One or both of absolute/percentage difference thresholds must be specified" and the method stops.
@@ -88,11 +88,13 @@ If it is ```False``` then we continue to stage 2.
 
 ### 5.2 Check Predictive Errors (Stage 2)
 
-The next step is to check if the predictive value is missing. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. Hence, if this is not present then we use the TCC marker = S, write the output and stop the method. If we have a value then we go to the next stage.
+The next step is to check if the predictive value is ```None```. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. 
+
+Hence, if the auxiliary value is also ```None``` then we use the TCC marker = S and write the output. If we have a value then we set the predictive value equal to the auxiliary value and go to the next stage.
 
 ### 5.2 Check Zero Errors (Stage 3)
 
-We must now check zero errors. 
+We must now check zero error conditions. 
 
 To do this our first step is to verify if the following is true.
 
@@ -137,10 +139,10 @@ Else we move onto the next stage which is where we determine an error detection 
 If 
 
 ```
-    x_{absolute} ≠ none
+    x_{absolute} ≠ None
 ```
 
- we go to stage 5a. Else we go to section 5.4.3.
+ we go to stage 5a found below. Else we go to section 5.4.3.
 
 ### 5.4.1 Check Absolute Difference Threshold (Stage 5a)
 
@@ -162,7 +164,25 @@ else we mark
     satisfied = FALSE
 ```
 
-we return the satisfied boolean and go to stage 6 (if boolean is ```TRUE```), if boolean is ```FALSE``` we move to section 5.4.3.
+we return the satisfied boolean and go to stage 6 in section 5.5 (if boolean is ```TRUE```), if boolean is ```FALSE``` we move to section 5.4.3.
+
+Note: Before we leave this stage this point we need to check that zero error condition 3 is satisfied
+
+```
+    y_{total, t} = 0
+```
+
+,
+
+```
+y_{derived, t} > 0
+```
+
+and amend total = ```True```.
+
+If so apply the correction to override the components with zeros if the difference observed is within the tolerances determined by the detection method.
+
+We then set TCC = M for manual checking.
 ### 5.4.2 Check Percentage Difference Threshold (Stage 5b)
 
 If the total for the predictive period is within the low and high percentage as shown by the formula below 
@@ -183,28 +203,28 @@ else we mark
     satisfied = FALSE
 ```
 
-we return the satisfied boolean and go to stage 6 (if boolean is ```TRUE```), if boolean is ```FALSE``` we return a TCC = M marker meaning manual editing is required and write an output. The method is then stopped.
+we return the satisfied boolean and go to stage 6 in section 5.5 (if boolean is ```TRUE```), if boolean is ```FALSE``` we return a TCC = M marker meaning manual editing is required and write an output.
 
 ### 5.4.3 Percentage Difference Threshold
 
 This stage is to check if 
 
 ```
-    x_{percent} ≠ none
+    x_{percent} ≠ None
 ```
 
-If this is true we run stage 5b (see above), else we check that
+If this is true we run stage 5b (see section 5.4.2 above), else we check that
 
 ```
-    x_{percent}
+    x_{absolute} ≠ None
 ```
 or
 
 ```
-    x_{percent} ≠ none
+    x_{percent} ≠ None
 ```
 
-If it is true we return a TCC = M marker meaning manual editing is required and write an output. The method is then stopped.
+If it is true we return a TCC = M marker meaning manual editing is required and we write an output.
 
 ### 5.5 Error Correction (Stage 6)
 
@@ -251,3 +271,21 @@ If any of the components are not corrected when needed then we repeat the formul
 ```
 
 and return TCC = C marker and write the output.
+
+If we have the situation as described above we will need to check the fourth zero case. This can be achieved by checking if
+
+```
+    y_{total, t} = 0
+```
+
+,
+
+```
+y_{derived, t} > 0
+```
+
+and the amend total is ```False```.
+
+If so we override the components with zeros if the difference observed is within the tolerances determined by the detection method.
+
+We then set TCC = M for manual checking.

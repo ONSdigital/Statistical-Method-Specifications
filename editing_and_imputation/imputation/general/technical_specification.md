@@ -67,9 +67,15 @@ types:
 * Forward Link Observation Count - Numeric
 * Backward Link Observation Count - Numeric
 * Construction Link Observation Count - Numeric
-* Defaulted Forward Link - Boolean
-* Defaulted Backward Link - Boolean
-* Defaulted Construction Link - Boolean
+* Forward Link Default Value Marker - Boolean
+* Backward Link Default Value Marker - Boolean
+* Construction Link Default Value Marker - Boolean
+
+If Responder Filtering is performed, output records shall also contain:
+
+* Post Filter Inclusion Previous - Boolean - Nulls Allowed
+* Post Filter Inclusion Current - Boolean - Nulls Allowed
+* Post Filter Inclusion Next - Boolean - Nulls Allowed
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
@@ -77,9 +83,15 @@ fields as the values shall be the same in both input and output records.
 ### 3.3 Back Data
 
 In order to correctly handle the first period of data, the method must
-accept a dataset containing back data. This dataset must contain the period
-directly preceding the first period in the main dataset and must not appear
-in the output.
+accept a dataset containing back data. This dataset is used when data prior
+to the first period of the input is required i.e. for the first period of
+imputation and for link weighting where the calculations reference links
+outside of the time period covered by the input dataset. Data provided as
+part of this dataset will be combined with the results of calculations
+performed by the method when required. These result sets shall be treated
+equivalently. Only back data periods prior to those in the input dataset
+shall be used and periods only present in the back data shall not appear in
+the method output.
 
 Back data records shall always contain the following fields:
 
@@ -89,12 +101,17 @@ Back data records shall always contain the following fields:
 * Imputed Variable
 * Imputation Marker
 * Auxiliary Variable
-* Unweighted Forward Link (Optional)
-* Unweighted Backward Link (Optional)
-* Unweighted Construction Link (Optional)
 
 These fields must have the same types as their counterparts in the Input and
 Output records.
+
+If Link Weighting is being performed then the back data must contain the
+following fields with the same types as the corresponding weighted link
+equivalents in the output:
+
+* Unweighted Forward Link
+* Unweighted Backward Link
+* Unweighted Construction Link
 
 ## 4.0 Method
 
@@ -159,9 +176,9 @@ precedence order:
 
 Since Construction Imputation must take place before Forward Imputation from
 Construction, they are collectively referred to as Construction based
-Imputation in the above list. The steps above may be performed in any order
-as long as, when constructing the output dataset, the order of precedence is
-preserved. However, the above ordering reduces the need for data filtering.
+Imputation in the above list. Providing the order of precedence is
+preserved, the steps above may be performed in any order when constructing
+the output dataset.
 
 ### 4.1 Responder Filtering
 
@@ -170,15 +187,21 @@ However the method must also accept an optional expression for filtering
 responders. If provided, link calculation methods will only consider responders
 matching this filter. This filter will only apply to link calculations.
 
-Responders produce three marker columns to make clear why it was not included
-in a link calculation be it because the current, next or previous periods was
-filtered out.
+For each record, the respective post filtering inclusion marker fields will be set to reflect whether the values in
+the previous, current and next periods match the filter expression.
 
-* Current Inclusion Post Filter - Boolean - Nulls Allowed
-* Next Inclusion Post Filter - Boolean - Nulls Allowed
-* Previous Inclusion Post Filter - Boolean - Nulls Allowed
+If forward, backward and construction links are all provided in the input
+dataset this process will not be performed.
 
 ### 4.2 Links
+
+Links provided as part of the input dataset will be used rather than those
+calculated or weighted in accordance with the rest of this section. The only
+exception is Link Defaulting which is always performed. Providing only one
+of forward or backward links is not permitted to avoid the method assuming
+relationships between these links.
+
+#### 4.2.1 Link Calculation
 
 In link calculations, only responders present in the same group in both
 target and predictive periods shall be used to calculate the ratios. These
@@ -191,59 +214,51 @@ links must be calculated per period and grouping within the dataset, with
 forward and backward links based on matched pairs. Observation counts for
 the calculated links must also be provided.
 
-In the general case, a contributor's imputation link shall be that
-calculated for its group and the imputation process being performed.
-However, the method must also accept links provided as part of the input
-dataset. These fields are optional but forward and backward links
-must be provided together and null links are allowed but will be defaulted
-to 1. When forward/backward and/or construction links are provided,
-no links are calculated.
+#### 4.2.2 Link Defaulting
 
-When links are not able to be calculated must default the link and mark this
-appropriately.
+When a link is not able to be calculated, the field shall be defaulted to
+`1` and the corresponding default value marker field shall be set to
+`true`.
 
-### 4.3 Weighting
+#### 4.2.3 Link Weighting
 
-Optionally the method can perform weighting when provided with the weight of
-the current link and how far back to retrieve the previous link to weight against.
+The method shall support weighting the links in the current period against
+those in a prior weighting period using the following formula:
 
-Unweighted links should be output as will be needed as inputs for future calculations.
+```asciimath
+l_(weighted)((g, c)) =
+    ((l((p_(target), g((c)))) * w))+((l((p_(target) - r, g((c)))) * ((1-w))))
+```
 
-* Unweighted Forward Link - Numeric
-* Unweighted Backward Link - Numeric
-* Unweighted Construction Link - Numeric
+where:
 
-Where:
+* `w` is the provided weight
+* `r` is the amount of periods prior to the target period from which to
+  obtain the weighting link
 
-* `w_(link)` is the weighted link
-* `uw_(current)` is the current periods link
-* `uw_(predictive)` is the weighting predictive periods link
-* `w_(weight)` is the current periods link weight
+The above applies if and only if `l((p_(target) - r, g((c))))` exists.
+Otherwise the unweighted link shall be used.
 
-`w_(link) = (uw_(current)*w_(weight))+(uw_(predictive)*(1-w_(weight)))`
-
-Weighting does not run against links that are passed into the method.
-
-### 4.4 Forward Imputation
+### 4.3 Forward Imputation
 
 In this method there are two forward imputation processes. In all cases the
 forward link is used, the predictive period for period `p` is `p - 1` and
 the predictive value is the value of the target variable in the predictive
 record. Thus this process must process periods in ascending order.
 
-#### 4.4.1 Forward Imputation From Response
+#### 4.3.1 Forward Imputation From Response
 
 In this imputation process, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this process will be marked `FIR`.
 
-#### 4.4.2 Forward Imputation From Construction
+#### 4.3.2 Forward Imputation From Construction
 
 In this imputation process, only predictive records which are either
 construction imputes or forward imputes from construction can be used.
 Records imputed using this process will be marked `FIC`.
 
-### 4.5 Backward Imputation
+### 4.4 Backward Imputation
 
 In this imputation process, the backward link is used, the predictive period
 for period `p` is `p + 1` and the predictive value is the value for the
@@ -256,7 +271,7 @@ be used. Backward imputation from construction must not occur.
 Records imputed using this process will be marked
 `BI`.
 
-### 4.6 Construction Imputation
+### 4.5 Construction Imputation
 
 In this imputation process the construction link is used, the predictive
 period for period `p` is `p` and the predictive value is the auxiliary

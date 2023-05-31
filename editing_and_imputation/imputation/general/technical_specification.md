@@ -187,8 +187,9 @@ However the method must also accept an optional expression for filtering
 responders. If provided, link calculation methods will only consider responders
 matching this filter. This filter will only apply to link calculations.
 
-For each record, the respective post filtering inclusion marker fields will be set to reflect whether the values in
-the previous, current and next periods match the filter expression.
+For each record, the respective post filtering inclusion marker fields will
+be set to reflect whether the values in the previous, current and next
+periods match the filter expression.
 
 If forward, backward and construction links are all provided in the input
 dataset this process will not be performed.

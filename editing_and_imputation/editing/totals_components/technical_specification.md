@@ -25,7 +25,7 @@ This method can also be used to ensure fixed relationships between variables are
 * Predictive and auxillary variables are well correlated with the target variable
 * At least one of the target or auxillary variables must be populated
 * Thresholds determine the need for correction
-* The method can only observe only one set of components and total at any given time
+* The method can only observe one set of components and total at any given time
 * Target period values exist
 
 ## 4.0 Data records
@@ -42,6 +42,8 @@ The following field types will be present in the input and output records, for m
 * Predictive Variable – Previous or current period total, numeric
 * Predictive Variable Period – String in “YYYYMM” format
 * Auxiliary Variable – optional, numeric – nulls allowed
+* Absolute Difference Threshold - Numeric (non-negative)
+* Percentage Difference Threshold - Numeric (non-negative)
 
 ### 4.2 Output records 
 
@@ -65,21 +67,23 @@ The following is a key of useful formula definitions/assumptions
 * y_{derived} => component sum
 * y_{c} => is the individual component (e.g c_1 would be y_{1})
 
-We start with a data record which is parsed to our process.
+We start with an input record which is passed to our method.
+
+Note: We expect predictive to be set either as the total for the current period or the total for the period to be assessed and that the future steps use predictive to mean total.
 
 ### 5.1 Validate Data Input (Stage 1)
 
-We firstly, check to see if total, components, predictive variable, auxillary variable (if specified), absolute difference threshold (if specified) or percentage difference threshold (if specified) in the data record is not a number value. If any of these values are not a number then we return an error message '{var or vars} not a Number' and stop the method.
+We firstly, check to see if total, components, predictive variable, auxillary variable (if specified), absolute difference threshold (if specified) or percentage difference threshold (if specified) in the data input is not a number value. If any of these values are not a number then we return an error message '{var or vars} not a Number' and stop the method.
 
 Then, we must see if 
 
 ```
-    x_{absolute} ≠ None
+    x_{absolute} = None
 ```
  and
 
 ```
-    x_{percent} ≠ None
+    x_{percent} = None
 ```
 
 holds. If this is ```True``` we flag an exception with the message "One or both of absolute/percentage difference thresholds must be specified" and the method stops.
@@ -90,11 +94,11 @@ If it is ```False``` then we continue to stage 2.
 
 The next step is to check if the predictive value is ```None```. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. 
 
-Hence, if the auxiliary value is also ```None``` then we use the TCC marker = S and write the output. If we have a value then we set the predictive value equal to the auxiliary value and go to the next stage.
+Hence, if the auxiliary value is also ```None``` then the method stops and the TCC marker in the output is written as "S". If we have a value then we set the predictive value equal to the auxiliary value and go to the next stage.
 
 ### 5.2 Check Zero Errors (Stage 3)
 
-We must now check zero error conditions. 
+We must now check zero error conditions, this is to guard cases when the component sum is zero and the total value is set. When component sum is zero we do not want to make a correction to either the total or components. 
 
 To do this our first step is to verify if the following is true.
 
@@ -113,16 +117,15 @@ If however the above is false we move onto stage 4
 
 ### 5.3 Check Sum(components) and Predictive Value (Stage 4)
 
-Stage 4 is where we check the sum of the components and the predictive value. 
+Stage 4 is where we check the sum of the components and the predictive value to determine whether there is a difference that may require correction.
 
-The initial part requires us to see if the following is true
-
+The initial part requires us determine the absolute difference between the total and sum of the components.
 
 ```
     |y_{total, predictive} - y_{derived}| = x_{absolute}.
 ```
 
-If this is the case then we store the absolute difference for use in the output.
+Note: The computed absolute difference needs to be available so that it can be output when results are returned.
 
 We now determine if
 

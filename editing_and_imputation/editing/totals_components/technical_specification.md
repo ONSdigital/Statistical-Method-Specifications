@@ -61,7 +61,7 @@ The following is a key of useful formula definitions/assumptions
 
 * y_(total, t) => total
 * y_{total, predictive} => predicted (the previous/comparison total which can come from a good return or an imputed value)
-* A => do_amend_total
+* A => amend_total
 * x_{absolute} => threshold_absolute
 * x_{percent} => threshold_percent
 * y_{derived} => component sum
@@ -127,11 +127,7 @@ The initial part requires us determine the absolute difference between the total
 
 Note: The computed absolute difference needs to be available so that it can be output when results are returned.
 
-We now determine if
-
-```
-    y_{1, t} + ... + y_{n, t} = y_{total, predictive}
-```
+We now determine if the absolute difference between the sum of the components and the predictive is zero then the method stops with an indication of no correction.
 
 If true, we have a TCC Marker = N meaning we have no correction and the method stops with an output written.
 
@@ -139,156 +135,34 @@ Else we move onto the next stage which is where we determine an error detection 
 
 ### 5.4 Determine Error Detection Method (Stage 5)
 
-If 
+Stage 5 determines whether the detected difference in the provided components and totals falls into the absolute or percentage difference thresholds specified and therefore needs to be automatically correct or the values need to be manually corrected.
 
-```
-    x_{absolute} ≠ None
-```
+When only Absolute Difference Threshold is set to 0 or above the threshold is checked against the absolute value calculated in step 4. We complete this action in section 5.4.1.
 
- we go to stage 5a found below. Else we go to section 5.4.3.
+When only Percentage Difference Threshold is set to 0 or above the threshold is checked against the predictive total. The percentage threshold is the sum of the received components plus and minus the Percentage Difference Threshold specified. If this threshold is not satisfied then we require manual editing and the method stops.
 
 ### 5.4.1 Check Absolute Difference Threshold (Stage 5a)
 
-The absolute difference between the target period total and the components less than or equal to the absolute difference threshold can be visualised using the following formula. 
+The absolute difference between the target period total and the components must be less than or equal to the absolute difference threshold.
 
-```
-    x_{absolute} <= |y_{total, t} - y_{total, predictive}|
-```
+When the Absolute Difference Threshold check indicates the difference needs to be automatically corrected the method continues to stage 6 in section 5.5. 
 
-If this is true we mark 
+When the Absolute Difference Threshold check indicates the correction needs to be manually applied the method will check if a Percentage Difference Threshold needs to be checked.
 
-```
-    satisfied = TRUE
-``` 
+Note: Before we leave this stage this point we need to check that zero error condition 3 is satisfied i.e. If target total = 0 and components sum > 0 and amend total = TRUE: The total should be corrected if the difference observed is within the tolerances determined by the detection method (see section 5.5). Else, the difference should be flagged for manual checking.
 
-else we mark 
-
-```
-    satisfied = FALSE
-```
-
-we return the satisfied boolean and go to stage 6 in section 5.5 (if boolean is ```TRUE```), if boolean is ```FALSE``` we move to section 5.4.3.
-
-Note: Before we leave this stage this point we need to check that zero error condition 3 is satisfied
-
-```
-    y_{total, t} = 0
-```
-
-,
-
-```
-y_{derived, t} > 0
-```
-
-and amend total = ```True```.
-
-If so apply the correction to override the components with zeros if the difference observed is within the tolerances determined by the detection method.
-
-We then set TCC = M for manual checking.
 ### 5.4.2 Check Percentage Difference Threshold (Stage 5b)
 
-If the total for the predictive period is within the low and high percentage as shown by the formula below 
-
-```
-    y_{derived} - (y_{derived} * x_{percent}) =< y_{total, predictive} =< y_{derived} + (y_{derived} * x_{percent})
-```
-
-If this is true we mark 
-
-```
-    satisfied = TRUE
-``` 
-
-else we mark 
-
-```
-    satisfied = FALSE
-```
-
-we return the satisfied boolean and go to stage 6 in section 5.5 (if boolean is ```TRUE```), if boolean is ```FALSE``` we return a TCC = M marker meaning manual editing is required and write an output.
-
-### 5.4.3 Percentage Difference Threshold
-
-This stage is to check if 
-
-```
-    x_{percent} ≠ None
-```
-
-If this is true we run stage 5b (see section 5.4.2 above), else we check that
-
-```
-    x_{absolute} ≠ None
-```
-or
-
-```
-    x_{percent} ≠ None
-```
-
-If it is true we return a TCC = M marker meaning manual editing is required and we write an output.
+If the total for the predictive period is within the low and high percentage then we go to stage 6 in section 5.5. Otherwise, we require manual editing and stop the method.
 
 ### 5.5 Error Correction (Stage 6)
 
-This section covers the error correction aspect of the process.
+This section covers the error correction aspect of the process. When the method has reached this part of the processing earlier checks have determined that either the total or the components must be automatically corrected.
 
-At this point we rely on the amend value `do_amend_total`. This is where `y_derived` or `y_total` are > 0.
+When the input parameter amend_total indicates that the total must be amended we automatically correct the total. Where the amend_total indicates the components need to corrected we automatically correct the totals. 
 
-If 
+Expanding on this if we correct the total then we set the final total in the output data equivalent to the predictive total, and the final values for all the components match their originals. We would now return a totals corrected marker.
 
-```
-    do_amend_total = TRUE
-```
+However, if the components are corrected to match the received predicted total based on the weighting of the original input component values, then we return a components corrected marker.
 
-Then the total is automatically corrected for the target period to equal the sum of the components in the target period.
-
-Hence we set the following
-
-```
-    y_{derived} = y_{total, t}
-```
-
-and the final values for all the components match their originals. 
-
-We would then have a TCC = T marker and write the output.
-
-However, if
-
-```
-    do_amend_total = FALSE
-```
-
-Then the components are automatically corrected for the target period to equal the total in the target period.
-
-```
-    y_{c} = (\frac{y_{c} + \dots + y_{derived}}) * y_{total, predictive}
-```
-
-and the final values for all the components match their originals. 
-
-If any of the components are not corrected when needed then we repeat the formula above. Else we set
-
-```
-    y_{total, t} = y_{total, predictive}
-```
-
-and return TCC = C marker and write the output.
-
-If we have the situation as described above we will need to check the fourth zero case. This can be achieved by checking if
-
-```
-    y_{total, t} = 0
-```
-
-,
-
-```
-y_{derived, t} > 0
-```
-
-and the amend total is ```False```.
-
-If so we override the components with zeros if the difference observed is within the tolerances determined by the detection method.
-
-We then set TCC = M for manual checking.
+In the case where the predictive total is set to zero and the amend_total indicates that the components need to be adjusted this step of the method will ensure that each component is reset to zero to match the expected total.

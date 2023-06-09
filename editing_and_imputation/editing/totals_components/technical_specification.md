@@ -78,12 +78,12 @@ We firstly, check to see if total, components, predictive variable, auxillary va
 Then, we must see if 
 
 ```
-    x_{absolute} = None
+    absolute_difference_threshold = None
 ```
  and
 
 ```
-    x_{percent} = None
+    percent_difference_threshold = None
 ```
 
 holds. If this is true we flag an exception with the message "One or both of absolute/percentage difference thresholds must be specified" and the method stops.
@@ -104,11 +104,11 @@ To do this our first step is to verify if the following is true.
 
 
 ```
-    y_{derived} = 0
+    sum_of_components = 0
 ```
 and
 ```
-    y_{total, predictive} > 0 
+    predictive_value > 0 
 ```
 
 If this is the case then we have TCC Marker = S and the method stops. We then write an output.
@@ -122,7 +122,7 @@ Stage 4 is where we check the sum of the components and the predictive value to 
 The initial part requires us determine the absolute difference between the total and sum of the components.
 
 ```
-    |y_{total, predictive} - y_{derived}| = x_{absolute}.
+    |predictive_value - sum_of_components| = absolute_difference_threshold.
 ```
 
 Note: The computed absolute difference needs to be available so that it can be output when results are returned.

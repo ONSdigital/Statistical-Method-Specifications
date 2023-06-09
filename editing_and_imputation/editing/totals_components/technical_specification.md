@@ -59,13 +59,13 @@ The following field types will be present in the input and output records, for m
 
 The following is a key of useful formula definitions/assumptions
 
-* y_(total, t) => total
-* y_{total, predictive} => predicted (the previous/comparison total which can come from a good return or an imputed value)
-* A => amend_total
-* x_{absolute} => threshold_absolute
-* x_{percent} => threshold_percent
-* y_{derived} => component sum
-* y_{c} => is the individual component (e.g c_1 would be y_{1})
+* total_value - this is the expected total value for the sun_of_components
+* predictive_value - this is the expected total_value from the current period or a previous period
+* amend_total - this indicates whether the total or component values should be automatically corrected
+* absolute_difference_threshold - this threshold is used to determine whether automatic correction      should take place when the difference between the predictive_value and sum_of_components is less than or equal to this threshold
+* percentage_difference_threshold - an upper and lower threshold is calculated from this value using the sum_of_components. The upper and lower thresholds are then compared with the predictive_value to determine whether automatic correction can be applied
+* sum_of_components - this is the original component values summed up
+* component_x - an individual component value from the original ist of components
 
 We start with an input record which is passed to our method.
 
@@ -86,15 +86,15 @@ Then, we must see if
     x_{percent} = None
 ```
 
-holds. If this is ```True``` we flag an exception with the message "One or both of absolute/percentage difference thresholds must be specified" and the method stops.
+holds. If this is true we flag an exception with the message "One or both of absolute/percentage difference thresholds must be specified" and the method stops.
 
-If it is ```False``` then we continue to stage 2.
+If it is false then we continue to stage 2.
 
 ### 5.2 Check Predictive Errors (Stage 2)
 
-The next step is to check if the predictive value is ```None```. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. 
+The next step is to check if the predictive value is None. If this is the case, then the auxillary value is used instead. This only applies if the user has provided an auxillary value. 
 
-Hence, if the auxiliary value is also ```None``` then the method stops and the TCC marker in the output is written as "S". If we have a value then we set the predictive value equal to the auxiliary value and go to the next stage.
+Hence, if the auxiliary value is also None then the method stops and the TCC marker in the output is written as "S". If we have a value then we set the predictive value equal to the auxiliary value and go to the next stage.
 
 ### 5.2 Check Zero Errors (Stage 3)
 

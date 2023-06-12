@@ -199,7 +199,7 @@ Note: The computed absolute difference needs to be available
  so that it can be output when results are returned.
 
 We now determine if the absolute difference between the sum of
-the components and the predictive is zero then the method stops 
+the components and the predictive is zero then the method stops
 with an indication of no correction.
 
 If true, we have a TCC Marker = N meaning we have no correction

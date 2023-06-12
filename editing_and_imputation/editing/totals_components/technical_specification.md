@@ -131,13 +131,13 @@ message '{var or vars} not a Number' and stop the method.
 
 Then, we must see if
 
-```
+```bash
     absolute_difference_threshold = None
 ```
 
 and
 
-```
+```bash
     percent_difference_threshold = None
 ```
 
@@ -167,14 +167,13 @@ the total or components.
 
 To do this our first step is to verify if the following is true.
 
-
-```
+```bash
     sum_of_components = 0
 ```
 
 and
 
-```
+```bash
     predictive_value > 0
 ```
 
@@ -192,7 +191,7 @@ may require correction.
 The initial part requires us determine the absolute difference
 between the total and sum of the components.
 
-```
+```bash
     |predictive_value - sum_of_components| = absolute_difference_threshold.
 ```
 
@@ -200,7 +199,8 @@ Note: The computed absolute difference needs to be available
  so that it can be output when results are returned.
 
 We now determine if the absolute difference between the sum of
-the components and the predictive is zero then the method stops with an indication of no correction.
+the components and the predictive is zero then the method stops 
+with an indication of no correction.
 
 If true, we have a TCC Marker = N meaning we have no correction
 and the method stops with an output written.

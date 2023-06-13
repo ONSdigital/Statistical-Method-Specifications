@@ -156,7 +156,7 @@ If Trimming is performed, then output records should also contain:
 
 If Responder Filtering is performed, then output records should also contain:
 
-* Post Filter Inclusion Marker Previous – Boolean – Nulls Allowed 
+* Post Filter Inclusion Marker Previous – Boolean – Nulls Allowed
 * Post Filter Inclusion Marker Target – Boolean – Nulls Allowed
 * Post Filter Inclusion Marker Next – Boolean – Nulls Allowed
 
@@ -208,7 +208,8 @@ If Weighted Imputation is performed, then the back data should also contain:
 * Unweighted Backward Link – Numeric
 * Unweighted Construction Link – Numeric
 
-These fields must have the same types as their weighted counterparts in the Output records. 
+These fields must have the same types as their weighted counterparts in the
+ Output records.
 
 ## 6.0 Overall Method
 

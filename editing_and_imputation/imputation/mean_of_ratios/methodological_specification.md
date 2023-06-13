@@ -135,9 +135,6 @@ Output records shall always contain the following fields with the following type
 * Forward Link – Optionally weighted – Numeric
 * Backward Link – Optionally weighted – Numeric
 * Construction Link – Optionally weighted – Numeric
-* Weighted Forward Link – Numeric – Optional
-* Weighted Backward Link – Numeric – Optional
-* Weighted Construction Link – Numeric – Optional
 * Final Target Variable – Numeric
 * Imputation Marker – String
 * Forward Link Observation Count – Numeric

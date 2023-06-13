@@ -94,9 +94,9 @@ Input records must include the following fields of the correct types:
 * Imputation Class – Any
 * Target Variable – Numeric – Nulls Allowed
 * Auxiliary Variable – Numeric
-* Forward Link – Numeric – Optional
-* Backward Link – Numeric – Optional
-* Construction Link – Numeric – Optional
+* Forward Link – Numeric – Optional – Nulls Allowed
+* Backward Link – Numeric – Optional – Nulls Allowed
+* Construction Link – Numeric – Optional – Nulls Allowed
 * Link Filter Columns – Optional – This can be any number of columns of any type
   that are to be used by the link filter (section 6.1.1) to prevent
   responders being used in the imputation link calculations
@@ -132,9 +132,9 @@ Output records shall always contain the following fields with the following type
 * Imputation Class – Any
 * Forward Growth Ratio – Numeric
 * Backward Growth Ratio – Numeric
-* Forward Link – Numeric
-* Backward Link – Numeric
-* Construction Link – Numeric
+* Forward Link – Optionally weighted – Numeric
+* Backward Link – Optionally weighted – Numeric
+* Construction Link – Optionally weighted – Numeric
 * Weighted Forward Link – Numeric – Optional
 * Weighted Backward Link – Numeric – Optional
 * Weighted Construction Link – Numeric – Optional
@@ -143,16 +143,28 @@ Output records shall always contain the following fields with the following type
 * Forward Link Observation Count – Numeric
 * Backward Link Observation Count – Numeric
 * Construction Link Observation Count – Numeric
-* Construction Link Default Marker – Boolean – Optional
-* Trimming Forward Growth Ratio Marker – Boolean – Optional
- – TRUE = keep, FALSE = trim
-* Trimming Backward Growth Ratio Marker – Boolean – Optional
- – TRUE = keep, FALSE = trim
-* Filter Marker – Boolean – Optional – TRUE = keep, FALSE = filter
-* Forward Consequence Filter Marker – Boolean – Optional
- – TRUE = keep, FALSE = filtered by consequence
-* Backward Consequence Filter Marker – Boolean – Optional
- – TRUE = keep, FALSE = filtered by consequence
+* Forward Link Default Marker – Boolean
+* Backward Link Default Marker – Boolean
+* Construction Link Default Marker – Boolean
+
+If Trimming is performed, then output records should also contain:
+
+* Trim Inclusion Forward Growth Ratio Marker
+ – Boolean – Optional – Nulls Allowed
+* Trim Inclusion Backward Growth Ratio Marker
+ – Boolean – Optional – Nulls Allowed
+
+If Responder Filtering is performed, then output records should also contain:
+
+* Post Filter Inclusion Marker Previous – Boolean – Nulls Allowed 
+* Post Filter Inclusion Marker Target – Boolean – Nulls Allowed
+* Post Filter Inclusion Marker Next – Boolean – Nulls Allowed
+
+If Weighted Imputation is performed, then output record should also contain:
+
+* Unweighted Forward Link – Numeric – Optional – Nulls Allowed
+* Unweighted Backward Link – Numeric – Optional – Nulls Allowed
+* Unweighted Construction Link – Numeric – Optional – Nulls Allowed
 
 Fields of type 'Any' shall be of the same type as the corresponding
  input fields as the values shall be the same in both input and output records.
@@ -187,12 +199,16 @@ Back data records shall always contain the following fields:
 * Imputation Class
 * Final Target Variable – Numeric
 * Imputation Marker – String
-* Forward Link – Numeric
-* Backward Link – Numeric
-* Construction Link – Numeric
 
 These fields must have the same types as their counterparts
  in the Input and Output records.
+If Weighted Imputation is performed, then the back data should also contain:
+
+* Unweighted Forward Link – Numeric
+* Unweighted Backward Link – Numeric
+* Unweighted Construction Link – Numeric
+
+These fields must have the same types as their weighted counterparts in the Output records. 
 
 ## 6.0 Overall Method
 
@@ -244,17 +260,22 @@ By default, the method will consider all responders when finding matched
  this filter (in addition to the conditions described above). This filter
  will only apply to link calculations.
 
+Note, filtering applies to specific contributors in
+ specific reference periods. If a contributors' record is excluded
+ for the target period, then by design it will also be excluded
+ for the predictive period when using forwards or backwards imputation
+ as a matched pair will not be found. The method will output filtering
+ inclusion markers to show this.
+
 Trimming (section 6.1.3) should remove any influential growth ratios.
  However, if some remain after trimming, then filtering could be used
  to remove these known influential growth ratios. This would require the
  method to run twice. First to identify the influential growth ratios and
  second, to run the method again with the filter applied.
 
-Note, filtering applies to specific contributors in
-specific reference periods. If a contributors' record is excluded
-for the target period, then by design it will also be excluded
-for the predictive period when using forwards or backwards imputation
-as a matched pair will not be found.
+If forward, backward and construction links are all provided in the input
+ dataset, then neither filtering nor trimming will be performed. This forces
+ the method to use the exact links provided.
 
 #### 6.1.2 Growth Ratio Calculations
 
@@ -333,7 +354,7 @@ When applying forwards and backwards imputation for a given target
 
 Construction imputation links are calculated using a consistent
  approach to constructed data as applied in the Ratio of Means
- imputation method. For given imputation class and target variable,
+ imputation method. For a given imputation class and target variable,
  the construction imputation link uses the sum of the clean responses
  in the target period divided by the sum of the responders' auxiliary
  values for the target period.
@@ -410,6 +431,10 @@ The proportions must sum to 1, where 1 represents 100% i.e.,
 
 If the previous link is not available, then 100% of the target
  period link should be used.
+
+Note, if the forward, backward or construction links are provided in
+ the input dataset, then weighting is not applied. This forces the
+ method to use the exact links provided.
 
 ### 6.3 Best Practice Guidance
 

@@ -358,12 +358,13 @@ $$ \large \hat{y}\_{k,t} = \Bigl(\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}
 
 If the conditions described in the subsections of 7.1 are satisfied
  and the Amend Total variable = TRUE (amend the total), then
- for a given contributor:
+ for a given contributor, the adjusted
+ $\hat{y}_{total,t}$ is calculated by:
 
-$$ \large y_{total, t} = y_{1, t} + \dots + y_{n, t} $$
+$$ \large \hat{y}\_{total, t} = y_{1, t} + \dots + y_{n, t} $$
 
 ```asciimath
-y_{total, t} = y_{1, t} + ... + y_{n, t}
+\hat{y}_{total, t} = y_{1, t} + ... + y_{n, t}
 ```
 
 If the difference between the predictive total and the sum of the components

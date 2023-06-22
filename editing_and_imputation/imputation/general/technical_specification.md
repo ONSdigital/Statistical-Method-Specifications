@@ -27,7 +27,10 @@
 This document specifies the generic method used by all ratio imputation
 types. The method imputes for a single numeric target variable within the
 dataset and outputs a separate dataset containing the imputed variable and
-other information necessary to use the imputed variable.
+other information necessary to use the imputed variable. Note that while the
+input data structure only allows for a single target variable column, a user
+can perform multivariable imputation by having all variables in the one target
+column and adding to the grouping a column to distinguish between variables.
 
 ## 3.0 Data Records
 
@@ -46,10 +49,19 @@ Input records must include the following fields of the correct types:
 * Group - Any
 * Target Variable - Numeric - Nulls Allowed
 * Auxiliary Variable - Numeric
-* Forward Link (Optional) - Numeric - Nulls Allowed
-* Backward Link (Optional) - Numeric - Nulls Allowed
-* Construction Link (Optional) - Numeric - Nulls Allowed
 
+Optionally the following fields can also be passed:
+
+Forward/Backward Links must be passed in together.
+
+* Forward Link - Numeric
+* Backward Link - Numeric
+
+Construction Links can be passed in separately.
+
+* Construction Link - Numeric
+
+Other fields should only be passed if required by Responder Filtering (4.1).
 Unless otherwise noted, fields must not contain null values.
 
 ### 3.2 Output Records
@@ -59,7 +71,7 @@ types:
 
 * Identifier - Any
 * Period - String in "YYYYMM" format
-* Imputed Variable - Numeric
+* Target/Imputed Variable - Numeric
 * Imputation Marker - String
 * Forward Link - Numeric
 * Backward Link - Numeric
@@ -76,6 +88,12 @@ If Responder Filtering is performed, output records shall also contain:
 * Post Filter Inclusion Previous - Boolean - Nulls Allowed
 * Post Filter Inclusion Current - Boolean - Nulls Allowed
 * Post Filter Inclusion Next - Boolean - Nulls Allowed
+
+If Link Weighting is being performed then the output records shall also contain:
+
+* Unweighted Forward Link - Numeric
+* Unweighted Backward Link - Numeric
+* Unweighted Construction Link - Numeric
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
@@ -197,10 +215,9 @@ dataset this process will not be performed.
 ### 4.2 Links
 
 Links provided as part of the input dataset will be used rather than those
-calculated or weighted in accordance with the rest of this section. The only
-exception is Link Defaulting which is always performed. Providing only one
-of forward or backward links is not permitted to avoid the method assuming
-relationships between these links.
+calculated or weighted in accordance with the rest of this section. Providing
+only one of forward or backward links is not permitted to avoid the method
+assuming relationships between these links.
 
 #### 4.2.1 Link Calculation
 

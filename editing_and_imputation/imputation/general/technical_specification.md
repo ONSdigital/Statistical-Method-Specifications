@@ -52,14 +52,12 @@ Input records must include the following fields of the correct types:
 
 Optionally the following fields can also be passed:
 
-Forward/Backward Links must be passed in together.
-
 * Forward Link - Numeric
 * Backward Link - Numeric
-
-Construction Links can be passed in separately.
-
 * Construction Link - Numeric
+
+Forward and backward Links must be passed in together.
+Construction Links can be passed in separately.
 
 Other fields should only be passed if required by Responder Filtering (4.1).
 Unless otherwise noted, fields must not contain null values.

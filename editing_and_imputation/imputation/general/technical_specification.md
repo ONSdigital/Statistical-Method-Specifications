@@ -69,7 +69,7 @@ types:
 
 * Identifier - Any
 * Period - String in "YYYYMM" format
-* Target/Imputed Variable - Numeric
+* Fully Populated Output Variable - Numeric
 * Imputation Marker - String
 * Forward Link - Numeric
 * Backward Link - Numeric

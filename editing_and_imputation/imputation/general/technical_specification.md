@@ -9,7 +9,7 @@
 * Response - A value in a target variable which exists prior to any
   imputation for a given period.
 * Responder - A contributor whose target variable contains a response for a
-  given period.
+  given period in a given group.
 * Non-responder - a contributor who is not a Responder.
 * Predictive Value - A value used as a predictor for a contributor's target
   variable.
@@ -27,10 +27,7 @@
 This document specifies the generic method used by all ratio imputation
 types. The method imputes for a single numeric target variable within the
 dataset and outputs a separate dataset containing the imputed variable and
-other information necessary to use the imputed variable. Note that while the
-input data structure only allows for a single target variable column, a user
-can perform multivariable imputation by having all variables in the one target
-column and adding to the grouping a column to distinguish between variables.
+other information necessary to use the imputed variable.
 
 ## 3.0 Data Records
 
@@ -41,6 +38,9 @@ different types of ratio imputation may require additional fields as per the
 type specific specifications.
 
 ### 3.1 Input Records
+
+Unless otherwise noted, fields specified in this section must be fully
+populated.
 
 Input records must include the following fields of the correct types:
 
@@ -56,11 +56,12 @@ Optionally the following fields can also be passed:
 * Backward Link - Numeric
 * Construction Link - Numeric
 
-Forward and backward Links must be passed in together.
-Construction Links can be passed in separately.
+Other fields should only be present if required by Responder Filtering (4.1).
 
-Other fields should only be passed if required by Responder Filtering (4.1).
-Unless otherwise noted, fields must not contain null values.
+An identifier must be unique within a given period and group and the method
+must support the same identifier appearing in different groups within the
+same period. This is to allow multiple independent groups of data for a
+given contributor to be imputed as part of the same sample.
 
 ### 3.2 Output Records
 
@@ -87,7 +88,7 @@ If Responder Filtering is performed, output records shall also contain:
 * Post Filter Inclusion Current - Boolean - Nulls Allowed
 * Post Filter Inclusion Next - Boolean - Nulls Allowed
 
-If Link Weighting is being performed then the output records shall also contain:
+If Link Weighting is performed, output records shall also contain:
 
 * Unweighted Forward Link - Numeric
 * Unweighted Backward Link - Numeric
@@ -109,7 +110,7 @@ equivalently. Only back data periods prior to those in the input dataset
 shall be used and periods only present in the back data shall not appear in
 the method output.
 
-Back data records shall always contain the following fields:
+Back data records shall always contain the following fully populated fields:
 
 * Identifier
 * Period
@@ -214,8 +215,9 @@ dataset this process will not be performed.
 
 Links provided as part of the input dataset will be used rather than those
 calculated or weighted in accordance with the rest of this section. Providing
-only one of forward or backward links is not permitted to avoid the method
-assuming relationships between these links.
+only a forward or backward link is not permitted to avoid the method
+assuming relationships between these links. This restriction does not apply
+to the construction link
 
 #### 4.2.1 Link Calculation
 

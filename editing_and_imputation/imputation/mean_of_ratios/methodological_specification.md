@@ -125,7 +125,8 @@ There are additional parameters, separate to the inputs, that the user must
 
 ### 5.2 Output Records
 
-Output records shall always contain the following fields with the following types:
+Output records shall always contain the following fields with the following types
+ for the target period unless specified otherwise:
 
 * Unique Identifier – Any e.g., Business Reporting Unit for a given contributor
 * Period – String in "YYYYMM" format
@@ -185,10 +186,6 @@ In order to correctly handle the first period of data, the method
  main dataset. This data shall be the result of a prior imputation
  run and must not appear in the output.
 
-If weighted imputation is being implemented, then the back data should
- include the necessary periods for the specified time lag
- (e.g., the previous year) to allow this.
-
 Back data records shall always contain the following fields:
 
 * Unique Identifier – Any e.g., Business Reporting Unit
@@ -199,7 +196,12 @@ Back data records shall always contain the following fields:
 
 These fields must have the same types as their counterparts
  in the Input and Output records.
-If Weighted Imputation is performed, then the back data should also contain:
+
+If weighted imputation is being implemented, then the back data should
+ include the necessary periods for the specified time lag
+ (e.g., the previous year) to allow this.
+
+The back data for weighting should also contain:
 
 * Unweighted Forward Link – Numeric
 * Unweighted Backward Link – Numeric

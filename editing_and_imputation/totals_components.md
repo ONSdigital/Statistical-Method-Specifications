@@ -278,7 +278,7 @@ Where $y_{1, t}$ to $y_{n, t}$ are the *n* corresponding components
  predictive period and $x_{absolute}$ is the predefined threshold for
  the absolute difference.
 
-If the predictive value is missing, then $y_{total, t-1}$ should
+If the predictive value is missing, then $y_{total, predictive}$ should
  be replaced with the auxiliary variable, if
  required by the user.
 

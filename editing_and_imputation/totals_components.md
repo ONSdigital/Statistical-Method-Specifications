@@ -274,7 +274,7 @@ $$ \large |(y_{1, t} + \dots + y_{n, t}) - y_{total,\ predictive}|
 ```
 
 Where $y_{1, t}$ to $y_{n, t}$ are the *n* corresponding components
- of the total $y_{total, t}$, $y_{total, t-1}$ is the total for the
+ of the total $y_{total, t}$, $y_{total, predictive}$ is the total for the
  predictive period and $x_{absolute}$ is the predefined threshold for
  the absolute difference.
 

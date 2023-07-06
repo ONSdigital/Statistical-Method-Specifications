@@ -573,7 +573,7 @@ Where $\bar{R}$ is the mean of ratios. $n_{trimmed, q,g,t}$
  pairs in a given imputation class required to apply trimming.
 
 Recall that all unmatched pairs and filtered out observations were removed before
-the trimming process, so the average ratio over the imputation group excludes these.
+the trimming process, so the average ratio over the imputation class excludes these.
 
 #### 7.3.2 Construction Imputation Links
 

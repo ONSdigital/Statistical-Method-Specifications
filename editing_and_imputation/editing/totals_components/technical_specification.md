@@ -2,23 +2,33 @@
 
 ## 1.0 Description
 
-The automatic editing method for totals and components correction is
-currently used in ONS business surveys to ensure fixed
+The automatic editing method for totals and
+components correction is currently used in
+ONS business surveys to ensure fixed
 relationships between variables are satisfied.
-For example, when a total (e.g. total employment) is
-collected along with the
-component breakdown (e.g., full-time male, full-time female,
-part-time male, part-time female).
+For example, when a total (e.g., total employment
+is collected along with the component breakdown
+(e.g., full-time male, full-time female,
+part-time male, part-time female)
 
-The primary use of the method is to automatically detect and
-correct errors in respondent data where fixed relationships
-have not been satisfied to improve the efficiency of the editing
-process, reduce the burden on respondents and survey validators
-and improve overall data quality.
+The primary use of the method is to automatically
+detect and correct errors in respondent data where
+fixed relationships have not been satisfied to
+improve the efficiency of the editing process,
+reduce the burden on respondents and survey
+validators and improve overall data quality.
 
-This method can also be used to ensure fixed relationships
-between variables are satisfied in other data types such as
-imputed data to improve overall data quality.
+This method can also be used to ensure fixed
+relationships between variables are satisfied in
+other data types such as imputed data to improve
+overall data quality.
+
+This method can only be applied if all the components
+are of the same type e.g., all returned or imputed.
+Maintaining a total and components relationship
+where components are a combination of types
+(e.g., returned and imputed) is outside of the scope
+for this method.
 
 ## 2.0 Terminology
 
@@ -26,8 +36,6 @@ imputed data to improve overall data quality.
  a unique identifier
 * Record – A set of values for each contributor and
 period
-* Target Period – The period currently undergoing
-data validation
 * Target Variable – The variable of interest that
 the method is working on, the total or components
 as determined by the Amend Total variable
@@ -37,13 +45,13 @@ target period
 for a contributor's target variable
 * Predictive Record – The record containing a contributor's
  predictive value
-* Predictive Period – The period containing predictive
-records; defined relative to the target period.
 * Auxiliary variable – The variable used as a predictor
 for a contributor’s target variable, where the predictive
 value is not available
 * Responder – A contributor who has responded to the survey
 within a given period
+* Precision - The precision value determines the level of
+accuracy for our floating point calculations
 
 ## 3.0 Technical Assumptions
 
@@ -54,7 +62,7 @@ must be populated
 * Thresholds determine the need for correction
 * The method can only observe one set of components and total
 at any given time
-* Target period values exist
+* Total cannot be None
 
 ## 4.0 Data records
 
@@ -64,27 +72,25 @@ output records, for more details see the methodology specification.
 ### 4.1 Input records
 
 * Unique Identifier – Any e.g. Business Reporting Unit
-* Period – String in "YYYYMM" format
-* Total Variable – Target period total, numeric – nulls
-allowed
-* Components Variable – Corresponding list of Total
+* Total Variable – Target total, numeric – nulls allowed
+* Components – Corresponding list of Total
 variable's components, numeric – nulls allowed
 * Amend Total – Select whether Total Variable should be
 automatically corrected, Boolean. FALSE = correct components,
 TRUE = correct total
-* Predictive Variable – Previous or current period total, numeric
-* Predictive Variable Period – String in “YYYYMM” format
+* Predictive Variable – Previous or current total, numeric
 * Auxiliary Variable – optional, numeric – nulls allowed
 * Absolute Difference Threshold - Numeric (non-negative)
 * Percentage Difference Threshold - Numeric (non-negative)
+* Precision - integer value (between 0 and 29)
 
 ### 4.2 Output records
 
 * Unique Identifier – Any e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
 * Absolute Difference – Numeric, nulls allowed
 * Low Percent – Numeric, nulls allowed
 * High Percent – Numeric, nulls allowed
+* Precision - integer value (between 0 and 29)
 * Final Total Variable – Numeric
 * Final Components Variable – Numeric
 * TCC Marker – To indicate the result of the Totals Components
@@ -95,9 +101,9 @@ Correction method, string
 The following is a key of useful formula definitions/assumptions
 
 * total_value - this is the expected total value for the
- sun_of_components
-* predictive_value - this is the expected total_value from
-the current period or a previous period
+ sum_of_components and is used to correct components if
+ automatic correction is applied
+* predictive_value - this is the expected total_value
 * amend_total - this indicates whether the total or
 component values should be automatically corrected
 * absolute_difference_threshold - this threshold is used
@@ -113,23 +119,29 @@ to determine whether automatic correction should take place
 values summed up
 * component_x - an individual component value from the
 original ist of components
+* precision - The precision value determines the level of
+accuracy for our sum of components and component 
+correction floating point calculations
 
 We start with an input record which is passed to our method.
-
-Note: We expect predictive to be set either as the total
-for the current period or the total for the period to be
-assessed and that the future steps use predictive to mean total.
 
 ### 5.1 Validate Data Input (Stage 1)
 
 We firstly, check to see if total, components, predictive
 variable, auxillary variable (if specified), absolute
-difference threshold (if specified) or percentage difference
-threshold (if specified) in the data input is not a number value.
-If any of these values are not a number then we return an error
-message '{var or vars} not a Number' and stop the method.
+difference threshold (if specified), percentage difference
+threshold (if specified) and precision (if specified) in the 
+data input are numeric values. 
 
-Then, we must see if
+If precision is not specified (i.e None) then we default 
+the value to 28. If it is less than zero or greater then 28 we
+raise a value error. Auxiliary and predictive can be None.
+
+If any of the other values are not a number then we return a
+tailored error message and stop the method with an "S"
+tcc marker.
+
+Then, we must verify if
 
 ```bash
     absolute_difference_threshold = None
@@ -149,14 +161,34 @@ If it is false then we continue to stage 2.
 
 ### 5.2 Check Predictive Errors (Stage 2)
 
-The next step is to check if the predictive value is None. If this
-is the case, then the auxillary value is used instead. This only
-applies if the user has provided an auxillary value.
+The next step is to check the predictive, auxiliary and total.
 
-Hence, if the auxiliary value is also None then the method stops and
-the TCC marker in the output is written as "S". If we have a
-value then we set the predictive value equal to the auxiliary
-value and go to the next stage.
+Otherwise, there are five ways in which the method can behave 
+based on these values. This includes the following
+
+1. When total value is present, predictive value is None
+and Auxiliary value is None then the decision whether an
+automatic correction can be made will be based off of the
+total value and any recalculation of the components will
+use the total value.
+
+2. - When total value is present, predictive value is present 
+and Auxiliary value is None then the decision whether an 
+automatic correction can be made will be based off of the 
+predictive value and any recalculation of the components 
+will use the total value.
+
+3. - When total value is present and predictive value is 
+present and Auxiliary value is present then the decision 
+whether an automatic correction can be made will be based 
+off of the predictive value and any recalculation of the 
+components will use the total value.
+
+4. - When total value is present and predictive value is 
+None and Auxiliary value is present then the decision 
+whether an automatic correction can be made will be 
+based off of the auxiliary value and any recalculation 
+of the components will use the total value.
 
 ### 5.2 Check Zero Errors (Stage 3)
 
@@ -196,7 +228,10 @@ between the total and sum of the components.
 ```
 
 Note: The computed absolute difference needs to be available
- so that it can be output when results are returned.
+so that it can be output when results are returned. It is also
+important to understand we use the python
+Decimal() method to apply the defined precision value
+to the floating values for this stage.
 
 We now determine if the absolute difference between the sum of
 the components and the predictive is zero then the method stops
@@ -227,8 +262,8 @@ satisfied then we require manual editing and the method stops.
 
 ### 5.4.1 Check Absolute Difference Threshold (Stage 5a)
 
-The absolute difference between the target period total and
- the components must be less than or equal to the absolute difference threshold.
+The absolute difference between the target total and
+the components must be less than or equal to the absolute difference threshold.
 
 When the Absolute Difference Threshold check indicates the
 difference needs to be automatically corrected the method
@@ -247,7 +282,7 @@ Else, the difference should be flagged for manual checking.
 
 ### 5.4.2 Check Percentage Difference Threshold (Stage 5b)
 
-If the total for the predictive period is within the low and high
+If the total for the predictive is within the low and high
 percentage then we go to stage 6 in section 5.5.
 Otherwise, we require manual editing and stop the method.
 
@@ -260,18 +295,20 @@ be automatically corrected.
 
 When the input parameter amend_total indicates that the total
 must be amended we automatically correct the total.
-Where the amend_total indicates the components need to corrected
-we automatically correct the totals.
+
+Where the amend_total indicates the components need to corrected,
+we use the total value and the precision for the component
+automatic correction calculations.
 
 Expanding on this if we correct the total then we set the final
-total in the output data equivalent to the predictive total, and the
+total in the output data equivalent to the total, and the
 final values for all the components match their originals. We would now
 return a totals corrected marker.
 
-However, if the components are corrected to match the received predicted
+However, if the components are corrected to match the received
 total based on the weighting of the original input component values,
 then we return a components corrected marker.
 
-In the case where the predictive total is set to zero and the amend_total
+In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.

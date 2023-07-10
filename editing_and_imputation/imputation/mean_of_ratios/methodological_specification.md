@@ -87,7 +87,7 @@ The generic formula for using Mean of Ratios imputation is the imputation link
 
 ### 5.1 Input Records
 
-Input records for thr target period must include the following fields of
+Input records for the target period must include the following fields of
  the correct types:
 
 * Unique Identifier – Any e.g., Business Reporting Unit for a given contributor

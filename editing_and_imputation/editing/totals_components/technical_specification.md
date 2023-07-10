@@ -120,7 +120,7 @@ values summed up
 * component_x - an individual component value from the
 original ist of components
 * precision - The precision value determines the level of
-accuracy for our sum of components and component 
+accuracy for our sum of components and component
 correction floating point calculations
 
 We start with an input record which is passed to our method.
@@ -130,10 +130,10 @@ We start with an input record which is passed to our method.
 We firstly, check to see if total, components, predictive
 variable, auxillary variable (if specified), absolute
 difference threshold (if specified), percentage difference
-threshold (if specified) and precision (if specified) in the 
-data input are numeric values. 
+threshold (if specified) and precision (if specified) in the
+data input are numeric values.
 
-If precision is not specified (i.e None) then we default 
+If precision is not specified (i.e None) then we default
 the value to 28. If it is less than zero or greater then 28 we
 raise a value error. Auxiliary and predictive can be None.
 
@@ -163,7 +163,7 @@ If it is false then we continue to stage 2.
 
 The next step is to check the predictive, auxiliary and total.
 
-Otherwise, there are five ways in which the method can behave 
+Otherwise, there are five ways in which the method can behave
 based on these values. This includes the following
 
 1. When total value is present, predictive value is None
@@ -172,22 +172,22 @@ automatic correction can be made will be based off of the
 total value and any recalculation of the components will
 use the total value.
 
-2. - When total value is present, predictive value is present 
-and Auxiliary value is None then the decision whether an 
-automatic correction can be made will be based off of the 
-predictive value and any recalculation of the components 
+2. When total value is present, predictive value is present
+and Auxiliary value is None then the decision whether an
+automatic correction can be made will be based off of the
+predictive value and any recalculation of the components
 will use the total value.
 
-3. - When total value is present and predictive value is 
-present and Auxiliary value is present then the decision 
-whether an automatic correction can be made will be based 
-off of the predictive value and any recalculation of the 
+3. When total value is present and predictive value is
+present and Auxiliary value is present then the decision
+whether an automatic correction can be made will be based
+off of the predictive value and any recalculation of the
 components will use the total value.
 
-4. - When total value is present and predictive value is 
-None and Auxiliary value is present then the decision 
-whether an automatic correction can be made will be 
-based off of the auxiliary value and any recalculation 
+4. When total value is present and predictive value is
+None and Auxiliary value is present then the decision
+whether an automatic correction can be made will be
+based off of the auxiliary value and any recalculation
 of the components will use the total value.
 
 ### 5.2 Check Zero Errors (Stage 3)

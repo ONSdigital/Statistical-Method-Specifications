@@ -161,7 +161,7 @@ If it is false then we continue to stage 2.
 
 ### 5.2 Check Predictive Errors (Stage 2)
 
-The next step is to check the predictive, auxiliary and 
+The next step is to check the predictive, auxiliary and
 total all exist.
 
 Otherwise, there are five ways in which the method can behave
@@ -232,7 +232,7 @@ Note: The computed absolute difference needs to be available
 so that it can be output when results are returned. It is also
 important to understand we use the python
 Decimal() method to apply the defined precision value
-to the floating values for this stage. 
+to the floating values for this stage.
 This determines the accuracy of out outputs.
 
 We now determine if the absolute difference between the sum of

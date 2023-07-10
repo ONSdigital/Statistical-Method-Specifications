@@ -119,7 +119,7 @@ to determine whether automatic correction should take place
 values summed up
 * component_x - an individual component value from the
 original ist of components
-* precision - The precision value determines the level of
+* precision - the precision value determines the level of
 accuracy for our sum of components and component
 correction floating point calculations
 
@@ -137,7 +137,7 @@ If precision is not specified (i.e None) then we default
 the value to 28. If it is less than zero or greater then 28 we
 raise a value error. Auxiliary and predictive can be None.
 
-If any of the other values are not a number then we return a
+If any of the other values are not as we expect then we return a
 tailored error message and stop the method with an "S"
 tcc marker.
 
@@ -161,7 +161,8 @@ If it is false then we continue to stage 2.
 
 ### 5.2 Check Predictive Errors (Stage 2)
 
-The next step is to check the predictive, auxiliary and total.
+The next step is to check the predictive, auxiliary and 
+total all exist.
 
 Otherwise, there are five ways in which the method can behave
 based on these values. This includes the following
@@ -220,7 +221,7 @@ Stage 4 is where we check the sum of the components and the
 predictive value to determine whether there is a difference that
 may require correction.
 
-The initial part requires us determine the absolute difference
+The initial part requires us to determine the absolute difference
 between the total and sum of the components.
 
 ```bash
@@ -231,7 +232,8 @@ Note: The computed absolute difference needs to be available
 so that it can be output when results are returned. It is also
 important to understand we use the python
 Decimal() method to apply the defined precision value
-to the floating values for this stage.
+to the floating values for this stage. 
+This determines the accuracy of out outputs.
 
 We now determine if the absolute difference between the sum of
 the components and the predictive is zero then the method stops
@@ -271,9 +273,9 @@ continues to stage 6 in section 5.5.
 
 When the Absolute Difference Threshold check indicates the
 correction needs to be manually applied the method will check
- if a Percentage Difference Threshold needs to be checked.
+if a Percentage Difference Threshold needs to be checked.
 
-Note: Before we leave this stage this point we need to check
+Note: Before we leave this stage we need to check
 that zero error condition 3 is satisfied i.e. If
 target total = 0 and components sum > 0 and amend total = TRUE:
 The total should be corrected if the difference observed is within

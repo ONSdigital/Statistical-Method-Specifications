@@ -52,7 +52,7 @@ This method can only be applied if all the components are of the same type e.g.,
 * Thresholds set are a good indication of whether a value should be corrected
 * The method can only observe and satisfy one fixed relationship at a
  time (i.e., only one set of components and total)
-* Both the total value and corresponding components are populated for
+* Both the total value and at least one corresponding component are populated for
  the target period
 * The components are all the same data type e.g., all returned or imputed.
  The total variable type does not impact this.
@@ -65,13 +65,12 @@ Input records must include the following fields of the correct types:
 
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
-* Total Variable – Target period total, numeric – nulls allowed
+* Total Variable – Target period total, numeric
 * Components Variable – Corresponding list of Total variable's components,
  numeric – nulls allowed
 * Amend Total – Select whether Total Variable for the target period should be
  automatically corrected, Boolean
 * Predictive Variable – Previous or current period total, numeric
-* Predictive Variable Period – String in “YYYYMM” format
 * Auxiliary Variable – optional, numeric – nulls allowed
 
 The Amend Total variable determines whether the Total or Components variable

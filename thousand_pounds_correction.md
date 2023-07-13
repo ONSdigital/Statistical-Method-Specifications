@@ -45,8 +45,8 @@ a value of £56,000 instead of correctly submitting 56.
  assumed that all other monetary values are also thousand pounds errors
 * The principal variable and predictive value are well correlated and are intended
  to be reported in the same denomination (i.e., thousand pounds)
-* The principal variable and auxiliary value are well correlated and intended to be
- reported in the same denomination (i.e., thousand pounds)
+* The principal variable and auxiliary value are well correlated and intended
+ to be reported in the same denomination (i.e., thousand pounds)
 * The auxiliary variable is known and available for all contributors processed
  by the method
 * Thresholds set are a good indication of whether a value should be corrected
@@ -74,14 +74,14 @@ Unless otherwise noted, fields must not contain null values.
 
 The method requires at least one of the following as the previous period predictive
  variable, in the given priority order:
- 
+
 1. Returned, cleaned response
 2. Imputed or constructed value
 3. Auxiliary variable e.g., registered annual turnover
 
 Although predicted and auxiliary are both optional, at least one must be provided
  for the method to work. Else a suitable marker is emitted.
- 
+
 Note that the predictive variable is indirectly defined as the principal variable
 in the predictive period.
 
@@ -94,11 +94,12 @@ Output records shall always contain the following fields with the following type
 * TPC Ratio – Numeric
 * Final Principal Variable – Numeric
 * Final Target Variables – Can be a list, numeric – nulls allowed
-* TPC Marker –  To indicate the result of the Thousand Pounds Correction method, string
+* TPC Marker –  To indicate the result of the Thousand Pounds Correction
+ method, string
 * Error Description – String
 
-Fields of type "Any" shall be of the same type as the corresponding input fields as
- the values shall be the same in both input and output records.
+Fields of type "Any" shall be of the same type as the corresponding input
+ fields as the values shall be the same in both input and output records.
 
 The TPC Marker must be one of the following:
 
@@ -130,10 +131,11 @@ The error detection calculation is applied to each contributor and calculates th
  The principal variable is the current period data value, and the predictive variable
  is the corresponding previous period data value, if the contributor was previously
  sampled. Previous period data can be a clean response, imputed or constructed data
- value. If there is no predictive value available (i.e., the contributor was not sampled
- in the previous period), then a well correlated alternative auxiliary variable can be
- used if available required by the user. Note that the auxiliary variable should be
- recorded in the same denomination as the target variable.
+ value. If there is no predictive value available (i.e., the contributor was
+ not sampled in the previous period), then a well correlated alternative
+ auxiliary variable can be used if available required by the user. Note that
+ the auxiliary variable should be recorded in the same denomination as
+ the target variable.
 
 If the ratio is within the predefined upper and lower thresholds, then a
  thousand pounds error is detected.
@@ -205,11 +207,9 @@ $$ \large \hat{y}\_{i, q, t} =  < \frac{y_{i, q, t}}{1000} $$
 \hat{y}_{i, q, t} =  < \frac{y_{i, q, t}}{1000}
 ```
 
-Where $\hat{y}\_{i, q, t}$ is the corrected value and rounded to the nearest whole number.
+Where $\hat{y}\_{i, q, t}$ is the corrected value and rounded to the
+ nearest whole number.
 
 Once the principal target variable has been corrected, all other monetary values,
  the remaining target variables, for a given contributor will be automatically
  corrected by the same method as described above.
-
-
- 

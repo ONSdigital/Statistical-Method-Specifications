@@ -16,7 +16,7 @@
 * Predictive Variable Type – Type of data e.g., response, impute etc. Not required to run the method but required for method review purposes. 
 * Predictive Record - The record containing a contributor's predictive value.
 * Predictive Period - The period containing predictive records; defined relative to the target period.
-* Auxiliary variable - The variable used as a predictor for a contributor's principal variable, where the predictive value is not available for a given contributor (i.e. where the contributor was not sampled in the predictive period). This should only be populated if the user has a suitable variable that they wish to use if the predictive value is not available. Else, the method should not run.
+* Auxiliary variable - An alternative variable used as a predictor for a contributor's principal variable, where the predictive value is not available for a given contributor (i.e. where the contributor was not sampled in the predictive period).
 * Responder - A contributor who has responded to the survey within a given period.
 
 
@@ -54,16 +54,15 @@ The method requires at least one of the following as the previous period predict
 2. Imputed or constructed value 
 3. Auxiliary variable e.g., registered annual turnover 
 
-Although predicted and auxiliary are both optional, at least one must be provided for the method to work. Else a method error is emitted. 
+Although predicted and auxiliary are both optional, at least one must be provided for the method to work. Else a suitable marker is emitted. 
 Note that the predictive variable is indirectly defined as the principal variable in the predictive period.
 
 ### 5.2 Output Records
 Output records shall always contain the following fields with the following types: 
 
 * Unique Identifier – Any e.g., Business Reporting Unit 
-* Period – String in "YYYYMM" format 
-* Original Principal Variable – Numeric
-* Original Target Variables – Can be a list, numeric – nulls allowed
+* Period – String in "YYYYMM" format
+* TPC Ratio – Numeric
 * Final Principal Variable – Numeric 
 * Final Target Variables – Can be a list, numeric – nulls allowed 
 * TPC Marker –  To indicate the result of the Thousand Pounds Correction method, string 
@@ -82,14 +81,14 @@ The TPC Marker must be one of the following:
 ### 6.1 Overall Method
 A principal variable must be specified as a priority indictor for whether a thousand pounds error has occurred. The method checks the principal variable for a given contributor to determine whether the ratio of the principal variable by the predictive variable is within a fixed set of upper and lower thresholds. If the ratio lies within these thresholds, then a thousand pounds correction is automatically applied to the principal variable and the rest of the target variables, if any, are automatically corrected.
 
-If the predictive period’s data is missing, then the method is not applied, unless it is appropriate to use a register-based variable that is well correlated with the target variable. The register based auxiliary variable should not be read into the data if the user does not require it. 
+If the predictive period’s data is missing, then the method is not applied, unless an appropriate variable that is well correlated with the target variable is available to the user. The auxiliary variable should not be read into the data if the user does not require it. 
 
 ### 6.2 Error Detection
-The error detection calculation is applied to each contributor and calculates the ratio of the principal variable and predictive variable at the contributor level. The principal variable is the current period data value, and the predictive variable is the corresponding previous period data value, if the contributor was previously sampled. Previous period data can be a clean response, imputed or constructed data value. If there is no predictive value available (i.e., the contributor was not sampled in the previous period), then an auxiliary variable such as IDBR selection turnover can be used if required by the user. Note that the auxiliary variable should be recorded in the same denomination as the target variable. 
+The error detection calculation is applied to each contributor and calculates the ratio of the principal variable and predictive variable at the contributor level. The principal variable is the current period data value, and the predictive variable is the corresponding previous period data value, if the contributor was previously sampled. Previous period data can be a clean response, imputed or constructed data value. If there is no predictive value available (i.e., the contributor was not sampled in the previous period), then a well correlated alternative auxiliary variable can be used if available required by the user. Note that the auxiliary variable should be recorded in the same denomination as the target variable. 
 
 If the ratio is within the predefined upper and lower thresholds, then a thousand pounds error is detected.  
 
-If the previous period’s value is zero, then the method does not continue. A thousand pounds error is neither detected nor corrected. 
+If the predictive or auxiliary variable's value is zero or missing, then the method does not continue. A thousand pounds error is neither detected nor corrected. 
 
 ### 6.3 Error Correction
 A detected thousand pounds error will be automatically corrected by dividing the principal variable (i.e., suspicious returned value) by 1000 then rounding to the nearest whole number.  
@@ -128,7 +127,7 @@ If a cleared, predictive value does not exist and the user has chosen to input a
 L_{Lower} < \frac{y_{i, q, t}}{x_{i, q, t}} < L_{Upper}
 ```
 
-Where *x<sub>i, q, t</sub>* is the auxiliary register based selected turnover for contributor *i* and appropriately converted to the same denomination as the principal variable, if necessary.
+Where *x<sub>i, q, t</sub>* is the well correlated auxiliary variable for contributor *i* and appropriately converted to the same denomination as the principal variable, if necessary.
 
 If the ratio lies within the limits, then a thousand pounds error is detected; else a thousand pounds error has not been identified. 
 
@@ -149,26 +148,6 @@ Where *y<sup>\*</sup><sub>i, q, t</sub>* is the corrected value and rounded to t
 Once the principal target variable has been corrected, all other monetary values, the remaining target variables, for a given contributor will be automatically corrected by the same method as described above. 
 
 
-## 8.0 Worked Example
-For this example, let the lower and upper limits equal 250 and 1350 respectively as these are currently the best practice parameters used in ONS business surveys. The user has opted to use auxiliary data in the absence of the preferred predictive variable.  
-
-| Contributor | *y<sub>i, q, t</sub>* | *y<sub>i, q, t-1</sub>* | *x<sub>i, q, t</sub>* | Detection Ratio | Pass/Fail |*y<sup>\*</sup><sub>i, q, t</sub>*|
-|---|---|---|---|---|---|---|
-| 1 | 2000M | 2M | N/A | 1000 | Fail | 2M |
-| 2 | 5000M | 100M | N/A | 50  | Pass | 5000M |
-| 3 | 1350M |  | 1M | 1350 | Pass | 1350M |
-| 4 | 1250M | 0 | N/A | N/A | N/A | 1250M |
-
-Contributor 1 shows the detection method using the target and predictive variables. The ratio is within the thresholds and therefore an error is detected, and a correction is applied. 
-
-Contributor 2 shows the detection method using the target and predictive variables. The ratio is outside the thresholds and therefore an error is not detected, and a correction is not applied. 
-
-Contributor 3 shows the detection method using the target variable, but the predictive variable is missing so the auxiliary variable is used. The ratio is equal to the upper threshold and therefore an error is not detected, and a correction is not applied. 
-
-Contributor 4 has both the target and predictive variables available, but the predictive variable is equal to 0 and therefore the method is not applied. 
 
 
-## 9.0 Future Enhancements 
-
-At present, method thresholds are fixed across all surveys, size bands and industry. A future enhancement could allow different thresholds to be set for cases that as particular industries that are more likely to experience higher fluctuations or sporadic data. The enhancement could also allow the method to detect and correct for cases where question values are requested in pounds but have incorrectly been returned in thousands.  
  

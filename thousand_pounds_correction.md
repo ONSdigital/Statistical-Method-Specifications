@@ -167,7 +167,7 @@ If a predictive value for the principal question *q* is available for contributo
  lies within the defined lower or upper thresholds, $L_{Lower}$
  or $L_{Upper}$.
 
-$$ large L_{Lower} < \frac{y_{i, q, t}}{y_{i, q, t-1}} < L_{Upper} $$
+$$ \large L_{Lower} < \frac{y_{i, q, t}}{y_{i, q, t-1}} < L_{Upper} $$
 
 ```asciimath
 L_{Lower} < \frac{y_{i, q, t}}{y_{i, q, t-1}} < L_{Upper}

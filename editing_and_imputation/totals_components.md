@@ -68,8 +68,8 @@ Input records must include the following fields of the correct types:
 * Total Variable – Target period total, numeric – nulls allowed
 * Components Variable – Corresponding list of Total variable's components,
  numeric – nulls allowed
-* Amend Total – Select whether Total Variable should be automatically
- corrected, Boolean. FALSE = correct components, TRUE = correct total
+* Amend Total – Select whether Total Variable for the target period should be
+ automatically corrected, Boolean
 * Predictive Variable – Previous or current period total, numeric
 * Predictive Variable Period – String in “YYYYMM” format
 * Auxiliary Variable – optional, numeric – nulls allowed
@@ -158,10 +158,10 @@ If the above is satisfied, an automatic correction will be made depending
 The rationale for automatically correcting totals/components can vary by
  data type. For example, with respondent data, it may be preferred to
  only automatically correct data if there is a small difference between
- the predictive and target variables in the target period as it is a
+ the predictive and component variables sum in the target period as it is a
  cost-effective approach to data editing. However, if a difference greater
- than a set threshold is observed between the predictive variable and the
- target variable in the target period, then it may be preferred to not
+ than a set threshold is observed between the predictive variable and the sum
+ of the component variables in the target period, then it may be preferred to not
  automatically correct data in favour of re-contacting the respondent to
  correct the data directly.
 

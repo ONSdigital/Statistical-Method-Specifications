@@ -316,7 +316,7 @@ total based on the weighting of the original input component values,
 then we return a components corrected marker.
 
 Expanding on this, if we require components to be corrected then we
-use the algorithm where the new component is equal to the component divided 
+use the algorithm where the new component is equal to the component divided
 by the sum_of_components and the result of this is multiplied by the total
 value.
 

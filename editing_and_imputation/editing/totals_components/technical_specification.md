@@ -180,7 +180,7 @@ Otherwise, there are four ways in which the method can behave
 based on these values. This includes the following
 
 1. When total value is present, predictive value is None
-and Auxiliary value is None then method stops and the 
+and Auxiliary value is None then method stops and the
 tcc marker "S" is returned.
 
 2. When total value is present, predictive value is present

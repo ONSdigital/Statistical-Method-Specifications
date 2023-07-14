@@ -56,12 +56,15 @@ accuracy for our floating point calculations
 ## 3.0 Technical Assumptions
 
 * Predictive and auxillary variables are well correlated
- with the target variable
 * At least one of the target or auxillary variables
 must be populated
 * Thresholds determine the need for correction
-* The method can only observe one set of components and total
-at any given time
+* The totals and components method will be period agnostic, the
+expectation is that the user of the method will ensure the
+correct values are passed to the method for evaluation.
+Example wrapper code will be written to show how this may work
+but there will likely be updates required to the example
+depending upon the data formats the user is working with.
 * Total cannot be None
 
 ## 4.0 Data records
@@ -72,7 +75,7 @@ output records, for more details see the methodology specification.
 ### 4.1 Input records
 
 * Unique Identifier – Any e.g. Business Reporting Unit
-* Total Variable – Target total, numeric – nulls allowed
+* Total Variable – Target total, numeric – nulls not allowed
 * Components – Corresponding list of Total
 variable's components, numeric – nulls allowed
 * Amend Total – Select whether Total Variable should be
@@ -82,7 +85,7 @@ TRUE = correct total
 * Auxiliary Variable – optional, numeric – nulls allowed
 * Absolute Difference Threshold - Numeric (non-negative)
 * Percentage Difference Threshold - Numeric (non-negative)
-* Precision - integer value (between 0 and 29)
+* Precision - optional integer value (valid values are 1-28)
 
 ### 4.2 Output records
 
@@ -100,9 +103,10 @@ Correction method, string
 
 The following is a key of useful formula definitions/assumptions
 
-* total_value - this is the expected total value for the
- sum_of_components and is used to correct components if
- automatic correction is applied
+* total_value - this is the total value received for the current
+period, this value is expected to match the sum_of_components.
+When an automatic correction is possible, the total_value is
+used to adjust the components when amend_total is false.
 * predictive_value - this is the expected total_value
 * amend_total - this indicates whether the total or
 component values should be automatically corrected
@@ -267,8 +271,8 @@ satisfied then we require manual editing and the method stops.
 The absolute difference between the target total and
 the components must be less than or equal to the absolute difference threshold.
 
-When the Absolute Difference Threshold check indicates the
-difference needs to be automatically corrected the method
+When the Absolute Difference Threshold check indicates either the total or
+components can be automatically corrected. The method
 continues to stage 6 in section 5.5.
 
 When the Absolute Difference Threshold check indicates the
@@ -277,7 +281,7 @@ if a Percentage Difference Threshold needs to be checked.
 
 Note: Before we leave this stage we need to check
 that zero error condition 3 is satisfied i.e. If
-target total = 0 and components sum > 0 and amend total = TRUE:
+total_value = 0 and sum_of_components > 0 and amend total = TRUE:
 The total should be corrected if the difference observed is within
 the tolerances determined by the detection method (see section 5.5).
 Else, the difference should be flagged for manual checking.
@@ -298,18 +302,23 @@ be automatically corrected.
 When the input parameter amend_total indicates that the total
 must be amended we automatically correct the total.
 
-Where the amend_total indicates the components need to corrected,
-we use the total value and the precision for the component
-automatic correction calculations.
-
 Expanding on this if we correct the total then we set the final
 total in the output data equivalent to the total, and the
 final values for all the components match their originals. We would now
 return a totals corrected marker.
 
+Where the amend_total indicates the components need to corrected,
+we use the total value and the precision for the component
+automatic correction calculations.
+
 However, if the components are corrected to match the received
 total based on the weighting of the original input component values,
 then we return a components corrected marker.
+
+Expanding on this, if we require components to be corrected then we
+use the algorithm where the new component is equal to the component divided 
+by the sum_of_components and the result of this is multiplied by the total
+value.
 
 In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method

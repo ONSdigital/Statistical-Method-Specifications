@@ -107,7 +107,14 @@ The following is a key of useful formula definitions/assumptions
 period, this value is expected to match the sum_of_components.
 When an automatic correction is possible, the total_value is
 used to adjust the components when amend_total is false.
-* predictive_value - this is the expected total_value
+* predictive_value - When specified, this is typically a verified
+total value from the immediately prior period to the total_value
+or equal to the total_value in the case that the current period
+is used for both total and predictive values. When the user does
+not specify a predictive_value then it may be set to equal the
+auxiliary value if present. The predictive_value is used to
+determine whether an automatic error correction can take place
+when checked against the absolute and or difference thresholds.
 * amend_total - this indicates whether the total or
 component values should be automatically corrected
 * absolute_difference_threshold - this threshold is used
@@ -138,7 +145,7 @@ threshold (if specified) and precision (if specified) in the
 data input are numeric values.
 
 If precision is not specified (i.e None) then we default
-the value to 28. If it is less than zero or greater then 28 we
+the value to 28. If it is less than zero or greater than 28 we
 raise a value error. Auxiliary and predictive can be None.
 
 If any of the other values are not as we expect then we return a
@@ -157,9 +164,10 @@ and
     percent_difference_threshold = None
 ```
 
-holds. If this is true we flag an exception with the message
-"One or both of absolute/percentage difference thresholds must
-be specified" and the method stops.
+holds. when both absolute_difference_threshold and
+percent_difference_threshold are absent validation
+wil raise an exception and method processing will
+stop.
 
 If it is false then we continue to stage 2.
 
@@ -168,14 +176,12 @@ If it is false then we continue to stage 2.
 The next step is to check the predictive, auxiliary and
 total all exist.
 
-Otherwise, there are five ways in which the method can behave
+Otherwise, there are four ways in which the method can behave
 based on these values. This includes the following
 
 1. When total value is present, predictive value is None
-and Auxiliary value is None then the decision whether an
-automatic correction can be made will be based off of the
-total value and any recalculation of the components will
-use the total value.
+and Auxiliary value is None then method stops and the 
+tcc marker "S" is returned.
 
 2. When total value is present, predictive value is present
 and Auxiliary value is None then the decision whether an
@@ -226,22 +232,18 @@ predictive value to determine whether there is a difference that
 may require correction.
 
 The initial part requires us to determine the absolute difference
-between the total and sum of the components.
+between the predictive and sum of the components.
 
 ```bash
     |predictive_value - sum_of_components| = absolute_difference_threshold.
 ```
 
-Note: The computed absolute difference needs to be available
-so that it can be output when results are returned. It is also
-important to understand we use the python
-Decimal() method to apply the defined precision value
-to the floating values for this stage.
-This determines the accuracy of out outputs.
+Note: It is important that calculations are exact and do not suffer any
+rounding errors that can be seen with binary arithmetic.
 
 We now determine if the absolute difference between the sum of
-the components and the predictive is zero then the method stops
-with an indication of no correction.
+the components and the total_value is zero then the method stops
+and returns a tcc marker of "N".
 
 If true, we have a TCC Marker = N meaning we have no correction
 and the method stops with an output written.

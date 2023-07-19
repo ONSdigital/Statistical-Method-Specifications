@@ -138,7 +138,7 @@ This method firstly identifies if a given totals and components
  This tolerance is determined in one of three different ways:
 
 1. If the absolute difference between the sum of the components and
- its corresponding total for the predictive period is less than or
+ its corresponding predictive total is less than or
  equal to the predefined threshold
 2. If the predictive total is within an acceptable absolute percentage of the
  components sum and an absolute difference is not considered
@@ -164,7 +164,7 @@ The rationale for automatically correcting totals/components can vary by
  automatically correct data in favour of re-contacting the respondent to
  correct the data directly.
 
-If the predictive period’s data is missing, then the method is not
+If the predictive total is missing, then the method is not
  applied, unless it is appropriate to use an auxiliary variable that
  is well correlated with the target variable. The auxiliary
  variable should not be read into the data if the user does not require it.

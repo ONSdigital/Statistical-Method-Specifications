@@ -80,8 +80,8 @@ The Amend Total variable determines whether the Total or Components variable
 If the current period total is used as the predictive variable, then the
  Predictive Variable and the Total Variable are the same.
 
-There are additional parameters, separate to the inputs, that the user must populate.
-These are:
+There are additional parameters, separate to the inputs, that the user must populate
+at least one of. These are:
 
 * Absolute Difference Threshold
 * Percentage Difference Threshold, represented as a decimal

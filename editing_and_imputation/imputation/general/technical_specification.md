@@ -117,7 +117,6 @@ Back data records shall always contain the following fully populated fields:
 * Group
 * Imputed Variable
 * Imputation Marker
-* Auxiliary Variable
 
 These fields must have the same types as their counterparts in the Input and
 Output records.

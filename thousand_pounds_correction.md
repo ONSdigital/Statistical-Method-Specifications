@@ -153,7 +153,7 @@ All other monetary questions, the target variables excluding the principal varia
  on the form will be automatically corrected as described without checking the
  returned or corresponding previous values.
 
-### 6.4 Method Error Handling
+### 6.4 Method Error Handling - need DST to confirm approach
 
 In the case of the method experiencing processing issues, the method will still
  create output tables with a suitable error description in the table.

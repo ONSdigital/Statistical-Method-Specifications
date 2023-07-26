@@ -155,7 +155,6 @@ if and only if `v(p_"target")` does not exist. Otherwise
 
 `v_"impute"(p_"target") = v(p_"target")`
 
-
 Where:
 
 * `v_"impute"` is the imputed value

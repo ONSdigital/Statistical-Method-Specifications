@@ -159,6 +159,11 @@ Let:
 v(p, g, c) = v(p_"predictive"(p), g, c) xx l(p, g)
 ```
 
+if and only if `v(p, g, c)` does not exist and the contributor was sampled
+for the given group and period. In all other cases `v(p, g, c)` remains
+unchanged. This assumes that all responses are already present in the output
+dataset such that if `v(p, g, c)` is a response it will exist.
+
 Both the link and predictive value used depend on the imputation process. In
 addition, for forward and backward imputation, multiple periods must be
 imputed in the correct order for the imputation process being performed

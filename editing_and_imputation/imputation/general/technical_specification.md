@@ -70,7 +70,7 @@ types:
 
 * Identifier - Any
 * Period - String in "YYYYMM" format
-* Fully Populated Output Variable - Numeric
+* Output - Numeric
 * Imputation Marker - String
 * Forward Link - Numeric
 * Backward Link - Numeric
@@ -96,6 +96,7 @@ If Link Weighting is performed, output records shall also contain:
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
+Unless otherwise specified, the fields above must be fully populated.
 
 ### 3.3 Back Data
 

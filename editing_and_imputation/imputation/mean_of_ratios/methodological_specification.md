@@ -559,7 +559,7 @@ For simplicity, let the growth ratios $[F, B]r_{q,i,t} = r_{q,i,t}$
  or backwards. For each imputation class, the imputation links are
  calculated by the mean growth ratio of the (trimmed) dataset:
 
-$$ \large \bar{R}_{q,g,t} = \Sigma_{all \ i \in g \ \text{in dataset after trim}}
+$$ \large \bar{R}\_{q,g,t} = \Sigma_{all \ i \in g \ \text{in dataset after trim}}
 \Bigl(\frac{r_{q,i,t}}{n_{trimmed,q,g,t}}\Bigl) $$
 
 ```asciimath

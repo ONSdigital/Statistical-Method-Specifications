@@ -71,10 +71,10 @@ To apply trimming two cut off boundaries must be calculated as follows:
 
 let:
 
-* `t_(upper)` be the upper percentage
-* `t_(lower)` be the lower percentage
+* `t_"upper"` be the upper percentage
+* `t_"lower"` be the lower percentage
 
-then the cut off boundaries `b_(upper)` and `b_(lower)` are:
+then the cut off boundaries `b_"upper"` and `b_(lower)` are:
 
 ```asciimath
 b_(lower) = ceil(n*t_(lower)/100)

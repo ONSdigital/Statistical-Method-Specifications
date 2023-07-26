@@ -148,7 +148,7 @@ formula is:
 
 ```asciimath
 v_"impute"(p_"target", c) =
-    v_"predictive"(p_"predictive"(p_"target"), c) * l(p_"target", g(c))
+    v_"predictive"(p_"predictive"(p_"target"), c) xx l(p_"target", g(c))
 ```
 
 if and only if `v(p_"target")` does not exist. Otherwise
@@ -254,7 +254,7 @@ those in a prior weighting period using the following formula:
 
 ```asciimath
 l_"weighted"(g, c) =
-    (l(p_"target", g(c)) * w)+(l(p_"target" - r, g(c)) * (1-w))
+    (l(p_"target", g(c)) xx w)+(l(p_"target" - r, g(c)) xx (1-w))
 ```
 
 where:

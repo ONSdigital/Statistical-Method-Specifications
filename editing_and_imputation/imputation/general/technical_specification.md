@@ -147,22 +147,22 @@ can be calculated. Given these conditions, the general recursive imputation
 formula is:
 
 ```asciimath
-v_(impute)((p_(target), c)) =
-    v_(predictive)((p_(predictive)((p_(target))), c)) * l((p_(target), g((c))))
+v_"impute"(p_"target", c) =
+    v_"predictive"(p_"predictive"(p_"target"), c) * l(p_"target", g(c))
 ```
 
-if and only if `v((p_(target)))` does not exist. Otherwise
+if and only if `v(p_"target")` does not exist. Otherwise
 
-`v_(impute)((p_(target))) = v((p_(target)))`
+`v_"impute"(p_"target") = v(p_"target")`
 
 
 Where:
 
-* `v_(impute)` is the imputed value
+* `v_"impute"` is the imputed value
 * `v` is the value in the target variable
-* `v_(predictive)` is the predictive value for the given imputation process
-* `p_(target)` is the target period
-* `p_(predictive)` is the predictive period function for the given imputation
+* `v_"predictive"` is the predictive value for the given imputation process
+* `p_"target"` is the target period
+* `p_"predictive"` is the predictive period function for the given imputation
     process
 * `c` is the contributor
 * `l` is a link calculation function
@@ -175,12 +175,12 @@ since imputes for a given contributor chain together i.e. imputes are used
 as predictive values when the contributor fails to respond for a contiguous
 sequence of periods such that:
 
-`v_(predictive)((p, c)) = v_(impute)((p_(predictive)((p_(target))), c))`
+`v_"predictive"(p, c) = v_"impute"(p_"predictive"(p_"target"), c)`
 
-if and only if the contributor was sampled for period `p_(predictive)` and
-`v_(predictive)` does not already exist.
+if and only if the contributor was sampled for period `p_"predictive"` and
+`v_"predictive"` does not already exist.
 
-In all cases, the definition of `p_(predictive)` for an imputation process
+In all cases, the definition of `p_"predictive"` for an imputation process
 is the same as that of the link being used. In addition, the predictive
 period must be calculated assuming a contiguous sequence of periods covering
 the full inclusive range of periods in the dataset rather than based on the
@@ -253,8 +253,8 @@ The method shall support weighting the links in the current period against
 those in a prior weighting period using the following formula:
 
 ```asciimath
-l_(weighted)((g, c)) =
-    ((l((p_(target), g((c)))) * w))+((l((p_(target) - r, g((c)))) * ((1-w))))
+l_"weighted"(g, c) =
+    (l(p_"target", g(c)) * w)+(l(p_"target" - r, g(c)) * (1-w))
 ```
 
 where:
@@ -263,7 +263,7 @@ where:
 * `r` is the amount of periods prior to the target period from which to
   obtain the weighting link
 
-The above applies if and only if `l((p_(target) - r, g((c))))` exists.
+The above applies if and only if `l(p_"target" - r, g(c))` exists.
 Otherwise the unweighted link shall be used.
 
 ### 4.3 Forward Imputation

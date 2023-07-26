@@ -154,7 +154,7 @@ Where:
 * `v_(impute)` is the imputed value
 * `v_(predictive)` is the predictive value for the given imputation process
 * `p_(target)` is the target period
-* `p_(predictive` is the predictive period for the given imputation process
+* `p_(predictive)` is the predictive period for the given imputation process
 * `c` is the contributor
 * `l` is a link calculation function
 * `g` is a function mapping a contributor to a grouping in the dataset

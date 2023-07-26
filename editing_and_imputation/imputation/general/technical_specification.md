@@ -142,19 +142,27 @@ records. Instead a suitable error shall be emitted.
 
 Imputation must only take place on records with no value for the target
 variable and where the appropriate predictive value and link are present or
-can be calculated. Given these conditions, the general imputation formula is:
+can be calculated. Given these conditions, the general recursive imputation
+formula is:
 
 ```asciimath
 v_(impute)((p_(target), c)) =
-    v_(predictive)((p_(predictive), c)) * l((p_(target), g((c))))
+    v_(predictive)((p_(predictive)((p_(target))), c)) * l((p_(target), g((c))))
 ```
+
+if and only if `v((p_(target)))` does not exist. Otherwise
+
+`v_(impute)((p_(target))) = v((p_(target)))`
+
 
 Where:
 
 * `v_(impute)` is the imputed value
+* `v` is the value in the target variable
 * `v_(predictive)` is the predictive value for the given imputation process
 * `p_(target)` is the target period
-* `p_(predictive)` is the predictive period for the given imputation process
+* `p_(predictive)` is the predictive period function for the given imputation
+    process
 * `c` is the contributor
 * `l` is a link calculation function
 * `g` is a function mapping a contributor to a grouping in the dataset
@@ -166,16 +174,17 @@ since imputes for a given contributor chain together i.e. imputes are used
 as predictive values when the contributor fails to respond for a contiguous
 sequence of periods such that:
 
-`v_(predictive)((p, c)) = v_(impute)((p_(predictive), c))`
+`v_(predictive)((p, c)) = v_(impute)((p_(predictive)((p_(target))), c))`
 
 if and only if the contributor was sampled for period `p_(predictive)` and
 `v_(predictive)` does not already exist.
 
-In all cases, the predictive period for an imputation process is the same as
-that of the link being used. In addition, the predictive period must be
-calculated assuming a contiguous sequence of periods covering the full
-inclusive range of periods in the dataset rather than based on the periods
-actually present for a given contributor or in the dataset as a whole.
+In all cases, the definition of `p_(predictive)` for an imputation process
+is the same as that of the link being used. In addition, the predictive
+period must be calculated assuming a contiguous sequence of periods covering
+the full inclusive range of periods in the dataset rather than based on the
+periods actually present for a given contributor or in the dataset as a
+whole.
 
 This document defines target and predictive periods as terms in the above
 sequence and assumes that the sequence is in ascending order regardless of

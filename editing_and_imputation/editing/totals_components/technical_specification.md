@@ -270,7 +270,8 @@ The range is calculated based on a percentage of the components sum
 while the percentage is determined by the
 percent_difference_threshold.
 
-If the predictive variable is outside of this range, then we require manual editing and the method stops.
+If the predictive variable is outside of this range, then we require 
+manual editing and the method stops.
 
 ### 5.5.1 Check Absolute Difference Threshold (Stage 5a)
 

@@ -299,9 +299,10 @@ If the predictive variable is within the low and high
 percentage then we go to stage 6 in section 5.5.
 Otherwise, we require manual editing and stop the method.
 
-The high and low percent range is calculated by sum of components
-and adding or subtracting the sum of components multiplied by the
-percentage difference threshold respectively.
+The high and low percent range is calculated by taking the
+sum of components and adding or subtracting the 
+sum of components multiplied by the percentage difference
+threshold respectively.
 
 ### 5.6 Error Correction (Stage 6)
 
@@ -329,7 +330,7 @@ automatic correction calculations.
 
 If the components are to be corrected, then they will always use the
 proportions (weighting) observed in the original components and rescale
-to the total variable, then we return a components corrected marker.
+to the total variable.
 
 Expanding on this, if we require components to be corrected then we
 use the algorithm where the new component is equal to the component divided

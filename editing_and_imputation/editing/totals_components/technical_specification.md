@@ -75,7 +75,7 @@ output records, for more details see the methodology specification.
 ### 4.1 Input records
 
 * Unique Identifier – Any e.g. Business Reporting Unit
-* Total Variable – Target total, numeric – nulls not allowed
+* Total Variable – Target total, numeric
 * Components – Corresponding list of Total
 variable's components, numeric – nulls allowed
 * Amend Total – Select whether Total Variable should be
@@ -87,15 +87,17 @@ TRUE = correct total
 * Percentage Difference Threshold - Numeric (non-negative)
 * Precision - optional integer value (valid values are 1-28)
 
+Note: Either one of Absolute difference threshold or percentage
+difference threshold can be null but at least one must be specified.
+
 ### 4.2 Output records
 
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Absolute Difference – Numeric, nulls allowed
 * Low Percent – Numeric, nulls allowed
 * High Percent – Numeric, nulls allowed
-* Precision - integer value (between 0 and 29)
 * Final Total Variable – Numeric
-* Final Components Variable – Numeric
+* Final Components Variable – Numerics
 * TCC Marker – To indicate the result of the Totals Components
 Correction method, string
 
@@ -114,7 +116,7 @@ is used for both total and predictive values. When the user does
 not specify a predictive_value then it may be set to equal the
 auxiliary value if present. The predictive_value is used to
 determine whether an automatic error correction can take place
-when checked against the absolute and or difference thresholds.
+when checked against the absolute and or percentage difference thresholds.
 * amend_total - this indicates whether the total or
 component values should be automatically corrected
 * absolute_difference_threshold - this threshold is used
@@ -129,7 +131,7 @@ to determine whether automatic correction should take place
 * sum_of_components - this is the original component
 values summed up
 * component_x - an individual component value from the
-original ist of components
+original list of components
 * precision - the precision value determines the level of
 accuracy for our sum of components and component
 correction floating point calculations
@@ -149,8 +151,7 @@ the value to 28. If it is less than zero or greater than 28 we
 raise a value error. Auxiliary and predictive can be None.
 
 If any of the other values are not as we expect then we return a
-tailored error message and stop the method with an "S"
-tcc marker.
+tailored error message.
 
 Then, we must verify if
 
@@ -164,9 +165,9 @@ and
     percent_difference_threshold = None
 ```
 
-holds. when both absolute_difference_threshold and
+holds. When both absolute_difference_threshold and
 percent_difference_threshold are absent validation
-wil raise an exception and method processing will
+will raise an exception and method processing will
 stop.
 
 If it is false then we continue to stage 2.
@@ -201,7 +202,7 @@ whether an automatic correction can be made will be
 based off of the auxiliary value and any recalculation
 of the components will use the total value.
 
-### 5.2 Check Zero Errors (Stage 3)
+### 5.3 Check Zero Errors (Stage 3)
 
 We must now check zero error conditions, this is to guard cases
 when the component sum is zero and the total value is set. When
@@ -217,25 +218,25 @@ To do this our first step is to verify if the following is true.
 and
 
 ```bash
-    predictive_value > 0
+    total > 0
 ```
 
-If this is the case then we have TCC Marker = S and the method
+If this is the case and amend total is false then we have TCC Marker = S and the method
 stops. We then write an output.
 
-If however the above is false we move onto stage 4
+Otherwise, we move onto stage 4
 
-### 5.3 Check Sum(components) and Predictive Value (Stage 4)
+### 5.4 Check Sum(components) and Predictive Value (Stage 4)
 
-Stage 4 is where we check the sum of the components and the
-predictive value to determine whether there is a difference that
-may require correction.
+If the absolute difference threshold is defined then we check
+the sum of the components and the predictive value to determine
+whether there is a difference that may require correction.
 
 The initial part requires us to determine the absolute difference
 between the predictive and sum of the components.
 
 ```bash
-    |predictive_value - sum_of_components| = absolute_difference_threshold.
+    |predictive_value - sum_of_components| = absolute_difference.
 ```
 
 Note: It is important that calculations are exact and do not suffer any
@@ -251,26 +252,28 @@ and the method stops with an output written.
 Else we move onto the next stage which is where we determine
 an error detection method.
 
-### 5.4 Determine Error Detection Method (Stage 5)
+### 5.5 Determine Error Detection Method (Stage 5)
 
 Stage 5 determines whether the detected difference in the
 provided components and totals falls into the absolute or percentage
-difference thresholds specified and therefore needs to be
-automatically correct or the values need to be manually corrected.
+difference thresholds specified and if so, the values will be
+automatically corrected, else they will be marked for manual editing.
 
-When only Absolute Difference Threshold is set to 0 or above
-the threshold is checked against the absolute value calculated
-in step 4. We complete this action in section 5.4.1.
+When only Absolute Difference Threshold is set to 0 or above,
+the threshold is checked against the absolute value.
 
 When only Percentage Difference Threshold is set to 0 or above
-the threshold is checked against the predictive total. The percentage
-threshold is the sum of the received components plus and minus the
-Percentage Difference Threshold specified. If this threshold is not
-satisfied then we require manual editing and the method stops.
+the predictive variable is checked against an acceptable range
+calculated based on the percentage threshold.
 
-### 5.4.1 Check Absolute Difference Threshold (Stage 5a)
+The range is calculated based on a percentage of the components sum
+while the percentage is determined by the percent_difference_threshold.
 
-The absolute difference between the target total and
+If the predictive variable is outside of this range, then we require manual editing and the method stops.
+
+### 5.5.1 Check Absolute Difference Threshold (Stage 5a)
+
+The absolute difference between the predictive variable and
 the components must be less than or equal to the absolute difference threshold.
 
 When the Absolute Difference Threshold check indicates either the total or
@@ -288,13 +291,17 @@ The total should be corrected if the difference observed is within
 the tolerances determined by the detection method (see section 5.5).
 Else, the difference should be flagged for manual checking.
 
-### 5.4.2 Check Percentage Difference Threshold (Stage 5b)
+### 5.5.2 Check Percentage Difference Threshold (Stage 5b)
 
-If the total for the predictive is within the low and high
+If the predictive variable is within the low and high
 percentage then we go to stage 6 in section 5.5.
 Otherwise, we require manual editing and stop the method.
 
-### 5.5 Error Correction (Stage 6)
+The high and low percent range is calculated by sum of components
+and adding or subtracting the sum of components multiplied by the
+percentage difference threshold respectively.
+
+### 5.6 Error Correction (Stage 6)
 
 This section covers the error correction aspect of the process.
 When the method has reached this part of the processing earlier checks
@@ -302,10 +309,15 @@ have determined that either the total or the components must
 be automatically corrected.
 
 When the input parameter amend_total indicates that the total
-must be amended we automatically correct the total.
+must be amended we automatically correct the total. This
+can be visualised by the calculation below.
+
+```
+    final_total = sum_of_components
+```
 
 Expanding on this if we correct the total then we set the final
-total in the output data equivalent to the total, and the
+total in the output data equivalent to the sum of components, and the
 final values for all the components match their originals. We would now
 return a totals corrected marker.
 
@@ -313,9 +325,9 @@ Where the amend_total indicates the components need to corrected,
 we use the total value and the precision for the component
 automatic correction calculations.
 
-However, if the components are corrected to match the received
-total based on the weighting of the original input component values,
-then we return a components corrected marker.
+If the components are to be corrected, then they will always use the
+proportions (weighting) observed in the original components and rescale
+to the total variable, then we return a components corrected marker.
 
 Expanding on this, if we require components to be corrected then we
 use the algorithm where the new component is equal to the component divided
@@ -325,3 +337,8 @@ value.
 In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.
+This can be visualised using the formula below.
+
+```
+    final_component = (original_component / sum_of_components) * total
+```

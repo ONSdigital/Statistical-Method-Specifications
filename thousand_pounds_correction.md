@@ -62,10 +62,8 @@ Input records must include the following fields of the correct types:
 * Principal Variable – Single variable, numeric
 * Target Variable(s) – Can be a list, numeric – nulls allowed - COLUMN PER
  TARGET VAR, RATHER THAN A LIST? OR DOES WRANGLER HANDLE THIS IF LIST READ IN?
-* Predictive Variable – Single variable, numeric – nulls allowed if unavailable
-* Predictive Variable Type – e.g., return, impute, etc., numeric – nulls allowed
-* Auxiliary Variable – Register based variable – optional, numeric
- – nulls allowed
+* Predictive Variable – Single variable, numeric – nulls allowed
+* Auxiliary Variable – Optional, numeric – nulls allowed
 * Upper Limit – Single variable, numeric, must be greater than Lower Limit
 * Lower Limit – Single variable, numeric, must be less than Upper Limit
 

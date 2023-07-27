@@ -221,8 +221,8 @@ and
     total > 0
 ```
 
-If this is the case and amend total is false then we have TCC Marker = S and the method
-stops. We then write an output.
+If this is the case and amend total is false then we have
+TCC Marker = S and the method stops. We then write an output.
 
 Otherwise, we move onto stage 4
 
@@ -267,7 +267,8 @@ the predictive variable is checked against an acceptable range
 calculated based on the percentage threshold.
 
 The range is calculated based on a percentage of the components sum
-while the percentage is determined by the percent_difference_threshold.
+while the percentage is determined by the
+percent_difference_threshold.
 
 If the predictive variable is outside of this range, then we require manual editing and the method stops.
 
@@ -312,7 +313,7 @@ When the input parameter amend_total indicates that the total
 must be amended we automatically correct the total. This
 can be visualised by the calculation below.
 
-```
+```bash
     final_total = sum_of_components
 ```
 
@@ -339,6 +340,6 @@ indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.
 This can be visualised using the formula below.
 
-```
+```bash
     final_component = (original_component / sum_of_components) * total
 ```

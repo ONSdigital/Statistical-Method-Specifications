@@ -300,7 +300,7 @@ percentage then we go to stage 6 in section 5.5.
 Otherwise, we require manual editing and stop the method.
 
 The high and low percent range is calculated by taking the
-sum of components and adding or subtracting the 
+sum of components and adding or subtracting the
 sum of components multiplied by the percentage difference
 threshold respectively.
 

@@ -183,7 +183,6 @@ and
     percent_difference_threshold = None
 ```
 
-
 If it is false then we continue to stage 2.
 
 ### 5.2 Check Predictive Errors (Stage 2)
@@ -223,7 +222,8 @@ when the component sum is zero and the total value is set. When
 component sum is zero we do not want to make a correction to either
 the total or components.
 
-To do this our first step according to the methodology is to verify if the following is true.
+To do this our first step according to the methodology is to verify
+if the following is true.
 
 ```bash
     y_{derived} = 0
@@ -374,7 +374,7 @@ to the total variable.
 Expanding on this, the methodology spec informs us that if we require
 components to be corrected then we use the algorithm where the new
 component is equal to the component divided by the sum_of_components
-and the result of this is multiplied by the total value as seen below. 
+and the result of this is multiplied by the total value as seen below.
 
 ```bash
     y_{c} = (\frac{y_{c} + \dots + y_{derived}}) * y_{total}
@@ -390,4 +390,3 @@ In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.
 This can be visualised using the formula below.
-

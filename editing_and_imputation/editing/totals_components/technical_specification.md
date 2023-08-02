@@ -136,6 +136,9 @@ original list of components
 accuracy for our sum of components and component
 correction floating point calculations
 
+Note: for the technical specification, we will be providing
+both mathematical formulas and ascii formula representation.
+
 We start with an input record which is passed to our method.
 
 ### 5.1 Validate Data Input (Stage 1)
@@ -153,7 +156,22 @@ raise a value error. Auxiliary and predictive can be None.
 If any of the other values are not as we expect then we return a
 tailored error message.
 
-Then, we must verify if
+The methodology specification says that the method checks if
+both absolute_difference_threshold and percent_difference_threshold
+are absent. If this is the case validation will raise an exception
+and method processing will stop. This is seen by the formulas below
+
+```bash
+    x_{absolute} = None
+```
+
+and
+
+```bash
+    x_{percent} = None
+```
+
+we can alternatively display this as below
 
 ```bash
     absolute_difference_threshold = None
@@ -165,10 +183,6 @@ and
     percent_difference_threshold = None
 ```
 
-holds. When both absolute_difference_threshold and
-percent_difference_threshold are absent validation
-will raise an exception and method processing will
-stop.
 
 If it is false then we continue to stage 2.
 
@@ -209,13 +223,25 @@ when the component sum is zero and the total value is set. When
 component sum is zero we do not want to make a correction to either
 the total or components.
 
-To do this our first step is to verify if the following is true.
+To do this our first step according to the methodology is to verify if the following is true.
+
+```bash
+    y_{derived} = 0
+```
+
+In other words,
 
 ```bash
     sum_of_components = 0
 ```
 
-and
+the methodology specification also requires
+
+```bash
+    y_{total} > 0 
+```
+
+which can be visualised as
 
 ```bash
     total > 0
@@ -232,8 +258,15 @@ If the absolute difference threshold is defined then we check
 the sum of the components and the predictive value to determine
 whether there is a difference that may require correction.
 
-The initial part requires us to determine the absolute difference
-between the predictive and sum of the components.
+The methodology specification requires us to determine
+the absolute difference between the predictive and sum
+of the components shown below.
+
+```bash
+    |y_{total} - y_{derived}| = x_{absolute}.
+```
+
+alternatively viewed as
 
 ```bash
     |predictive_value - sum_of_components| = absolute_difference.
@@ -280,7 +313,7 @@ the components must be less than or equal to the absolute difference threshold.
 
 When the Absolute Difference Threshold check indicates either the total or
 components can be automatically corrected. The method
-continues to stage 6 in section 5.5.
+continues to stage 6 in section 5.6.
 
 When the Absolute Difference Threshold check indicates the
 correction needs to be manually applied the method will check
@@ -290,13 +323,13 @@ Note: Before we leave this stage we need to check
 that zero error condition 3 is satisfied i.e. If
 total_value = 0 and sum_of_components > 0 and amend total = TRUE:
 The total should be corrected if the difference observed is within
-the tolerances determined by the detection method (see section 5.5).
+the tolerances determined by the detection method (see section 5.6).
 Else, the difference should be flagged for manual checking.
 
 ### 5.5.2 Check Percentage Difference Threshold (Stage 5b)
 
 If the predictive variable is within the low and high
-percentage then we go to stage 6 in section 5.5.
+percentage then we go to stage 6 in section 5.6.
 Otherwise, we require manual editing and stop the method.
 
 The high and low percent range is calculated by taking the
@@ -312,8 +345,14 @@ have determined that either the total or the components must
 be automatically corrected.
 
 When the input parameter amend_total indicates that the total
-must be amended we automatically correct the total. This
-can be visualised by the calculation below.
+must be amended the methodology specification requires us to
+automatically correct the total as seen below.
+
+```bash
+    y_{total} = y_{1, t} + ... + y_{n, t}
+```
+
+This can also be understood in the following format
 
 ```bash
     final_total = sum_of_components
@@ -332,16 +371,23 @@ If the components are to be corrected, then they will always use the
 proportions (weighting) observed in the original components and rescale
 to the total variable.
 
-Expanding on this, if we require components to be corrected then we
-use the algorithm where the new component is equal to the component divided
-by the sum_of_components and the result of this is multiplied by the total
-value.
+Expanding on this, the methodology spec informs us that if we require
+components to be corrected then we use the algorithm where the new
+component is equal to the component divided by the sum_of_components
+and the result of this is multiplied by the total value as seen below. 
+
+```bash
+    y_{c} = (\frac{y_{c} + \dots + y_{derived}}) * y_{total}
+```
+
+which is understood as
+
+```bash
+    final_component = (original_component / sum_of_components) * total
+```
 
 In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.
 This can be visualised using the formula below.
 
-```bash
-    final_component = (original_component / sum_of_components) * total
-```

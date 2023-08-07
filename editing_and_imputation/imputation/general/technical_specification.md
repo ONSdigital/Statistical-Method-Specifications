@@ -9,7 +9,7 @@
 * Response - A value in a target variable which exists prior to any
   imputation for a given period.
 * Responder - A contributor whose target variable contains a response for a
-  given period.
+  given period in a given group.
 * Non-responder - a contributor who is not a Responder.
 * Predictive Value - A value used as a predictor for a contributor's target
   variable.
@@ -39,6 +39,9 @@ type specific specifications.
 
 ### 3.1 Input Records
 
+Unless otherwise noted, fields specified in this section must be fully
+populated.
+
 Input records must include the following fields of the correct types:
 
 * Identifier - Any
@@ -46,11 +49,19 @@ Input records must include the following fields of the correct types:
 * Group - Any
 * Target Variable - Numeric - Nulls Allowed
 * Auxiliary Variable - Numeric
-* Forward Link (Optional) - Numeric
-* Backward Link (Optional) - Numeric
-* Construction Link (Optional) - Numeric
 
-Unless otherwise noted, fields must not contain null values.
+Optionally the following fields can also be passed:
+
+* Forward Link - Numeric
+* Backward Link - Numeric
+* Construction Link - Numeric
+
+Other fields should only be present if required by Responder Filtering (4.1).
+
+An identifier must be unique within a given period and group and the method
+must support the same identifier appearing in different groups within the
+same period. This is to allow multiple independent groups of data for a
+given contributor to be imputed as part of the same sample.
 
 ### 3.2 Output Records
 
@@ -59,7 +70,7 @@ types:
 
 * Identifier - Any
 * Period - String in "YYYYMM" format
-* Imputed Variable - Numeric
+* Output - Numeric
 * Imputation Marker - String
 * Forward Link - Numeric
 * Backward Link - Numeric
@@ -67,28 +78,57 @@ types:
 * Forward Link Observation Count - Numeric
 * Backward Link Observation Count - Numeric
 * Construction Link Observation Count - Numeric
+* Forward Link Default Value Marker - Boolean
+* Backward Link Default Value Marker - Boolean
+* Construction Link Default Value Marker - Boolean
+
+If Responder Filtering is performed, output records shall also contain:
+
+* Post Filter Inclusion Previous - Boolean - Nulls Allowed
+* Post Filter Inclusion Current - Boolean - Nulls Allowed
+* Post Filter Inclusion Next - Boolean - Nulls Allowed
+
+If Link Weighting is performed, output records shall also contain:
+
+* Unweighted Forward Link - Numeric
+* Unweighted Backward Link - Numeric
+* Unweighted Construction Link - Numeric
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
+Unless otherwise specified, the fields above must be fully populated.
 
 ### 3.3 Back Data
 
 In order to correctly handle the first period of data, the method must
-accept a dataset containing back data. This dataset must contain the period
-directly preceding the first period in the main dataset and must not appear
-in the output.
+accept a dataset containing back data. This dataset is used when data prior
+to the first period of the input is required i.e. for the first period of
+imputation and for link weighting where the calculations reference links
+outside of the time period covered by the input dataset. Data provided as
+part of this dataset will be combined with the results of calculations
+performed by the method when required. These result sets shall be treated
+equivalently. Only back data periods prior to those in the input dataset
+shall be used and periods only present in the back data shall not appear in
+the method output.
 
-Back data records shall always contain the following fields:
+Back data records shall always contain the following fully populated fields:
 
 * Identifier
 * Period
 * Group
 * Imputed Variable
 * Imputation Marker
-* Auxiliary Variable
 
 These fields must have the same types as their counterparts in the Input and
 Output records.
+
+If Link Weighting is being performed then the back data must contain the
+following fields with the same types as the corresponding weighted link
+equivalents in the output:
+
+* Unweighted Forward Link
+* Unweighted Backward Link
+* Unweighted Construction Link
 
 ## 4.0 Method
 
@@ -103,40 +143,39 @@ records. Instead a suitable error shall be emitted.
 
 Imputation must only take place on records with no value for the target
 variable and where the appropriate predictive value and link are present or
-can be calculated. Given these conditions, the general imputation formula is:
+can be calculated. Thus the general recursive imputation formula for
+calculating the output value `v` is:
+
+Let:
+
+* `p` be the target period
+* `p_"predictive"` be the predictive period function for the given imputation
+    process
+* `c` be the contributor
+* `l` be a link calculation function
+* `g` be the grouping to which the output value belongs
 
 ```asciimath
-v_(impute)((p_(target), c)) =
-    v_(predictive)((p_(predictive), c)) * l((p_(target), g((c))))
+v(p, g, c) = v(p_"predictive"(p), g, c) xx l(p, g)
 ```
 
-Where:
-
-* `v_(impute)` is the imputed value
-* `v_(predictive)` is the predictive value for the given imputation process
-* `p_(target)` is the target period
-* `p_(predictive` is the predictive period for the given imputation process
-* `c` is the contributor
-* `l` is a link calculation function
-* `g` is a function mapping a contributor to a grouping in the dataset
+The above applies if and only if `v(p, g, c)` does not exist and the
+contributor was sampled for the given group and period. In all other cases
+`v(p, g, c)` remains unchanged. This assumes that all responses are already
+present in the output dataset such that if `v(p, g, c)` is a response it
+will exist.
 
 Both the link and predictive value used depend on the imputation process. In
 addition, for forward and backward imputation, multiple periods must be
 imputed in the correct order for the imputation process being performed
-since imputes for a given contributor chain together i.e. imputes are used
-as predictive values when the contributor fails to respond for a contiguous
-sequence of periods such that:
+since imputes for a given contributor chain together.
 
-`v_(predictive)((p, c)) = v_(impute)((p_(predictive), c))`
-
-if and only if the contributor was sampled for period `p_(predictive)` and
-`v_(predictive)` does not already exist.
-
-In all cases, the predictive period for an imputation process is the same as
-that of the link being used. In addition, the predictive period must be
-calculated assuming a contiguous sequence of periods covering the full
+In all cases, the definition of `p_"predictive"` for an imputation process
+is the same as that of the link being used. Also, the predictive period must
+be calculated assuming a contiguous sequence of periods covering the full
 inclusive range of periods in the dataset rather than based on the periods
-actually present for a given contributor or in the dataset as a whole.
+actually present for a given contributor and group or in the dataset as a
+whole.
 
 This document defines target and predictive periods as terms in the above
 sequence and assumes that the sequence is in ascending order regardless of
@@ -153,9 +192,9 @@ precedence order:
 
 Since Construction Imputation must take place before Forward Imputation from
 Construction, they are collectively referred to as Construction based
-Imputation in the above list. The steps above may be performed in any order
-as long as, when constructing the output dataset, the order of precedence is
-preserved. However, the above ordering reduces the need for data filtering.
+Imputation in the above list. Providing the order of precedence is
+preserved, the steps above may be performed in any order when constructing
+the output dataset.
 
 ### 4.1 Responder Filtering
 
@@ -164,7 +203,22 @@ However the method must also accept an optional expression for filtering
 responders. If provided, link calculation methods will only consider responders
 matching this filter. This filter will only apply to link calculations.
 
+For each record, the respective post filtering inclusion marker fields will
+be set to reflect whether the values in the previous, current and next
+periods match the filter expression.
+
+If forward, backward and construction links are all provided in the input
+dataset this process will not be performed.
+
 ### 4.2 Links
+
+Links provided as part of the input dataset will be used rather than those
+calculated or weighted in accordance with the rest of this section. Providing
+only a forward or backward link is not permitted to avoid the method
+assuming relationships between these links. This restriction does not apply
+to the construction link
+
+#### 4.2.1 Link Calculation
 
 In link calculations, only responders present in the same group in both
 target and predictive periods shall be used to calculate the ratios. These
@@ -177,33 +231,51 @@ links must be calculated per period and grouping within the dataset, with
 forward and backward links based on matched pairs. Observation counts for
 the calculated links must also be provided.
 
-In the general case, a contributor's imputation link shall be that
-calculated for its group and the imputation process being performed.
-However, the method must also accept links provided as part of the input
-dataset. These fields are optional but if present all three types of links
-must be provided and null links are not allowed. These links take
-precedence over any links calculated for a contributor's group.
+#### 4.2.2 Link Defaulting
 
-### 4.4 Forward Imputation
+When a link is not able to be calculated, the field shall be defaulted to
+`1` and the corresponding default value marker field shall be set to
+`true`.
+
+#### 4.2.3 Link Weighting
+
+The method shall support weighting the links in the current period against
+those in a prior weighting period using the following formula:
+
+```asciimath
+l_"weighted"(g, c) =
+    (l(p_"target", g(c)) xx w)+(l(p_"target" - r, g(c)) xx (1-w))
+```
+
+where:
+
+* `w` is the provided weight
+* `r` is the amount of periods prior to the target period from which to
+  obtain the weighting link
+
+The above applies if and only if `l(p_"target" - r, g(c))` exists.
+Otherwise the unweighted link shall be used.
+
+### 4.3 Forward Imputation
 
 In this method there are two forward imputation processes. In all cases the
 forward link is used, the predictive period for period `p` is `p - 1` and
 the predictive value is the value of the target variable in the predictive
 record. Thus this process must process periods in ascending order.
 
-#### 4.4.1 Forward Imputation From Response
+#### 4.3.1 Forward Imputation From Response
 
 In this imputation process, only predictive records which are either
 responses or forward imputes from responses can be used. Records imputed
 using this process will be marked `FIR`.
 
-#### 4.4.2 Forward Imputation From Construction
+#### 4.3.2 Forward Imputation From Construction
 
 In this imputation process, only predictive records which are either
 construction imputes or forward imputes from construction can be used.
 Records imputed using this process will be marked `FIC`.
 
-### 4.5 Backward Imputation
+### 4.4 Backward Imputation
 
 In this imputation process, the backward link is used, the predictive period
 for period `p` is `p + 1` and the predictive value is the value for the
@@ -216,7 +288,7 @@ be used. Backward imputation from construction must not occur.
 Records imputed using this process will be marked
 `BI`.
 
-### 4.6 Construction Imputation
+### 4.5 Construction Imputation
 
 In this imputation process the construction link is used, the predictive
 period for period `p` is `p` and the predictive value is the auxiliary

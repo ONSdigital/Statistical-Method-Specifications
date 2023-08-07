@@ -30,8 +30,13 @@ are sufficiently similar and of sufficient size for robust link calculation.
 In addition to the fields specified for the general method, the following
 fields of the following types will be present in output records:
 
-* Forward Growth Ratio – Numeric
-* Backward Growth Ratio – Numeric
+* Forward Growth Ratio – Numeric - Nulls Allowed
+* Backward Growth Ratio – Numeric - Nulls Allowed
+
+Optionally if trimming occurs there will also be:
+
+* Trim Inclusion Forward - Boolean - Nulls Allowed
+* Trim Inclusion Backward - Boolean - Nulls Allowed
 
 ## 4.0 Link Calculation Function
 
@@ -66,19 +71,19 @@ To apply trimming two cut off boundaries must be calculated as follows:
 
 let:
 
-* `t_(upper)` be the upper percentage
-* `t_(lower)` be the lower percentage
+* `t_"upper"` be the upper percentage
+* `t_"lower"` be the lower percentage
 
-then the cut off boundaries `b_(upper)` and `b_(lower)` are:
+then the cut off boundaries `b_"upper"` and `b_"lower"` are:
 
 ```asciimath
-b_(lower) = ceil(n*t_(lower)/100)
-b_(upper) = floor(n*((1-t_(upper/100)))
+b_"lower" = ceil(n*t_"lower"/100)
+b_"upper" = 1+floor(n*(1-(t_"upper"/100)))
 ```
 
 Thus with ratios in `r` in ascending order, The trimmed set of growth ratios
-`g` is given by `g = (r_k)_(k=b_(lower))^b_(upper)` and `n` is adjusted
-to `b_(upper)-b_(lower)`.
+`g` is given by `g = (r_k)_(k=b_"lower")^b_"upper"` and after trimming `n` is
+set as the number of elements in the resulting set.
 
 ### 4.4 Calculation Function
 

@@ -263,7 +263,7 @@ the absolute difference between the predictive and sum
 of the components shown below.
 
 ```bash
-    |y_{total} - y_{derived}| = x_{absolute}.
+    |y_{predictive} - y_{derived}| = x_{absolute}.
 ```
 
 alternatively viewed as
@@ -337,6 +337,17 @@ sum of components and adding or subtracting the
 sum of components multiplied by the percentage difference
 threshold respectively.
 
+This can defined by the method spec as
+
+```
+    low_{percent} =< y_{total,predictive} =< high_{percent}
+```
+
+or alternatively as
+
+```
+    low_percentage_threshold <= predictive <= high_percentage_threshold
+```
 ### 5.6 Error Correction (Stage 6)
 
 This section covers the error correction aspect of the process.
@@ -349,7 +360,7 @@ must be amended the methodology specification requires us to
 automatically correct the total as seen below.
 
 ```bash
-    y_{total} = y_{1, t} + ... + y_{n, t}
+    y_{final_total} = y_{1, t} + ... + y_{n, t}
 ```
 
 This can also be understood in the following format
@@ -376,9 +387,9 @@ components to be corrected then we use the algorithm where the new
 component is equal to the component divided by the sum_of_components
 and the result of this is multiplied by the total value as seen below.
 
-```bash
-    y_{c} = (\frac{y_{c} + \dots + y_{derived}}) * y_{total}
-```
+$$ y_{final\_component} = \Bigl(\frac{y_{original\_component}}
+{y_{derived}}\Bigl) * y_{total}
+$$
 
 which is understood as
 

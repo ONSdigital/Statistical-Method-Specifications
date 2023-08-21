@@ -339,15 +339,16 @@ threshold respectively.
 
 This can defined by the method spec as
 
-```
+```bash
     low_{percent} =< y_{total,predictive} =< high_{percent}
 ```
 
 or alternatively as
 
-```
+```bash
     low_percentage_threshold <= predictive <= high_percentage_threshold
 ```
+
 ### 5.6 Error Correction (Stage 6)
 
 This section covers the error correction aspect of the process.

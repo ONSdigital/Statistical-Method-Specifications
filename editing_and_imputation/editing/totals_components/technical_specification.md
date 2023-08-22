@@ -343,7 +343,7 @@ $$ \large low_{percent} = y_{derived} - (y_{derived} * x_{percent}) $$
 
 $$ \large high_{percent} = y_{derived} + (y_{derived} * x_{percent}) $$
 
-this can be seen in a another way as follows
+this can also be viewed as follows
 
 ```bash
 low_percentage_threshold = sum_of_components - (sum_of_components * percentage_difference_threshold)

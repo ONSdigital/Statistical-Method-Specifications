@@ -339,11 +339,27 @@ threshold respectively.
 
 This can defined by the method spec as
 
+$$ \large low_{percent} = y_{derived} - (y_{derived} * x_{percent}) $$
+
+$$ \large high_{percent} = y_{derived} + (y_{derived} * x_{percent}) $$
+
+this can be seen in a another way as follows 
+
+```bash
+low_percentage_threshold = sum_of_components - (sum_of_components * percentage_difference_threshold)
+```
+
+```bash
+high_percentage_threshold = sum_of_components + (sum_of_components * percentage_difference_threshold)
+```
+
+the following condition then applies
+
 ```bash
     low_{percent} =< y_{total,predictive} =< high_{percent}
 ```
 
-or alternatively as
+alternatively seen as
 
 ```bash
     low_percentage_threshold <= predictive <= high_percentage_threshold

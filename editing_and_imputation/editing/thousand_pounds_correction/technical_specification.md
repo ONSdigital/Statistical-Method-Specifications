@@ -48,8 +48,8 @@ period.
 
 ## 3.0 Technical Assumptions
 
-* Dataclasses are used to provide structure where required
-* All dataclass datasets are immutable upon creation
+* Data classes are used to provide structure where required
+* All data class datasets are immutable upon creation
 * Missing/null values are not adjusted (they are placed in the output dataset
 'as-is' regardless of calculations)
 * Uses built-in python libraries only

@@ -199,10 +199,10 @@ If the ratio lies within the limits, then a thousand pounds error is detected;
 A detected error for question *q* is automatically corrected for
  contributor *i* at time *t* by:
 
-$$ \large \hat{y}\_{i, q, t} =  < \frac{y_{i, q, t}}{1000} $$
+$$ \large \hat{y}\_{i, q, t} = \frac{y_{i, q, t}}{1000} $$
 
 ```asciimath
-\hat{y}_{i, q, t} =  < \frac{y_{i, q, t}}{1000}
+\hat{y}_{i, q, t} = \frac{y_{i, q, t}}{1000}
 ```
 
 Where $\hat{y}\_{i, q, t}$ is the corrected value and rounded to the

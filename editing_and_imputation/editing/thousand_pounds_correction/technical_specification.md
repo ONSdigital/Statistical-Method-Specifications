@@ -205,7 +205,6 @@ to signify no correction has been made.
 
 We then move onto stage 4.
 
-
 ### 5.3 Error Correction (Stage 4)
 
 Here we have determined that a pounds thousands error has been detected.

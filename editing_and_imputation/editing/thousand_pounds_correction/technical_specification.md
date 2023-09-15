@@ -56,7 +56,7 @@ period.
 * Assumes that all processing can be dealt with 'in-memory' and output is
 provided as single dataset
 * Errors are caught internally within the method and are converted into managed
-output errors (TPC Marker of "E")
+output errors (TPC Marker of "S")
 * A ratio inside of the upper or lower thresholds is due to a thousand
 pounds error
 * If the principal variable is found to be a thousand pounds error, then it is
@@ -88,8 +88,7 @@ output records, for more details see the methodology specification.
 
 ### 4.1 Input records
 
-* Unique Identifier – Any e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
+* Principle Identifier – Any e.g., Business Reporting Unit
 * Principal Variable – Single variable, numeric
 * Target Variable(s) – Can be a list, numeric – nulls allowed
 * Predictive Variable – Single variable, numeric – nulls allowed
@@ -99,22 +98,20 @@ output records, for more details see the methodology specification.
 
 ### 4.2 Output records
 
-* Unique Identifier – Any e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
+* Principle Identifier – Any e.g., Business Reporting Unit
 * TPC Ratio – Numeric
 * Final Principal Variable – Numeric
 * Final Target Variables – Can be a list, numeric – nulls allowed
 * TPC Marker – To indicate the result of the Thousand Pounds Correction
 method, string
-* Error Description – String
+* Error Description – thousand pound exemption
 
 ## 5.0 Process Overview
 
 The following is a key of useful formula definitions/assumptions
 
-* identifier: (String) - Unique identifier e.g. a question code - q050
+* principal_identifier: (String) - Unique identifier e.g. a question code - q050
 * value: (Float) - Optional - Numeric value that may be adjusted.
-* principal_identifier: (String) - Unique identifier e.g. "q500"
 (question identifier), or "12345678901-202209" (contributor reference & period)
 * principal_variable: (Float) - Numeric value that the method is working on
 * predictive: (Float) - Optional - Numeric value used for comparison.
@@ -155,8 +152,9 @@ and
     auxiliary = None
 ```
 
-If the predictive and auxiliary are None then we return an error message
-and stop the method.
+If the predictive and auxiliary are None then we return a tailored
+error message. However, if both are 0 or predicitve is 0 and
+auxiliary is none then and stop the method with an "S" TCC marker.
 
 If principle variable, lower limit, upper limit or question values
 within an array are None or the upper limit is greater than or equal to
@@ -192,10 +190,6 @@ Which can be viewed as,
 ```bash
     lower_limit < (principle_value / comparison_value) < upper_limit
 ```
-
-If the period's value is zero, then the method does not continue.
-We return an "S" TPC marker and return a tailored error message
-asking for the period.
 
 Likewise, if a thousand pounds error determines that no correction
 is needed then the principal variable and any linked variables will

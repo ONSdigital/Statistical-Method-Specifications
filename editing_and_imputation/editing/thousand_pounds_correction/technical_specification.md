@@ -156,7 +156,7 @@ and
 ```
 
 If the predictive and auxiliary are None then we return an error message
-and stop the method. The method would return a "S" TPC marker.
+and stop the method.
 
 If principle variable, lower limit, upper limit or question values
 within an array are None or the upper limit is greater than or equal to

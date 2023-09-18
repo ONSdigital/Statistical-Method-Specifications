@@ -19,8 +19,6 @@
 * Target Record - A contributor's record in the target period.
 * Predictive Variable - The corresponding value used as predictor for the
  principal variable for each contributor.
-* Predictive Variable Type – Type of data e.g., response, impute etc. Not
- required to run the method but required for method review purposes.
 * Predictive Record - The record containing a contributor's predictive value.
 * Predictive Period - The period containing predictive records; defined
  relative to the target period.
@@ -60,8 +58,7 @@ Input records must include the following fields of the correct types:
 * Unique Identifier – Any e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
 * Principal Variable – Single variable, numeric
-* Target Variable(s) – Can be a list, numeric – nulls allowed - COLUMN PER
- TARGET VAR, RATHER THAN A LIST? OR DOES WRANGLER HANDLE THIS IF LIST READ IN?
+* Target Variable(s) – Can be a list, numeric – nulls allowed
 * Predictive Variable – Single variable, numeric – nulls allowed
 * Auxiliary Variable – Optional, numeric – nulls allowed
 * Upper Limit – Single variable, numeric, must be greater than Lower Limit
@@ -78,7 +75,7 @@ The method requires at least one of the following as the previous period predict
 3. Auxiliary variable e.g., registered annual turnover
 
 Although predicted and auxiliary are both optional, at least one must be provided
- for the method to work. Else a suitable marker is emitted.
+ for the method to work. Else the method will not run.
 
 Note that the predictive variable is indirectly defined as the principal variable
 in the predictive period.
@@ -94,7 +91,6 @@ Output records shall always contain the following fields with the following type
 * Final Target Variables – Can be a list, numeric – nulls allowed
 * TPC Marker –  To indicate the result of the Thousand Pounds Correction
  method, string
-* Error Description – String
 
 Fields of type "Any" shall be of the same type as the corresponding input
  fields as the values shall be the same in both input and output records.
@@ -103,7 +99,7 @@ The TPC Marker must be one of the following:
 
 * C = Correction applied
 * N = No correction applied
-* E = Method error
+* S = Method stops
 
 ## 6.0 Method
 
@@ -151,10 +147,10 @@ All other monetary questions, the target variables excluding the principal varia
  on the form will be automatically corrected as described without checking the
  returned or corresponding previous values.
 
-### 6.4 Method Error Handling - need DST to confirm approach
+### 6.4 Method Error Handling
 
-In the case of the method experiencing processing issues, the method will still
- create output tables with a suitable error description in the table.
+In the case of the method experiencing processing issues, the method shall not result
+ in any output records. Instead, a suitable error description shall be emitted.
 
 ## 7.0 Calculations
 

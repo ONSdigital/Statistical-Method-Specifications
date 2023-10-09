@@ -147,7 +147,7 @@ All other monetary questions, the target variables excluding the principal varia
  on the form will be automatically corrected as described without checking the
  returned or corresponding previous values.
 
-### 6.4 Method Error Handling
+### 6.4 Exception Handling
 
 In the case of the method experiencing processing issues, the method shall not result
  in any output records. Instead, a suitable error description shall be emitted.

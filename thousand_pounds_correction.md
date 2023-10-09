@@ -55,7 +55,7 @@ a value of £56,000 instead of correctly submitting 56.
 
 Input records must include the following fields of the correct types:
 
-* Unique Identifier – Any e.g., Business Reporting Unit
+* Unique Identifier – String e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
 * Principal Variable – Single variable, numeric
 * Target Variable(s) – Can be a list, numeric – nulls allowed
@@ -84,7 +84,7 @@ in the predictive period.
 
 Output records shall always contain the following fields with the following types:
 
-* Unique Identifier – Any e.g., Business Reporting Unit
+* Unique Identifier – String e.g., Business Reporting Unit
 * Period – String in "YYYYMM" format
 * TPC Ratio – Numeric
 * Final Principal Variable – Numeric

@@ -97,8 +97,6 @@ method, string
 The following is a key of useful formula definitions/assumptions
 
 * unique_identifier: (String) - Unique identifier
-* value: (Float) - Optional - Numeric value that may be adjusted.
-(question identifier)
 * principal_variable: (Float) - Numeric value that the method is working on
 * predictive: (Float) - Optional - Numeric value used for comparison.
 A previous 'valid' value (i.e. Returned/Imputed/Constructed)

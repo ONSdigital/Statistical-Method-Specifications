@@ -203,4 +203,4 @@ Which can also be seen in the following format
 The method then returns a corrected "C" TPC marker.
 
 Note: To prevent loss of accuracy values are not rounded to 2.d.p
-like monetary values are. Instead the full Decimal value is returned.
+like monetary values are. Instead the full string value is returned.

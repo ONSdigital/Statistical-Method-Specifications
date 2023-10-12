@@ -139,7 +139,8 @@ correction floating point calculations
 Note: for the technical specification, we will be providing
 both mathematical formulas and ascii formula representation.
 
-We start with an input record which is passed to our method.
+We start with an input record which is passed to our method
+and output is returned as string, None or NaN types.
 
 ### 5.1 Validate Data Input (Stage 1)
 

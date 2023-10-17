@@ -86,9 +86,9 @@ output records, for more details see the methodology specification.
 ### 4.2 Output records
 
 * Unique Identifier – Business Reporting Unit
-* TPC Ratio – Numeric
-* Final principal Variable – Numeric
-* Final Target Variables – Can be a list, numeric – nulls allowed
+* TPC Ratio – String
+* Final principal Variable – String
+* Final Target Variables – Can be a list, string – nulls allowed
 * TPC Marker – To indicate the result of the Thousand Pounds Correction
 method, string
 

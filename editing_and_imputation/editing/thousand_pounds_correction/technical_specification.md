@@ -104,7 +104,7 @@ A previous 'valid' value (i.e. Returned/Imputed/Constructed)
 a predictive value is not available and required by the user
 * upper_limit: (Float) - Upper bound of 'error value' threshold
 * lower_limit: (Float) - Lower bound of 'error value' threshold
-* target_variables: (List of Variables) - Optional - List of linked
+* target_variables: (List of floats) - Optional - List of linked
 question and values to potentially be adjusted
 
 ### 5.1 Validate Data Input (Stage 1)
@@ -136,9 +136,9 @@ and
     auxiliary = None
 ```
 
-If the predictive and auxiliary are None then we return a tailored
-error message. However, if both are 0 or predictive is 0 and
-auxiliary is none then and stop the method with an "S" TPC marker.
+If both the predictive and auxiliary are None or both are 0
+then we stop the method with an "S" TPC marker and return
+a tailored error message.
 
 If principal variable, lower limit, upper limit or question values
 within an array are None or the upper limit is less than or equal to

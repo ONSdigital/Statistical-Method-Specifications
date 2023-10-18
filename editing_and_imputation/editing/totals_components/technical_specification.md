@@ -66,6 +66,8 @@ Example wrapper code will be written to show how this may work
 but there will likely be updates required to the example
 depending upon the data formats the user is working with.
 * Total cannot be None
+* Precision values will introduce a minor level of inaccuracy
+as the calculations will be adjusted on a very small scale.
 
 ## 4.0 Data records
 
@@ -417,4 +419,3 @@ which is understood as
 In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.
-This can be visualised using the formula below.

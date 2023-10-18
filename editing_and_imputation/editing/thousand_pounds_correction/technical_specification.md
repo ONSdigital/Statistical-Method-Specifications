@@ -67,6 +67,8 @@ as-is into the output dataset. This attribute is provided to allow a user
 context to be provided as required.
 * If no target_variables are provided only the principal_variable may
 be adjusted
+* Precision values will introduce a minor level of inaccuracy
+as the calculations will be adjusted on a very small scale.
 
 ## 4.0 Data records
 

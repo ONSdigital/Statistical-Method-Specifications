@@ -66,6 +66,8 @@ Example wrapper code will be written to show how this may work
 but there will likely be updates required to the example
 depending upon the data formats the user is working with.
 * Total cannot be None
+* Precision values will introduce a minor level of inaccuracy
+as the calculations will be adjusted on a very small scale.
 
 ## 4.0 Data records
 
@@ -264,7 +266,7 @@ the absolute difference between the predictive and sum
 of the components shown below.
 
 ```bash
-    |y_{total} - y_{derived}| = x_{absolute}.
+    |y_{predictive} - y_{derived}| = x_{absolute}.
 ```
 
 alternatively viewed as
@@ -338,6 +340,34 @@ sum of components and adding or subtracting the
 sum of components multiplied by the percentage difference
 threshold respectively.
 
+This can defined by the method spec as
+
+$$ \large low_{percent} = y_{derived} - (y_{derived} * x_{percent}) $$
+
+$$ \large high_{percent} = y_{derived} + (y_{derived} * x_{percent}) $$
+
+this can also be viewed as follows
+
+```bash
+low_percentage_threshold = sum_of_components - (sum_of_components * percentage_difference_threshold)
+```
+
+```bash
+high_percentage_threshold = sum_of_components + (sum_of_components * percentage_difference_threshold)
+```
+
+the following condition then applies
+
+```bash
+    low_{percent} =< y_{total,predictive} =< high_{percent}
+```
+
+alternatively seen as
+
+```bash
+    low_percentage_threshold <= predictive <= high_percentage_threshold
+```
+
 ### 5.6 Error Correction (Stage 6)
 
 This section covers the error correction aspect of the process.
@@ -350,7 +380,7 @@ must be amended the methodology specification requires us to
 automatically correct the total as seen below.
 
 ```bash
-    y_{total} = y_{1, t} + ... + y_{n, t}
+    y_{final_total} = y_{1, t} + ... + y_{n, t}
 ```
 
 This can also be understood in the following format
@@ -377,9 +407,9 @@ components to be corrected then we use the algorithm where the new
 component is equal to the component divided by the sum_of_components
 and the result of this is multiplied by the total value as seen below.
 
-```bash
-    y_{c} = (\frac{y_{c} + \dots + y_{derived}}) * y_{total}
-```
+$$ y_{final\_component} = \Bigl(\frac{y_{original\_component}}
+{y_{derived}}\Bigl) * y_{total}
+$$
 
 which is understood as
 
@@ -390,4 +420,3 @@ which is understood as
 In the case where the total is set to zero and the amend_total
 indicates that the components need to be adjusted this step of the method
 will ensure that each component is reset to zero to match the expected total.
-This can be visualised using the formula below.

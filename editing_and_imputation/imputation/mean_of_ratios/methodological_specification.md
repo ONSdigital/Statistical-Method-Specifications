@@ -415,7 +415,24 @@ Construction imputation imputes data for non-responders in
 
 Note that trimming cannot be applied when using construction imputation.
 
-#### 6.2.5 Weighted Imputation
+#### 6.2.5 Manual Construction Imputation
+
+Although not part of the statistical method itself, the method must
+ acceptand appropriately handle cases where a value has been overridden
+ by manual intervention. Using subject matter knowledge, the values are
+ calculated externally to the method then manually input. Records input
+ using this approach will be marked MC.
+
+Please see section 8.1 for more details.
+
+##### Forward Imputation from Manual Construction
+
+For forward imputation from manual construction, the predictive value
+ must only come from manually constructed values or forward imputed
+ values from a manual construction. Records imputed using this
+ imputation will be marked FIMC.
+
+#### 6.2.6 Weighted Imputation
 
 If required by the user, weighted imputation can be applied
  to account for growth or loss observed in a particular time
@@ -705,3 +722,56 @@ Mean of Ratios imputation follows a set of rules to ensure that it
 Please see the image below for further information.
 
 ![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
+
+## 8.1 Manual Construction Rules
+
+### 8.1.1 Rules
+
+* Only a return or another manual construction can override a manual
+ construction (MC)
+* A manual construction can override the following types: constructions,
+ forward imputes from constructions and forward imputes from returns
+* A manual construction can be used as the predictive value when carrying
+ out forward imputation (FIMC)
+* A forward impute from a manual construction can be used as the predictive
+ value when carrying out rolling forward imputation for multiple periods of
+ non-response (FIMC)
+* A manual construction cannot be used as the predictive value when carrying
+ out backward imputation
+* A return can override a forward impute from a manual construction
+* A forward impute from a return can override a forward impute from a manual
+ construction
+* A backward impute can override a forward impute from a manual construction
+
+### 8.1.2 Scenarios
+
+* If a manual construction (MC) is currently held for the contributor and then
+ a response (R) is returned for the same period, then the returned value should
+ override the manual construction. Final response pattern: R
+* If the previous period value is a manual construction (MC) and the contributor
+ is a non-responder for the current period, then forward impute from a manual
+ construction (FIMC). Final response pattern: MC, FIMC
+* If a manual construction is available for the first period but not the second,
+ third or current, then perform rolling forwards imputation from a manual
+ construction from the first period for all missing periods (FIMC). Final
+ response pattern: MC, FIMC, FIMC, FIMC
+* If a manual construction is held for the contributor in the first period, and
+ a response is returned for the second, then do not override the manual
+ construction with a backward impute. Final response pattern: MC, R
+* If a manual construction is held in the first period, and a forward impute from
+ a manual construction in the second, then the contributor responded in the third
+ period, then only override the forward impute from a manual construction in the
+ second period with a backward impute. Final response pattern: MC, BI, R
+* If a manual construction is held in the first period, and a forward impute from
+ a manual construction in the second, then a response is returned for the second
+ period, then the returned value should override the forward impute from a manual
+ construction. Final response pattern: MC, R
+* If a manual construction is held in the first period, and rolling forward
+ imputation from a manual construction was performed for the second and third
+ periods, and then a response is returned for the second period, then the returned
+ value should override the forward impute from a manual construction in the second
+ and forward imputation from a response should override the third period.
+ Final response pattern: MC, R, FIR
+* If a value of any type is held in the first period, then manual construction is
+ input for the second period, then do not backward impute from the
+ manual construction

@@ -201,8 +201,7 @@ $$ \large \hat{y}\_{i, q, t} = \frac{y_{i, q, t}}{1000} $$
 \hat{y}_{i, q, t} = \frac{y_{i, q, t}}{1000}
 ```
 
-Where $\hat{y}\_{i, q, t}$ is the corrected value and rounded to the
- nearest whole number.
+Where $\hat{y}\_{i, q, t}$ is the corrected value.
 
 Once the principal target variable has been corrected, all other monetary values,
  the remaining target variables, for a given contributor will be automatically

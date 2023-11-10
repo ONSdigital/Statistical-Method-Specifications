@@ -418,7 +418,7 @@ Note that trimming cannot be applied when using construction imputation.
 #### 6.2.5 Manual Construction Imputation
 
 Although not part of the statistical method itself, the method must
- acceptand appropriately handle cases where a value has been overridden
+ accept and appropriately handle cases where a value has been overridden
  by manual intervention. Using subject matter knowledge, the values are
  calculated externally to the method then manually input. Records input
  using this approach will be marked MC.

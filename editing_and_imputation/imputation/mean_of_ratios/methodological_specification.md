@@ -4,7 +4,7 @@
 
 * Support area – Methodology – Processing, Editing & imputation
 * Method theme – Imputation
-* Status – draft, not tested
+* Status – Fully tested
 
 ## 2.0 Terminology
 

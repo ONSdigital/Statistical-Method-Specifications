@@ -4,7 +4,7 @@
 
 * Support area – Methodology – Processing, Editing & Imputation
 * Method theme – Automatic Editing
-* Status – draft, not tested
+* Status – Fully tested
 
 ## 2.0 Terminology
 
@@ -64,7 +64,6 @@ This method can only be applied if all the components are of the same type e.g.,
 Input records must include the following fields of the correct types:
 
 * Unique Identifier – Any e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
 * Total Variable – Target period total, numeric
 * Components Variable – Corresponding list of Total variable's components,
  numeric – nulls allowed
@@ -106,7 +105,6 @@ them blank.
 Output records shall always contain the following fields with the following types:
 
 * Unique Identifier – Any e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
 * Absolute Difference – Numeric, nulls allowed
 * Low Percent – Numeric, nulls allowed (see 7.1.2)
 * High Percent – Numeric, nulls allowed (see 7.1.2)
@@ -352,7 +350,7 @@ $$ \large \hat{y}\_{k,t} = \Bigl(\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}
  \Bigl) * y_{total, t} $$
 
 ```asciimath
-\hat{y}_{k,t} = (\frac{y_{k,t}}{y_{1, t} + \dots + y_{n, t}}) * y_{total, t}
+\hat{y}_{k,t} = (\frac{y_{k,t}}{y_{1, t} + ... + y_{n, t}}) * y_{total, t}
 ```
 
 If the conditions described in the subsections of 7.1 are satisfied

@@ -4,7 +4,7 @@
 
 * Support area – Methodology – Processing, Editing & Imputation
 * Method theme – Automatic Editing
-* Status – draft, not tested
+* Status – Fully tested
 
 ## 2.0 Terminology
 
@@ -49,14 +49,13 @@ a value of £56,000 instead of correctly submitting 56.
  by the method
 * Thresholds set are a good indication of whether a value should be corrected
 
-## 5.0 Method Input and Output - need DST input to finalise
+## 5.0 Method Input and Output
 
 ### 5.1 Input Records
 
 Input records must include the following fields of the correct types:
 
 * Unique Identifier – String e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
 * Principal Variable – Single variable, numeric
 * Target Variable(s) – Can be a list, numeric – nulls allowed
 * Predictive Variable – Single variable, numeric – nulls allowed
@@ -85,7 +84,6 @@ in the predictive period.
 Output records shall always contain the following fields with the following types:
 
 * Unique Identifier – String e.g., Business Reporting Unit
-* Period – String in "YYYYMM" format
 * TPC Ratio – Numeric
 * Final Principal Variable – Numeric
 * Final Target Variables – Can be a list, numeric – nulls allowed

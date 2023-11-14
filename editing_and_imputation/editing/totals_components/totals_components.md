@@ -22,6 +22,8 @@
  target variable, where the predictive value is not available (e.g., where
  the contributor was not sampled in the predictive period).
 * Responder – A contributor who has responded to the survey within a given period.
+* Precision – The precision value determines the level of accuracy for the floating
+ point calculations in significant figures.
 
 ## 3.0 Introduction
 
@@ -69,8 +71,9 @@ Input records must include the following fields of the correct types:
  numeric – nulls allowed
 * Amend Total – Select whether Total Variable for the target period should be
  automatically corrected, Boolean
-* Predictive Variable – Previous or current period total, numeric
-* Auxiliary Variable – optional, numeric – nulls allowed
+* Predictive Variable – Previous or current period total, numeric – nulls allowed
+* Auxiliary Variable – Numeric – nulls allowed
+* Precision – Numeric – nulls allowed
 
 The Amend Total variable determines whether the Total or Components variable
  will be corrected through application of the method. The chosen variable

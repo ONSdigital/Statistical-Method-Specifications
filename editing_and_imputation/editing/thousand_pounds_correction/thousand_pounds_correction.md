@@ -27,6 +27,8 @@
  for a given contributor (i.e. where the contributor was not sampled in the
  predictive period).
 * Responder - A contributor who has responded to the survey within a given period.
+* Precision – The precision value determines the level of accuracy for the
+ floating point calculations in significant figures.
 
 ## 3.0 Introduction
 
@@ -62,6 +64,7 @@ Input records must include the following fields of the correct types:
 * Auxiliary Variable – Optional, numeric – nulls allowed
 * Upper Limit – Single variable, numeric, must be greater than Lower Limit
 * Lower Limit – Single variable, numeric, must be less than Upper Limit
+* Precision – Numeric – nulls allowed
 
 Unless otherwise noted, fields must not contain null values.
  All other fields shall be ignored.

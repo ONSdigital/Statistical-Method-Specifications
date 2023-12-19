@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Statistical-Method-Specifications
+  description: Specification documentation for statistical methods
+  annotations:
+    jira/project-key: SPP
+    github.com/project-slug: ONSdigital/Statistical-Method-Specifications
+  tags:
+    - documentation
+    - spp
+  links:
+      title: Statistical Method Specifications
+      icon: search
+spec:
+  type: library
+  lifecycle: production
+  owner: group:spp-results

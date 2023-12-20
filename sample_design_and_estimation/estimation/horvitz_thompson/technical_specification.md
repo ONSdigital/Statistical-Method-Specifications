@@ -11,7 +11,7 @@
 
 This document specifies the Horvitz-Thompson estimation method. The method
 calculates weights for a universe and sample population, then it outputs a
-dataset containing weights.
+dataset containing these weights.
 
 ## 3.0 Data Records
 
@@ -23,25 +23,31 @@ type specific specifications.
 
 ### 3.1 Input Records
 
+Unless otherwise noted, fields specified in this section must be fully
+populated.
+
 Input records must include the following fields of the correct types:
 
 * Identifier - Any
-* Period - String in "YYYYMM" format
+* Period - Any
 * Strata - Any
 * Sample Marker - Boolean
-* Adjustment Marker (Optional) - String one of "I", "D", "O"
-* H Value (Optional) - Boolean
-* Auxiliary (Optional) - Numeric
-* Calibration Group (Optional) - Any
 
-Unless otherwise noted, fields must not contain null values.
+Optionally the following fields can also be passed:
+
+* Adjustment Marker - String one of "I", "D", "O"
+* H Value - Boolean
+* Auxiliary Variable - Numeric
+* Calibration Group - Any
+
+An identifier must be unique within a given period and strata/calibration group.
 
 ### 3.2 Output Records
 
 Output records shall always contain the following fields with the following
 types:
 
-* Period - String in "YYYYMM" format
+* Period - Any
 * Strata - Any
 * Design Weight - Numeric
 * Unadjusted Design Weight (Optional) - Numeric
@@ -50,6 +56,7 @@ types:
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
+Unless otherwise specified, the fields above must be fully populated.
 
 ## 4.0 Method
 

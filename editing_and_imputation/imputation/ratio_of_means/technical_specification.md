@@ -41,8 +41,7 @@ The general link formula for a link `l` is:
 
 `l = (sum_(k=1)^n x_k)/(sum_(k=1)^n y_k)`
 
-In general the observation count for a link is `n`. If `sum_(k=1)^n y_k = 0`
-then `l = 1` and the observation count is 0. If `n = 0` then `l = 1` and the
-observation count is null.
+The observation count for a link is `n`. If `sum_(k=1)^n y_k = 0`
+then `l = 1`. If `n = 0` then `l = 1`.
 
 For Copyright information, please see LICENCE.

@@ -11,16 +11,14 @@
 ## 2.0 Description
 
 This document specifies the one sided winsorisation method. The method
-outliers data and outputs a separate dataset containing if winsoration
-has been applied and the matching outlier weight.
+calculates outlier weights for a dataset based on provided values and
+weights.
 
 ## 3.0 Data Records
 
 All field names in this document are not definitive; the actual field names
 must be configurable and the method used to configure these names is an
-implementation detail and thus out of scope of this document. In addition,
-different uses of winsorisation may require additional fields as per the
-type specific specifications.
+implementation detail and thus out of scope of this document.
 
 ### 3.1 Input Records
 
@@ -34,17 +32,17 @@ Input records must include the following fields of the correct types:
 * Grouping - Any
 * Target Variable - Numeric
 * Design Weight Variable - Numeric
+* L Value - Numeric
 
 Optionally the following fields can also be passed:
 
-* L Value - Numeric
 * Calibration Factor - Numeric
 * Auxiliary Variable - Numeric
 
 A reference must be unique within a given period and group and the method
 must support the same identifier appearing in different groups within the
 same period. This is to allow multiple independent groups of data for a
-given contributor to be outliered as part of the same sample.
+given contributor to be winsorised as part of the same sample.
 
 ### 3.2 Output Records
 
@@ -59,7 +57,7 @@ types:
 
 Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
-Unless otherwise specified, the fields above must be fully populated.
+Unless otherwise specified, the fields above shall be fully populated.
 
 ## 4.0 Method
 

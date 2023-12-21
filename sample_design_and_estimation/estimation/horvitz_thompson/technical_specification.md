@@ -10,16 +10,13 @@
 ## 2.0 Description
 
 This document specifies the Horvitz-Thompson estimation method. The method
-calculates weights for a universe and sample population, then it outputs a
-dataset containing these weights.
+calculates weights for a universe and sample population.
 
 ## 3.0 Data Records
 
 All field names in this document are not definitive; the actual field names
 must be configurable and the method used to configure these names is an
-implementation detail and thus out of scope of this document. In addition,
-different functions of this method may require additional fields as per the
-type specific specifications.
+implementation detail and thus out of scope of this document.
 
 ### 3.1 Input Records
 
@@ -66,7 +63,7 @@ Calibration Factor calculation.
 
 ### 4.1 Expansion Estimation
 
-Expansion calculates an unadjusted design weight and then can be optionally be
+Expansion calculates an unadjusted design weight and then can optionally be
 run in one of four ways to adjust it:
 
 1. No further changes

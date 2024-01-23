@@ -1,6 +1,6 @@
-## Cell key Perturbation Specification
+# Cell key Perturbation Specification
 
-### 1.0 Meta  
+## 1.0 Meta  
 
 ---
 
@@ -10,7 +10,7 @@ Method theme - Statistical Disclosure Control
 
 Status - Completed, tested, and signed off
 
-### 2.0 Terminology  
+## 2.0 Terminology  
 
 ---
 
@@ -33,7 +33,7 @@ merge on the ptable
 * ptable -- perturbation table. The lookup file containing the pvalues, this
 determines which cell get perturbed.
 
-### 3.0 Introduction  
+## 3.0 Introduction  
 
 ---
 
@@ -43,7 +43,7 @@ introduces uncertainty to potential disclosures. The method is specifically
 designed to protect against disclosure by differencing. This method was used
 in ONS Census 2021.
 
-### 4.0 Assumptions  
+## 4.0 Assumptions  
 
 ---
 
@@ -63,13 +63,13 @@ applied without a ptable file. It may or may not be possible to apply the
 method to data that does not contain one row per record and one column per
 variable.
 
-### 5.0 Data records  
+## 5.0 Data records  
 
 ---
 
 The following field types will be present in the input and output records.
 
-### 5.1 Input records  
+## 5.1 Input records  
 
 ---
 
@@ -95,7 +95,7 @@ added.
 calculations (modulo sum). The other variables are expected to be categorical
 (they can be numeric but categorical is more suitable for frequency tables).
 
-### 5.2 Output records  
+## 5.2 Output records  
 
 ---
 
@@ -114,7 +114,7 @@ one row per combination of characteristics. One column is included for each
 variable tabulated, e.g.: Local Authority, Age, Sex, count, pcv, pvalue, count;
 Bristol, 16-24, 1, 503, 503, +2, 505.
 
-### 5.3 Error handling  
+## 5.3 Error handling  
 
 ---
 
@@ -129,7 +129,7 @@ perturbation and produce results for missing categories. If categories are to
 be combined or values imputed to replace missing data, this should be done
 before the perturbation.
 
-### 6.0 Overall Method  
+## 6.0 Overall Method  
 
 ---
 
@@ -154,7 +154,7 @@ the ptable, the 'pvalue' column (perturbation value).
 The end result is a table of combinations of variables, provided by the user,
 and the 'count' column has had the required noise from the ptable applied.
 
-### 7.0 Algorithm  
+## 7.0 Algorithm  
 
 ---
 

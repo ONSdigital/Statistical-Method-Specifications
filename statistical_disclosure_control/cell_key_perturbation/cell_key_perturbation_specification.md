@@ -73,17 +73,11 @@ The following field types will be present in the input and output records.
 
 ---
 
-<!-- markdownlint-disable MD037 -->
-
-
-
+<!-- markdownlint-disable -->
  | Variable Definition |Type of Variable| Format of specific variable (if applicable)| Expected range of the values | Meaning of the values| Expected level of aggregation | Comments | 
  |:---       |:---     |:---     |:---   |:--- |:--- |:--- |
  | Record key| Integer | Integer | 0-255 |The numbers are random and have no meaning. The 'keys' are used as inputs in perturbation to apply consistency| One per statistical unit (person, household, business) |  The name of the record key column is supplied to the function. Record key variables may be named as record_key, record_key_person etc |
-
-
-
-<!-- markdownlint-enable MD037 -->
+<!-- markdownlint-enable -->
 
 * The microdata used is expected to contain one row per record (person,
 household, business, or other individual) and one column for each
@@ -105,19 +99,13 @@ calculations (modulo sum). The other variables are expected to be categorical
 
 ---
 
-<!-- markdownlint-disable MD037 -->
-
-
-
+<!-- markdownlint-disable -->
  |Variable definition| Type of variable| Format of specific variable (if applicable)| Expected range of the values| Meaning of the values | Expected level of aggregation | Comments |
  |:---       |:---     |:---     |:---   |:--- |:--- |:--- |
  |ckey       | integer || 0-255   | No intrinsic meaning. This value determines the perturbation to be added and ensures consistency | One value per cell in a frequency table | | |
  |pcv        | integer || 0-750 | No intrinsic meaning. This value is an edited version of the count designed to reduce the necessary size of the ptable file. For cell values 0-750, pcv is the same as cell value | One value per cell in a frequency table | | |     
  |count     | integer  || >=0  | The cell value after perturbation. The 'count' of how many records contain a combination of characteristics, plus the noise added by perturbation. E.g. there could be 14 males aged 18-24 in an area. Noise of +1 is applied to the cell so the post perturbation 'count' is 15. | One value per cell in a frequency table | | | 
-
-
- 
-<!-- markdownlint-enable MD037 -->
+<!-- markdownlint-enable -->
 
 ---
 
@@ -152,7 +140,7 @@ used so that cell keys are uniform in the range 0-255 (or 0-4095), which allows
 the method to specify and control the perturbation rate.
 
 To prevent the need for a very large ptable file, the rows 501-750 are also
-used for higher cell counts. Row 501 is used for cell counts 501, 751, 1001, 
+used for higher cell counts. Row 501 is used for cell counts 501, 751, 1001,
 1251... Row 502 is used for cell counts 502, 752, 1002. To achieve this effect,
 a column named \'pcv\' (perturbation cell value) is created and cell counts
 above 750 are transformed by subtracting 1, taking modulo 250 (to get the range
@@ -163,7 +151,7 @@ covered, matching on values of cell-key and pcv. The post-perturbation count
 is created by adding the pre-perturbation count and the designated noise from
 the ptable, the 'pvalue' column (perturbation value).
 
-The end result is a table of combinations of variables, provided by the user, 
+The end result is a table of combinations of variables, provided by the user,
 and the 'count' column has had the required noise from the ptable applied.
 
 ### 7.0 Algorithm  

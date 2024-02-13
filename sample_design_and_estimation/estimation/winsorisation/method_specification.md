@@ -261,9 +261,7 @@ and is calculated using the data to be Winsorised for each observation and the
 sum of the _weighted target values_ divided by the sum of the _weighted auxiliary
 values_ for each calibration group $j$ multiplied by the supplied auxiliary value
 
-${\widehat{\mu}}_{i} = {x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}}$
-
-$${\widehat{\mu}}_{i} = x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$$
+**${\widehat{\mu}}_{i}$** = $x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$
 
 ### Winsorisation
 

@@ -250,7 +250,7 @@ $ where $a_i = \frac{N_{h}}{n_{h}}$
 
 (regardless of whether birth death adjusted design weight was chosen during estimation)
 
-**${\overline{y}_h} = \frac{\sum_{i = 1}^{n_{h}}y_{i}}{n_{h}}$** is the
+**${\overline{y}_h}$** $= \frac{\sum_{i = 1}^{n_{h}}y_{i}}{n_{h}}$ is the
 _mean target value_, the sample mean for
 stratum $h$ for the period to be Winsorised
 

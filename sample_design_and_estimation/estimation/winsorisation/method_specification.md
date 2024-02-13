@@ -268,15 +268,15 @@ ${\widehat{\mu}}_{i} = x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}
 **$o_i$** Once a target value has been identified for Winsorisation the outlier
 weight is calculated as:
 
-$o_{i} = \left\{ \begin{matrix}
+$o_{i} = \left\{\begin{matrix}
 1 & \text{if }y_{i} \text{is not an outlier} \\
 \frac{y_{i}^{*}}{y_{i}} = \frac{\text{modified y}}{\text{original y}} & \text
 {if }y_{i} \text{is an outlier} \\
-\end{matrix} \right.$
+\end{matrix}\right.$
 
 Where
 
-${y_{i}}^{*} = \left\{ \begin{matrix}
+${y_{i}}^{*} = \left\{\begin{matrix}
 \text{y}_{\text{i }}\text{if }y_{i} \text{is not an outlier,}   i.e.  y_{i} \leq
  k_{i}\text{} \\
 \frac{1}{w_{i}}y_{i} + \left( 1 - \frac{1}{w_{i}} \right)k_{i}\text{}\text{if }
@@ -304,7 +304,9 @@ in a given stratum will have the same threshold $k_{h}$
 #### Ratio Estimation
 
 The unique threshold for a unit, $i$, is:
-$$k_{i} = \ {\widehat{\mu}}_{i} + \frac{L}{a_{i}g_{i} - 1}$$
+
+$$k_{i} = {\widehat{\mu}}_{i} + \frac{L}{a_{i}g_{i} - 1}$$
+
 Apart from parameter $L$, which is calculated with a bespoke
 method using historic data, this is calculated using the data from the
 period to be Winsorised.

@@ -263,6 +263,8 @@ values_ for each calibration group $j$ multiplied by the supplied auxiliary valu
 
 ${\widehat{\mu}}_{i} = {x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}}$
 
+$${\widehat{\mu}}_{i} = x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$$
+
 ### Winsorisation
 
 **$o_i$** Once a target value has been identified for Winsorisation the outlier

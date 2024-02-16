@@ -169,8 +169,8 @@ be set to indicate the value was considered for Winsorisation ("W")
 If calibration factor and auxiliary values **are**
 supplied then **ratio estimation** is used.
 
-For ratio estimation a _weight_ (calibration weight) is calculated from the product of the supplied
-calibration factor and the design weight.
+For ratio estimation a _weight_ (calibration weight) is calculated from the
+product of the supplied calibration factor and the design weight.
 
 The product of the supplied design weight with the target value is used to calculate
 a _weighted target value_.
@@ -259,7 +259,8 @@ and is calculated using the data to be Winsorised for each observation and the
 sum of the _weighted target values_ divided by the sum of the _weighted auxiliary
 values_ for each calibration group $j$ multiplied by the supplied auxiliary value
 
-**${\widehat{\mu}}_{i}$** = $x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$
+**${\widehat{\mu}}_{i}$** = $x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}
+{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$
 
 ### Winsorisation
 

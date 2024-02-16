@@ -4,8 +4,8 @@
 
 * Support Area - Methodology – sample design & estimation
 * Method Theme - Estimation
-* Status - One-sided winsorisation is implemented.
-Two-sided winsorisation is out of scope.
+* Status - One-sided Winsorisation is implemented.
+Two-sided Winsorisation is out of scope.
 
 ## 2.0 Terminology
 
@@ -14,7 +14,7 @@ Two-sided winsorisation is out of scope.
 In business surveys, some responses can be very large and can distort
 estimates when such a business is selected. Consequently, it is sometimes
 desireable to reduce the effect of these businesses. This is known as outlier
-treatment. This method applies a technique known as one-sided winsorisation.
+treatment. This method applies a technique known as one-sided Winsorisation.
 The objective of the method is to introduce a small bias, while reducing the
 variance. This is intended to reduce the mean squared error of the total, a
 measure of overall accuracy. The method works for stratified expansion
@@ -28,10 +28,9 @@ depends upon whether expansion or ratio
 estimation is used.
 
 If a target value is deemed influential, greater than the calculated threshold, an
-outlier weight is calculated which will reduce the target value to the most
-extreme retained value when subsequently grossed.
+outlier weight is calculated which will reduce the target value closer to the threshold.
 
-Two-sided winsorisation is out of scope for this specification.
+Two-sided Winsorisation is out of scope for this specification.
 
 ## 4.0 Assumptions
 
@@ -41,7 +40,7 @@ or imputation) prior to the running of this method.
 source data and passed into the method.
 * An appropriate design-weight is provided that corresponds well with the
 data being processed.
-* Auxiliary and Calibration Weight values are provided that correcpond well
+* Auxiliary and Calibration Factor values are provided that correspond well
 with the data being processed when ratio estimation is required.
 * A unique reference value is provided to the method, duplicate reference
 values will be treated as an error.
@@ -56,18 +55,18 @@ industry sector, area or size may be considered a group)
 Input records must include the following fields of the correct types:
 
 * Reference - Any - a unique identifier, e.g Business Reporting Unit
-* Period - String - "YYYY" or "YYYYMM" format, the period to be wisorised
+* Period - String - for example "YYYY" or "YYYYMM", the period to be Winsorised
 * Cell or Group - Numeric - a number representing a stratum (e.g Standard
 Industrial Classification)
-* Target Variable - Numeric - Nulls allowed (Check?), the value to be treated
-* Design Weight - Numeric - Nulls allowed (Check?), a supplied weight that
+* Target Variable - Numeric - the value to be treated
+* Design Weight - Numeric - a supplied weight that
 reflects the sampling design
-* Calibration Weight - Numeric - Nulls allowed, a weight that maintains the
+* Calibration Factor - Numeric - Nulls allowed, a weight that maintains the
 estimated calibration totals. Mandatory for ratio estimation.
 * Auxiliary - Numeric - Nulls allowed, a secondary value used for prediction
 in ratio estimation. Mandatory for ratio estimation.
 
-The presence of Auxiliary and Calibration Weight indicates that ratio
+The presence of Auxiliary and Calibration Factor indicates that ratio
 estimation must be performed rather than expansion estimation.
 
 ### 5.2 Output Records
@@ -75,23 +74,23 @@ estimation must be performed rather than expansion estimation.
 Output records must include the the following fields of the correct types:
 
 * Reference - Any - a unique identifier, e.g Business Reporting Unit
-* Period - String - "YYYY" or "YYYYMM" format, the period to be wisorised
+* Period - String - for example "YYYY" or "YYYYMM", the period to be Winsorised
 * Outlier Weight - Numeric - A value between 0 and 1 which reflects the
-reduction in a target variable due to winsorisation
-* Marker - String - Indicates the result of the winsorisation method for
+reduction in a target variable due to Winsorisation
+* Marker - String - Indicates the result of the Winsorisation method for
 each target value
-  * **W** - Winsorised. Marked against any value that could be winsorised
+  * **W** - Winsorised. Marked against any value that could be Winsorised
   * **NW_FE** - Not Winsorised Fully Enumerated. Marked when design weight is
   1 for expansion estimation.
   * **NW_AG** - Not Winsorised a*g. Marked
   in ratio estimation when the product of
-  design weight and calibration weight is < 1.
+  design weight and calibration factor is <= 1.
 
 ## 6.0 Method
 
 ### 6.1 Overall Method
 
-The winsorisation method performs the following steps to find outliers and
+The Winsorisation method performs the following steps to find outliers and
 calculate outlier weights based on either expansion or ratio estimation.
 
 #### Parameter Validation
@@ -101,36 +100,35 @@ each reference is unique. Non-unique references will cause the method to error.
 
 #### Assess Validity for Winsorisation
 
-Target values must be checked to determine if they can be marked as not winsorised,
+Target values must be checked to determine if they can be marked as not Winsorised,
 fully enumerated (NW_FE):
 
 * A target value with a corresponding design weight of 1 is marked as NW_FE and
 given an outlier weight of 1. This should
 occur regardless of whether:
   * Other target values in the cell or group have a design weight not equal to 1.
-  * Expansion or Ratio estimation were to be performed.
 
 Target values considered for ratio estimation (when
-auxiliary and calibration weight are present) must
+auxiliary and calibration factor are present) must
 be checked to determine their eligibility for
-winsorisation. This assessment is based on the
-product of the design weight and calibration weight (NW_AG).
+Winsorisation. This assessment is based on the
+product of the design weight and calibration factor (NW_AG).
 
-* If design weight multiplied by calibration weight
+* If design weight multiplied by calibration factor
 is less than or equal to 1 the target value is not
-winsorised, the associated oultier weight is set to
+Winsorised, the associated oultier weight is set to
 1 and the marker set as NW_AG.
 
 * _Do we need the caveat in the original for design
 weight = 1 && calibration != 1 and design weight
-multiplied by calibration weight is < 1 ?_ It seems
+multiplied by calibration factor is < 1 ?_ It seems
 this is already captured by the above constraints?
 
 Any target value that has been marked as NW_FE or
-NW_AG must be removed from winsorisation calculations
+NW_AG must be removed from Winsorisation calculations
 
 Target values that are not marked as NW_FE or NW_AG
-are winsorised, the outlier weights calculated and
+are Winsorised, the outlier weights calculated and
 marked as W.
 
 #### Determine Estimation Method
@@ -141,13 +139,13 @@ values under consideration.
 
 ##### Expansion Estimation
 
-If calibration weight and auxiliary values **are
+If calibration factor and auxiliary values **are
 not** supplied then **expansion estimation** is used.
 
 For expansion estimation a _weight_ is calculated from the input design weight.
 
 The _mean target value_ is calculated for those target values that are in the same
-period and group and are to be considered for winsorisation.
+period and group and are to be considered for Winsorisation.
 
 An estimation _threshold_ is then calculated using the _mean target value_,
 L-value and weight.
@@ -164,15 +162,15 @@ _modified target value_. In the case of a target value that was not modified the
 _outlier weight_ will be 1.
 
 Finally, regardless of whether the target value was modified or not the marker will
-be set to indicate the value was considered for winsorisation ("W")
+be set to indicate the value was considered for Winsorisation ("W")
 
 ##### Ratio Estimation
 
-If calibration weight and auxiliary values **are**
+If calibration factor and auxiliary values **are**
 supplied then **ratio estimation** is used.
 
-For ratio estimation a _weight_ is calculated from the product of the supplied
-calibration weight and the design weight.
+For ratio estimation a _weight_ (calibration weight) is calculated from the product of the supplied
+calibration factor and the design weight.
 
 The product of the supplied design weight with the target value is used to calculate
 a _weighted target value_.
@@ -189,7 +187,7 @@ with the target value by multiplting the provided auxiliary by the computed
 _weighted ratio_.
 
 A _threshold_ is then calculated based on this _predict unit value_, supplied L-value
-and the _weight_ that was calculated from the calibration weight and design weight.
+and the _weight_ that was calculated from the calibration factor and design weight.
 
 If the target value exceeds the _threshold_, then a modified value of the
 target is calculated using the original value, _weight_ and _threshold_.
@@ -202,7 +200,7 @@ _modified target value_. In the case of a target value that was not modified the
 _outlier weight_ will be 1.
 
 Finally, regardless of whether the target value was modified or not the marker will
-be set to indicate the value was considered for winsorisation ("W")
+be set to indicate the value was considered for Winsorisation ("W")
 
 ## 7.0 Calculations
 
@@ -212,7 +210,7 @@ be set to indicate the value was considered for winsorisation ("W")
 
 **$j$** - an index denoting a calibration group (a collection of strata)
 
-**$y_i$** - a target value.  This is an obsereved value for a given variable for
+**$y_i$** - a target value.  This is an observed value for a given variable for
 a given business.
 
 **$n_h$** or **$n_j$** - the sample sizefor stratum $h$ or calibration group $j$.
@@ -240,9 +238,9 @@ $a_i = a_h = \frac{N_{h}}{n_{h}}$, e.g the birth death adjusted design weight
 $a_i = a_h = \ \frac{N_{h}}{n_{h}}\left(1 + H_{h}\left( \frac{d_{h}}{n_{h} - d_{h}}
  \right) \right)$, business $i \in$ stratum $h$, chosen during estimation
 
-**$g_i$** is the _calibration weight_ that is supplied to Winsorisation. The
+**$g_i$** is the _calibration factor_ that is supplied to Winsorisation. The
 calculation of this is outside the scope of the Winsorisation method itself but
-an example of the calculation for calibration weight for business $i \in$
+an example of the calculation for calibration factor for business $i \in$
 calibration group $j$ used in ONS is:
 
 $g_{i} = g_{j} = \ \frac{\sum_{i = 1}^{N_{j}}x_{i}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}

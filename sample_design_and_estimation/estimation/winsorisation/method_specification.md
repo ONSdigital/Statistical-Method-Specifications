@@ -104,9 +104,7 @@ Target values must be checked to determine if they can be marked as not Winsoris
 fully enumerated (NW_FE):
 
 * A target value with a corresponding design weight of 1 is marked as NW_FE and
-given an outlier weight of 1. This should
-occur regardless of whether:
-  * Other target values in the cell or group have a design weight not equal to 1.
+given an outlier weight of 1.
 
 Target values considered for ratio estimation (when
 auxiliary and calibration factor are present) must
@@ -118,11 +116,6 @@ product of the design weight and calibration factor (NW_AG).
 is less than or equal to 1 the target value is not
 Winsorised, the associated oultier weight is set to
 1 and the marker set as NW_AG.
-
-* _Do we need the caveat in the original for design
-weight = 1 && calibration != 1 and design weight
-multiplied by calibration factor is < 1 ?_ It seems
-this is already captured by the above constraints?
 
 Any target value that has been marked as NW_FE or
 NW_AG must be removed from Winsorisation calculations

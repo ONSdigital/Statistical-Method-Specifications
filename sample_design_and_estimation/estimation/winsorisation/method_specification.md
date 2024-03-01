@@ -236,14 +236,21 @@ calculation of this is outside the scope of the Winsorisation method itself but
 an example of the calculation for calibration factor for business $i \in$
 calibration group $j$ used in ONS is:
 
-$g_{i} = g_{j} = \ \frac{\sum_{i = 1}^{N_{j}}x_{i}}{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}
-$ where $a_i = \frac{N_{h}}{n_{h}}$
+$$\begin{equation}
+g_i = g_j = \frac{\sum_{i=1}^{N_j} x_i}{\sum_{i=1}^{N_j} a_1x_i} 
+\end{equation}$$ 
+where $a_i = \frac{N_{h}}{n_{h}}$
 
 (regardless of whether birth death adjusted design weight was chosen during estimation)
 
-**${\overline{y}_h}$** $= \frac{\sum_{i = 1}^{n_{h}}y_{i}}{n_{h}}$ is the
+**${\overline{y}_h}$** is the
 _mean target value_, the sample mean for
 stratum $h$ for the period to be Winsorised
+
+$$\begin{equation}
+    \bar{y}_h = \frac{\sum^{n_h}_{i=1}y_i}{n_h}
+\end{equation}$$
+the calculation above is the
 
 **$x_i$** is the _auxiliary variable_ for a given sampled _target value_
 
@@ -252,19 +259,25 @@ and is calculated using the data to be Winsorised for each observation and the
 sum of the _weighted target values_ divided by the sum of the _weighted auxiliary
 values_ for each calibration group $j$ multiplied by the supplied auxiliary value
 
-**${\widehat{\mu}}_{i}$** = $x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}
-{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$
+
+$$\begin{equation}
+\hat{\mu}_i = x_i \frac{\sum_{i=1}^{n_j} a_i y_i}{\sum_{i=1}^{n_j} a_1 x_i} 
+\end{equation}$$
+
 
 ### Winsorisation
 
 **$o_i$** Once a target value has been identified for Winsorisation the outlier
 weight is calculated as:
 
-$o_{i} = \left\{\begin{matrix}
-1 & \text{if }y_{i} \text{is not an outlier} \\
-\frac{y_{i}^{*}}{y_{i}} = \frac{\text{modified y}}{\text{original y}} & \text
-{if }y_{i} \text{is an outlier} \\
-\end{matrix}\right.$
+$$\begin{equation}
+    o_i = 
+    \begin{cases}
+1 & \text{if $y_i$  is not an outlier}\\
+\frac{y_i^*}{y_i} & \text{if $y_i$ is an outlier}        
+    \end{cases}
+ % for multiple cases you need to add \usepackage{amsmath}
+\end{equation}$$
 
 Where
 
@@ -288,7 +301,10 @@ The threshold calculation for Winsorisation is different based on whether
 #### Expansion Estimation
 
 The threshold for a unit, $i$, in a given stratum, $h$ is:
-$$k_{i} = k_{h} = \overline{y_{h}} + \frac{L}{a_{i} - 1}$$
+
+$$\begin{equation}
+    k_i=k_h=\bar{y_h} + \frac{L}{a_i-1}
+\end{equation}$$
 
 Apart from parameter $L$, which is calculated with a bespoke
 method using historic data, this is calculated using the data from the
@@ -299,7 +315,9 @@ in a given stratum will have the same threshold $k_{h}$
 
 The unique threshold for a unit, $i$, is:
 
-$$k_{i} = {\widehat{\mu}}_{i} + \frac{L}{a_{i}g_{i} - 1}$$
+$$\begin{equation}
+k_i= \hat{\mu}_i + \frac{L}{a_i g_i-1}
+\end{equation}$$
 
 Apart from parameter $L$, which is calculated with a bespoke
 method using historic data, this is calculated using the data from the

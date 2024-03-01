@@ -237,8 +237,9 @@ an example of the calculation for calibration factor for business $i \in$
 calibration group $j$ used in ONS is:
 
 $$\begin{equation}
-g_i = g_j = \frac{\sum_{i=1}^{N_j} x_i}{\sum_{i=1}^{N_j} a_1x_i} 
+g_i = g_j = \frac{\sum_{i=1}^{N_j} x_i}{\sum_{i=1}^{N_j} a_ix_i} 
 \end{equation}$$ 
+
 where $a_i = \frac{N_{h}}{n_{h}}$
 
 (regardless of whether birth death adjusted design weight was chosen during estimation)
@@ -248,9 +249,20 @@ _mean target value_, the sample mean for
 stratum $h$ for the period to be Winsorised
 
 $$\begin{equation}
+    \bar{y}_h = meantargetvalue
+\end{equation}$$
+
+$$\begin{equation}
+    meantargetvalue = \frac{\sum^{n_h}_{i=1}y_i}{n_h}
+\end{equation}$$
+
+$$%Bryan latex$$
+$$\begin{equation}
     \bar{y}_h = \frac{\sum^{n_h}_{i=1}y_i}{n_h}
 \end{equation}$$
-the calculation above is the
+
+$$%Steve equation$$
+**${\overline{y}_h}$** $= \frac{\sum_{i = 1}^{n_{h}}y_{i}}{n_{h}}$
 
 **$x_i$** is the _auxiliary variable_ for a given sampled _target value_
 
@@ -259,11 +271,31 @@ and is calculated using the data to be Winsorised for each observation and the
 sum of the _weighted target values_ divided by the sum of the _weighted auxiliary
 values_ for each calibration group $j$ multiplied by the supplied auxiliary value
 
-
 $$\begin{equation}
-\hat{\mu}_i = x_i \frac{\sum_{i=1}^{n_j} a_i y_i}{\sum_{i=1}^{n_j} a_1 x_i} 
+\hat{\mu}_i = predictunitvalue
 \end{equation}$$
 
+$$\begin{equation}
+predictunitvalue = x_i \frac{\sum_{i=1}^{n_j} a_i y_i}{\sum_{i=1}^{n_j} a_i x_i} 
+\end{equation}$$ 
+
+$$%Bryan equation$$
+$$\begin{equation}
+\hat{\mu}_i = x_i \frac{\sum_{i=1}^{n_j} a_i y_i}{\sum_{i=1}^{n_j} a_i x_i} 
+\end{equation}$$
+
+
+$$%steve equation%$$
+**${\widehat{\mu}}_{i}$** = $x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}
+{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$
+
+$$\begin{equation}
+\sum_{i=1}^{n_j} a_i y_i
+\end{equation}$$
+
+$$\begin{equation}
+\frac{\sum_{i=1}^{n_h} y_i}{n_h}
+\end{equation}$$
 
 ### Winsorisation
 

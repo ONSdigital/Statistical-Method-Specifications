@@ -268,13 +268,15 @@ $o_{i} = \left\{\begin{matrix}
 
 Where
 
-${y_{i}}^{*} = \left\{\begin{matrix}
-\text{y}_{\text{i }}\text{if }y_{i} \text{is not an outlier,}   i.e.  y_{i} \leq
- k_{i}\text{} \\
-\frac{1}{w_{i}}y_{i} + \left( 1 - \frac{1}{w_{i}} \right)k_{i}\text{}\text{if }
-y_{i} \text{is an outlier,}   i.e. y_{i} > k_{i}  \\
-\  \\
-\end{matrix} \right.$
+$$\begin{equation}
+y_i^* = 
+\begin{cases}
+    y_i & \text{if $y_i$ is not an outlier, i.e. $y_i\leq k_i$}\\
+    \frac{1}{w_i} y_i+(1- \frac{1}{w_i})k_i & \text{if $y_i$ is an outlier,
+    i.e. $y_i>k_i$}
+\end{cases}
+\end{equation}$$
+
 
 and where $k_i$, the _threshold_ for Winsorisation is defined in the following sections.
 

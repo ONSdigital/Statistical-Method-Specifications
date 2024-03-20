@@ -236,11 +236,11 @@ calculation of this is outside the scope of the Winsorisation method itself but
 an example of the calculation for calibration factor for business $i \in$
 calibration group $j$ used in ONS is:
 
-<!-- markdownlint-disable MD013 -->
+<!-- markdownlint-disable -->
 $$\begin{equation}
 g_i = g_j = \frac{\text{sum of population sizes *} x_i}{\text{sum of population sizes *} a_ix_i}
 \end{equation}$$
-<!-- markdownlint-enable MD013 -->
+<!-- markdownlint-enable -->
 
 $$\begin{equation}
 \text{sum of population sizes} = \sum_{i=1}^{N_j}
@@ -322,7 +322,9 @@ y_i^* =
 \end{cases}
 \end{equation}$$
 
+<!-- markdownlint-disable MD037 -->
 and where $k_i$, the _threshold_ for Winsorisation is defined in the following sections.
+<!-- markdownlint-disable MD037 -->
 
 ### Threshold Calculation
 

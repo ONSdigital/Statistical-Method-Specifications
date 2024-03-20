@@ -206,7 +206,7 @@ be set to indicate the value was considered for Winsorisation ("W")
 **$y_i$** - a target value.  This is an observed value for a given variable for
 a given business.
 
-**$n_h$** or **$n_j$** - the sample sizefor stratum $h$ or calibration group $j$.
+**$n_h$** or **$n_j$** - the sample size for stratum $h$ or calibration group $j$.
 These values are inputs to the calculation of the _design weight_ that is passed
 to Winsorisation.  
 **$N_h$** or **$N_j$** - the population size for stratum $h$ or calibration group
@@ -237,7 +237,11 @@ an example of the calculation for calibration factor for business $i \in$
 calibration group $j$ used in ONS is:
 
 $$\begin{equation}
-g_i = g_j = \frac{\sum_{i=1}^{N_j} x_i}{\sum_{i=1}^{N_j} a_ix_i} 
+g_i = g_j = \frac{\text{sum of population sizes *} x_i}{\text{sum of population sizes *} a_ix_i}
+\end{equation}$$ 
+
+$$\begin{equation}
+\text{sum of population sizes} = \sum_{i=1}^{N_j}
 \end{equation}$$ 
 
 where $a_i = \frac{N_{h}}{n_{h}}$
@@ -249,20 +253,20 @@ _mean target value_, the sample mean for
 stratum $h$ for the period to be Winsorised
 
 $$\begin{equation}
-    \bar{y}_h = meantargetvalue
+    \bar{y}_h = \text{mean target value}
 \end{equation}$$
 
 $$\begin{equation}
-    meantargetvalue = \frac{\sum^{n_h}_{i=1}y_i}{n_h}
+    \text{mean target value} = \frac{\text{sum of target values}}{\text{number of target values}}
 \end{equation}$$
 
-$$%Bryan latex$$
 $$\begin{equation}
-    \bar{y}_h = \frac{\sum^{n_h}_{i=1}y_i}{n_h}
+    \text{sum of target values}=\sum^{n_h}_{i=1}y_i
 \end{equation}$$
 
-$$%Steve equation$$
-**${\overline{y}_h}$** $= \frac{\sum_{i = 1}^{n_{h}}y_{i}}{n_{h}}$
+$$\begin{equation}    
+    \text{number of target values} = {n_h}
+\end{equation}$$
 
 **$x_i$** is the _auxiliary variable_ for a given sampled _target value_
 
@@ -272,29 +276,19 @@ sum of the _weighted target values_ divided by the sum of the _weighted auxiliar
 values_ for each calibration group $j$ multiplied by the supplied auxiliary value
 
 $$\begin{equation}
-\hat{\mu}_i = predictunitvalue
+\hat{\mu}_i = \text{predict unit value}
 \end{equation}$$
 
 $$\begin{equation}
-predictunitvalue = x_i \frac{\sum_{i=1}^{n_j} a_i y_i}{\sum_{i=1}^{n_j} a_i x_i} 
+\text{predict unit value} = x_i \frac{\text{sum of weighted target values}}{\text{sum of weighted auxiliary values}}
 \end{equation}$$ 
 
-$$%Bryan equation$$
 $$\begin{equation}
-\hat{\mu}_i = x_i \frac{\sum_{i=1}^{n_j} a_i y_i}{\sum_{i=1}^{n_j} a_i x_i} 
-\end{equation}$$
-
-
-$$%steve equation%$$
-**${\widehat{\mu}}_{i}$** = $x_{i}\frac{\sum_{i = 1}^{n_{j}}{a_{i}y_{i}}}
-{\sum_{i = 1}^{n_{j}}{a_{i}x_{i}}}$
+\text{sum of weighted target values} = \sum_{i=1}^{n_j} a_i y_i
+\end{equation}$$ 
 
 $$\begin{equation}
-\sum_{i=1}^{n_j} a_i y_i
-\end{equation}$$
-
-$$\begin{equation}
-\frac{\sum_{i=1}^{n_h} y_i}{n_h}
+\text{sum of weighted auxiliary values} = \sum_{i=1}^{n_j} a_i x_i
 \end{equation}$$
 
 ### Winsorisation

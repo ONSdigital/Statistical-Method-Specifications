@@ -236,13 +236,15 @@ calculation of this is outside the scope of the Winsorisation method itself but
 an example of the calculation for calibration factor for business $i \in$
 calibration group $j$ used in ONS is:
 
+<!-- markdownlint-disable MD013 -->
 $$\begin{equation}
 g_i = g_j = \frac{\text{sum of population sizes *} x_i}{\text{sum of population sizes *} a_ix_i}
-\end{equation}$$ 
+\end{equation}$$
+<!-- markdownlint-enable MD013 -->
 
 $$\begin{equation}
 \text{sum of population sizes} = \sum_{i=1}^{N_j}
-\end{equation}$$ 
+\end{equation}$$
 
 where $a_i = \frac{N_{h}}{n_{h}}$
 
@@ -256,15 +258,17 @@ $$\begin{equation}
     \bar{y}_h = \text{mean target value}
 \end{equation}$$
 
+<!-- markdownlint-disable MD013 -->
 $$\begin{equation}
     \text{mean target value} = \frac{\text{sum of target values}}{\text{number of target values}}
 \end{equation}$$
+<!-- markdownlint-enable MD013 -->
 
 $$\begin{equation}
     \text{sum of target values}=\sum^{n_h}_{i=1}y_i
 \end{equation}$$
 
-$$\begin{equation}    
+$$\begin{equation}
     \text{number of target values} = {n_h}
 \end{equation}$$
 
@@ -279,13 +283,15 @@ $$\begin{equation}
 \hat{\mu}_i = \text{predict unit value}
 \end{equation}$$
 
+<!-- markdownlint-disable MD013 -->
 $$\begin{equation}
 \text{predict unit value} = x_i \frac{\text{sum of weighted target values}}{\text{sum of weighted auxiliary values}}
-\end{equation}$$ 
+\end{equation}$$
+<!-- markdownlint-enable MD013 -->
 
 $$\begin{equation}
 \text{sum of weighted target values} = \sum_{i=1}^{n_j} a_i y_i
-\end{equation}$$ 
+\end{equation}$$
 
 $$\begin{equation}
 \text{sum of weighted auxiliary values} = \sum_{i=1}^{n_j} a_i x_i
@@ -297,10 +303,10 @@ $$\begin{equation}
 weight is calculated as:
 
 $$\begin{equation}
-    o_i = 
+    o_i =
     \begin{cases}
 1 & \text{if $y_i$  is not an outlier}\\
-\frac{y_i^*}{y_i} & \text{if $y_i$ is an outlier}        
+\frac{y_i^*}{y_i} & \text{if $y_i$ is an outlier}
     \end{cases}
  % for multiple cases you need to add \usepackage{amsmath}
 \end{equation}$$
@@ -308,14 +314,13 @@ $$\begin{equation}
 Where
 
 $$\begin{equation}
-y_i^* = 
+y_i^* =
 \begin{cases}
     y_i & \text{if $y_i$ is not an outlier, i.e. $y_i\leq k_i$}\\
     \frac{1}{w_i} y_i+(1- \frac{1}{w_i})k_i & \text{if $y_i$ is an outlier,
     i.e. $y_i>k_i$}
 \end{cases}
 \end{equation}$$
-
 
 and where $k_i$, the _threshold_ for Winsorisation is defined in the following sections.
 

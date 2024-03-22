@@ -77,7 +77,6 @@ rationale of the method, e.g on an editing method you may
 want to explain why you would be making automatic corrections
 to data, and what are the boundaries for doing this sort of
 correction
- 
 >
 
 ### 6.x any other specifics

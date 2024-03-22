@@ -189,8 +189,9 @@ target is calculated using the original value, _weight_ and _threshold_.
 If the target value is less than or equal to the _threshold_
 the target value remains unchanged.
 
-An _outlier weight_ is calculated by using the original target value divided by the
-_modified target value_. In the case of a target value that was not modified the
+An _outlier weight_ is calculated by using the _modified target value_ divided
+by the original target value.
+In the case of a target value that was not modified the
 _outlier weight_ will be 1.
 
 Finally, regardless of whether the target value was modified or not the marker will
@@ -216,7 +217,7 @@ passed to Winsorisation.
 
 **$w_i$** is the _weight_ which, for business $i$, is calculated as:
 $w_i = a_i$ when **expansion estimation** is used
-$w_i = a_i g_i$ when **ratio expansion** is used
+$w_i = a_i g_i$ when **ratio estimation** is used
 
 **$L$** is the Winsorisation parameter supplied to the method - in ONS this is
 calculated from historic data using a bespoke method based on the survey
@@ -279,8 +280,8 @@ $$\begin{equation}
 
 ### Winsorisation
 
-**$o_i$** Once a target value has been identified for Winsorisation the outlier
-weight is calculated as:
+Once a target value has been identified for Winsorisation the outlier
+weight, **$o_i$** is calculated as:
 
 $$\begin{equation}
     o_i =

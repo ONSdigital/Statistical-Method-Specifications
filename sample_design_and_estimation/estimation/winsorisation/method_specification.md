@@ -56,8 +56,8 @@ Input records must include the following fields of the correct types:
 
 * Reference - Any - a unique identifier, e.g Business Reporting Unit
 * Period - String - for example "YYYY" or "YYYYMM", the period to be Winsorised
-* Cell or Group - Numeric - a number representing a stratum (e.g Standard
-Industrial Classification)
+* Cell or Group - Any - represention of a stratum (e.g Standard
+Industrial Classification by size)
 * Target Variable - Numeric - the value to be treated
 * Design Weight - Numeric - a supplied weight that
 reflects the sampling design
@@ -118,7 +118,7 @@ Winsorised, the associated oultier weight is set to
 1 and the marker set as NW_AG.
 
 Any target value that has been marked as NW_FE or
-NW_AG must be removed from Winsorisation calculations
+NW_AG will be excluded from Winsorisation calculations
 
 Target values that are not marked as NW_FE or NW_AG
 are Winsorised, the outlier weights calculated and
@@ -138,7 +138,7 @@ not** supplied then **expansion estimation** is used.
 For expansion estimation a _weight_ is calculated from the input design weight.
 
 The _mean target value_ is calculated for those target values that are in the same
-period and group and are to be considered for Winsorisation.
+period and stratum (group) and are to be considered for Winsorisation.
 
 An estimation _threshold_ is then calculated using the _mean target value_,
 L-value and weight.
@@ -150,8 +150,9 @@ is calculated using the original value, _weight_ and _threshold_.
 If the target value is less than or equal to the _threshold_
 the target value remains unchanged.
 
-An _outlier weight_ is calculated by using the original target value divided by the
-_modified target value_. In the case of a target value that was not modified the
+An _outlier weight_ is calculated by using the _modified target value_  divided
+by the original target value.
+In the case of a target value that was not modified the
 _outlier weight_ will be 1.
 
 Finally, regardless of whether the target value was modified or not the marker will
@@ -175,11 +176,11 @@ The sum of the _weighted target values_ divided by the sum of the _weighted
 auxiliary values_ are used to calculate a
 _weighted ratio_.
 
-This _weighted ratio_ is then used to calculate a _predict unit value_ associated
+This _weighted ratio_ is then used to calculate a _predicted unit value_ associated
 with the target value by multiplting the provided auxiliary by the computed
 _weighted ratio_.
 
-A _threshold_ is then calculated based on this _predict unit value_, supplied L-value
+A _threshold_ is then calculated based on this _predicted unit value_, supplied L-value
 and the _weight_ that was calculated from the calibration factor and design weight.
 
 If the target value exceeds the _threshold_, then a modified value of the
@@ -199,7 +200,7 @@ be set to indicate the value was considered for Winsorisation ("W")
 
 **$i$** - an index denoting a single observation / business / row
 
-**$h$** - an index denoting a stratum (is this equivalent to group?)
+**$h$** - an index denoting a stratum
 
 **$j$** - an index denoting a calibration group (a collection of strata)
 
@@ -224,31 +225,10 @@ beyond the scope of this specification.
 
 **$a_i$** is the _design weight_ that is supplied to Winsorisation. The calculation
  of this is outside the scope of the
-Winsorisation method itself but an example of the calculations used in ONS are:
-
-$a_i = a_h = \frac{N_{h}}{n_{h}}$, e.g the birth death adjusted design weight
-
-$a_i = a_h = \ \frac{N_{h}}{n_{h}}\left(1 + H_{h}\left( \frac{d_{h}}{n_{h} - d_{h}}
- \right) \right)$, business $i \in$ stratum $h$, chosen during estimation
+Winsorisation method itself.
 
 **$g_i$** is the _calibration factor_ that is supplied to Winsorisation. The
-calculation of this is outside the scope of the Winsorisation method itself but
-an example of the calculation for calibration factor for business $i \in$
-calibration group $j$ used in ONS is:
-
-<!-- markdownlint-disable -->
-$$\begin{equation}
-g_i = g_j = \frac{\text{sum of population sizes *} x_i}{\text{sum of population sizes *} a_ix_i}
-\end{equation}$$
-<!-- markdownlint-enable -->
-
-$$\begin{equation}
-\text{sum of population sizes} = \sum_{i=1}^{N_j}
-\end{equation}$$
-
-where $a_i = \frac{N_{h}}{n_{h}}$
-
-(regardless of whether birth death adjusted design weight was chosen during estimation)
+calculation of this is outside the scope of the Winsorisation method itself.
 
 **${\overline{y}_h}$** is the
 _mean target value_, the sample mean for
@@ -274,18 +254,18 @@ $$\begin{equation}
 
 **$x_i$** is the _auxiliary variable_ for a given sampled _target value_
 
-**${\widehat{\mu}}_{i}$** is the _predict unit value_ used in **ratio estimation**
+**${\widehat{\mu}}_{i}$** is the _predicted unit value_ used in **ratio estimation**
 and is calculated using the data to be Winsorised for each observation and the
 sum of the _weighted target values_ divided by the sum of the _weighted auxiliary
 values_ for each calibration group $j$ multiplied by the supplied auxiliary value
 
 $$\begin{equation}
-\hat{\mu}_i = \text{predict unit value}
+\hat{\mu}_i = \text{predicted unit value}
 \end{equation}$$
 
 <!-- markdownlint-disable MD013 -->
 $$\begin{equation}
-\text{predict unit value} = x_i \frac{\text{sum of weighted target values}}{\text{sum of weighted auxiliary values}}
+\text{predicted unit value} = x_i \frac{\text{sum of weighted target values}}{\text{sum of weighted auxiliary values}}
 \end{equation}$$
 <!-- markdownlint-enable MD013 -->
 

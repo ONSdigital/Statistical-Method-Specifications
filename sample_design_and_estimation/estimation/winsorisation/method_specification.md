@@ -9,6 +9,8 @@ Two-sided Winsorisation is out of scope.
 
 ## 2.0 Terminology
 
+Relevant terms are described as they are used in the description below.
+
 ## 3.0 Introduction
 
 In business surveys, some responses can be very large and can distort
@@ -177,7 +179,7 @@ auxiliary values_ are used to calculate a
 _weighted ratio_.
 
 This _weighted ratio_ is then used to calculate a _predicted unit value_ associated
-with the target value by multiplting the provided auxiliary by the computed
+with the target value by multiplying the provided auxiliary by the computed
 _weighted ratio_.
 
 A _threshold_ is then calculated based on this _predicted unit value_, supplied L-value

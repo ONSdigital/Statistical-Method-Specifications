@@ -730,7 +730,8 @@ Please see the image below for further information.
 * Only a return or another manual construction can override a manual
  construction (MC)
 * A manual construction can override the following types: constructions,
- forward imputes from constructions and forward imputes from returns
+ forward imputes from constructions, forward imputes from returns and
+ backward imputes
 * A manual construction can be used as the predictive value when carrying
  out forward imputation (FIMC)
 * A forward impute from a manual construction can be used as the predictive
@@ -755,6 +756,10 @@ Please see the image below for further information.
  third or current, then perform rolling forwards imputation from a manual
  construction from the first period for all missing periods (FIMC). Final
  response pattern: MC, FIMC, FIMC, FIMC
+* If a manual construction is held for the contributor in the first period and
+ rolling forward imputation from a manual construction in the second and third,
+ then the contributor responded in the fourth period, then override FIMC with BI.
+ Final response pattern: MC, BI, BI, R
 * If a manual construction is held for the contributor in the first period, and
  a response is returned for the second, then do not override the manual
  construction with a backward impute. Final response pattern: MC, R

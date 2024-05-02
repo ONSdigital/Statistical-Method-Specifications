@@ -98,6 +98,9 @@ Input records for the target period must include the following fields of
 * Forward Link – Numeric – Optional – Nulls Allowed
 * Backward Link – Numeric – Optional – Nulls Allowed
 * Construction Link – Numeric – Optional – Nulls Allowed
+* Manually Constructed Value – Numeric – Optional – Nulls allowed – This column
+  is used at target variable level to input manually constructed values
+  into the  method (section 6.2.5)
 * Link Filter Columns – Optional – This can be any number of columns of any type
   that are to be used by the link filter (section 6.1.1) to prevent
   responders being used in the imputation link calculations
@@ -175,8 +178,10 @@ The Imputation Marker must be one of the following:
 
 * FIR = Forwards imputation from response
 * FIC = Forwards imputation from construction
+* FIMC = Forwards imputation from manual construction
 * BI = Backwards imputation
 * C = Construction imputation from auxiliary variable
+* MC = Manual construction
 * R = Response. This value is cleared of errors or warnings
 
 ### 5.3 Back Data

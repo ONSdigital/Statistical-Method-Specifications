@@ -68,7 +68,7 @@ on whether data is available in the predictive period.
 The generic formula for using ratio of means imputation is the imputation link
 multiplied by the variable of interest (auxiliary variable in the case of
 construction) for the non-respondent from a previous/consecutive/current period
-for forwards/backwards/construction imputation respectively. 
+for forwards/backwards/construction imputation respectively.
 
 Due to its robust nature, it does not use any form of trimming or outliering.
 
@@ -190,7 +190,7 @@ These fields must have the same types as their counterparts in the Input
 and Output records.
 
 If weighted imputation is being implemented, then the back data should
-include the necessary periods for the specified time lag (e.g., the 
+include the necessary periods for the specified time lag (e.g., the
 previous year) to allow this.
 
 The back data for weighting should also contain:
@@ -521,6 +521,5 @@ imputation from a response should override the third period. Final response patt
 MC, R, FIR.
 * If a value of any type is held in the first period, then manual construction is
 input for the second period, then do not backward impute from the manual construction.
-
 
 For Copyright information, please see LICENCE.

@@ -138,10 +138,35 @@ contributor’s response so that it is representative of the expected period.
 
 Contributors may not always provide full or correct data and the Date
 Adjustment method will handle it by producing error codes. There are 15
-error codes and the explanation of each of the codes can be found in
-the technical specification and in the code itself. The method will continue
-processing even when errors occur, this was done for historical reasons,
-unlike other methods in the Statistical Methods Library.
+error codes and the explanation of each of the codes can be found below:
+
+* E00: Average Weekly parameter is invalid.
+* E01: The value to be date adjusted is missing from one of the target columns.
+* E02: The contributor returned end date is earlier than the contributor returned
+                    start date.
+* E03: A required record for calculating weight m is missing from the trading
+                    weights table.
+* E04: A required trading weight for calculating weight m is null or blank.
+* E05: A required trading weight for calculating weight m has a negative value.
+* E06: A required record for calculating weight n is missing from or duplicated in
+                    the trading  weights table.
+* E07: A required trading weight for calculating weight n is null or blank.
+* E08: A required trading weight for calculating weight n has a negative value.
+* E09: Contributors return does not cover any of expected period.
+* E10: The sum of trading day weights over contributors returned period is zero.
+* E11: The sum of trading day weights over contributors returned period is zero.
+* E12: A required record for calculating midpoint date is missing from the
+                    trading weights table.
+* E13: A required record for setting APS and APE by midpoint is missing from or
+                    duplicated in the trading  weights table.
+* E14: Expected period start date is missing or an invalid date.
+* E15: Expected period end date is missing or an invalid date.
+
+These are NOT exceptions and do not cause the method to fail. Once an error flag
+has been placed on a row of data, no further processing is done to that row,
+preserving the data in the state it was when the flag was raised.
+The method will continuemprocessing even when errors occur, this was done
+for historical reasons, unlike other methods in the Statistical Methods Library.
 
 ### 6.2 Set to Mid-point – set as Y or YT or N
 

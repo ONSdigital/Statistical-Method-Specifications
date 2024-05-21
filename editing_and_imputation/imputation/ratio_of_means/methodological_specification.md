@@ -103,10 +103,10 @@ Input records must include the following fields of the correct types:
 * Forward Link (Optional) - Numeric
 * Backward Link (Optional) - Numeric
 * Construction Link (Optional) - Numeric
-* Target period link weight (Optional) - Numeric
-* Previous year forwards imputation link (Optional) - Numeric
-* Previous year backwards imputation link (Optional) - Numeric
-* Previous year construction link (Optional) - Numeric
+* Manually Constructed Value – Numeric – Optional – Nulls
+ allowed – This column is used at target variable level to
+ input manually constructed values into the method
+ (section 6.2.5)
 * Link Filter Columns (Optional) - This can be any number of
 columns of any type that are to be used by the link filter
 (7.0) to prevent responders being used in the imputation
@@ -147,6 +147,15 @@ types:
 * Forward Link Observation Count - Numeric
 * Backward Link Observation Count - Numeric
 * Construction Link Observation Count - Numeric
+* Forward Link Default Marker – Boolean
+* Backward Link Default Marker – Boolean
+* Construction Link Default Marker – Boolean
+
+If Responder Filtering is performed, then output records should also contain:
+
+* Post Filter Inclusion Marker Previous – Boolean – Nulls Allowed
+* Post Filter Inclusion Marker Target – Boolean – Nulls Allowed
+* Post Filter Inclusion Marker Next – Boolean – Nulls Allowed
 
 If weighted imputation is performed, then the output record should also
 contain:
@@ -394,7 +403,23 @@ an auxiliary variable is used from the target period and is then
 multiplied by a link to create a constructed value. Records imputed using
 this imputation will be marked C.
 
-### 8.4 Weighted imputation links
+### 8.4 Manual Construction Imputation
+
+Although not part of the statistical method itself, the method must accept
+and appropriately handle cases where a value has been overridden by manual
+intervention. Using subject matter knowledge, the values are calculated
+externally to the method and then manually input. Records using this
+approach will be mark MC.
+
+Please see section 8.8 for more details.
+
+#### 8.4.1 Forward Imputation from Manual Construction
+
+For forward imputation from manual construction, the predicitve value must
+only come from manually constructed values or forward imputed values from
+a manual construction. Records using this imputation will be marked FIMC.
+
+### 8.5 Weighted imputation links
 
 In some cases, it may be appropriate to use an imputation link which is an
 average of imputation links for more than one period. In the simplest case
@@ -407,7 +432,7 @@ Weighted imputation link = w*{sum y_{i, t}}/{sum x_{i, t}}
           + (1-w)*{sum y_{i, t-k}}/{sum x_{i, t-k}}
 ```
 
-### 8.5 User specified imputation links
+### 8.6 User specified imputation links
 
 In some instances, a user may want to specify that the imputed value for a
 given target variable is constructed using links that have been calculated
@@ -417,7 +442,7 @@ forwards imputed using links that have been calculated for another variable
 named by the user within a corresponding imputation class or use a link of
 1.
 
-### 8.6 Imputation rules
+### 8.7 Imputation rules
 
 Ratio of means imputation follows a set of rules to ensure that it is used
 correctly, these rules are in the same order as the flow chart below:
@@ -464,9 +489,9 @@ Please see the image below for further information.
 
 ![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
 
-### 8.7 Manual Construction Rules
+### 8.8 Manual Construction Rules
 
-#### 8.7.1 Rules
+#### 8.8.1 Rules
 
 * Only a return or another manual construction can override a manual
   construction (MC).
@@ -485,7 +510,7 @@ Please see the image below for further information.
   construction.
 * A backward impute can override a forward impute from a manual construction.
 
-#### 8.7.2 Scenarios
+#### 8.8.2 Scenarios
 
 * If a manual construction (MC) is currently held for the contributor and then
 a responde (R) is returned for the same period, then the returned value should

@@ -54,7 +54,7 @@ can be:
 * a consecutive value from the variable of interest for the non-responder,
   used for backwards imputation.
 
-Typically, the auxiliary variable can beL
+Typically, the auxiliary variable can be:
 
 * a known register based variable for the non-responder that is well
   correlated with the variable of interest, used for construction
@@ -168,7 +168,7 @@ Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
 
 Output records labelled 'Optional' shall only be populated in the ouput
-dataset if the corresponding functionliaty was used e.g., trimming.
+dataset if the corresponding functionality was used e.g., trimming.
 
 The imputation marker must be one of the following:
 
@@ -208,7 +208,7 @@ The back data for weighting should also contain:
 * Unweighted Backward Link - Numeric
 * Unweighted Construction Link - Numeric
 
-These fields must jabe the same types as their weighted counterparts in
+These fields must have the same types as their weighted counterparts in
 the Output records.
 
 ## 6.0 Method
@@ -361,7 +361,7 @@ of the link being used.
 For a given period and non-responder, the method will aim to apply forwards
 imputation wherever possible. If this is not feasible, backward imputation will
 be used if applicable. If a predictive record does not exist for the
-non-responder (ie. newly sampled) then construction imputation will be applied.
+non-responder (i.e. newly sampled) then construction imputation will be applied.
 
 Note that when imputation is not required for a given contributor (i.e.
 responder) then the output imputation marker is set to R.
@@ -415,7 +415,7 @@ Please see section 8.8 for more details.
 
 #### 8.4.1 Forward Imputation from Manual Construction
 
-For forward imputation from manual construction, the predicitve value must
+For forward imputation from manual construction, the predictve value must
 only come from manually constructed values or forward imputed values from
 a manual construction. Records using this imputation will be marked FIMC.
 
@@ -443,7 +443,7 @@ named by the user within a corresponding imputation class or use a link of
 1.
 
 ### 8.7 Imputation rules
-
+i
 Ratio of means imputation follows a set of rules to ensure that it is used
 correctly, these rules are in the same order as the flow chart below:
 
@@ -513,7 +513,7 @@ Please see the image below for further information.
 #### 8.8.2 Scenarios
 
 * If a manual construction (MC) is currently held for the contributor and then
-a responde (R) is returned for the same period, then the returned value should
+a responder (R) is returned for the same period, then the returned value should
 override the manual construction. Final response pattern: R.
 * If the previous period value is a manual construction (MC) and the contributor
 is a non-responder for the current period, then forward impute from a manual
@@ -528,20 +528,20 @@ then the contributor responded in the fourth period, then override FIMC with BI.
 Final response pattern: MC, BI, BI, R.
 * If a manual construction is held for the contributor in the first period, and
 a response is returned for the second, then do not override the manual construction
-with a backward impute. Final reponse pattern: MC, R.
+with a backward impute. Final response pattern: MC, R.
 * If a manual construction is held for the contributor in the first period, and a
 forward impute from a manual construction in the second, then the contributor
 responded in the third period, then only override the forward impute from a manual
-construction in the second period and backawrd impute. Final response pattern: MC,
+construction in the second period and backward impute. Final response pattern: MC,
 BI, R.
 * If a manual construction is held for the contributor in the first period, and a
 forward impute from a manual construction in the second, then a response is returned
 for the second period, then the returned value should override the forward impute
 from a manual construction. Final response pattern: MC, R.
 * If a manual construction is held for the contributor in the first period, and
-rolling forward imputation from a manual consutrction was performed for the second
+rolling forward imputation from a manual construction was performed for the second
 and third periods, and then a response is returned for the second period, then the
-returned value should override the foward impute in the second period and forwards
+returned value should override the forward impute in the second period and forwards
 imputation from a response should override the third period. Final response pattern:
 MC, R, FIR.
 * If a value of any type is held in the first period, then manual construction is

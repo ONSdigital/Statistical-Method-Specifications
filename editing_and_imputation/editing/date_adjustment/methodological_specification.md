@@ -137,7 +137,7 @@ contributor’s response so that it is representative of the expected period.
 #### 6.1.1 Incomplete or erroneous data provided
 
 Contributors may not always provide full or correct data and the Date
-Adjustment method will handle it by producing error codes. There are 15
+Adjustment method will handle it by producing error codes. There are 16
 error codes and the explanation of each of the codes can be found below:
 
 * E00: Average Weekly parameter is invalid.

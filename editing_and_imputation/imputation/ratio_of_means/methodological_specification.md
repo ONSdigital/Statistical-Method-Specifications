@@ -106,10 +106,10 @@ Input records must include the following fields of the correct types:
 * Manually Constructed Value – Numeric – Optional – Nulls
  allowed – This column is used at target variable level to
  input manually constructed values into the method
- (section 6.2.5)
+ (section 8.4 and 8.8)
 * Link Filter Columns (Optional) - This can be any number of
 columns of any type that are to be used by the link filter
-(7.0) to prevent responders being used in the imputation
+(7.1) to prevent responders being used in the imputation
 link calculations.
 
 Unless otherwise noted, fields must not contain null values. All other
@@ -236,12 +236,13 @@ The following imputation types comprise the complete method:
 * Backward imputation
 * Construction
 * Forward imputation from construction
+* Forward imputation from a manual construction
 
 Forward imputation imputes data for non-responders in the target period by
 multiplying a link to the predictive period data, where the predictive period
 is the period that immediately precedes the target period. It should be noted
-that the same link is used for forwards imputation from a response and from a
-construction.
+that the same link is used for forwards imputation from a response, from a
+construction and from a manual construction.
 
 Backwards imputation imputes data for non-responders in the target period by
 multiplying a link to the predictive period data, where the predictive period
@@ -443,7 +444,7 @@ named by the user within a corresponding imputation class or use a link of
 1.
 
 ### 8.7 Imputation rules
-i
+
 Ratio of means imputation follows a set of rules to ensure that it is used
 correctly, these rules are in the same order as the flow chart below:
 

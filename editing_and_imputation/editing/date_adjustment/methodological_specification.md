@@ -35,7 +35,7 @@ user that the contributor’s returned period is long.
 day weights per domain.
 * Trading day weights: These are weights associated with each day to
 allow the user to give a higher value to certain days relative to others
-in a given period. For example setting weights of 0.2 for weekdays and 0
+in a given period. For example, setting weights of 0.2 for weekdays and 0
 for weekends when considering turnover data values would imply that
 turnover is not generated on the weekend and is stable throughout
 weekdays.
@@ -59,7 +59,7 @@ the trading days weights ratio.
 To generate summary and headline statistics for a reporting period it
 is important to ensure that data reported are on a consistent basis
 referencing the same period. However, sometimes it is not possible for
-data to be reported for the exact period of time required, e.g. monthly,
+data to be reported for the exact period of time required, e.g., monthly,
 quarterly, yearly. The responder may specify different start and end
 dates for which the observed (referenced as response throughout this
 specification) data cover. The Date Adjustment method weights the
@@ -165,7 +165,7 @@ error codes and the explanation of each of the codes can be found below:
 These are NOT exceptions and do not cause the method to fail. Once an error flag
 has been placed on a row of data, no further processing is done to that row,
 preserving the data in the state it was when the flag was raised.
-The method will continuemprocessing even when errors occur, this was done
+The method will continue processing even when errors occur, this was done
 for historical reasons, unlike other methods in the Statistical Methods Library.
 
 ### 6.2 Set to Mid-point – set as Y or YT or N
@@ -175,8 +175,8 @@ contributor’s returned dates are within the expected period. If the
 mid-point of the contributor’s returned start and end dates are outside
 the expected period, then a “C” flag is raised in the error flag column to
 inform the user that the contributor’s response data aligns with a different
-reporting period (i.e. not the expected period). If the respondent’s
-mid-point does lie outside of the period the user is
+reporting period (i.e., not the expected period). If the respondent’s
+mid-point does lie outside of the period, the user is
 interested in then date adjustment will not occur.
 
 There are two ways to use the mid-point method: set the mid-point to “Y”
@@ -184,9 +184,9 @@ and set the mid-point to “YT”.
 
 Setting the mid-point input parameter to “Y” will simply calculate the
 mid-point of the days returned. If the number of days in the contributor’s
-returned period are even then divide the count by 2 and add that to the
+returned period are even, then divide the count by 2 and add that to the
 contributor’s returned start date to find the mid-point. If the number of
-days in the contributor’s returned period are odd then add 1 to the count
+days in the contributor’s returned period are odd, then add 1 to the count
 and divide by 2. This is then added onto the contributor’s returned start
 date. If the user sets the mid-point input parameter to “YT”, then the method
 will trim any weighted days at the start or end of the contributor’s returned

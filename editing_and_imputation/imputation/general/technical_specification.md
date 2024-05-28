@@ -55,6 +55,7 @@ Optionally the following fields can also be passed:
 * Forward Link - Numeric
 * Backward Link - Numeric
 * Construction Link - Numeric
+* Manual construction col - String
 
 Other fields should only be present if required by Responder Filtering (4.1).
 
@@ -62,6 +63,9 @@ An identifier must be unique within a given period and group and the method
 must support the same identifier appearing in different groups within the
 same period. This is to allow multiple independent groups of data for a
 given contributor to be imputed as part of the same sample.
+
+Manual construction column should only be present if 
+input records included the manual override value in a column (4.6).
 
 ### 3.2 Output Records
 
@@ -188,7 +192,9 @@ precedence order:
 
 1. Forward imputation from response
 2. Backward imputation
-3. Imputation based on construction
+3. Manual construction and forward imputation from manual construction (ONLY IF the manual constructed col is passed in)
+4. Imputation based on construction
+ 
 
 Since Construction Imputation must take place before Forward Imputation from
 Construction, they are collectively referred to as Construction based
@@ -275,6 +281,12 @@ In this imputation process, only predictive records which are either
 construction imputes or forward imputes from construction can be used.
 Records imputed using this process will be marked `FIC`.
 
+#### 4.3.3 Forward Imputation From Construction
+
+In this imputation process, only predictive records which are either
+manual construction or forward imputes from manual construction can be used.
+Records imputed using this process will be marked `FIMC`.
+
 ### 4.4 Backward Imputation
 
 In this imputation process, the backward link is used, the predictive period
@@ -303,4 +315,14 @@ period in the sequence. However, since this rule only applies to the method
 output and both the predictive and target periods are the same for this
 process, the order in which periods are processed is unimportant.
 
+### 4.6 Manual Construction Imputation
+
+If a manual construction value is currently held for the contributor and 
+response is missing for the same period, then the predictive
+period for period `p` is `p` and the predictive value is manual construction value.
+Records imputed using this process will be
+marked `MC`.
+
 For Copyright information, please see LICENCE.
+
+

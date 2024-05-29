@@ -66,7 +66,7 @@ must support the same identifier appearing in different groups within the
 same period. This is to allow multiple independent groups of data for a
 given contributor to be imputed as part of the same sample.
 
-Manual construction column should only be present if 
+Manual construction column should only be present if
 input records included the manual construction value in a column (4.6).
 
 ### 3.2 Output Records
@@ -201,7 +201,6 @@ precedence order:
 4. Forward imputation from manual construction only if the
   manual constructed col and value are passed in,else skip.
 5. Imputation based on construction
- 
 
 Since Construction Imputation must take place before Forward Imputation from
 Construction, they are collectively referred to as Construction based
@@ -331,5 +330,3 @@ The output value `v` is a manual construction value.
 Records imputed by this procedure will be labelled `MC`.
 
 For Copyright information, please see LICENCE.
-
-

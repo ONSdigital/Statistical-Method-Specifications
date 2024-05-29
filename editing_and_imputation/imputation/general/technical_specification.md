@@ -66,7 +66,7 @@ must support the same identifier appearing in different groups within the
 same period. This is to allow multiple independent groups of data for a
 given contributor to be imputed as part of the same sample.
 
-Manual construction column should only be present if
+Manual construction col parameter should only be present if
 input records included the manual construction value in a column (4.6).
 
 ### 3.2 Output Records

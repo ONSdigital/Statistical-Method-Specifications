@@ -490,7 +490,6 @@ Please see the image below for further information.
 
 ![imputation_types4](https://github.com/ONSdigital/Statistical-Method-Specifications/assets/87982871/eafd5663-8870-4c03-9819-125d1ff38fc4)
 
-
 ### 8.8 Manual Construction Rules
 
 #### 8.8.1 Rules

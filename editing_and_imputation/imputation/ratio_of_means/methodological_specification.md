@@ -77,8 +77,8 @@ Due to its robust nature, it does not use any form of trimming or outliering.
 * The contributor's target variable value in the predictive period and the
 auxiliary variable are well correlated (i.e. a good predictor) with the
 target period.
-* The auxiliary variable is populated for every contributor when performing
-  construction imputation.
+* The auxiliary variable is populated by the user for every contributor when
+performing construction imputation.
 * The imputation classes group similar contributors together whilst providing
 a sufficient number of contributors within each class enabling a robust
 link calculation.
@@ -168,7 +168,7 @@ Fields of type "Any" shall be of the same type as the corresponding input
 fields as the values shall be the same in both input and output records.
 
 Output records labelled 'Optional' shall only be populated in the ouput
-dataset if the corresponding functionality was used e.g., trimming.
+dataset if the corresponding functionality was used e.g., weighting.
 
 The imputation marker must be one of the following:
 
@@ -488,7 +488,8 @@ correctly, these rules are in the same order as the flow chart below:
 
 Please see the image below for further information.
 
-![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
+![imputation_types4](https://github.com/ONSdigital/Statistical-Method-Specifications/assets/87982871/eafd5663-8870-4c03-9819-125d1ff38fc4)
+
 
 ### 8.8 Manual Construction Rules
 
@@ -512,6 +513,8 @@ Please see the image below for further information.
 * A backward impute can override a forward impute from a manual construction.
 
 #### 8.8.2 Scenarios
+
+These scenarios are in the same order as the flow chart above in section 8.7:
 
 * If a manual construction (MC) is currently held for the contributor and then
 a responder (R) is returned for the same period, then the returned value should

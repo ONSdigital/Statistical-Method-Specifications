@@ -40,7 +40,7 @@ A List of the input data required to run the method,
 including any types that are specified with examples
 where needed, e.g a type of any may want an example
 of what may be used within
-the field 
+the field
 
 Additionally include a list of any optional values
 or "variable" values, (e.g if one of two columns
@@ -48,8 +48,8 @@ must be populated, identify which columns these are).
 
 Finally, add in anything else note-worthy about the
 inputs (e.g if an input is a "switch" value, where the
-input should be 0, 1, or 2 for instance). 
-> 
+input should be 0, 1, or 2 for instance).
+>
 
 ### 5.2 Output Records
 

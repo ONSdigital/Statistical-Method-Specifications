@@ -17,7 +17,7 @@ with an explanation of what it is
 
 \< This section must contain:
 
-An Introduction to the methiod, describing the purpose
+An Introduction to the method, describing the purpose
 of the method and an example of the sort of data it
 could be used on, the primary business use-case of the
 method, any other potential use-cases as well as any
@@ -40,7 +40,7 @@ A List of the input data required to run the method,
 including any types that are specified with examples
 where needed, e.g a type of any may want an example
 of what may be used within
-the field >
+the field 
 
 Additionally include a list of any optional values
 or "variable" values, (e.g if one of two columns
@@ -48,7 +48,8 @@ must be populated, identify which columns these are).
 
 Finally, add in anything else note-worthy about the
 inputs (e.g if an input is a "switch" value, where the
-input should be 0, 1, or 2 for instance). >
+input should be 0, 1, or 2 for instance). 
+> 
 
 ### 5.2 Output Records
 
@@ -62,6 +63,7 @@ Again, anything note-worthy about specific outputs should
 be mentioned, (e.g if an output provides a character output
 that specifies what the method did, if it successfully
 completed or not, or if it completed, if it amended data)
+>
 
 ## 6.0 Overall Method
 
@@ -98,7 +100,7 @@ does, these calculations should be written in both mathjax
 and asciimath, see the below from totals_and_components as
 an example >
 
-### 7.1 Error Detection Calculations
+### 7.1 EXAMPLE - Error Detection Calculations
 
 For all error detection approaches as described in section 6, the
  method initially identifies contributors where the following is

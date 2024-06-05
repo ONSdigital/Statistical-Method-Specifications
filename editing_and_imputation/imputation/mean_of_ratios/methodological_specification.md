@@ -726,7 +726,7 @@ Mean of Ratios imputation follows a set of rules to ensure that it
 
 Please see the image below for further information.
 
-![imputation_types1](https://user-images.githubusercontent.com/87982871/167370091-bd18e5bb-fef5-4d46-9b1e-a452040d9e16.png)
+![imputation_types4](https://github.com/ONSdigital/Statistical-Method-Specifications/assets/87982871/e6da577c-3ad0-48ec-b3dc-21126f932f86)
 
 ## 8.1 Manual Construction Rules
 
@@ -750,6 +750,8 @@ Please see the image below for further information.
 * A backward impute can override a forward impute from a manual construction
 
 ### 8.1.2 Scenarios
+
+The scenarios below are in the same order on the flow chart above.
 
 * If a manual construction (MC) is currently held for the contributor and then
  a response (R) is returned for the same period, then the returned value should

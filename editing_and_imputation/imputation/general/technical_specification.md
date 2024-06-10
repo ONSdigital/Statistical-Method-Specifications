@@ -234,8 +234,7 @@ to the construction link
 
 In link calculations, only responders present in the same group in both
 target and predictive periods shall be used to calculate the ratios. These
-pairs of responders are referred to as matched pairs. Non responders
-with a manual contruction value are excluded from link calculaion.
+pairs of responders are referred to as matched pairs.
 
 The link calculation function is out of scope of this document as it
 is specific to the type of Ratio Imputation being performed. However, as in

@@ -21,6 +21,8 @@
 * Grouping or group - How the data has been broken into subsets also known as
   imputation class.
 * Link - A ratio used as part of the imputation process.
+* Manual construction - A value is calculated
+  externally to the method using subject matter knowledge.
 
 ## 2.0 Description
 
@@ -55,6 +57,7 @@ Optionally the following fields can also be passed:
 * Forward Link - Numeric
 * Backward Link - Numeric
 * Construction Link - Numeric
+* Manual construction col - String
 
 Other fields should only be present if required by Responder Filtering (4.1).
 
@@ -62,6 +65,9 @@ An identifier must be unique within a given period and group and the method
 must support the same identifier appearing in different groups within the
 same period. This is to allow multiple independent groups of data for a
 given contributor to be imputed as part of the same sample.
+
+Manual construction col parameter should only be present if
+input records included the manual construction value in a column (4.6).
 
 ### 3.2 Output Records
 
@@ -161,9 +167,11 @@ v(p, g, c) = v(p_"predictive"(p), g, c) xx l(p, g)
 
 The above applies if and only if `v(p, g, c)` does not exist and the
 contributor was sampled for the given group and period. In all other cases
-`v(p, g, c)` remains unchanged. This assumes that all responses are already
-present in the output dataset such that if `v(p, g, c)` is a response it
-will exist.
+`v(p, g, c)` remains unchanged except, If `v(p, g, c)` does not exist and
+a manual construction value is assigned to the contributor per period,
+manual construction value should become `v(p, g, c)` (4.6).
+Otherwise this assumes that all responses are already present in the output
+dataset such that if `v(p, g, c)` is a response it will exist.
 
 Both the link and predictive value used depend on the imputation process. In
 addition, for forward and backward imputation, multiple periods must be
@@ -186,9 +194,13 @@ regards to the periodicity of the dataset.
 The following imputation processes comprise the complete method in
 precedence order:
 
-1. Forward imputation from response
-2. Backward imputation
-3. Imputation based on construction
+1. Manual construction only if the manual constructed col and value
+  are passed in,else skip.
+2. Forward imputation from response
+3. Backward imputation
+4. Forward imputation from manual construction only if the
+  manual constructed col and value are passed in,else skip.
+5. Imputation based on construction
 
 Since Construction Imputation must take place before Forward Imputation from
 Construction, they are collectively referred to as Construction based
@@ -258,7 +270,7 @@ Otherwise the unweighted link shall be used.
 
 ### 4.3 Forward Imputation
 
-In this method there are two forward imputation processes. In all cases the
+In this method there are three forward imputation processes. In all cases the
 forward link is used, the predictive period for period `p` is `p - 1` and
 the predictive value is the value of the target variable in the predictive
 record. Thus this process must process periods in ascending order.
@@ -274,6 +286,12 @@ using this process will be marked `FIR`.
 In this imputation process, only predictive records which are either
 construction imputes or forward imputes from construction can be used.
 Records imputed using this process will be marked `FIC`.
+
+#### 4.3.3 Forward Imputation From Construction
+
+In this imputation process, only predictive records which are either
+manual construction or forward imputes from manual construction can be used.
+Records imputed using this process will be marked `FIMC`.
 
 ### 4.4 Backward Imputation
 
@@ -302,5 +320,12 @@ contributor, Construction imputes must only be output for the earliest
 period in the sequence. However, since this rule only applies to the method
 output and both the predictive and target periods are the same for this
 process, the order in which periods are processed is unimportant.
+
+### 4.6 Manual Construction
+
+In the manual construction process, When a response is missing for a period,
+a manual construction value is assigned to the contributor for that period.
+The output value `v` is a manual construction value.
+Records imputed by this procedure will be labelled `MC`.
 
 For Copyright information, please see LICENCE.

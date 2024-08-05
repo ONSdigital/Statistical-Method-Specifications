@@ -32,7 +32,7 @@
 ## 3.0 Summary
 
 Selective Editing is an internationally recognised editing method
-where potential errors are prioritised according to their expected (test to show linting)
+where potential errors are prioritised according to their expected
 impact on key outputs, for one time period. Only respondents that
 are having a significant impact on published estimates will be
 recontacted for validation.
